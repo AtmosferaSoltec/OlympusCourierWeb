@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-menu',
+  selector: 'app-clientes',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './menu.component.html',
-  styleUrl: './menu.component.css'
+  templateUrl: './clientes.component.html',
+  styleUrl: './clientes.component.css'
 })
-export class MenuComponent {
+export class ClientesComponent {
 
 }

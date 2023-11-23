@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-panel-admin',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './panel-admin.component.html',
+  styleUrl: './panel-admin.component.css'
 })
-export class LoginComponent {
+export class PanelAdminComponent {
 
 }

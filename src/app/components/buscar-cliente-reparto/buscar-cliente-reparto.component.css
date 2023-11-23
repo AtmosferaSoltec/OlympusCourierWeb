@@ -1,0 +1,109 @@
+.buscar__container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.buscar {
+    display: flex;
+    gap: 20px;
+}
+
+.buscar__container span {
+    font-size: 1.1rem;
+    color: #808080;
+    font-family: metropolis;
+    font-weight: 500;
+}
+
+
+.input-container {
+    position: relative;
+    width: 500px;
+}
+
+.input-with-icon {
+    padding-left: 20px;
+    width: 100%;
+    height: 45px;
+    background-color: #F1F1F1;
+    border-radius: 15px;
+    border: none;
+    font-size: 1.1rem;
+    color: #808080;
+    font-family: 'Metropolis', sans-serif;
+}
+
+.input-container input:focus {
+    outline: none;
+    border: 2px solid #047CC4;
+}
+
+
+.icon {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 25px;
+    color: #808080;
+}
+
+/**Clientes Encontrados**/
+.container__completado {
+    position: relative;
+    padding-top: 1rem;
+}
+
+.container__completado span {
+    font-size: 1.2rem;
+}
+
+.span__completado {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+.span__completado mat-icon {
+
+    color:
+        #808080;
+    font-size: 20px;
+}
+
+/**Lista de Clientes Encontrados**/
+.sugerencias {
+    margin-top: 3px;
+    position: absolute;
+    top: 100%;
+    left: 81px;
+    background-color: white;
+    z-index: 1;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 500px;
+  }
+
+  .sugerencias .auto__completar li {
+    font-size: 1.3rem;
+    color: #ffffff;
+    border-radius: 10px;
+    font-family: metropolis;
+    background-color: gray;
+    padding-top: 10px;
+    padding-left: 15px;
+    margin-bottom: 1px;
+    padding-bottom: 10px;
+    z-index: 2;
+  }
+
+  .sugerencias .auto__completar li:hover {
+    background-color: #0467a5;
+    cursor: pointer;
+  }

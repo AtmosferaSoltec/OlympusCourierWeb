@@ -1,0 +1,155 @@
+<div class="container">
+
+
+    <div class="container__fecha">
+
+
+        <div class="btn__icon__user ">
+
+            <button mat-raised-button class="btn-add" (click)="agregar()"
+                style="background-color: #047CC4; color: white;">
+                <mat-icon>add</mat-icon>
+                Añadir Reparto
+            </button>
+            <div class="container__icon">
+                <div class="input__icon1">
+                    <button mat-icon-button class="icon_btn" matTooltip="Exportar">
+                        <mat-icon style="color: #047CC4;">save_alt</mat-icon>
+                    </button>
+                </div>
+
+                <div class="input__icon1">
+                    <button mat-icon-button class="icon_btn" matTooltip="Perfil">
+                        <mat-icon style="color: #047CC4;">person_outline</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container__input__clientes">
+            <div class="input__clientes">
+
+                <div class="input__search">
+                    <label for="">Documento</label>
+                    <div class="container__input">
+                        <input type="text" class="search-input" placeholder="RUC, DNI, Pasaporte">
+                    </div>
+                </div>
+
+                <div class="container__1">
+                    <label for="">Fechas</label>
+                    <div class="input-container">
+                        <input type="text" id="from" placeholder="Desde" [matDatepicker]="picker1"
+                            (click)="picker1.open()" readonly>
+                        <i class="material-icons" (click)="picker1.open()">calendar_today</i>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="text" id="to" placeholder="Hasta" [matDatepicker]="picker2"
+                            (click)="picker2.open()" readonly>
+                        <i class="material-icons" (click)="picker2.open()">calendar_today</i>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="date-input">
+
+                <div class="input__search">
+                    <label for="">Cliente</label>
+                    <div class="container__input">
+                        <input type="text" class="search-input" placeholder="Nombres, Razón social">
+                    </div>
+                </div>
+
+                <div class="input__search">
+                    <label for="">Estado</label>
+                    <div style="display: flex; gap: 6px; align-items: center;" class="container__input">
+                        <select type="text" class="search-input">
+                            <option value="">ejm</option>
+                            <option value="">ejm</option>
+                            <option value="">ejm</option>
+                        </select>
+                        <div class="icon__search">
+                            <a href="">
+                                <mat-icon class="search">search</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table mat-table [dataSource]="listRepartos">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>N° Reparto</th>
+            <td mat-cell *matCellDef="let item">
+                {{formatoId(item.id)}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="cliente">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="nombres">Cliente</th>
+            <td mat-cell *matCellDef="let item">{{item.cliente.nombres}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef>Fecha</th>
+            <td mat-cell *matCellDef="let item">{{item.fecha_creacion}}</td>
+        </ng-container>
+        <ng-container matColumnDef="flete">
+            <th mat-header-cell *matHeaderCellDef>Flete</th>
+            <td mat-cell *matCellDef="let item">S/{{item.total}} </td>
+        </ng-container>
+        <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef>Estado</th>
+            <td mat-cell *matCellDef="let item">
+                <span class="item__estado"
+                    [ngStyle]="{'background-color': getColor(item.estado)}">{{getEstado(item.estado)}}</span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="act">
+            <th mat-header-cell *matHeaderCellDef><mat-icon>menu</mat-icon></th>
+            <td mat-cell *matCellDef="let item">
+                <div class="estado-content">
+                    <div class="estado-icons">
+                        <button class="btn__icon" mat-icon-button matTooltip="Ver más" [matMenuTriggerFor]="mas">
+                            <mat-icon class="icon__horizontal larger-icon">more_horiz</mat-icon>
+                        </button>
+
+                        <mat-menu #mas="matMenu">
+                            <button mat-menu-item (click)="openDetalle()">
+                                <mat-icon color="primary">visibility</mat-icon>
+                                <span>Ver Detalle</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon color="warn">delete</mat-icon>
+                                <span>Eliminar</span>
+                            </button>
+                            <button mat-menu-item (click)="generarComprobante()">
+                                <mat-icon>description</mat-icon>
+                                <span>Generar Comprobante</span>
+                            </button>
+                        </mat-menu>
+                    </div>
+
+                </div>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row = index; columns: columnas;"
+            [ngStyle]="{'background-color': row % 2 === 0 ? '#ffffff' : '#f8f8f8'}" style="height: 70px;"></tr>
+
+    </table>
+
+    @if (listRepartos.length==0) {
+    <span>Sin Items</span>
+    } @else {
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
+    }
+</div>

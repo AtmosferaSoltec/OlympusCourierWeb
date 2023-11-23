@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.cdnfonts.com/css/metropolis-2');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: metropolis
+}
+
+:root {
+    --colorP1: #047CC4;
+    --colorP2: #54ADFF;
+    --colorR1: #CF475B;
+    --colorT: #1C2134;
+    --colorT1: #808080;
+    --colorT2: #989EB6;
+    --colorS1: #3F4143;
+    --colorBox: #F5F7FC;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,342 @@
+.container {
+    margin-left: 90px;
+    margin-top: 50px;
+
+}
+
+.container__fecha {
+    display: flex;
+    flex-direction: column;
+    padding-right: 25px;
+
+}
+
+.btn__icon__user {
+    display: flex;
+    flex-direction: row;
+    /* Mantén la disposición en fila */
+    margin-bottom: 40px;
+}
+
+.container__icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 1090px;
+}
+
+.input__clientes,
+.date-input {
+    display: flex;
+    flex-direction: row;
+    gap: 170px;
+    height: 50px;
+
+}
+
+.container__1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 13px;
+    margin-left: 17rem;
+
+}
+
+.input__search:nth-child(2) {
+    margin-left: 17rem;
+}
+
+.input__search {
+    position: relative;
+}
+
+.container__input__clientes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+::placeholder {
+    color: #808080;
+    /* Cambia #FF0000 al color que desees */
+    font-family: metropolis;
+}
+
+input {
+    color: #808080;
+    /* Cambia #FF0000 al color que desees */
+    font-family: metropolis;
+}
+
+.btn-add {
+    width: 200px;
+    height: 40px;
+    background-color: #047CC4;
+    color: white;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+label {
+    font-family: metropolis;
+    color: #808080;
+    font-size: 17px;
+    font-weight: 600;
+    width: 100px;
+}
+
+.search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+}
+
+/* estilos iconos descargar y usuario */
+.input__icon1 {
+    width: 50px;
+    /* Ajusta el ancho y alto del contenedor según tus preferencias */
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F1F1F1;
+}
+
+.input__icon1 i {
+    font-size: 29px;
+    /* Ajusta el tamaño del icono según tus preferencias */
+    color:
+        #047CC4;
+    /* Cambia el color del icono si es necesario */
+}
+
+
+/* Estilos para el ícono de la lupa */
+
+.input__search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 13px;
+}
+
+.input__search input:focus {
+    outline: none;
+    border: 2px solid #047CC4;
+}
+
+
+
+.search-input {
+    width: 340px;
+    padding: 15px;
+    border: none;
+    background-color: #F1F1F1;
+    font-size: 16px;
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 13px;
+    color: #808080;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.icon__search {
+    display: flex;
+    background-color: #047CC4;
+    border-radius: 13px;
+    width: 47px;
+    height: 45px;
+    justify-content: center;
+    align-items: center;
+}
+
+.search {
+    font-size: 1.8rem;
+    color: white;
+    position: relative;
+    left: -1px;
+    top: 2px;
+}
+
+
+.input-container {
+    position: relative;
+}
+
+.input-container input {
+    cursor: pointer;
+    padding: 15px;
+    border: none;
+    border-radius: 15px;
+    background-color: #F1F1F1;
+    width: 190px;
+
+    /* Ajusta el ancho según tu preferencia */
+}
+
+.input-container input[type="text"] {
+    font-size: 16px;
+    /* Tamaño de fuente */
+    color: #3f3f46;
+    /* Color del texto */
+
+
+
+}
+
+.input-container input::placeholder {
+    color: #808080;
+    font-family: metropolis;
+    font-size: 16px;
+}
+
+.input-container input:hover {
+    background-color: rgba(218, 218, 218, 0.6);
+}
+
+.input-container i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #777;
+    /* Cambia el color del ícono según tu preferencia */
+}
+
+/* Aplica espaciado de letras solo a las fechas ingresadas, no al placeholder */
+.input-container input::placeholder {
+    letter-spacing: 0;
+    /* Restablece el espaciado del placeholder a cero */
+}
+
+.input-container input:not(:placeholder-shown) {
+    letter-spacing: 2px;
+    /* Ajusta el espaciado entre caracteres según tu preferencia */
+}
+
+/* Estilos adicionales para dar una apariencia más atractiva */
+.input-container input:focus {
+
+    outline: none;
+    box-shadow: none;
+}
+
+select {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+    width: 400px;
+    height: 53px;
+    background-color: #f4f4f5;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    color: #808080;
+    font-family: 'Metropolis', sans-serif;
+    border: none;
+}
+
+select:focus {
+    outline: none;
+    border: 2px solid #047CC4;
+}
+
+
+
+
+.input-container i:hover {
+    color: #8a8989;
+    /* Cambia el color del ícono al pasar el cursor sobre él */
+}
+
+
+
+
+
+
+
+
+.icon {
+    position: relative;
+    top: 7px;
+    color: #bbbbbb;
+    left: 4px;
+}
+
+.venta {
+    font-weight: 600;
+}
+
+.fa-solid {
+    margin-right: 15px;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.estado__pendiente {
+    position: relative;
+}
+
+.estado-pendientes {
+    width: 140px;
+    height: 38px;
+    font-size: 1.1rem;
+    font-family: metropolis;
+    background: #6ADB25;
+    color: white;
+    font-weight: 400;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.item__estado {
+    padding: 5px 30px;
+    border-radius: 15px;
+    color: white;
+}
+
+
+
+.larger-icon {
+    transform: scale(1.5);
+    /* Ajusta el valor para cambiar el tamaño del ícono */
+    transition: transform 0.2s;
+    /* Añade una transición suave */
+}
+
+.larger-icon:hover {
+    transform: scale(1.8);
+    /* Cambia el tamaño del ícono al pasar el mouse */
+}
+
+table {
+    border-top: 1px solid #D9D9D9;
+    margin-top: 50px;
+}
+
+table th {
+    color: #808080;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+table td {
+    color: #808080;
+    font-size: 1rem;
+    text-align: center;
+}
