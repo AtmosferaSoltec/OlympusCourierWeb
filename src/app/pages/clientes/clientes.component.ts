@@ -4,11 +4,12 @@ import { Cliente } from '../../models/cliente';
 import { ClienteService } from '../../services/cliente.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { TablaClientesComponent } from '../../components/tabla-clientes/tabla-clientes.component';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule, TablaClientesComponent],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css'
 })

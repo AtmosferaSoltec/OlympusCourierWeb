@@ -5,7 +5,6 @@ import { Reparto } from '../../models/reparto';
 import { Router, RouterOutlet } from '@angular/router';
 import { RepartoService } from '../../services/reparto.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { DialogDetalleRepartoComponent } from '../../components/dialog-detalle-reparto/dialog-detalle-reparto.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
@@ -134,13 +133,7 @@ export class RepartosComponent {
   }
 
   openDetalle() {
-
-    const dialogRef = this.dialog.open(DialogDetalleRepartoComponent, {
-      width: "950px"
-    })
-
-    dialogRef.afterClosed().subscribe(data => {
-    })
+    this.router.navigateByUrl('/menu/detalle-reparto')
   }
 
   generarComprobante() {

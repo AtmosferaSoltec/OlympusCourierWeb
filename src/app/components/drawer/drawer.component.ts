@@ -15,7 +15,7 @@ export class DrawerComponent {
 
   @Input() conected = false;
   @Output() onToggleSideNav: EventEmitter<boolean> = new EventEmitter();
-  collapsed = true;
+  collapsed = false;
   screenWidth = 0;
 
   toggleNavigation() {

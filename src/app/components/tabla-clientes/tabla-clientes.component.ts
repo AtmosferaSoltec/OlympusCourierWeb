@@ -7,11 +7,12 @@ import { ClienteService } from '../../services/cliente.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddClienteComponent } from '../dialog-add-cliente/dialog-add-cliente.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-tabla-clientes',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatIconModule, MatPaginatorModule],
+  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, MatPaginatorModule],
   templateUrl: './tabla-clientes.component.html',
   styleUrl: './tabla-clientes.component.css'
 })
@@ -37,8 +38,8 @@ export class TablaClientesComponent {
 
   async listarClientes() {
     this.clienteService.listarClientes().subscribe({
-      next: data => {
-        this.listClientes.data = data;
+      next: (data: any) => {
+        this.listClientes.data = data.data;
       },
       error: error => console.log(error)
     });

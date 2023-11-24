@@ -9,14 +9,18 @@ import { environment } from '../../environments/environment.development';
   providedIn: 'root'
 })
 export class RepartoService {
-  
+
+
   clienteService = inject(ClienteService)
   http = inject(HttpClient);
+  url = `${environment.baseUrl}/api/repartos`;
 
+  get(id: number) {
+    return this.http.get(`${this.url}/${id}`);
+  }
   
   listarRepartos(): Observable<Reparto[]> {
-    const url = `${environment.baseUrl}/api/repartos`;
-    return this.http.get<any>(url);
+    return this.http.get<any>(this.url);
   }
 
   /*async listarRepartos(): Promise<Reparto[]> {

@@ -1,0 +1,149 @@
+h2 {
+    color: var(--colorP1);
+}
+
+.cuerpo {
+    display: flex;
+    font-family: 'Metropolis', sans-serif;
+
+    .uno {
+        width: 70%;
+    }
+
+    .dos {
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        .total {
+            color: #808080;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    }
+}
+
+.container_title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 30px 0px;
+
+    .container_title_content {
+        font-size: 18px;
+        color: #808080;
+
+        span {
+            font-weight: 500;
+            font-size: 20px;
+        }
+    }
+}
+
+.border-right {
+    border-right: 1px solid #dddddd;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+
+    .title {
+        width: 20%;
+        font-size: 18px;
+        color: var(--colorP1);
+        font-weight: 500;
+    }
+
+    .valor {
+        flex: 1;
+        background-color: #EEEEEE;
+        color: #808080;
+        padding: 10px 15px;
+        border-radius: 10px;
+        font-size: 18px;
+    }
+}
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #d9d9d9;
+}
+
+.card-item {
+    font-family: 'Metropolis', sans-serif;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+    h2 {
+        color: var(--colorP1);
+        font-weight: bold;
+    }
+
+    .content {
+        display: flex;
+        font-size: 18px;
+
+        .left {
+            flex: 0 0 20%;
+            color: var(--colorP1);
+            font-weight: 500;
+        }
+
+        .right {
+            flex: 1;
+            padding-left: 20px;
+            color: #808080;
+            font-weight: 400;
+        }
+    }
+
+    .container2 {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .container2 div {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 300;
+        gap: 10px;
+        color: #808080;
+    }
+}
+
+.card-estado {
+    display: flex;
+    border-radius: 30px;
+    background-color: #05ACD7;
+    font-size: 18px;
+
+    .title {
+        width: 50%;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        font-weight: bold;
+    }
+
+    .content {
+        width: 50%;
+        margin: 1px;
+        background-color: white;
+        border-radius: 30px;
+        text-align: center;
+        padding: 10px;
+        color: #808080;
+        font-weight: 500;
+    }
+}

@@ -1,0 +1,98 @@
+<div class="cuerpo">
+    <div class="uno border-right">
+        <div class="d-flex align-items-center">
+            <button mat-icon-button class="align-items-center">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <h2 class="ml-2 mb-0">Detalle de Reparto</h2>
+        </div>
+
+        <div class="container_title">
+            <div class="container_title_content">
+                <span>N° Reparto</span>
+                #00005
+            </div>
+            <div class="container_title_content">
+                <span>Usuario:</span>
+                Marcos Quispe C.
+            </div>
+        </div>
+
+        <div class="item">
+            <span class="title">Documento:</span>
+            <span class="valor">74455518</span>
+        </div>
+
+        <div class="item">
+            <span class="title">Cliente:</span>
+            <span class="valor">Joel Maldonado Fernandez</span>
+        </div>
+        <div class="item">
+            <span class="title">Teléfono:</span>
+            <span class="valor">936 416 623</span>
+        </div>
+        <div class="item">
+            <span class="title">Distrito:</span>
+            <span class="valor">Pueblo Nuevo</span>
+        </div>
+        <div class="item">
+            <span class="title">Dirección:</span>
+            <span class="valor">Prol. Santa Rosa 123</span>
+        </div>
+        <div class="item">
+            <span class="title">Referencia:</span>
+            <span class="valor">Cerca a plaza de armas</span>
+        </div>
+        <div class="item">
+            <span class="title">Fecha Creada:</span>
+            <span class="valor">16/11/2023 - 04:30pm</span>
+        </div>
+        <div class="item">
+            <span class="title">Fecha Entregada:</span>
+            <span class="valor">18/11/2023 - 04:30pm</span>
+        </div>
+
+        <hr style="margin-top: 30px; margin-bottom: 30px;">
+
+        @for (item of list; track $index) {
+        <div class="card-item">
+            <h2>Item 1</h2>
+            <div class="content">
+                <div class="left">
+                    <p>N Guia</p>
+                    <p>Detalle</p>
+                </div>
+                <div class="right">
+                    <p>0000001</p>
+                    <p>Productos Santa Natura</p>
+                </div>
+            </div>
+            <hr>
+            <div class="container2">
+                <div>
+                    <mat-icon>inventory_2</mat-icon>
+                    <span>Sobre</span>
+                </div>
+                <div>
+                    <mat-icon>checklist_rtl</mat-icon>
+                    <span>2</span>
+                </div>
+                <div>
+                    <mat-icon>payments</mat-icon>
+                    <span>S/45.00</span>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    <div class="dos">
+        <h2>Datos de Entrega:</h2>
+        <div class="card-estado">
+            <span class="title">Estado:</span>
+            <span class="content">Entregado</span>
+        </div>
+        <span class="total">
+            Total
+        </span>
+    </div>
+</div>
