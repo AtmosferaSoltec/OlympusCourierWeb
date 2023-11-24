@@ -13,6 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import moment from 'moment';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-repartos',
@@ -22,13 +23,14 @@ import moment from 'moment';
     MatIconModule, MatDatepickerModule,
     MatNativeDateModule, MatDialogModule,
     MatPaginatorModule, MatMenuModule,
-    MatTableModule, RouterOutlet],
+    MatTableModule, RouterOutlet,
+    ReactiveFormsModule
+  ],
   templateUrl: './repartos.component.html',
   styleUrl: './repartos.component.css'
 })
 export class RepartosComponent {
-
-
+  formulario: FormGroup;
   dialog = inject(MatDialog)
 
   listRepartos: Reparto[] = [];
@@ -49,7 +51,20 @@ export class RepartosComponent {
   bool: boolean = true;
 
   constructor(
+    private fb: FormBuilder
   ) {
+
+    this.formulario = this.fb.group({
+      tipoDoc: [''],
+      doc: [''],
+      nombres: [''],
+      desde: [''],
+      hasta: [''],
+      usuarios: [''],
+      distritos: [''],
+      tipoComprobante: [''],
+      estado: [''],
+    })
     this.listarRepartos()
     setTimeout(() => {
       this.bool = false;
@@ -129,6 +144,11 @@ export class RepartosComponent {
   }
 
   generarComprobante() {
+
+  }
+
+
+  filtrar() {
 
   }
 }

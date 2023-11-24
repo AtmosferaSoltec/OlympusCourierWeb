@@ -4,28 +4,18 @@
 
 
         <div class="btn__icon__user ">
-
-
-            <button mat-raised-button class="btn-add" (click)="agregar()"
-                style="background-color: #047CC4; color: white;">
-                <mat-icon>add</mat-icon>
+            <button mat-raised-button (click)="agregar()" style="background-color: #047CC4; color: white;">
                 Añadir Reparto
             </button>
-            <div class="container__icon">
-                <div class="input__icon1">
-                    <button mat-icon-button class="icon_btn" matTooltip="Exportar">
-                        <mat-icon style="color: #047CC4;">save_alt</mat-icon>
-                    </button>
-                </div>
-
-                <div class="input__icon1">
-                    <button mat-icon-button class="icon_btn" matTooltip="Perfil">
-                        <mat-icon style="color: #047CC4;">person_outline</mat-icon>
-                    </button>
-                </div>
-            </div>
+            <button mat-icon-button matTooltip="Exportar">
+                <mat-icon style="color: #047CC4;">save_alt</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Perfil">
+                <mat-icon style="color: #047CC4;">person_outline</mat-icon>
+            </button>
         </div>
 
+        <!--
         <div class="container__input__clientes">
             <div class="input__clientes">
 
@@ -83,6 +73,73 @@
                 </div>
             </div>
         </div>
+-->
+
+        <form [formGroup]="formulario" (submit)="filtrar()">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text"><mat-icon>assignment_ind</mat-icon></span>
+                <select class="form-select" formControlName="tipoDoc">
+                    <option selected>Todos</option>
+                    <option>RUC</option>
+                    <option>DNI</option>
+                    <option>CE</option>
+                </select>
+                <span class="input-group-text ms-2"><mat-icon>badge</mat-icon></span>
+                <input type="text" class="form-control" placeholder="Documento" formControlName="doc">
+
+                <span class="input-group-text ms-2"><mat-icon>person</mat-icon></span>
+                <input type="text" class="form-control" placeholder="Nombre Legal" formControlName="nombres">
+
+
+                <span class="input-group-text ms-2"><mat-icon (click)="picker1.open()">date_range</mat-icon></span>
+                <input class="input-group-text" type="text" placeholder="Desde: 23/11/2023" [matDatepicker]="picker1"
+                    (click)="picker1.open()" readonly formControlName="desde">
+                <mat-datepicker #picker1></mat-datepicker>
+
+                <span class="input-group-text ms-2"><mat-icon (click)="picker1.open()">date_range</mat-icon></span>
+                <input class="input-group-text" type="text" placeholder="Hasta: 23/11/2023" [matDatepicker]="picker2"
+                    (click)="picker2.open()" readonly formControlName="hasta">
+                <mat-datepicker #picker2></mat-datepicker>
+            </div>
+
+            <div class="input-group">
+
+                <span class="input-group-text"><mat-icon>groups</mat-icon></span>
+                <select class="form-select" formControlName="usuarios">
+                    <option selected>Todos</option>
+                    <option>Joel Maldonado</option>
+                    <option>Adriel Albino</option>
+                    <option>Jeyson Mendoza</option>
+                </select>
+
+                <span class="input-group-text ms-2"><mat-icon>push_pin</mat-icon></span>
+                <select class="form-select" formControlName="distritos">
+                    <option selected>Todos</option>
+                    <option>Chincha Alta</option>
+                    <option>Chincha Baja</option>
+                    <option>Tambo de Mora</option>
+                </select>
+
+                <span class="input-group-text ms-2"><mat-icon>description</mat-icon></span>
+                <select class="form-select" formControlName="tipoComprobante">
+                    <option selected>Todos</option>
+                    <option>Boleta</option>
+                    <option>Factura</option>
+                    <option>Anulado</option>
+                </select>
+
+                <span class="input-group-text ms-2"><mat-icon>local_shipping</mat-icon></span>
+                <select class="form-select" formControlName="estado">
+                    <option selected>Todos</option>
+                    <option>Pendiente</option>
+                    <option>Completado</option>
+                    <option>Anulado</option>
+                </select>
+                <button type="submit" class="btn btn-primary ms-2">Buscar</button>
+            </div>
+        </form>
+
     </div>
 
     <table mat-table [dataSource]="listRepartos">
