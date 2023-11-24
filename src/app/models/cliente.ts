@@ -1,13 +1,15 @@
 export interface Cliente {
     id?: number;
-    tipo_doc: string;
+    cod_tipodoc: string;
     documento?: string;
     nombres?: string;
     telefono?: string;
     correo?: string;
     genero?: string;
-    distrito_id?: string;
+    id_distrito?: string;
+    distrito?: string;
     direc?: string;
     referencia?: string;
     url_maps?: string;
+
 }

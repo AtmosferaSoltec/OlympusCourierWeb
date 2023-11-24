@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Reparto } from '../../models/reparto';
@@ -12,6 +11,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import moment from 'moment';
 
 @Component({
   selector: 'app-repartos',
@@ -84,13 +85,20 @@ export class RepartosComponent {
   async listarRepartos() {
     this.loaderRepartos = true
     this.repartoService.listarRepartos().subscribe({
-      next: data => {
-        this.listRepartos = data
+      next: (data: any) => {
+        this.listRepartos = data.data;
       },
       error: error => console.log(error)
     });
     this.loaderRepartos = false;
   }
+
+
+  formatDate(fecha: string): string {
+    const date = moment(fecha);
+    return date.format('DD/MM/YYYY HH:mm');
+  }
+
 
   agregar() {
     this.router.navigateByUrl('/menu/agregar-reparto')
@@ -120,34 +128,7 @@ export class RepartosComponent {
     })
   }
 
-  formatFecha(fecha: string | undefined, pattern: string): string {
-    if (fecha === undefined) {
-      return "Sin fecha";
-    } else {
-      const date = new Date(fecha);
-
-      if (isNaN(date.getTime())) {
-        return "Fecha no válida";
-      }
-
-      if (pattern === "dd/MM/yyyy") {
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}-${month}-${year}`;
-      } else if (pattern === "HH:mm") {
-        const hours = date.getHours();
-        const minutes = date.getMinutes().toString().padStart(2, '0');
-        const amOrPm = hours >= 12 ? "PM" : "AM";
-        const formattedHours = (hours % 12 || 12).toString().padStart(2, '0');
-        return `${formattedHours}:${minutes} ${amOrPm}`;
-      } else {
-        return "Formato no admitido";
-      }
-    }
-  }
-
   generarComprobante() {
-    
+
   }
 }

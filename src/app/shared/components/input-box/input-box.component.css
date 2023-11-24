@@ -1,0 +1,48 @@
+.campo__form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.campo__form div {
+    height: 100px;
+}
+
+span {
+    color: #047CC4;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+
+label {
+    width: 150px;
+    font-size: 1.15rem !important;
+    opacity: 1;
+    color: #808080;
+    line-height: 1.5rem !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-weight: 600 !important;
+    letter-spacing: -0.2px;
+}
+
+input {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    height: 49px;
+    background-color: #F1F1F1;
+    border-radius: 15px;
+    border: none;
+    font-size: 1.1rem;
+    color: #808080;
+    font-family: 'Metropolis', sans-serif;
+}
+
+input:focus {
+    outline: none;
+}
+
+input:focus {
+    border: 2px solid #047CC4;
+}

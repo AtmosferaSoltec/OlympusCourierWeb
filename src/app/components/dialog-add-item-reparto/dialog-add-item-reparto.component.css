@@ -1,0 +1,158 @@
+.container {
+    padding: 3rem 4.5rem;
+}
+
+.icon__form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+mat-icon {
+    color: #808080;
+}
+
+.container__form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+.container__cantidad {
+    display: flex;
+    flex-direction: row;
+    gap: 11px;
+}
+
+.campo__form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.campo__form div {
+    height: 100px;
+}
+
+span {
+    color: #047CC4;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+input {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    width: 450px;
+    height: 49px;
+    background-color: #F1F1F1;
+    border-radius: 15px;
+    border: none;
+    font-size: 1.1rem;
+    color: #808080;
+    font-family: 'Metropolis', sans-serif;
+}
+
+input:focus {
+    outline: none;
+}
+
+input:focus {
+    border: 2px solid #047CC4;
+}
+
+select {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+    width: 450px;
+    height: 53px;
+    background-color: #f4f4f5;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    color: #808080;
+    font-family: 'Metropolis', sans-serif;
+    border: none;
+}
+
+option {
+    padding: 20px;
+}
+
+/* Estilo para el ícono de triángulo (puedes mantener este estilo) */
+.custom-select::after {
+    content: "\25BC";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 16px;
+}
+
+
+select:focus {
+    border: 2px solid #047CC4;
+}
+
+label {
+    width: 150px;
+    font-size: 1.15rem !important;
+    opacity: 1;
+    color: #808080;
+    line-height: 1.5rem !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-weight: 600 !important;
+    letter-spacing: -0.2px;
+}
+
+.container__cantidad .campo__form input {
+    width: 180px;
+    margin-left: 27px;
+}
+
+.btn__navbar {
+    position: relative;
+}
+
+.raparto__btn {
+
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+
+.btn__form {
+    margin-top: 55px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.raparto__btn button {
+    padding: 1rem;
+    background-color:
+        #05ACD7;
+    color: white;
+    border-radius: 5px;
+    width: 180px;
+    border: none;
+    font-family: metropolis;
+    font-weight: 600;
+    font-size: 0.98rem;
+    height: 50px;
+}
+
+.btn__form :nth-child(2) {
+    background-color:
+        #E8E8E8;
+    color: #808080;
+}

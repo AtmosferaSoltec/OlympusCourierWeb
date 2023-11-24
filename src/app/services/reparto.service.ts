@@ -13,6 +13,7 @@ export class RepartoService {
   clienteService = inject(ClienteService)
   http = inject(HttpClient);
 
+  
   listarRepartos(): Observable<Reparto[]> {
     const url = `${environment.baseUrl}/api/repartos`;
     return this.http.get<any>(url);

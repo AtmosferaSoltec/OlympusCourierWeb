@@ -1,1 +1,28 @@
-<p>agregar-reparto works!</p>
+<div class="reparto__container">
+    <div style="margin-left: -15px;" class="title__reparto">
+        <button mat-icon-button (click)="cancel()"><mat-icon>arrow_back</mat-icon></button>
+        <span>Nuevo Reparto</span>
+    </div>
+
+    <app-buscar-cliente-reparto (clienteEmit)="clienteEmit($event)"></app-buscar-cliente-reparto>
+
+    <app-tabla-items-reparto (listEmit)="listEmit($event)"></app-tabla-items-reparto>
+
+    <div class="container__total">
+        <div class="container__clave">
+            <span>Clave</span>
+            <input placeholder="****" type="text" maxlength="4" [formControl]="clave">
+        </div>
+
+        <div class="container__costo">
+            <span class="costo">Costo T.</span>
+            <span>S/{{getTotal()}}</span>
+        </div>
+
+    </div>
+    <div class="container__btn">
+        <button mat-raised-button (click)="guardarReparto()">Guardar</button>
+        <button mat-raised-button style="background-color: #E8E8E8; color: #808080;"
+            (click)="cancel()">Cancelar</button>
+    </div>
+</div>

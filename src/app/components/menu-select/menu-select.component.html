@@ -1,0 +1,25 @@
+<div class="center">
+    <div class="dropdown">
+      <label for="">{{titulo}}</label>
+  
+      <div>
+        <div class="input-box">{{ selectedDistrito?.nombre }}</div>
+        <div class="list">
+          <!-- Utiliza ngFor para iterar sobre los elementos de listDistritos -->
+          <ng-container *ngFor="let item of listado; let i = index">
+            <input
+              type="radio"
+              name="drop1"
+              [id]="'id' + i"
+              class="radio"
+              [checked]="selectedDistrito === item"
+              (change)="onDistritoChange(item)"
+            />
+            <label [for]="'id' + i">
+              {{ item }}
+            </label>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>

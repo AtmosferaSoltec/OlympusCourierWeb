@@ -1,0 +1,212 @@
+.reparto__container {
+    margin-left: 80px;
+    margin-top: 80px;
+  }
+
+  .title__reparto {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+
+  .title__reparto span {
+    font-size: 1.3rem;
+    color: #047CC4;
+    font-family: metropolis;
+    font-weight: 700;
+    letter-spacing: -0.5;
+  }
+
+
+  mat-icon {
+    color: #047CC4;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .btn__agregar {
+    margin-left: 10px;
+    /* Agrega un margen izquierdo para separar el botón del campo de búsqueda */
+  }
+
+  .icon:focus {
+    color: #047CC4;
+  }
+
+
+  .container__autocompletar {
+    width: 300px;
+    position: relative;
+    top: -150px;
+  }
+
+  .btn__agregar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 20px;
+  }
+
+  .btn__agregar mat-icon {
+    color:
+      #047CC4;
+  }
+
+  .btn__agregar span {
+    color: #047CC4;
+    font-weight: 600;
+  }
+
+  .btn__item {
+    border: none;
+    border-radius: 10px;
+    width: 38px;
+    padding: 5px;
+    height: 38px;
+    background-color: #047CC4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn__item mat-icon {
+
+    color: white;
+    font-size: 30px;
+    position: relative;
+    left: -3px;
+    top: -3px;
+  }
+
+
+
+
+  .title {
+    font-family: metropolis;
+    color: #808080;
+    font-weight: 600;
+    width: 100px;
+  }
+
+  .sub__title {
+    margin-left: 60px;
+    font-family: metropolis;
+    color: #808080;
+    font-weight: 400;
+  }
+
+
+
+  .btn-add {
+    display: block;
+    margin: 20px auto;
+    /* Centrar el botón */
+  }
+
+
+  .btn__crud {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .btn__crud button {
+    border: none;
+    background-color: white;
+
+  }
+
+  .btn__crud button mat-icon {
+    color: #808080;
+    font-size: 1.6rem;
+  }
+
+  .container__total {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    height: 120px;
+    gap: 59rem;
+  }
+
+  .container__clave {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: 100px;
+  }
+
+  .container__clave span {
+    font-size: 1.2rem;
+    color: #808080;
+    font-family: metropolis;
+    font-weight: 700;
+  }
+
+  .container__clave input {
+
+    width: 130px;
+    height: 35px;
+    border: none;
+    padding: 1rem;
+    background-color:
+      #F1F1F1;
+    color: #808080;
+    font-family: metropolis;
+    font-weight: 400;
+    font-size: 1rem;
+    border-radius: 10px;
+  }
+
+  .container__clave input:focus {
+    outline: none;
+    border: 2px solid #047CC4;
+  }
+
+  .container__costo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 1.2rem;
+    color: #808080;
+    font-family: metropolis;
+    font-weight: 400;
+  }
+
+  .costo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    color: #047CC4;
+    font-family: metropolis;
+    font-weight: 700;
+  }
+
+  .container__btn {
+    display: flex;
+    margin-left: 71.6rem;
+    gap: 20px;
+  }
+
+  .container__btn button {
+    background-color:
+      #05ACD7;
+    color: white;
+    border-radius: 5px;
+    width: 120px;
+    border: none;
+    font-family: metropolis;
+    font-weight: 600;
+    font-size: 0.98rem;
+    height: 38px;
+  }
+
+  .container__btn :nth-child(2) {
+    background-color:
+      #E8E8E8;
+    color: #808080;
+  }

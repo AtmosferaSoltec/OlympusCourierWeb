@@ -1,0 +1,171 @@
+.dropdown {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.input-box {
+  width: 450px;
+  height: 53px;
+  box-sizing: border-box;
+  background-color: #F1F1F1;
+  border-radius: 20px;
+  font-family: metropolis;
+  padding-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.input-box::before {
+  content: "expand_more";
+  font-family: "Material Icons";
+  position: absolute;
+  font-size: 18px;
+  top: 50%;
+  right: 15px;
+  transform: translate(0, -50%);
+  width: fit-content;
+  height: fit-content;
+}
+
+.input-box.open::before {
+  content: "expand_less";
+}
+
+.input-box:empty::after {
+  content: "Select Title";
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.list {
+  position: absolute;
+  top: 100%;
+  left: 100px;
+  width: 503px;
+  height: fit-content;
+  background: white;
+  margin-top: 10px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  max-height: 0;
+  transition: 0.25s ease-out;
+  z-index: 2;
+}
+
+.list input {
+  display: none;
+}
+
+.list label {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: poppins;
+  font-size: 14px;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: relative;
+}
+
+.list label .material-icons-outlined,
+.input-box .material-icons-outlined {
+  color: #808080;
+  margin-right: 5px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-family: metropolis;
+}
+
+.list label:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+input:checked+label {
+  color: rgb(20, 117, 213);
+  background: rgb(238, 245, 252);
+}
+
+input:checked+label::before {
+  content: "done";
+  font-family: "Material Icons";
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translate(0, -50%);
+  font-size: 18px;
+}
+
+.open {
+  outline: 0.7mm solid rgb(20, 117, 213);
+}
+
+.title {
+  font-family: poppins;
+  font-size: small;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.search-box {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 8px;
+}
+
+#search {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  border-radius: 1mm;
+  border: none;
+  outline: 0.3mm solid rgba(0, 0, 0, 0.15);
+  font-family: poppins;
+}
+
+#search:focus {
+  outline: 0.5mm solid rgba(0, 0, 0, 0.35);
+}
+
+.input__search input:focus {
+  outline: none;
+  border: 2px solid #047CC4;
+}
+
+.btn-add {
+  width: 200px;
+  height: 40px;
+  background-color: #047CC4;
+  color: white;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 18px;
+}
+
+label {
+  font-family: metropolis;
+  color: #808080;
+  font-size: 17px;
+  font-weight: 600;
+  width: 100px;
+}
+
+.search-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+}

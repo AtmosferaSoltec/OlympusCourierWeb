@@ -48,9 +48,12 @@ export class BuscarClienteRepartoComponent {
     this.isLoading = true;
     this.showSugerencias = true;
     this.clienteService.searchCliente(this.documento.value).subscribe({
-      next: data => {
-        this.data$ = data;
-        this.isLoading = false;
+      next: (data: any) => {
+        console.log(data);
+        if (data?.isSuccess) {
+          this.data$ = data.data;
+          this.isLoading = false;
+        }
       },
       error: error => {
         console.log(error)
