@@ -149,6 +149,7 @@ export class RepartosComponent {
 
 
   filtrar() {
+    console.log(this.formulario.value);
 
   }
 }

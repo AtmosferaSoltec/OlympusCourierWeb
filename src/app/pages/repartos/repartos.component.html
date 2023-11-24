@@ -2,17 +2,18 @@
 
     <div class="container__fecha">
 
-
-        <div class="btn__icon__user ">
+        <div class="btn__icon__user d-flex justify-content-between">
             <button mat-raised-button (click)="agregar()" style="background-color: #047CC4; color: white;">
                 Añadir Reparto
             </button>
-            <button mat-icon-button matTooltip="Exportar">
-                <mat-icon style="color: #047CC4;">save_alt</mat-icon>
-            </button>
-            <button mat-icon-button matTooltip="Perfil">
-                <mat-icon style="color: #047CC4;">person_outline</mat-icon>
-            </button>
+            <div class="d-flex">
+                <button mat-icon-button matTooltip="Exportar">
+                    <mat-icon style="color: #047CC4;">save_alt</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Perfil">
+                    <mat-icon style="color: #047CC4;">person_outline</mat-icon>
+                </button>
+            </div>
         </div>
 
         <!--
