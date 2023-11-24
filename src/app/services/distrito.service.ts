@@ -10,6 +10,14 @@ import { environment } from '../../environments/environment.development';
 export class DistritoService {
   http = inject(HttpClient);
 
+  constructor() {
+    this.listarDestinos().subscribe({
+      next: (data: any) => {
+        console.log(data);
+      }
+    })
+  }
+
   listarDestinos(): Observable<Distrito[]> {
     const url = `${environment.baseUrl}/api/distrito`;
     return this.http.get<any>(url);

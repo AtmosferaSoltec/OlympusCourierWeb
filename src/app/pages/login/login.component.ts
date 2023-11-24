@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { ClienteService } from '../../services/cliente.service';
 import { UsuarioService } from '../../services/usuario.service';
+import { DistritoService } from '../../services/distrito.service';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent {
 
   formulario: FormGroup;
   usuarioService = inject(UsuarioService);
+  distritoService = inject(DistritoService);
 
   constructor(
     private fb: FormBuilder

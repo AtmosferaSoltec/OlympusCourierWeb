@@ -30,7 +30,7 @@ export class DrawerComponent {
 
   logout() {
     this.router.navigate(['/login']);
-    localStorage.removeItem('token');
+    localStorage.removeItem('idUser');
   }
 
   selected = 'repartos'
