@@ -67,23 +67,11 @@ export class TablaItemsRepartoComponent {
   }
 
   deleteItemReparto(item: ItemReparto) {
-    Swal.fire({
-      title: 'Eliminar Item',
-      text: '¿Estas seguro?',
-      icon: 'warning',
-      cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Eliminar',
-      showCancelButton: true,
-      confirmButtonColor: '#047CC4'
-    }).then((res) => {
-      if (res.isConfirmed) {
-        const index = this.listItemRepartos.indexOf(item);
-        if (index !== -1) {
-          this.listItemRepartos.splice(index, 1);
-          this.table.renderRows();
-          this.listEmit.emit(this.listItemRepartos)
-        }
-      }
-    })
+    const index = this.listItemRepartos.indexOf(item);
+    if (index !== -1) {
+      this.listItemRepartos.splice(index, 1);
+      this.table.renderRows();
+      this.listEmit.emit(this.listItemRepartos)
+    }
   }
 }

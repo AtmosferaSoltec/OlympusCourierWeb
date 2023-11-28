@@ -1,57 +1,57 @@
 <div class="container">
-    <div class="icon__form">
-        <span>Agregar Ítem</span>
-        <button mat-icon-button (click)="closeDialog()">
-            <mat-icon>close</mat-icon>
-        </button>
+    <div class="mt-3">
+        <h2><strong style="color: var(--colorP1);">Agregar Cliente</strong></h2>
     </div>
 
+    <form [formGroup]="formulario">
 
-    <form>
-        <div class="container__form">
+        <div class="input-group mb-3">
 
-            <app-input-box label="N° Guia" [formName]="nGuia"></app-input-box>
+            <span class="input-group-text">
+                <mat-icon>description</mat-icon>
+            </span>
+            <input type="text" class="form-control" placeholder="Numero de Guia" formControlName="nGuia">
 
-            <div class="campo__form">
-                <label for="">Tipo</label>
-                <select [formControl]="cat">
-                    <option value="Sobre">Sobre</option>
-                    <option value="Paqueteria">Paqueteria</option>
-                    <option value="Paquete">Paquete</option>
-                    <option value="Caja">Caja</option>
-                    <option value="Bulto">Bulto</option>
-                    <option value="Otro">Otro</option>
-                </select>
-            </div>
-
-            <app-input-box label="Descripción" [formName]="descrip"></app-input-box>
-
-            <div class="container__cantidad">
-                <div class="campo__form">
-                    <label for="">Cantidad</label>
-                    <input type="number" placeholder="0" class="input" [formControl]="cant">
-                </div>
-
-
-                <div class="campo__form">
-                    <label for="">Precio</label>
-                    <input style="margin-left: -71px;" type="number" placeholder="S/0.0" class="input"
-                        [formControl]="precio">
-                </div>
-                
-            </div>
+            <span class="input-group-text ms-2">
+                <mat-icon>inventory_2</mat-icon>
+            </span>
+            <select class="form-select" formControlName="tipoPaquete">
+                @for (item of listTipoPaquete; track $index) {
+                <option [value]="item.id">{{item.nombre}}</option>
+                }
+            </select>
 
 
         </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <mat-icon>notes</mat-icon>
+            </span>
+            <input type="text" class="form-control" placeholder="Detalle" formControlName="descrip">
 
+        </div>
+
+        <div class="input-group mb-3">
+
+            <span class="input-group-text">
+                <mat-icon>shopping_cart</mat-icon>
+            </span>
+            <input type="number" class="form-control" placeholder="Cantidad" formControlName="cant">
+
+            <span class="input-group-text ms-2">
+                <mat-icon>sell</mat-icon>
+            </span>
+            <input type="number" class="form-control" placeholder="Precio Total" formControlName="precio">
+
+        </div>
     </form>
 
 
-    <div class="raparto__btn">
-        <button mat-raised-button class="btn-add" [disabled]="!formValid" (click)="onAceptar()">Guardar</button>
-        <button mat-raised-button style="background-color: #E8E8E8; color: #808080;"
-            (click)="closeDialog()">Cancelar</button>
-
+    <div class="d-flex justify-content-end mt-3 mb-3">
+        <button type="button" (click)="closeDialog()" class="btn btn-secondary">Cancelar</button>
+        &nbsp;
+        <button type="button" (click)="onAceptar()" [disabled]="!formulario.valid"
+            class="btn btn-primary">Guardar</button>
     </div>
 
 

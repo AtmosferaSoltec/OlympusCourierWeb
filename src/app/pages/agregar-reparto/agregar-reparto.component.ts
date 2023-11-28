@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Cliente } from '../../models/cliente';
 import { ItemReparto } from '../../models/item-reparto';
 import { ClienteService } from '../../services/cliente.service';
@@ -23,15 +23,21 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class AgregarRepartoComponent {
 
+  formulario: FormGroup;
 
-  clave = new FormControl('', Validators.maxLength(4))
   cliente: Cliente | undefined;
   listItemRepartos: ItemReparto[] = []
 
-  clienteService = inject(ClienteService);
-  repartoService = inject(RepartoService);
-  router = inject(Router);
-  dialog = inject(MatDialog);
+  private repartoService = inject(RepartoService);
+  private router = inject(Router);
+  private fb = inject(FormBuilder);
+
+  constructor() {
+    this.formulario = this.fb.group({
+      clave: ['', [Validators.required, Validators.minLength(4)]],
+      anotacion: ['']
+    })
+  }
 
   clienteEmit(newCliente: Cliente | undefined) {
     this.cliente = newCliente;
@@ -45,6 +51,9 @@ export class AgregarRepartoComponent {
     this.listItemRepartos = listItemRepartos;
   }
 
+  back(){
+    this.router.navigateByUrl('/menu/repartos');
+  }
 
   cancel() {
     if (this.cliente && this.listItemRepartos) {
@@ -88,8 +97,8 @@ export class AgregarRepartoComponent {
       if (this.listItemRepartos.length > 0) {
 
         const reparto: Reparto = {
-          anotacion: '',
-          clave: this.clave.value ? this.clave.value : '',
+          anotacion: this.formulario.get('anotacion')?.value || '',
+          clave: this.formulario.get('clave')?.value || '1234',
           estado: 'P',
           id_cliente: this.cliente.id,
           items: this.listItemRepartos,

@@ -23,12 +23,14 @@
                 <span class="title">Comprobantes</span>
             </a>
         </li>
+        @if (usuarioService.usuario?.cod_rol !== "U") {
         <li [ngClass]="{'focus-menu': selected === 'panel-admin'}" (click)="navegar('panel-admin')">
             <a>
                 <span class="icon"><mat-icon>admin_panel_settings</mat-icon></span>
                 <span class="title">Panel Admin.</span>
             </a>
         </li>
+        }
 
         <li>
             <a (click)="logout()">
@@ -42,8 +44,8 @@
         <div class="admin">
             <span class="icon__user"><img src="../../../../assets/user.png" alt=""></span>
             <div class="admin__nombre">
-                <label class="admin__title" for="">Admin</label>
-                <label class="admin__nombre" for="">Nombre</label>
+                <label class="admin__title">{{getRol()}}</label>
+                <label class="admin__nombre">{{getNombre()}}</label>
             </div>
         </div>
         <button mat-mini-fab style="background-color:white; color:  #047CC4;" (click)="toggleNavigation()">

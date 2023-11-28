@@ -1,12 +1,13 @@
 <div class="container">
 
+    <div class="mt-3">
+        <h2><strong style="color: var(--colorP1);">Agregar Cliente</strong></h2>
+    </div>
     <form [formGroup]="formulario">
 
-        <div class="mt-3">
-            <h2><strong>Agregar Cliente</strong></h2>
-        </div>
 
         <div class="input-group mb-3">
+
             <span class="input-group-text">
                 <mat-icon>assignment_ind</mat-icon>
             </span>
@@ -15,32 +16,38 @@
                 <option [value]="item.cod">{{item.detalle}}</option>
                 }
             </select>
-            <span class="input-group-text">
+            <span class="input-group-text ms-2">
                 <mat-icon>badge</mat-icon>
             </span>
             <input type="text" class="form-control" placeholder="Documento" formControlName="doc">
-            <button (click)="buscarDoc()" class="btn btn-primary" type="button">
+
+            <button (click)="buscarDoc()" class="btn btn-primary ms-2" type="button">
                 Consultar
             </button>
         </div>
 
         <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
+
+            <span class="input-group-text">
                 <mat-icon>person</mat-icon>
             </span>
             <input type="text" class="form-control" placeholder="Nombre legal" formControlName="nombres">
-            <span class="input-group-text" id="basic-addon1">
+
+            <span class="input-group-text ms-2">
                 <mat-icon>phone</mat-icon>
             </span>
             <input type="text" class="form-control" placeholder="Teléfono" formControlName="cel">
+
         </div>
 
         <div class="input-group mb-3">
+
             <span class="input-group-text">
                 <mat-icon>mail</mat-icon>
             </span>
             <input type="text" class="form-control" placeholder="Correo" formControlName="correo">
-            <span class="input-group-text">
+
+            <span class="input-group-text ms-2">
                 <mat-icon>man</mat-icon>
             </span>
             <select class="form-select" formControlName="genero">
@@ -59,18 +66,19 @@
                 <option [value]="item.id">{{item.nombre}}</option>
                 }
             </select>
-            <span class="input-group-text">
+
+            <span class="input-group-text ms-2">
                 <mat-icon>signpost</mat-icon>
             </span>
             <input class="form-control" placeholder="Dirección" formControlName="direc">
 
-        </div>
-
-        <div class="input-group mb-3">
-            <span class="input-group-text">
+            <span class="input-group-text ms-2">
                 <mat-icon>my_location</mat-icon>
             </span>
             <input class="form-control" placeholder="Referencia" formControlName="ref">
+        </div>
+
+        <div class="input-group mb-3">
             <span class="input-group-text">
                 <mat-icon>link</mat-icon>
             </span>

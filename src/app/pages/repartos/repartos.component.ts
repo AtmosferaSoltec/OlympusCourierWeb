@@ -10,9 +10,22 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe, JsonPipe, formatDate } from '@angular/common';
 import moment from 'moment';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClienteService } from '../../services/cliente.service';
+import { UsuarioService } from '../../services/usuario.service';
+import { DocumentoService } from '../../services/documento.service';
+import { Documento } from '../../models/documento';
+import { Usuario } from '../../models/usuario';
+import { DistritoService } from '../../services/distrito.service';
+import { Distrito } from '../../models/distrito';
+import { registerLocaleData } from '@angular/common';
+import localeEsPE from '@angular/common/locales/es-PE';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+registerLocaleData(localeEsPE);
 
 @Component({
   selector: 'app-repartos',
@@ -23,14 +36,25 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
     MatNativeDateModule, MatDialogModule,
     MatPaginatorModule, MatMenuModule,
     MatTableModule, RouterOutlet,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    FormsModule,
+    ReactiveFormsModule,
+    JsonPipe,
+    MatNativeDateModule,
+    MatTooltipModule
   ],
   templateUrl: './repartos.component.html',
-  styleUrl: './repartos.component.css'
+  styleUrl: './repartos.component.css',
+  providers: [DatePipe]
 })
 export class RepartosComponent {
   formulario: FormGroup;
-  dialog = inject(MatDialog)
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
 
   listRepartos: Reparto[] = [];
   loaderRepartos = false;
@@ -38,49 +62,72 @@ export class RepartosComponent {
     'id',
     'cliente',
     'fecha',
-    'flete',
     'estado',
+    'flete',
     'act',
   ];
+  bool: boolean = true;
+  listTipoDocumento: Documento[] = [];
+  listDistrito: Distrito[] = [];
+  listUsuario: Usuario[] = [];
 
   router = inject(Router);
+  dialog = inject(MatDialog)
   repartoService = inject(RepartoService);
+  distritoService = inject(DistritoService);
+  usuarioService = inject(UsuarioService);
+  documentoService = inject(DocumentoService);
+  private fb = inject(FormBuilder);
 
+  fechaDesde: Date = new Date();
+  fechaHasta: Date = new Date();
+  datePipe = inject(DatePipe);
 
-  bool: boolean = true;
+  formatearFecha(fecha: Date): string {
+    const f = this.datePipe.transform(fecha, 'dd/MM/yyyy') || 'Sin Fecha';
+    console.log(f);
 
-  constructor(
-    private fb: FormBuilder
-  ) {
+    return f
+  }
 
+  constructor() {
     this.formulario = this.fb.group({
       tipoDoc: [''],
       doc: [''],
       nombres: [''],
-      desde: [''],
-      hasta: [''],
       usuarios: [''],
       distritos: [''],
       tipoComprobante: [''],
       estado: [''],
     })
+
     this.listarRepartos()
     setTimeout(() => {
       this.bool = false;
     }, 3000);
-  }
 
-  getColor(estado: string): string {
-    switch (estado) {
-      case 'P':
-        return 'gray';
-      case 'E':
-        return 'green';
-      case 'A':
-        return 'red';
-      default:
-        return 'black';
-    }
+    this.documentoService.getAll().subscribe({
+      next: (data: any) => {
+        if (data && data.isSuccess) {
+          this.listTipoDocumento = data.data;
+        }
+      }
+    });
+    this.usuarioService.getAll().subscribe({
+      next: (data: any) => {
+        if (data && data.isSuccess) {
+          this.listUsuario = data.data;
+        }
+      }
+    });
+    this.distritoService.listarDestinos().subscribe({
+      next: (data: any) => {
+        if (data && data.isSuccess) {
+          this.listDistrito = data.data;
+        }
+      }
+    });
+
   }
 
   getEstado(estado: string): string {

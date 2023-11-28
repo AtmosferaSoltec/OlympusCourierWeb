@@ -3,9 +3,7 @@
     <div class="container__fecha">
 
         <div class="btn__icon__user d-flex justify-content-between">
-            <button mat-raised-button (click)="agregar()" style="background-color: #047CC4; color: white;">
-                Añadir Reparto
-            </button>
+
             <div class="d-flex">
                 <button mat-icon-button matTooltip="Exportar">
                     <mat-icon style="color: #047CC4;">save_alt</mat-icon>
@@ -17,64 +15,6 @@
         </div>
 
         <!--
-        <div class="container__input__clientes">
-            <div class="input__clientes">
-
-                <div class="input__search">
-                    <label for="">Documento</label>
-                    <div class="container__input">
-                        <input type="text" class="search-input" placeholder="RUC, DNI, Pasaporte">
-                    </div>
-                </div>
-
-                <div class="container__1">
-                    <label for="">Fechas</label>
-                    <div class="input-container">
-                        <input type="text" id="from" placeholder="Desde" [matDatepicker]="picker1"
-                            (click)="picker1.open()" readonly>
-                        <i class="material-icons" (click)="picker1.open()">calendar_today</i>
-                        <mat-datepicker #picker1></mat-datepicker>
-                    </div>
-
-                    <div class="input-container">
-                        <input type="text" id="to" placeholder="Hasta" [matDatepicker]="picker2"
-                            (click)="picker2.open()" readonly>
-                        <i class="material-icons" (click)="picker2.open()">calendar_today</i>
-                        <mat-datepicker #picker2></mat-datepicker>
-                    </div>
-                </div>
-
-            </div>
-
-
-
-            <div class="date-input">
-
-                <div class="input__search">
-                    <label for="">Cliente</label>
-                    <div class="container__input">
-                        <input type="text" class="search-input" placeholder="Nombres, Razón social">
-                    </div>
-                </div>
-
-                <div class="input__search">
-                    <label for="">Estado</label>
-                    <div style="display: flex; gap: 6px; align-items: center;" class="container__input">
-                        <select type="text" class="search-input">
-                            <option value="">ejm</option>
-                            <option value="">ejm</option>
-                            <option value="">ejm</option>
-                        </select>
-                        <div class="icon__search">
-                            <a href="">
-                                <mat-icon class="search">search</mat-icon>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
--->
 
         <form [formGroup]="formulario" (submit)="filtrar()">
 
@@ -82,9 +22,9 @@
                 <span class="input-group-text"><mat-icon>assignment_ind</mat-icon></span>
                 <select class="form-select" formControlName="tipoDoc">
                     <option selected>Todos</option>
-                    <option>RUC</option>
-                    <option>DNI</option>
-                    <option>CE</option>
+                    @for (item of listTipoDocumento; track $index) {
+                    <option>{{item.detalle}}</option>
+                    }
                 </select>
                 <span class="input-group-text ms-2"><mat-icon>badge</mat-icon></span>
                 <input type="text" class="form-control" placeholder="Documento" formControlName="doc">
@@ -92,34 +32,47 @@
                 <span class="input-group-text ms-2"><mat-icon>person</mat-icon></span>
                 <input type="text" class="form-control" placeholder="Nombre Legal" formControlName="nombres">
 
+                <div date-rangepicker class="flex items-center">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <mat-icon class="mat-18">calendar_month</mat-icon>
+                        </div>
+                        <input name="start" type="text"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Select date start">
+                    </div>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
 
-                <span class="input-group-text ms-2"><mat-icon (click)="picker1.open()">date_range</mat-icon></span>
-                <input class="input-group-text" type="text" placeholder="Desde: 23/11/2023" [matDatepicker]="picker1"
-                    (click)="picker1.open()" readonly formControlName="desde">
-                <mat-datepicker #picker1></mat-datepicker>
-
-                <span class="input-group-text ms-2"><mat-icon (click)="picker1.open()">date_range</mat-icon></span>
-                <input class="input-group-text" type="text" placeholder="Hasta: 23/11/2023" [matDatepicker]="picker2"
-                    (click)="picker2.open()" readonly formControlName="hasta">
-                <mat-datepicker #picker2></mat-datepicker>
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <mat-icon class="mat-18">calendar_month</mat-icon>
+                            </div>
+                        </div>
+                        <input name="end" type="text"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Select date end">
+                    </div>
+                </div>
             </div>
+
+
 
             <div class="input-group">
 
                 <span class="input-group-text"><mat-icon>groups</mat-icon></span>
                 <select class="form-select" formControlName="usuarios">
                     <option selected>Todos</option>
-                    <option>Joel Maldonado</option>
-                    <option>Adriel Albino</option>
-                    <option>Jeyson Mendoza</option>
+                    @for (item of listUsuario; track $index) {
+                    <option>{{item.nombres}}</option>
+                    }
                 </select>
 
                 <span class="input-group-text ms-2"><mat-icon>push_pin</mat-icon></span>
                 <select class="form-select" formControlName="distritos">
                     <option selected>Todos</option>
-                    <option>Chincha Alta</option>
-                    <option>Chincha Baja</option>
-                    <option>Tambo de Mora</option>
+                    @for (item of listDistrito; track $index) {
+                    <option>{{item.nombre}}</option>
+                    }
                 </select>
 
                 <span class="input-group-text ms-2"><mat-icon>description</mat-icon></span>
@@ -140,6 +93,10 @@
                 <button type="submit" class="btn btn-primary ms-2">Buscar</button>
             </div>
         </form>
+        -->
+
+
+
 
     </div>
 
@@ -167,12 +124,23 @@
         <ng-container matColumnDef="estado">
             <th mat-header-cell *matHeaderCellDef>Estado</th>
             <td mat-cell *matCellDef="let item">
-                <span class="item__estado"
-                    [ngStyle]="{'background-color': getColor(item.estado)}">{{getEstado(item.estado)}}</span>
+                <span class="item__estado" [ngClass]="
+                {
+                    'item__estado_p': item.estado === 'P',
+                    'item__estado_e': item.estado === 'E',
+                    'item__estado_a': item.estado === 'A',
+                }">
+                    {{getEstado(item.estado)}}
+                </span>
             </td>
         </ng-container>
         <ng-container matColumnDef="act">
-            <th mat-header-cell *matHeaderCellDef><mat-icon>menu</mat-icon></th>
+            <th mat-header-cell *matHeaderCellDef>
+                <button mat-mini-fab (click)="agregar()" style="background-color: #047CC4; color: white;"
+                    matTooltip="Agregar Reparto">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </th>
             <td mat-cell *matCellDef="let item">
                 <div class="estado-content">
                     <div class="estado-icons">
@@ -185,10 +153,12 @@
                                 <mat-icon color="primary">visibility</mat-icon>
                                 <span>Ver Detalle</span>
                             </button>
+                            @if (usuarioService.usuario?.cod_rol !== 'U') {
                             <button mat-menu-item>
                                 <mat-icon color="warn">delete</mat-icon>
                                 <span>Eliminar</span>
                             </button>
+                            }
                             <button mat-menu-item (click)="generarComprobante()">
                                 <mat-icon>description</mat-icon>
                                 <span>Generar Comprobante</span>

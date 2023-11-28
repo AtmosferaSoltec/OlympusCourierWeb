@@ -1,28 +1,47 @@
-<div class="reparto__container">
-    <div style="margin-left: -15px;" class="title__reparto">
-        <button mat-icon-button (click)="cancel()"><mat-icon>arrow_back</mat-icon></button>
-        <span>Nuevo Reparto</span>
+<div class="container mt-3">
+    
+    <div class="d-flex align-items-center" style="color: var(--colorP1);">
+        <button mat-icon-button class="align-items-center" (click)="back()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h2 class="mb-0">Nuevo Reparto</h2>
     </div>
 
     <app-buscar-cliente-reparto (clienteEmit)="clienteEmit($event)"></app-buscar-cliente-reparto>
 
     <app-tabla-items-reparto (listEmit)="listEmit($event)"></app-tabla-items-reparto>
 
-    <div class="container__total">
-        <div class="container__clave">
-            <span>Clave</span>
-            <input placeholder="****" type="text" maxlength="4" [formControl]="clave">
+
+
+    <form [formGroup]="formulario" class="container__bottom">
+        <div>
+            <div class="input-group">
+                <span class="input-group-text">
+                    <mat-icon>lock</mat-icon>
+                </span>
+                <input type="number" class="form-control" placeholder="Clave" formControlName="clave">
+            </div>
+
+            <div class="input-group mt-2">
+
+                <span class="input-group-text">
+                    <mat-icon>notes</mat-icon>
+                </span>
+                <input type="text" class="form-control" placeholder="Anotación" formControlName="anotacion">
+            </div>
         </div>
 
-        <div class="container__costo">
-            <span class="costo">Costo T.</span>
-            <span>S/{{getTotal()}}</span>
-        </div>
+        <span class="total ms-2">
+            Total S/{{getTotal()}}
+        </span>
+    </form>
 
-    </div>
-    <div class="container__btn">
-        <button mat-raised-button (click)="guardarReparto()">Guardar</button>
-        <button mat-raised-button style="background-color: #E8E8E8; color: #808080;"
-            (click)="cancel()">Cancelar</button>
+
+
+
+    <div class="d-flex justify-content-end mt-3">
+        <button type="button" (click)="cancel()" class="btn btn-secondary">Cancelar</button>
+        &nbsp;
+        <button type="button" (click)="guardarReparto()" [disabled]="!formulario.valid" class="btn btn-primary">Guardar</button>
     </div>
 </div>

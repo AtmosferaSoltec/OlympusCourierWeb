@@ -1,11 +1,12 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ItemReparto } from '../../models/item-reparto';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InputBoxComponent } from '../../shared/components/input-box/input-box.component';
+import { PaqueteService } from '../../services/paquete.service';
 
 @Component({
   selector: 'app-dialog-add-item-reparto',
@@ -16,42 +17,63 @@ import { InputBoxComponent } from '../../shared/components/input-box/input-box.c
 })
 export class DialogAddItemRepartoComponent {
 
+  formulario: FormGroup
+
+  paqueteService = inject(PaqueteService)
+
   constructor(
     public dialogRef: MatDialogRef<DialogAddItemRepartoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ItemReparto | undefined,
+    private fb: FormBuilder
   ) {
 
-    this.nGuia.valueChanges.subscribe(() => this.updateFormValidity());
-    this.cat.valueChanges.subscribe(() => this.updateFormValidity());
-    this.descrip.valueChanges.subscribe(() => this.updateFormValidity());
-    this.cant.valueChanges.subscribe(() => this.updateFormValidity());
-    this.precio.valueChanges.subscribe(() => this.updateFormValidity());
+    console.log(data?.cat);
+
+
+    this.formulario = this.fb.group({
+      nGuia: [data?.nGuia || '', []],
+      tipoPaquete: [data?.cat || 's', [Validators.required]],
+      descrip: [data?.descrip || '', []],
+      cant: [data?.cant || '', [Validators.required, Validators.min(1)]],
+      precio: [data?.precio || '', [Validators.required, Validators.min(1)]]
+    })
+
+    this.paqueteService.getAll().subscribe({
+      next: (data: any) => {
+        if (data && data.isSuccess) {
+          this.listTipoPaquete = data.data;
+          if (!this.data?.cat && this.listTipoPaquete?.length > 0) {
+            this.formulario.get('tipoPaquete')?.setValue(this.listTipoPaquete[0].id)
+          }
+        } else {
+          console.log(data.mensaje ? data.mensaje : 'No se pudo obtener datos');
+        }
+      },
+      error(err) {
+        console.log(err);
+
+      },
+    })
   }
 
-  updateFormValidity() {
-    this.formValid = this.nGuia.valid && this.cat.valid && this.descrip.valid && this.cant.valid && this.precio.valid;
-  }
+  listTipoPaquete: any[] = []
+
 
   closeDialog() {
     this.dialogRef.close();
   }
 
-  formValid = false;
-
-  nGuia = new FormControl(this.data?.nGuia);
-  cat = new FormControl(this.data?.cat, Validators.required);
-  descrip = new FormControl(this.data?.descrip);
-  cant = new FormControl(this.data?.cant, [Validators.required, Validators.min(1)]);
-  precio = new FormControl(this.data?.precio, [Validators.required, Validators.min(1)]);
-
   onAceptar() {
+
     const itemReparto: ItemReparto = {
-      nGuia: this.nGuia.value ? this.nGuia.value : 'Sin Guia',
-      cat: this.cat.value ? this.cat.value : '',
-      descrip: this.descrip.value ? this.descrip.value : 'Sin Descripción',
-      precio: this.precio.value ? this.precio.value : 0.0,
-      cant: this.cant.value ? this.cant.value : 0,
-    }
+      nGuia: this.formulario.get('nGuia')?.value || 'Sin Guia',
+      cat: this.formulario.get('tipoPaquete')?.value || '',
+      descrip: this.formulario.get('descrip')?.value || 'Sin Descripción',
+      precio: this.formulario.get('precio')?.value || 0.0,
+      cant: this.formulario.get('cant')?.value || 0,
+    };
+
     this.dialogRef.close(itemReparto)
+
   }
 }

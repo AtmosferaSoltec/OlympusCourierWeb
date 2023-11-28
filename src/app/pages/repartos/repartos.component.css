@@ -300,10 +300,25 @@ select:focus {
   transform: translate(-50%, -50%);
 }
 
-.item__estado {
-  padding: 5px 30px;
+.item__estado_p {
+  padding: 1px 10px;
+  border-radius: 10px;
+  background-color: rgba(128, 128, 128, 0.2);
+  color: gray;
+}
+
+.item__estado_e {
+  padding: 3px 15px;
   border-radius: 15px;
-  color: white;
+  background-color: rgba(106, 219, 37, 0.2);
+  background-color: #6ADB25;
+}
+
+.item__estado_a {
+  padding: 3px 15px;
+  border-radius: 15px;
+  background-color: rgba(255, 0, 0, 0.2);
+  background-color: red;
 }
 
 
