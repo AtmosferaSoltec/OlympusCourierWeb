@@ -1,0 +1,77 @@
+<form [formGroup]="formulario" (submit)="filtrar()">
+
+    <div class="input-group mb-3">
+        <span class="input-group-text"><mat-icon>assignment_ind</mat-icon></span>
+        <select class="form-select" formControlName="tipoDoc">
+            <option selected>Todos</option>
+            @for (item of listTipoDocumento; track $index) {
+            <option>{{item.detalle}}</option>
+            }
+        </select>
+        <span class="input-group-text ms-2"><mat-icon>badge</mat-icon></span>
+        <input type="text" class="form-control" placeholder="Documento" formControlName="doc">
+
+        <span class="input-group-text ms-2"><mat-icon>person</mat-icon></span>
+        <input type="text" class="form-control" placeholder="Nombre Legal" formControlName="nombres">
+
+        <div date-rangepicker class="flex items-center">
+            <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <mat-icon class="mat-18">calendar_month</mat-icon>
+                </div>
+                <input name="start" type="text"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Select date start">
+            </div>
+            <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <mat-icon class="mat-18">calendar_month</mat-icon>
+                    </div>
+                </div>
+                <input name="end" type="text"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Select date end">
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="input-group">
+
+        <span class="input-group-text"><mat-icon>groups</mat-icon></span>
+        <select class="form-select" formControlName="usuarios">
+            <option selected>Todos</option>
+            @for (item of listUsuario; track $index) {
+            <option>{{item.nombres}}</option>
+            }
+        </select>
+
+        <span class="input-group-text ms-2"><mat-icon>push_pin</mat-icon></span>
+        <select class="form-select" formControlName="distritos">
+            <option selected>Todos</option>
+            @for (item of listDistrito; track $index) {
+            <option>{{item.nombre}}</option>
+            }
+        </select>
+
+        <span class="input-group-text ms-2"><mat-icon>description</mat-icon></span>
+        <select class="form-select" formControlName="tipoComprobante">
+            <option selected>Todos</option>
+            <option>Boleta</option>
+            <option>Factura</option>
+            <option>Anulado</option>
+        </select>
+
+        <span class="input-group-text ms-2"><mat-icon>local_shipping</mat-icon></span>
+        <select class="form-select" formControlName="estado">
+            <option selected>Todos</option>
+            <option>Pendiente</option>
+            <option>Completado</option>
+            <option>Anulado</option>
+        </select>
+        <button type="submit" class="btn btn-primary ms-2">Buscar</button>
+    </div>
+</form>

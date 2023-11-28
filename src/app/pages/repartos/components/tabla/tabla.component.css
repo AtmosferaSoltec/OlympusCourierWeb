@@ -15,3 +15,15 @@ table td {
     font-size: 1rem;
     text-align: center;
 }
+
+
+.sin-repartos {
+    flex-direction: column;
+    display: flex;
+    margin: 50px auto;
+}
+
+.sin-repartos span {
+    color: #3f3f46;
+    text-align: center;
+}

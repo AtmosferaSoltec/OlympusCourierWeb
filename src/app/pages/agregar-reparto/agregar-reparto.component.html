@@ -1,5 +1,5 @@
 <div class="container mt-3">
-    
+
     <div class="d-flex align-items-center" style="color: var(--colorP1);">
         <button mat-icon-button class="align-items-center" (click)="back()">
             <mat-icon>arrow_back</mat-icon>
@@ -7,9 +7,9 @@
         <h2 class="mb-0">Nuevo Reparto</h2>
     </div>
 
-    <app-buscar-cliente-reparto (clienteEmit)="clienteEmit($event)"></app-buscar-cliente-reparto>
+    <app-buscar-cliente></app-buscar-cliente>
 
-    <app-tabla-items-reparto (listEmit)="listEmit($event)"></app-tabla-items-reparto>
+    <app-tabla-items></app-tabla-items>
 
 
 
@@ -42,6 +42,7 @@
     <div class="d-flex justify-content-end mt-3">
         <button type="button" (click)="cancel()" class="btn btn-secondary">Cancelar</button>
         &nbsp;
-        <button type="button" (click)="guardarReparto()" [disabled]="!formulario.valid" class="btn btn-primary">Guardar</button>
+        <button type="button" (click)="guardarReparto()" [disabled]="!formulario.valid"
+            class="btn btn-primary">Guardar</button>
     </div>
 </div>

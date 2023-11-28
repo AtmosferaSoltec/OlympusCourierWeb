@@ -88,9 +88,9 @@
     max-height: 200px;
     overflow-y: auto;
     width: 500px;
-  }
+}
 
-  .sugerencias .auto__completar li {
+.sugerencias .auto__completar li {
     font-size: 1.3rem;
     color: #ffffff;
     border-radius: 10px;
@@ -101,9 +101,9 @@
     margin-bottom: 1px;
     padding-bottom: 10px;
     z-index: 2;
-  }
+}
 
-  .sugerencias .auto__completar li:hover {
+.sugerencias .auto__completar li:hover {
     background-color: #0467a5;
     cursor: pointer;
-  }
+}

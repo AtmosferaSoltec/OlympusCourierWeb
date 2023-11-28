@@ -1,173 +1,48 @@
-
-.container {
-    margin-left: 50px;
-    margin-top: 80px;
-    padding-right: 20px;
-
-}
-
-.date-input {
+.btn-actions {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: row-reverse;
 }
 
-.container__1 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    height: 80px;
-
-}
-
-
-
-.btn__navbar {
-    margin-top: -18px;
-    margin-left: -25px;
-}
-
-label {
-    font-family: metropolis;
-    color: #808080;
-    font-size: 17px;
-    width: 100px;
-    font-weight: 600;
-}
-
-
-
-.input{
-    width: 408px;
-    padding: 15px;
-    border: none;
-    background-color: #F1F1F1;
-    font-size: 16px;
-    border-radius: 20px;
-}
-
-/* Estilo para el contenedor del select */
-.select-container {
-  position: relative;
-  width: 400px;
-  height: 53px;
-  border-radius: 15px;
-  overflow: hidden;
-  background-color: #f4f4f5;
-}
-
-/* Estilo para el select */
-select {
-  width: 100%;
-  height: 100%;
-  border: none;
-  padding: 1.25rem;
-  background-color: transparent;
-  font-size: 1.1rem;
-  color: #808080;
-  font-family: 'Metropolis', sans-serif;
-  appearance: none;
-  cursor: pointer;
-}
-/* Estilo para las opciones del select */
-select option {
-    padding: 10px 0; /* Ajusta el espaciado vertical según tus necesidades */
-  }
-  
-
-/* Estilo para el ícono de clase "arrow-more" */
-
-
-/* Estilo para el borde cuando el select está enfocado */
-select:focus {
-  outline: none;
-  border: 2px solid #047CC4;
-}
-
-
-
-.input__search input:focus{
-    outline: none;
-    border: 2px solid #047CC4;
-  }
-  
-/* Estilos para el ícono de la lupa */
-
-.input__search {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 40px;
-}
-
-.search-input {
-    width: 460px;
-    padding: 15px;
-    border: none;
-    border-radius: 20px;
-    background-color: #F1F1F1;
-    font-size: 16px;
-}
-
-.icon__search {
-    display: flex;
-    background-color: #047CC4;
-    border-radius: 13px;
-    width: 47px;
-    height: 45px;
-    justify-content: center;
-    align-items: center;
-}
-
-.icon__cliente {
-    display: flex;
-    background-color: #047CC4;
-    border-radius: 13px;
-    width: 37px;
-    height: 35px;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.search {
-    font-size: 1.8rem;
-    color: white;
-    position: relative;
-    left: -1px;
-    top: 2px;
-}
-
-
-
-
-
-.container__input input[type="text"] {
-    font-size: 16px;
-    /* Tamaño de fuente */
-    color: #3f3f46;
-    /* Color del texto */
-
-
-
-}
-
-.container__input input::placeholder {
-    color: #808080;
-    font-family: metropolis;
-    font-size: 16px;
-}
-
-
-
-
-
-
-.icon_btn {
-    background-color: #f8f8f8;
+.btn-actions mat-icon {
     color: var(--colorP1);
 }
 
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.title h1 {
+    margin: 0;
+    color: var(--colorP1);
+    font-weight: 500;
+}
 
 
+.btn {
+    background-color: var(--colorP1);
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    text-decoration: none;
+    gap: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+}
+
+.btn:hover {
+    color: var(--colorP1);
+    background-color: white;
+}
+
+.btn:active {
+    background-color: var(--colorP1);
+    color: white;
+    border: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}

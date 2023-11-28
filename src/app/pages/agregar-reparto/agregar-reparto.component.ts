@@ -1,23 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Cliente } from '../../models/cliente';
 import { ItemReparto } from '../../models/item-reparto';
-import { ClienteService } from '../../services/cliente.service';
 import { RepartoService } from '../../services/reparto.service';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { Reparto } from '../../models/reparto';
 import Swal from 'sweetalert2';
-import { BuscarClienteRepartoComponent } from '../../components/buscar-cliente-reparto/buscar-cliente-reparto.component';
-import { TablaItemsRepartoComponent } from '../../components/tabla-items-reparto/tabla-items-reparto.component';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { BuscarClienteComponent } from './components/buscar-cliente/buscar-cliente.component';
+import { TablaItemsComponent } from './components/tabla-items/tabla-items.component';
+import { AgregarRepartoService } from './agregar-reparto.service';
 @Component({
   selector: 'app-agregar-reparto',
   standalone: true,
-  imports: [CommonModule, BuscarClienteRepartoComponent, TablaItemsRepartoComponent, MatIconModule, MatButtonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule, TablaItemsComponent, MatIconModule,
+    MatButtonModule, ReactiveFormsModule, BuscarClienteComponent
+  ],
   templateUrl: './agregar-reparto.component.html',
   styleUrl: './agregar-reparto.component.css'
 })
@@ -25,10 +27,8 @@ export class AgregarRepartoComponent {
 
   formulario: FormGroup;
 
-  cliente: Cliente | undefined;
-  listItemRepartos: ItemReparto[] = []
-
   private repartoService = inject(RepartoService);
+  private service = inject(AgregarRepartoService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
 
@@ -39,24 +39,18 @@ export class AgregarRepartoComponent {
     })
   }
 
-  clienteEmit(newCliente: Cliente | undefined) {
-    this.cliente = newCliente;
-  }
 
   displayFn(option: any): string {
     return option && option.doc ? option.doc : '';
   }
 
-  listEmit(listItemRepartos: ItemReparto[]) {
-    this.listItemRepartos = listItemRepartos;
-  }
 
-  back(){
+  back() {
     this.router.navigateByUrl('/menu/repartos');
   }
 
   cancel() {
-    if (this.cliente && this.listItemRepartos) {
+    if (this.service.cliente && this.service.listItemRepartos) {
       Swal.fire({
         title: '¡Alerta de Seguridad!',
         text: '¿Estás seguro de que deseas regresar a la pantalla anterior? Todos los datos ingresados se perderán.',
@@ -78,7 +72,7 @@ export class AgregarRepartoComponent {
 
 
   getTotal() {
-    return this.listItemRepartos.reduce((total, item) => total + item.precio, 0);
+    return this.service.listItemRepartos.reduce((total, item) => total + item.precio, 0);
   }
 
   async guardarReparto() {
@@ -93,15 +87,15 @@ export class AgregarRepartoComponent {
         toast.addEventListener('mouseleave', Swal.resumeTimer)
       }
     })
-    if (this.cliente?.id != undefined) {
-      if (this.listItemRepartos.length > 0) {
+    if (this.service.cliente?.id != undefined) {
+      if (this.service.listItemRepartos.length > 0) {
 
         const reparto: Reparto = {
           anotacion: this.formulario.get('anotacion')?.value || '',
           clave: this.formulario.get('clave')?.value || '1234',
           estado: 'P',
-          id_cliente: this.cliente.id,
-          items: this.listItemRepartos,
+          id_cliente: this.service.cliente.id,
+          items: this.service.listItemRepartos,
         }
         const res = await this.repartoService.insert(reparto)
         if (res) {

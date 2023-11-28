@@ -1,21 +1,22 @@
 import { Component, EventEmitter, Output, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ItemReparto } from '../../models/item-reparto';
-import Swal from 'sweetalert2';
-import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogAddItemRepartoComponent } from '../dialog-add-item-reparto/dialog-add-item-reparto.component';
-import { MatIconModule } from '@angular/material/icon';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import { DialogAddItemRepartoComponent } from '../../../../components/dialog-add-item-reparto/dialog-add-item-reparto.component';
+import { ItemReparto } from '../../../../models/item-reparto';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { AgregarRepartoService } from '../../agregar-reparto.service';
 
 @Component({
-  selector: 'app-tabla-items-reparto',
+  selector: 'app-tabla-items',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatTableModule, MatButtonModule],
-  templateUrl: './tabla-items-reparto.component.html',
-  styleUrl: './tabla-items-reparto.component.css'
+  imports: [CommonModule, MatIconModule, MatTableModule, MatButtonModule, MatTooltipModule],
+  templateUrl: './tabla-items.component.html',
+  styleUrl: './tabla-items.component.css'
 })
-export class TablaItemsRepartoComponent {
+export class TablaItemsComponent {
   columnas: string[] = [
     'guia',
     'tipo',
@@ -25,10 +26,9 @@ export class TablaItemsRepartoComponent {
     'act',
   ];
 
-  listItemRepartos: ItemReparto[] = [];
-  @Output() listEmit = new EventEmitter<ItemReparto[]>();
   @ViewChild(MatTable) table!: MatTable<ItemReparto>;
 
+  private service = inject(AgregarRepartoService);
 
   /** Añadir Item Reparto*/
   openDialogAddItemReparto() {
@@ -38,9 +38,8 @@ export class TablaItemsRepartoComponent {
 
     dialogRef.afterClosed().subscribe((data: ItemReparto) => {
       if (data) {
-        this.listItemRepartos.push(data)
+        this.service.listItemRepartos.push(data)
         this.table.renderRows();
-        this.listEmit.emit(this.listItemRepartos)
       }
     });
   }
@@ -56,22 +55,20 @@ export class TablaItemsRepartoComponent {
 
     dialogRef.afterClosed().subscribe((data: ItemReparto) => {
       if (data) {
-        const index = this.listItemRepartos.findIndex((element) => element === item);
+        const index = this.service.listItemRepartos.findIndex((element) => element === item);
         if (index !== -1) {
-          this.listItemRepartos[index] = data;
+          this.service.listItemRepartos[index] = data;
           this.table.renderRows();
-          this.listEmit.emit(this.listItemRepartos)
         }
       }
     });
   }
 
   deleteItemReparto(item: ItemReparto) {
-    const index = this.listItemRepartos.indexOf(item);
+    const index = this.service.listItemRepartos.indexOf(item);
     if (index !== -1) {
-      this.listItemRepartos.splice(index, 1);
+      this.service.listItemRepartos.splice(index, 1);
       this.table.renderRows();
-      this.listEmit.emit(this.listItemRepartos)
     }
   }
 }
