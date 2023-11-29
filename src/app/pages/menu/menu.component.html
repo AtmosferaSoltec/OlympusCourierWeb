@@ -1,6 +1,4 @@
-<div class="container">
-  <app-drawer (onToggleSideNav)="onCollapsedChange($event)"></app-drawer>
-  <div class="content" [ngClass]="{'close': collapsed, 'open': !collapsed}">
-      <router-outlet></router-outlet>
-  </div>
-</div>
+
+<app-sidenav></app-sidenav>
+<app-body [collapsed]="appService.isCollapsed">
+</app-body>

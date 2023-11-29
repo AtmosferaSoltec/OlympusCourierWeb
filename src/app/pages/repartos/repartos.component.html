@@ -1,22 +1,24 @@
 <div class="container">
 
-    <div class="container__fecha">
+    <div class="btn-actions">
 
-        <div class="btn__icon__user d-flex justify-content-between">
+        <button mat-icon-button class="icon_btn" matTooltip="Perfil">
+            <mat-icon>person_outline</mat-icon>
+        </button>
 
-            <div class="d-flex">
-                <button mat-icon-button matTooltip="Exportar">
-                    <mat-icon style="color: #047CC4;">save_alt</mat-icon>
-                </button>
-                <button mat-icon-button matTooltip="Perfil">
-                    <mat-icon style="color: #047CC4;">person_outline</mat-icon>
-                </button>
-            </div>
-        </div>
-
+        <button mat-icon-button class="icon_btn" matTooltip="Exportar">
+            <mat-icon>save_alt</mat-icon>
+        </button>
 
     </div>
 
+    <div class="title">
+        <h1>Repartos</h1>
+        <a (click)="toAgregar()" class="btn">
+            <mat-icon>add</mat-icon>
+            Agregar
+        </a>
+    </div>
     <!--
     <app-filtros></app-filtros>
     -->

@@ -9,12 +9,12 @@ import { AgregarRepartoComponent } from './pages/agregar-reparto/agregar-reparto
 import { authGuard } from './guard/auth.guard';
 import { DetalleRepartoComponent } from './pages/detalle-reparto/detalle-reparto.component';
 import { GenerarComprobanteComponent } from './pages/generar-comprobante/generar-comprobante.component';
-import { DashboardComponent } from './drawer/dashboard/dashboard.component';
-import { ProductsComponent } from './drawer/products/products.component';
-import { StatisticsComponent } from './drawer/statistics/statistics.component';
+import { UsuariosComponent } from './pages/panel-admin/components/usuarios/usuarios.component';
+import { PaquetesComponent } from './pages/panel-admin/components/paquetes/paquetes.component';
+import { DestinosComponent } from './pages/panel-admin/components/destinos/destinos.component';
 
 export const routes: Routes = [
-    /*{ path: 'login', component: LoginComponent },
+    { path: 'login', component: LoginComponent },
     {
         path: 'menu', component: MenuComponent,
         children: [
@@ -23,16 +23,19 @@ export const routes: Routes = [
             { path: 'generar-comprobante', component: GenerarComprobanteComponent },
             { path: 'clientes', component: ClientesComponent },
             { path: 'comprobantes', component: ComprobantesComponent },
-            { path: 'panel-admin', component: PanelAdminComponent },
+            {
+                path: 'panel-admin',
+                component: PanelAdminComponent,
+                children: [
+                    { path: 'usuarios', component: UsuariosComponent },
+                    { path: 'destinos', component: DestinosComponent },
+                    { path: 'paquetes', component: PaquetesComponent }
+                ]
+            },
             { path: 'agregar-reparto', component: AgregarRepartoComponent },
         ],
         canActivate: [authGuard]
     },
     { path: '**', redirectTo: 'login' },
-    */
 
-
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'products', component: ProductsComponent },
-    { path: 'statistics', component: StatisticsComponent }
 ];

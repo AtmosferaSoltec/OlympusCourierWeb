@@ -1,9 +1,9 @@
 <div class="sidenav"
     [ngClass]="{'sidenav-onCollapsed': !appService.isCollapsed, 'sidenav-offCollapsed': appService.isCollapsed}">
     <div class="logo-container">
-        <button class="logo" (click)="toggle()">A</button>
+        <button class="logo" (click)="toggle()">O</button>
         @if (appService.isCollapsed) {
-        <div class="logo-text">Angular</div>
+        <div class="logo-text">Olympus</div>
         }
         @if (appService.isCollapsed) {
         <button class="btn-close" (click)="appService.isCollapsed = false">
@@ -13,6 +13,7 @@
     </div>
     <ul class="sidenav-nav">
         @for (item of navData; track item) {
+        @if (item.activo) {
         <li class="sidenav-nav-item">
             <a class="sidenav-nav-link" (click)="navegar(item.routerLink)">
                 <i class="sidenav-link-icon" [class]="item.icon"></i>
@@ -24,5 +25,20 @@
             </a>
         </li>
         }
+        }
     </ul>
+
+    <div class="container__admin">
+        <div class="admin">
+            <span class="icon__user"><img src="../../../../assets/user.png" alt=""></span>
+            <div class="admin__nombre">
+                <label class="admin__title">{{getRol()}}</label>
+                <label class="admin__nombre">{{getNombre()}}</label>
+            </div>
+        </div>
+        <button mat-mini-fab style="background-color:white; color:  #047CC4;">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <!-- <div class="toggle" (click)="toggleNavigation()"></div>-->
+    </div>
 </div>

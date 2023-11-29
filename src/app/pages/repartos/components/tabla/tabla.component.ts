@@ -32,7 +32,6 @@ export class TablaComponent {
     'act',
   ];
 
-  router = inject(Router);
 
 
   repartoService = inject(RepartoService);
@@ -71,10 +70,8 @@ export class TablaComponent {
         return 'Sin Valor';
     }
   }
-  agregar() {
-    this.router.navigateByUrl('/menu/agregar-reparto')
-  }
 
+  router = inject(Router);
 
 
 

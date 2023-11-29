@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-statistics',
+  selector: 'app-destinos',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './statistics.component.html',
-  styleUrl: './statistics.component.css'
+  templateUrl: './destinos.component.html',
+  styleUrl: './destinos.component.css'
 })
-export class StatisticsComponent {
+export class DestinosComponent {
 
 }

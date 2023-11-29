@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-media',
+  selector: 'app-usuarios',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './media.component.html',
-  styleUrl: './media.component.css'
+  templateUrl: './usuarios.component.html',
+  styleUrl: './usuarios.component.css'
 })
-export class MediaComponent {
+export class UsuariosComponent {
 
 }

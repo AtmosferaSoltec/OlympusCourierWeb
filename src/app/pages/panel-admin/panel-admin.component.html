@@ -1,1 +1,9 @@
-<p>panel-admin works!</p>
+<h1>Panel Administrativo</h1>
+
+@for (item of data; track $index) {
+
+    <div class="card" [ngClass]="item.color" (click)="navegar(item.url)">
+        <mat-icon>{{item.icon}}</mat-icon>
+        <span>{{item.label}}</span>
+    </div>
+}
