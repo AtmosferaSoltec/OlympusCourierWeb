@@ -9,9 +9,12 @@ import { AgregarRepartoComponent } from './pages/agregar-reparto/agregar-reparto
 import { authGuard } from './guard/auth.guard';
 import { DetalleRepartoComponent } from './pages/detalle-reparto/detalle-reparto.component';
 import { GenerarComprobanteComponent } from './pages/generar-comprobante/generar-comprobante.component';
+import { DashboardComponent } from './drawer/dashboard/dashboard.component';
+import { ProductsComponent } from './drawer/products/products.component';
+import { StatisticsComponent } from './drawer/statistics/statistics.component';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginComponent },
+    /*{ path: 'login', component: LoginComponent },
     {
         path: 'menu', component: MenuComponent,
         children: [
@@ -25,5 +28,11 @@ export const routes: Routes = [
         ],
         canActivate: [authGuard]
     },
-    { path: '**', redirectTo: 'login' }
+    { path: '**', redirectTo: 'login' },
+    */
+
+
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'products', component: ProductsComponent },
+    { path: 'statistics', component: StatisticsComponent }
 ];

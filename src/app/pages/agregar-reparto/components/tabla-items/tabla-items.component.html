@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="listItemRepartos">
+<table mat-table [dataSource]="service.listItemRepartos">
     <ng-container matColumnDef="guia">
         <th mat-header-cell *matHeaderCellDef>N° Guia</th>
         <td mat-cell *matCellDef="let item">
@@ -48,7 +48,7 @@
 
 
 <div class="d-flex justify-content-center mt-3 mb-3">
-    @if (listItemRepartos.length == 0) {
+    @if (service.listItemRepartos.length == 0) {
     <div>
         Sin Items Agregados
     </div>

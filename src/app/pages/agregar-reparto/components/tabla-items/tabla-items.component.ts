@@ -28,7 +28,7 @@ export class TablaItemsComponent {
 
   @ViewChild(MatTable) table!: MatTable<ItemReparto>;
 
-  private service = inject(AgregarRepartoService);
+  service = inject(AgregarRepartoService);
 
   /** Añadir Item Reparto*/
   openDialogAddItemReparto() {

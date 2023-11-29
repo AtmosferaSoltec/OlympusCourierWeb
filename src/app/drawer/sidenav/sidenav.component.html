@@ -1,0 +1,28 @@
+<div class="sidenav"
+    [ngClass]="{'sidenav-onCollapsed': !appService.isCollapsed, 'sidenav-offCollapsed': appService.isCollapsed}">
+    <div class="logo-container">
+        <button class="logo" (click)="toggle()">A</button>
+        @if (appService.isCollapsed) {
+        <div class="logo-text">Angular</div>
+        }
+        @if (appService.isCollapsed) {
+        <button class="btn-close" (click)="appService.isCollapsed = false">
+            <i class="fal fa-times close-icon"></i>
+        </button>
+        }
+    </div>
+    <ul class="sidenav-nav">
+        @for (item of navData; track item) {
+        <li class="sidenav-nav-item">
+            <a class="sidenav-nav-link" (click)="navegar(item.routerLink)">
+                <i class="sidenav-link-icon" [class]="item.icon"></i>
+                @if (appService.isCollapsed) {
+                <span class="sidenav-link-text">
+                    {{item.label}}
+                </span>
+                }
+            </a>
+        </li>
+        }
+    </ul>
+</div>

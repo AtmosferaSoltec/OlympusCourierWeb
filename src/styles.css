@@ -6,14 +6,9 @@
     box-sizing: border-box;
 }
 
-html,
 body {
-    height: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: metropolis
+    position: absolute;
+    font-family: 'Metropolis', sans-serif;
 }
 
 :root {
@@ -27,12 +22,22 @@ body {
     --colorBox: #F5F7FC;
 }
 
-html,
-body {
-    height: 100%;
-}
+.card {
+    display: flex;
+    flex-direction: column;
+    border-radius: .5rem;
+    background-color: #fff;
+    margin: 1.25rem 0 1.25rem 0;
+    box-shadow: 0 .25rem .5rem #e6edef;
 
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    .card-head {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #edf1f7;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .card-body {
+        padding: 1rem 1.5rem; 
+    }
 }
