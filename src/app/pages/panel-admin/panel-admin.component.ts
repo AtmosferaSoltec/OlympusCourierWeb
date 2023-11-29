@@ -1,12 +1,21 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { MatTabsModule } from '@angular/material/tabs';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { PaquetesComponent } from './components/paquetes/paquetes.component';
+import { DestinosComponent } from './components/destinos/destinos.component';
 
 @Component({
   selector: 'app-panel-admin',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [
+    CommonModule, MatIconModule,
+    RouterOutlet, MatTabsModule,
+    UsuariosComponent, PaquetesComponent,
+    DestinosComponent
+  ],
   templateUrl: './panel-admin.component.html',
   styleUrl: './panel-admin.component.css'
 })
@@ -36,6 +45,6 @@ export class PanelAdminComponent {
   private router = inject(Router)
 
   navegar(url: string) {
-    this.router.navigate(['/panel-admin', url])
+    this.router.navigate(['menu', 'panel-admin', url])
   }
 }

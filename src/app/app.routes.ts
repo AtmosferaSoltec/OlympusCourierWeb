@@ -17,23 +17,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     {
         path: 'menu', component: MenuComponent,
-        children: [
-            { path: 'repartos', component: RepartosComponent },
-            { path: 'detalle-reparto', component: DetalleRepartoComponent },
-            { path: 'generar-comprobante', component: GenerarComprobanteComponent },
-            { path: 'clientes', component: ClientesComponent },
-            { path: 'comprobantes', component: ComprobantesComponent },
-            {
-                path: 'panel-admin',
-                component: PanelAdminComponent,
-                children: [
-                    { path: 'usuarios', component: UsuariosComponent },
-                    { path: 'destinos', component: DestinosComponent },
-                    { path: 'paquetes', component: PaquetesComponent }
-                ]
-            },
-            { path: 'agregar-reparto', component: AgregarRepartoComponent },
-        ],
+        loadChildren: () => import('./pages/menu/menu.routes'),
         canActivate: [authGuard]
     },
     { path: '**', redirectTo: 'login' },

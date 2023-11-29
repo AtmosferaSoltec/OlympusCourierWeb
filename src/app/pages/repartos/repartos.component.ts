@@ -29,7 +29,6 @@ export class RepartosComponent {
 
   toAgregar() {
     this.router.navigateByUrl('/menu/agregar-reparto')
-
   }
 
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ClienteService } from './cliente.service';
 import { environment } from '../../environments/environment.development';
+import { ItemReparto } from '../models/item-reparto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class RepartoService {
   get(id: number) {
     return this.http.get(`${this.url}/${id}`);
   }
-  
+
   listarRepartos(): Observable<Reparto[]> {
     return this.http.get<any>(this.url);
   }
@@ -53,21 +54,10 @@ export class RepartoService {
     }
   }*/
 
-  async insert(item: Reparto): Promise<boolean> {
-    return true
-    /*
-    try {
-      const col = collection(this.fb, 'Reparto');
-      await addDoc(col, item);
-      return true;
-    } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al insertar',
-        text: 'Hubo un problema al insertar el documento. Por favor, inténtelo de nuevo más tarde.',
+  insert(
+    body: any
+  ) {
+    return this.http.post(this.url, body)
 
-      })
-      return false;
-    }*/
   }
 }

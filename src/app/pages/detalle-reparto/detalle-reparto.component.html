@@ -1,7 +1,7 @@
 <div class="cuerpo">
     <div class="uno border-right">
         <div class="d-flex align-items-center">
-            <button mat-icon-button class="align-items-center">
+            <button mat-icon-button class="align-items-center" (click)="back()">
                 <mat-icon>arrow_back</mat-icon>
             </button>
             <h2 class="ml-2 mb-0">Detalle de Reparto</h2>
@@ -10,46 +10,46 @@
         <div class="container_title">
             <div class="container_title_content">
                 <span>N° Reparto</span>
-                #00005
+                #000{{service.reparto?.id}}
             </div>
             <div class="container_title_content">
                 <span>Usuario:</span>
-                Marcos Quispe C.
+                {{service.reparto?.usuario?.nombres}}
             </div>
         </div>
 
         <div class="item">
             <span class="title">Documento:</span>
-            <span class="valor">74455518</span>
+            <span class="valor">{{service.reparto?.cliente?.documento}}</span>
         </div>
 
         <div class="item">
             <span class="title">Cliente:</span>
-            <span class="valor">Joel Maldonado Fernandez</span>
+            <span class="valor">{{service.reparto?.cliente?.nombres}}</span>
         </div>
         <div class="item">
             <span class="title">Teléfono:</span>
-            <span class="valor">936 416 623</span>
+            <span class="valor">{{service.reparto?.cliente?.telefono}}</span>
         </div>
         <div class="item">
             <span class="title">Distrito:</span>
-            <span class="valor">Pueblo Nuevo</span>
+            <span class="valor">{{service.reparto?.cliente?.distrito}}</span>
         </div>
         <div class="item">
             <span class="title">Dirección:</span>
-            <span class="valor">Prol. Santa Rosa 123</span>
+            <span class="valor">{{service.reparto?.cliente?.direc}}</span>
         </div>
         <div class="item">
             <span class="title">Referencia:</span>
-            <span class="valor">Cerca a plaza de armas</span>
+            <span class="valor">{{service.reparto?.cliente?.referencia}}</span>
         </div>
         <div class="item">
             <span class="title">Fecha Creada:</span>
-            <span class="valor">16/11/2023 - 04:30pm</span>
+            <span class="valor">{{service.reparto?.fecha_creacion}}</span>
         </div>
         <div class="item">
             <span class="title">Fecha Entregada:</span>
-            <span class="valor">18/11/2023 - 04:30pm</span>
+            <span class="valor">{{service.reparto?.fecha_entrega}}</span>
         </div>
 
         <hr style="margin-top: 30px; margin-bottom: 30px;">

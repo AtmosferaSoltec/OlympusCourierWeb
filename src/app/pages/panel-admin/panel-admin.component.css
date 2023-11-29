@@ -1,45 +1,4 @@
-.card {
-    width: 100%;
-    height: 100%;
-    max-width: 340px;
-    max-height: 230px;
-    color: white;
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    align-items: end;
-    font-size: 20px;
-    padding: 0 20px 20px 0;
-    cursor: pointer;
-    gap: 10px;
-    border-radius: 20px;
-    box-shadow: 0.4rem 0 0.4rem 0 gray;
-
-    transition: 200ms ease;
-}
-
-.green {
-    background-color: #40DB62;
-
-}
-
-.green:hover {
-    background-color: #25B845;
-}
-
-.blue {
-    background-color: #05ACD7;
-}
-
-.blue:hover {
-    background-color: #078EB1;
-
-}
-
-.yeelow {
-    background-color: #FFBC0D;
-}
-
-.yeelow:hover {
-    background-color: #F9A709;
+h1 {
+    color: var(--colorP1);
+    font-weight: 500;
 }

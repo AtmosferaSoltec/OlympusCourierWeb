@@ -1,9 +1,24 @@
 <h1>Panel Administrativo</h1>
-
-@for (item of data; track $index) {
-
-    <div class="card" [ngClass]="item.color" (click)="navegar(item.url)">
-        <mat-icon>{{item.icon}}</mat-icon>
-        <span>{{item.label}}</span>
-    </div>
-}
+<mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>person</mat-icon>
+            Usuarios
+        </ng-template>
+        <app-usuarios></app-usuarios>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>maps</mat-icon>
+            Destinos
+        </ng-template>
+        <app-destinos></app-destinos>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>description</mat-icon>
+            Paquetes
+        </ng-template>
+        <app-paquetes></app-paquetes>
+    </mat-tab>
+</mat-tab-group>

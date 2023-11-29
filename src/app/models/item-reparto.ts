@@ -1,8 +1,8 @@
 export interface ItemReparto {
-    id?:number;
-    nGuia: string
-    cat: string
-    descrip: string
-    precio: number
-    cant: number
+    id?: number;
+    num_guia: string;
+    id_tipo_paquete: number;
+    detalle: string;
+    precio: number;
+    cant: number;
 }

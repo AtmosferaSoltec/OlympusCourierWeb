@@ -17,29 +17,28 @@ export class SidenavComponent {
   navData = [
     {
       routerLink: 'repartos',
-      icon: 'fa-solid fa-box-open',
+      icon: 'local_shipping',
       label: 'Repartos',
       activo: true
     },
     {
       routerLink: 'clientes',
-      icon: 'fa-solid fa-user-group',
+      icon: 'group',
       label: 'Clientes',
       activo: true
     },
     {
       routerLink: 'comprobantes',
-      icon: 'fa-solid fa-file-lines',
+      icon: 'description',
       label: 'Comprobantes',
-      activo: true
+      activo: false
     },
     {
       routerLink: 'panel-admin',
-      icon: 'fa-solid fa-hammer',
+      icon: 'admin_panel_settings',
       label: 'Panel Admin',
       activo: false
     }
-
   ]
 
   router = inject(Router)
@@ -71,13 +70,18 @@ export class SidenavComponent {
         next: (data: any) => {
           if (data && data.isSuccess) {
             this.usuarioService.usuario = data.data;
-            if(this.usuarioService.usuario?.cod_rol != 'U'){
+            if (this.usuarioService.usuario?.cod_rol != 'U') {
               this.navData[3].activo = true
             }
           }
         }
       })
     }
+  }
+
+  logout(){
+    localStorage.removeItem('idUser');
+    this.router.navigate(['login']);
   }
 
   getRol() {

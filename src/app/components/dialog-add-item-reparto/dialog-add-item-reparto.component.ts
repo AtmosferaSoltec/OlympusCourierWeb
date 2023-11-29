@@ -27,13 +27,11 @@ export class DialogAddItemRepartoComponent {
     private fb: FormBuilder
   ) {
 
-    console.log(data?.cat);
-
 
     this.formulario = this.fb.group({
-      nGuia: [data?.nGuia || '', []],
-      tipoPaquete: [data?.cat || 's', [Validators.required]],
-      descrip: [data?.descrip || '', []],
+      nGuia: [data?.num_guia || '', []],
+      tipoPaquete: [data?.id_tipo_paquete || 0, [Validators.required]],
+      descrip: [data?.detalle || '', []],
       cant: [data?.cant || '', [Validators.required, Validators.min(1)]],
       precio: [data?.precio || '', [Validators.required, Validators.min(1)]]
     })
@@ -42,7 +40,7 @@ export class DialogAddItemRepartoComponent {
       next: (data: any) => {
         if (data && data.isSuccess) {
           this.listTipoPaquete = data.data;
-          if (!this.data?.cat && this.listTipoPaquete?.length > 0) {
+          if (!this.data?.id_tipo_paquete && this.listTipoPaquete?.length > 0) {
             this.formulario.get('tipoPaquete')?.setValue(this.listTipoPaquete[0].id)
           }
         } else {
@@ -66,9 +64,9 @@ export class DialogAddItemRepartoComponent {
   onAceptar() {
 
     const itemReparto: ItemReparto = {
-      nGuia: this.formulario.get('nGuia')?.value || 'Sin Guia',
-      cat: this.formulario.get('tipoPaquete')?.value || '',
-      descrip: this.formulario.get('descrip')?.value || 'Sin Descripción',
+      num_guia: this.formulario.get('nGuia')?.value || 'Sin Guia',
+      id_tipo_paquete: this.formulario.get('tipoPaquete')?.value || '',
+      detalle: this.formulario.get('descrip')?.value || 'Sin Descripción',
       precio: this.formulario.get('precio')?.value || 0.0,
       cant: this.formulario.get('cant')?.value || 0,
     };

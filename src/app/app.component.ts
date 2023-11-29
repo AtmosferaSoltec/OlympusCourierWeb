@@ -1,9 +1,6 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { SidenavComponent } from './drawer/sidenav/sidenav.component';
-import { BodyComponent } from './drawer/body/body.component';
-import { AppService } from './app.service';
 
 interface SideNavToggle {
   screenWidth: number;

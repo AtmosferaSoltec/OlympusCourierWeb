@@ -87,20 +87,32 @@ export class AgregarRepartoComponent {
         toast.addEventListener('mouseleave', Swal.resumeTimer)
       }
     })
+
     if (this.service.cliente?.id != undefined) {
       if (this.service.listItemRepartos.length > 0) {
-
-        const reparto: Reparto = {
+        
+        const body = {
           anotacion: this.formulario.get('anotacion')?.value || '',
           clave: this.formulario.get('clave')?.value || '1234',
-          estado: 'P',
           id_cliente: this.service.cliente.id,
-          items: this.service.listItemRepartos,
+          id_usuario: localStorage.getItem('idUser'),
+          items: this.service.listItemRepartos
         }
-        const res = await this.repartoService.insert(reparto)
-        if (res) {
-          this.router.navigate(['../'])
-        }
+
+        this.repartoService.insert(body).subscribe({
+          next: (data: any) => {
+            if (data && data.isSuccess) {
+              this.service.reset()
+              this.router.navigate(['../'])
+            } else {
+              console.log(data?.mensaje || 'Error al insertar');
+
+            }
+          },
+          error: (err) => {
+            console.log(err)
+          }
+        })
       } else {
         toast.fire({
           icon: 'question',

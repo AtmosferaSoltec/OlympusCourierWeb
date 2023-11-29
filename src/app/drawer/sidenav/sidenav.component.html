@@ -7,7 +7,7 @@
         }
         @if (appService.isCollapsed) {
         <button class="btn-close" (click)="appService.isCollapsed = false">
-            <i class="fal fa-times close-icon"></i>
+            <mat-icon>close</mat-icon>
         </button>
         }
     </div>
@@ -16,7 +16,7 @@
         @if (item.activo) {
         <li class="sidenav-nav-item">
             <a class="sidenav-nav-link" (click)="navegar(item.routerLink)">
-                <i class="sidenav-link-icon" [class]="item.icon"></i>
+                <mat-icon class="sidenav-link-icon">{{item.icon}}</mat-icon>
                 @if (appService.isCollapsed) {
                 <span class="sidenav-link-text">
                     {{item.label}}
@@ -26,7 +26,20 @@
         </li>
         }
         }
+        
+        <li class="sidenav-nav-item">
+            <a class="sidenav-nav-link" (click)="logout()">
+                <mat-icon class="sidenav-link-icon">logout</mat-icon>
+                @if (appService.isCollapsed) {
+                <span class="sidenav-link-text">
+                    Cerrar Sesión
+                </span>
+                }
+            </a>
+        </li>
     </ul>
+
+    {{getRol()}}
 
     <div class="container__admin">
         <div class="admin">

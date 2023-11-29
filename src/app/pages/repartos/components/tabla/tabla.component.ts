@@ -83,8 +83,8 @@ export class TablaComponent {
     }
   }
 
-  openDetalle() {
-    this.router.navigateByUrl('/menu/detalle-reparto')
+  toDetalle(id:number) {
+    this.router.navigate(['/menu/detalle-reparto', id]);
   }
 
   generarComprobante() {

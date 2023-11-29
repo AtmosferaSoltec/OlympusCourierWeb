@@ -9,6 +9,12 @@ export class AgregarRepartoService {
 
   listItemRepartos: ItemReparto[] = []
   cliente: Cliente | null = null
+
   constructor() { }
+
+  reset() {
+    this.listItemRepartos = [];
+    this.cliente = null;
+  }
 
 }

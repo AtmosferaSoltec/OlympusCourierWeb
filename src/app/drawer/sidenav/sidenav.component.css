@@ -43,9 +43,10 @@
             background-color: transparent;
             border: none;
 
-            .fa-times {
+            mat-icon {
                 color: white;
                 font-size: 24px;
+
             }
         }
     }
