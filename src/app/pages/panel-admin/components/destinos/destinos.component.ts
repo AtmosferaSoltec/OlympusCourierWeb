@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PanelAdminService } from '../../panel-admin.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Distrito } from '../../../../models/distrito';
 import { DialogDistritosComponent } from '../dialogs/dialog-distritos/dialog-distritos.component';
 import Swal from 'sweetalert2';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-destinos',
@@ -19,7 +20,19 @@ import Swal from 'sweetalert2';
 export class DestinosComponent {
 
   panelAdminService = inject(PanelAdminService)
+
   dialog = inject(MatDialog)
+
+  onInputChange(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    if (inputValue.length > 0) {
+      this.panelAdminService.listDistritos = this.panelAdminService.listDistritosTotal.filter(objeto =>
+        objeto.nombre.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    } else {
+      this.panelAdminService.listDistritos = this.panelAdminService.listDistritosTotal;
+    }
+  }
 
   openDialog(item: Distrito | null = null) {
     const dialogRef = this.dialog.open(DialogDistritosComponent, {
@@ -33,7 +46,7 @@ export class DestinosComponent {
 
   }
 
-  eliminar(item: Distrito) {
+  eliminar(item: Distrito, estado: string) {
     Swal.fire({
       title: "¿Estas seguro?",
       text: "Se eliminara este distrito!",

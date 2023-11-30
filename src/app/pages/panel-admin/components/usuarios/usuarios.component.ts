@@ -21,6 +21,17 @@ export class UsuariosComponent {
   panelAdminService = inject(PanelAdminService)
   dialog = inject(MatDialog)
 
+  onInputChange(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    if (inputValue.length > 0) {
+      this.panelAdminService.listUsuarios = this.panelAdminService.listUsuariosTotal.filter(objeto =>
+        objeto.nombres.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    } else {
+      this.panelAdminService.listUsuarios = this.panelAdminService.listUsuariosTotal;
+    }
+  }
+
   openDialog(item: Usuario | undefined = undefined) {
 
     const dialogRef = this.dialog.open(DialogUsuarioComponent, {
@@ -34,7 +45,7 @@ export class UsuariosComponent {
 
   }
 
-  eliminar(item: Usuario) {
+  eliminar(item: Usuario, estado: string) {
     Swal.fire({
       title: "¿Estas seguro?",
       text: "Se eliminara este usuario!",

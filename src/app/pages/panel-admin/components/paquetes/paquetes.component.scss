@@ -97,7 +97,7 @@ td {
       position: sticky;
       top: 0;
       left: 0;
-      background-color: var(--colorP1);
+      background-color: #6fcaea;
       color: white;
     }
 
@@ -124,6 +124,17 @@ td {
 
 mat-icon {
   color: gray;
+}
+.sin-data{
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  color: #808080;
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 @media (max-width: 1000px) {

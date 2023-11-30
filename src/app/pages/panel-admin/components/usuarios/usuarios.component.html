@@ -4,7 +4,7 @@
         <div class="header__input">
 
             <mat-icon>search</mat-icon>
-            <input type="search" placeholder="Search" />
+            <input type="search" placeholder="Buscar" (input)="onInputChange($event)" />
 
         </div>
         <div class="header__btn">
@@ -37,16 +37,30 @@
                         <p class="status" [ngClass]="item.cod_rol">{{item.rol}}</p>
                     </td>
                     <td>
+                        @if(item.activo !== "E"){
+                        @if(item.activo == "S"){
                         <button mat-icon-button matTooltip="Editar" (click)="openDialog(item)">
                             <mat-icon>edit</mat-icon>
                         </button>
-                        <button mat-icon-button matTooltip="Eliminar" (click)="eliminar(item)">
+                        <button mat-icon-button matTooltip="Eliminar" (click)="eliminar(item, 'N')">
                             <mat-icon>delete</mat-icon>
                         </button>
+                        }@else if(item.activo === "N"){
+                        <button mat-icon-button matTooltip="Restaurar" (click)="eliminar(item, 'S')">
+                            <mat-icon>restart_alt</mat-icon>
+                        </button>
+                        }
+                        }
                     </td>
                 </tr>
                 }
             </tbody>
         </table>
+        @if (panelAdminService.listUsuarios.length === 0) {
+        <div class="sin-data">
+            <mat-icon>hourglass_empty</mat-icon>
+            Sin Datos
+        </div>
+        }
     </div>
 </div>

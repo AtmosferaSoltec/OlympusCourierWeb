@@ -14,8 +14,11 @@ import { Router } from '@angular/router';
 export class PanelAdminService {
 
   listUsuarios: Usuario[] = [];
+  listUsuariosTotal: Usuario[] = [];
   listDistritos: Distrito[] = [];
+  listDistritosTotal: Distrito[] = [];
   listPaquetes: TipoPaquete[] = [];
+  listPaquetesTotal: TipoPaquete[] = [];
 
   router = inject(Router)
 
@@ -49,6 +52,7 @@ export class PanelAdminService {
             return usuario;
           })
           this.listUsuarios = listMap;
+          this.listUsuariosTotal = listMap;
 
         } else {
           console.log(data?.mensaje || 'Error al obtener Usuarios');
@@ -96,6 +100,7 @@ export class PanelAdminService {
       next: (data: any) => {
         if (data?.isSuccess) {
           this.listPaquetes = data.data
+          this.listPaquetesTotal = this.listPaquetes
         } else {
           console.log(data?.mensaje || 'Error al obtener Tipo de Paquetes');
         }
@@ -138,10 +143,11 @@ export class PanelAdminService {
   /** Distritos **/
 
   obtenerDistritos() {
-    this.distritoService.listarDestinos().subscribe({
+    this.distritoService.listarDistritos().subscribe({
       next: (data: any) => {
         if (data?.isSuccess) {
           this.listDistritos = data.data
+          this.listDistritosTotal = this.listDistritos
         } else {
           console.log(data?.mensaje || 'Error al obtener Distritos');
         }

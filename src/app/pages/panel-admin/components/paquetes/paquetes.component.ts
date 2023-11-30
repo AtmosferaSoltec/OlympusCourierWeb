@@ -21,6 +21,17 @@ export class PaquetesComponent {
   panelAdminService = inject(PanelAdminService)
   dialog = inject(MatDialog)
 
+  onInputChange(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    if (inputValue.length > 0) {
+      this.panelAdminService.listPaquetes = this.panelAdminService.listPaquetesTotal.filter(objeto =>
+        objeto.nombre?.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    } else {
+      this.panelAdminService.listPaquetes = this.panelAdminService.listPaquetesTotal;
+    }
+  }
+
   openDialog(item: TipoPaquete | null = null) {
     const dialogRef = this.dialog.open(DialogPaquetesComponent, {
       data: item,
@@ -34,7 +45,7 @@ export class PaquetesComponent {
   }
 
 
-  eliminar(item: TipoPaquete) {
+  eliminar(item: TipoPaquete, estado: string) {
     Swal.fire({
       title: "¿Estas seguro?",
       text: "Se eliminara este tipo de paquete!",

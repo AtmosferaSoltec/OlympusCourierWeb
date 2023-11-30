@@ -1,5 +1,4 @@
-$colorP1: #047CC4;
-
+$colorP1: #047cc4;
 
 td img {
   width: 36px;
@@ -14,7 +13,6 @@ th,
 td {
   padding: 1rem;
   text-align: left;
-  font-family: "Poppins", sans-serif;
 }
 
 .container {
@@ -106,8 +104,8 @@ td {
       position: sticky;
       top: 0;
       left: 0;
-      background-color: var(--colorP1);
-      color: white;
+      background-color: #86e49d;
+      color: #006b21;
     }
 
     tbody tr:nth-child(even) {
@@ -152,6 +150,18 @@ td {
 
 .table__body:hover::-webkit-scrollbar-thumb {
   visibility: visible;
+}
+
+.sin-data {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  color: #808080;
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 @media (max-width: 1000px) {

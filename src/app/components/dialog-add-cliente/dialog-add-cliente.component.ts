@@ -74,7 +74,7 @@ export class DialogAddClienteComponent {
   }
 
   listarDestinos() {
-    this.distritoService.listarDestinos().subscribe({
+    this.distritoService.listarDistritos().subscribe({
       next: (data: any) => {
         this.listDistritos = data.data
         this.formulario.get('distrito')?.setValue(this.listDistritos[0].id)

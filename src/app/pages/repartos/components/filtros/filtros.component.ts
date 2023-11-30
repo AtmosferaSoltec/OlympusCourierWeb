@@ -56,7 +56,7 @@ export class FiltrosComponent {
         }
       }
     });
-    this.distritoService.listarDestinos().subscribe({
+    this.distritoService.listarDistritos().subscribe({
       next: (data: any) => {
         if (data && data.isSuccess) {
           this.listDistrito = data.data;

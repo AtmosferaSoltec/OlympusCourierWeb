@@ -11,7 +11,9 @@ export class DistritoService {
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/distrito`;
 
-  listarDestinos(): Observable<Distrito[]> {
+  
+
+  listarDistritos(): Observable<Distrito[]> {
     return this.http.get<any>(this.url);
   }
 
