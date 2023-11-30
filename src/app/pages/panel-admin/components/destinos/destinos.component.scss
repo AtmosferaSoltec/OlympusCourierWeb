@@ -1,20 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-
-
-td img {
-    width: 36px;
-    height: 36px;
-    margin-right: .5rem;
-    border-radius: 50%;
-    vertical-align: middle;
-}
+$colorP1: #047CC4;
 
 table,
 th,
 td {
     padding: 1rem;
     text-align: left;
-    font-family: 'Poppins', sans-serif;
 }
 
 .container {
@@ -72,17 +62,27 @@ td {
     }
 
     .header__btn button {
-        text-decoration: none;
+        width: 150px;
+        height: 40px;
         display: flex;
+        justify-content: center;
         align-items: center;
         gap: 5px;
-        background-color: var(--colorP1);
+        
+        font-size: 16px;
+        background-color: $colorP1;
         color: white;
         border: 0;
         padding: 2px 10px;
         border-radius: 15px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
+        mat-icon {
+          color: white;
+        }
+        &:hover {
+          background-color: darken($colorP1, 10%);
+        }
+      }
 }
 
 .table__body {
@@ -105,30 +105,11 @@ td {
         tbody tr:nth-child(even) {
             background-color: #0000000B;
         }
-
-        td {
-            .status {
-                padding: .3rem 0;
-                border-radius: 2rem;
-                text-align: center;
-                margin: 0;
-            }
-
-            .status.A {
-                background-color: #86E49D;
-                color: #006b21;
-            }
-
-            .status.S {
-                background-color: #D893A3;
-                color: #B30021;
-            }
-
-            .status.U {
-                background-color: #6FCAEA;
-            }
-        }
     }
+}
+
+mat-icon{
+    color: gray;
 }
 
 .table__body::-webkit-scrollbar {
@@ -151,8 +132,4 @@ td {
     td:not(:first-of-type) {
         min-width: 12.1rem;
     }
-}
-
-mat-icon {
-    color: gray;
 }

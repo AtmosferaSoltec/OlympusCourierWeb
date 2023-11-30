@@ -1,1 +1,17 @@
-<p>dialog-paquetes works!</p>
+<div class="container">
+    <h1>
+        Agregar Tipo Paquete
+    </h1>
+    <form [formGroup]="formulario">
+        <div class="caja">
+            <span class="label">Nombre </span>
+            <input class="input" type="text" placeholder="Ingrese detalle del tipo de paquete" formControlName="nombre">
+        </div>
+    </form>
+
+    <div class="actions">
+        <button (click)="closeDialog()">Cancelar</button>
+        <button (click)="guardar()">Guardar</button>
+    </div>
+
+</div>

@@ -8,6 +8,7 @@ export interface Usuario {
     correo: string;
     fecha_nac: string;
     fecha_creacion: string;
+    clave: string;
     cod_rol: string;
     rol: string;
     activo: string;

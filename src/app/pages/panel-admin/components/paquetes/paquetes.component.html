@@ -33,10 +33,10 @@
                     <td>{{item.fecha_creacion}}</td>
                     <td>{{item.activo}}</td>
                     <td>
-                        <button mat-icon-button matTooltip="Editar">
-                            <mat-icon (click)="openDialog(item)">edit</mat-icon>
+                        <button mat-icon-button matTooltip="Editar" (click)="openDialog(item)">
+                            <mat-icon>edit</mat-icon>
                         </button>
-                        <button mat-icon-button matTooltip="Eliminar">
+                        <button mat-icon-button matTooltip="Eliminar" (click)="eliminar(item)">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </td>

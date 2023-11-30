@@ -7,13 +7,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { TipoPaquete } from '../../../../models/tipo-paquete';
 import { DialogPaquetesComponent } from '../dialogs/dialog-paquetes/dialog-paquetes.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-paquetes',
   standalone: true,
   imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule],
   templateUrl: './paquetes.component.html',
-  styleUrl: './paquetes.component.css'
+  styleUrl: './paquetes.component.scss'
 })
 export class PaquetesComponent {
 
@@ -26,5 +27,33 @@ export class PaquetesComponent {
       width: "770px"
     })
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+
+  }
+  
+
+  eliminar(item: TipoPaquete) {
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: "Se eliminara este tipo de paquete!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Si, Eliminar!",
+      confirmButtonColor: "#047CC4",
+      cancelButtonText: "Cancelar",
+      cancelButtonColor: "#d33",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Eliminado!",
+          text: "Usuario eliminado.",
+          icon: "success",
+          confirmButtonText: "Continuar",
+          confirmButtonColor: "#047CC4",
+        });
+      }
+    });
   }
 }

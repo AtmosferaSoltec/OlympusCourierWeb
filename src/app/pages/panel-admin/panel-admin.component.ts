@@ -17,7 +17,7 @@ import { DestinosComponent } from './components/destinos/destinos.component';
     DestinosComponent
   ],
   templateUrl: './panel-admin.component.html',
-  styleUrl: './panel-admin.component.css'
+  styleUrl: './panel-admin.component.scss'
 })
 export class PanelAdminComponent {
 
