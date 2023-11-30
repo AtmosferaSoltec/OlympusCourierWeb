@@ -9,12 +9,12 @@ import { Usuario } from '../models/usuario';
 export class UsuarioService {
 
   http = inject(HttpClient);
-  url = `${environment.baseUrl}/api/usuarios`;
+  baseUrl = `${environment.baseUrl}/api/usuarios`;
 
   usuario: Usuario | null = null;
 
   login(doc: string, clave: string) {
-    return this.http.post(`${this.url}/login`, {
+    return this.http.post(`${this.baseUrl}/login`, {
       documento: doc,
       clave: clave
     })
@@ -25,11 +25,19 @@ export class UsuarioService {
   }
 
   getAll() {
-    return this.http.get(`${this.url}`);
+    return this.http.get(`${this.baseUrl}`);
   }
 
   get(id: string) {
-    return this.http.get(`${this.url}/${id}`)
+    return this.http.get(`${this.baseUrl}/${id}`)
+  }
+
+  eliminar(user: Usuario) {
+    const url = `${this.baseUrl}/${user.id}`;
+    const body = {
+      activo: user.activo === 'S' ? 'N' : 'E'
+    }
+    return this.http.patch(url, body);
   }
 
 }

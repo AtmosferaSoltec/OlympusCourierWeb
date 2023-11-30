@@ -5,6 +5,8 @@ import { Distrito } from '../../models/distrito';
 import { TipoPaquete } from '../../models/tipo-paquete';
 import { PaqueteService } from '../../services/paquete.service';
 import { DistritoService } from '../../services/distrito.service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +17,23 @@ export class PanelAdminService {
   listDistritos: Distrito[] = [];
   listPaquetes: TipoPaquete[] = [];
 
+  router = inject(Router)
+
   usuarioService = inject(UsuarioService)
   distritoService = inject(DistritoService)
   paqueteService = inject(PaqueteService)
 
   constructor() {
-    this.listarUsuarios()
+    this.obtenerUsuarios()
     this.obtenerDistritos()
     this.obtenerTipoPaquetes()
   }
 
-  listarUsuarios() {
+
+
+  /** Usuarios **/
+
+  obtenerUsuarios() {
     this.usuarioService.getAll().subscribe({
       next: (data: any) => {
         if (data && data.isSuccess) {
@@ -53,21 +61,35 @@ export class PanelAdminService {
     })
   }
 
-  obtenerDistritos() {
-    this.distritoService.listarDestinos().subscribe({
+  eliminarUsuario(item: Usuario) {
+    this.usuarioService.eliminar(item).subscribe({
       next: (data: any) => {
         if (data?.isSuccess) {
-          this.listDistritos = data.data
+          Swal.fire({
+            title: "Eliminado!",
+            text: "Usuario eliminado.",
+            icon: "success",
+            confirmButtonText: "Continuar",
+            confirmButtonColor: "#047CC4",
+          })
+          this.obtenerUsuarios();
         } else {
-          console.log(data?.mensaje || 'Error al obtener Distritos');
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: data?.mensaje || 'Error al eliminar',
+            confirmButtonText: "Cerrar",
+            confirmButtonColor: "#047CC4",
+          });
         }
       },
-      error: (err) => {
-        console.log(err);
-
-      }
-    })
+      error: (err) => console.log(err)
+    });
   }
+
+
+
+  /** Tipo Paquetes **/
 
   obtenerTipoPaquetes() {
     this.paqueteService.getAll().subscribe({
@@ -85,4 +107,75 @@ export class PanelAdminService {
     })
   }
 
+  eliminarTipoPaquete(item: TipoPaquete) {
+    this.paqueteService.eliminar(item).subscribe({
+      next: (data: any) => {
+        if (data?.isSuccess) {
+          Swal.fire({
+            title: "Eliminado!",
+            text: "Tipo de paquete eliminado.",
+            icon: "success",
+            confirmButtonText: "Continuar",
+            confirmButtonColor: "#047CC4",
+          })
+          this.obtenerTipoPaquetes();
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: data?.mensaje || 'Error al eliminar',
+            confirmButtonText: "Cerrar",
+            confirmButtonColor: "#047CC4",
+          });
+        }
+      },
+      error: (err) => console.log(err)
+    });
+  }
+
+
+
+  /** Distritos **/
+
+  obtenerDistritos() {
+    this.distritoService.listarDestinos().subscribe({
+      next: (data: any) => {
+        if (data?.isSuccess) {
+          this.listDistritos = data.data
+        } else {
+          console.log(data?.mensaje || 'Error al obtener Distritos');
+        }
+      },
+      error: (err) => {
+        console.log(err);
+
+      }
+    })
+  }
+
+  eliminarDistrito(item: Distrito) {
+    this.distritoService.eliminar(item).subscribe({
+      next: (data: any) => {
+        if (data?.isSuccess) {
+          Swal.fire({
+            title: "Eliminado!",
+            text: "Distrito eliminado.",
+            icon: "success",
+            confirmButtonText: "Continuar",
+            confirmButtonColor: "#047CC4",
+          })
+          this.obtenerDistritos();
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: data?.mensaje || 'Error al eliminar',
+            confirmButtonText: "Cerrar",
+            confirmButtonColor: "#047CC4",
+          });
+        }
+      },
+      error: (err) => console.log(err)
+    });
+  }
 }

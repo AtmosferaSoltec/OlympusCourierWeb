@@ -9,7 +9,7 @@ import { AppService } from '../../app.service';
   standalone: true,
   imports: [CommonModule, RouterOutlet, SidenavComponent],
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.css'
+  styleUrl: './menu.component.scss'
 })
 export class MenuComponent {
 

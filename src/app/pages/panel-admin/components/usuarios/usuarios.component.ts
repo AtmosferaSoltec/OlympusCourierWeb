@@ -21,10 +21,6 @@ export class UsuariosComponent {
   panelAdminService = inject(PanelAdminService)
   dialog = inject(MatDialog)
 
-  constructor() {
-    this.openDialog()
-  }
-
   openDialog(item: Usuario | undefined = undefined) {
 
     const dialogRef = this.dialog.open(DialogUsuarioComponent, {
@@ -50,13 +46,7 @@ export class UsuariosComponent {
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Eliminado!",
-          text: "Usuario eliminado.",
-          icon: "success",
-          confirmButtonText: "Continuar",
-          confirmButtonColor: "#047CC4",
-        });
+        this.panelAdminService.eliminarUsuario(item)
       }
     });
   }

@@ -45,13 +45,7 @@ export class DestinosComponent {
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Eliminado!",
-          text: "Usuario eliminado.",
-          icon: "success",
-          confirmButtonText: "Continuar",
-          confirmButtonColor: "#047CC4",
-        });
+        this.panelAdminService.eliminarDistrito(item)
       }
     });
   }

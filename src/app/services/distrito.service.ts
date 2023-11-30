@@ -9,9 +9,17 @@ import { environment } from '../../environments/environment.development';
 })
 export class DistritoService {
   http = inject(HttpClient);
+  url = `${environment.baseUrl}/api/distrito`;
 
   listarDestinos(): Observable<Distrito[]> {
-    const url = `${environment.baseUrl}/api/distrito`;
-    return this.http.get<any>(url);
+    return this.http.get<any>(this.url);
+  }
+
+  eliminar(distrito: Distrito) {
+    const url = `${this.url}/${distrito.id}`;
+    const body = {
+      activo: distrito.activo === 'S' ? 'N' : 'E'
+    }
+    return this.http.patch(url, body);
   }
 }
