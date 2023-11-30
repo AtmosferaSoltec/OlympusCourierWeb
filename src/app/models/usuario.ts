@@ -9,5 +9,6 @@ export interface Usuario {
     fecha_nac: string;
     fecha_creacion: string;
     cod_rol: string;
+    rol: string;
     activo: string;
 }

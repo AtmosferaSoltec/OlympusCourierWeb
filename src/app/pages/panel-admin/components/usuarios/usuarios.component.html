@@ -1,1 +1,52 @@
-<h1>Esta es una prueba</h1>
+<div class="container">
+
+    <div class="table__header">
+        <div class="header__input">
+
+            <mat-icon>search</mat-icon>
+            <input type="search" placeholder="Search" />
+
+        </div>
+        <div class="header__btn">
+            <button (click)="openDialog()">
+                <mat-icon>add</mat-icon>
+                Añadir
+            </button>
+        </div>
+    </div>
+    <div class="table__body">
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Documento</th>
+                    <th>Nombres</th>
+                    <th>Teléfono</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of panelAdminService.listUsuarios; track $index) {
+                <tr>
+                    <td>{{item.id}}</td>
+                    <td>{{item.documento}}</td>
+                    <td><img src="../../../../../assets/user.png" alt="">{{item.nombres}} {{item.ape_paterno}}</td>
+                    <td>{{item.telefono}}</td>
+                    <td>
+                        <p class="status" [ngClass]="item.cod_rol">{{item.rol}}</p>
+                    </td>
+                    <td>
+                        <button mat-icon-button matTooltip="Editar">
+                            <mat-icon (click)="openDialog()">edit</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="Eliminar">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
