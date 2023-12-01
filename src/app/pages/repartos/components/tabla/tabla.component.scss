@@ -1,4 +1,6 @@
 $colorP1: #047cc4;
+$colorPendiente: #565656;
+$colorPendienteBack: #f3f3f3;
 
 table,
 th,
@@ -29,7 +31,7 @@ mat-icon {
     }
 
     tbody tr:nth-child(even) {
-      background-color: #0000000b;
+      background-color: $colorPendienteBack;
     }
 
     td {
@@ -41,8 +43,8 @@ mat-icon {
       }
 
       .status.P {
-        background-color: #86e49d;
-        color: #006b21;
+        background-color: $colorPendienteBack;
+        color: $colorPendiente;
       }
 
       .status.A {
