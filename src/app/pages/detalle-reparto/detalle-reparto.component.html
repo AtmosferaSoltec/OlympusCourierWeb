@@ -18,71 +18,12 @@
             </div>
         </div>
 
-        <div class="item">
-            <span class="title">Documento:</span>
-            <span class="valor">{{service.reparto?.cliente?.documento}}</span>
-        </div>
-
-        <div class="item">
-            <span class="title">Cliente:</span>
-            <span class="valor">{{service.reparto?.cliente?.nombres}}</span>
-        </div>
-        <div class="item">
-            <span class="title">Teléfono:</span>
-            <span class="valor">{{service.reparto?.cliente?.telefono}}</span>
-        </div>
-        <div class="item">
-            <span class="title">Distrito:</span>
-            <span class="valor">{{service.reparto?.cliente?.distrito}}</span>
-        </div>
-        <div class="item">
-            <span class="title">Dirección:</span>
-            <span class="valor">{{service.reparto?.cliente?.direc}}</span>
-        </div>
-        <div class="item">
-            <span class="title">Referencia:</span>
-            <span class="valor">{{service.reparto?.cliente?.referencia}}</span>
-        </div>
-        <div class="item">
-            <span class="title">Fecha Creada:</span>
-            <span class="valor">{{service.reparto?.fecha_creacion}}</span>
-        </div>
-        <div class="item">
-            <span class="title">Fecha Entregada:</span>
-            <span class="valor">{{service.reparto?.fecha_entrega}}</span>
-        </div>
+        <app-detalle-cliente [cliente]="service.reparto?.cliente"></app-detalle-cliente>
 
         <hr style="margin-top: 30px; margin-bottom: 30px;">
 
-        @for (item of list; track $index) {
-        <div class="card-item">
-            <h2>Item 1</h2>
-            <div class="content">
-                <div class="left">
-                    <p>N Guia</p>
-                    <p>Detalle</p>
-                </div>
-                <div class="right">
-                    <p>0000001</p>
-                    <p>Productos Santa Natura</p>
-                </div>
-            </div>
-            <hr>
-            <div class="container2">
-                <div>
-                    <mat-icon>inventory_2</mat-icon>
-                    <span>Sobre</span>
-                </div>
-                <div>
-                    <mat-icon>checklist_rtl</mat-icon>
-                    <span>2</span>
-                </div>
-                <div>
-                    <mat-icon>payments</mat-icon>
-                    <span>S/45.00</span>
-                </div>
-            </div>
-        </div>
+        @for (item of reparto?.items; track item.id; let idx = $index) {
+            <app-card-item [item]="item" [index]="idx"></app-card-item>
         }
     </div>
     <div class="dos">
@@ -94,5 +35,6 @@
         <span class="total">
             Total
         </span>
+        <button (click)="toGenerarComprobante()">Generar Comprobante</button>
     </div>
 </div>

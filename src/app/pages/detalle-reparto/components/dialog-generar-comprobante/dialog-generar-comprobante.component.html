@@ -1,0 +1,58 @@
+<div class="container">
+    <h1>
+        Generar Comprobante
+    </h1>
+    <form [formGroup]="formulario">
+
+        <div class="caja">
+            <span class="label">Tipo Comprobante </span>
+            <select formControlName="tipoComprobante">
+                <option value="2">Boleta</option>
+                <option value="1">Factura</option>
+            </select>
+        </div>
+
+        <div class="caja">
+            <span class="label">Tipo Doc </span>
+            <select formControlName="tipoDoc">
+                @for (item of listTipoDoc; track $index) {
+                <option [value]="item.cod">{{item.detalle}}</option>
+                }
+            </select>
+        </div>
+
+        <div class="caja">
+            <span class="label">Documento</span>
+            <input class="input" type="text" placeholder="Ingrese documento" formControlName="documento">
+        </div>
+
+        <div class="caja">
+            <span class="label">Nombre Legal </span>
+            <input class="input" type="text" placeholder="Ingrese nombre" formControlName="nombre">
+        </div>
+
+
+        <div class="caja">
+            <span class="label">Dirección </span>
+            <input class="input" type="text" placeholder="Ingrese documento" formControlName="direc">
+        </div>
+
+
+        <div class="caja">
+            <span class="label"> Teléfono </span>
+            <input class="input" type="tel" placeholder="Ingrese documento" formControlName="telefono">
+        </div>
+
+
+        <div class="caja">
+            <span class="label">Correo </span>
+            <input class="input" type="email" placeholder="Ingrese documento" formControlName="correo">
+        </div>
+
+    </form>
+
+    <div class="actions">
+        <button (click)="close()">Cancelar</button>
+        <button (click)="guardar()">Guardar</button>
+    </div>
+</div>

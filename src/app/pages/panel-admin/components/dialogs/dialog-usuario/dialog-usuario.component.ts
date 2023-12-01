@@ -35,10 +35,10 @@ export class DialogUsuarioComponent {
       documento: [this.data?.documento || '', [Validators.required]],
       nombres: [this.data?.nombres || '', [Validators.required]],
       ape_paterno: [this.data?.ape_paterno || '', [Validators.required]],
-      ape_materno: [this.data?.ape_materno || '', [Validators.required]],
+      ape_materno: [this.data?.ape_materno || ''],
       telefono: [this.data?.telefono || '', [Validators.required]],
-      correo: [this.data?.correo || '', [Validators.required]],
-      fecha_nac: [this.data?.fecha_nac || '', [Validators.required]],
+      correo: [this.data?.correo || ''],
+      fecha_nac: [this.data?.fecha_nac || '',],
       clave: [this.data?.clave || '', [Validators.required]],
       cod_rol: [this.data?.cod_rol || '', [Validators.required]]
     })
@@ -72,6 +72,8 @@ export class DialogUsuarioComponent {
             });
 
           }else{
+            console.log(data?.mensaje);
+            
             Swal.fire({
               icon: "error",
               title: "Oops...",
@@ -82,8 +84,10 @@ export class DialogUsuarioComponent {
           }
         },
         error: (err) => console.log(err)
-
       })
+    }else{
+      console.log(this.formulario.value);
+      
     }
   }
 }

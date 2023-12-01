@@ -7,11 +7,18 @@ import { RepartoService } from '../../services/reparto.service';
 import { routes } from '../../app.routes';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { DetalleRepartoService } from './detalle-reparto.service';
+import { CardItemComponent } from './components/card-item/card-item.component';
+import { DetalleClienteComponent } from './components/detalle-cliente/detalle-cliente.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogGenerarComprobanteComponent } from './components/dialog-generar-comprobante/dialog-generar-comprobante.component';
 
 @Component({
   selector: 'app-detalle-reparto',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, RouterOutlet],
+  imports: [
+    CommonModule, MatIconModule, MatButtonModule,
+    RouterOutlet, CardItemComponent, DetalleClienteComponent
+  ],
   templateUrl: './detalle-reparto.component.html',
   styleUrl: './detalle-reparto.component.scss'
 })
@@ -54,6 +61,12 @@ export class DetalleRepartoComponent implements OnInit {
         console.log(err);
       }
     })
+  }
+
+  dialog = inject(MatDialog)
+
+  toGenerarComprobante(){
+    this.dialog.open(DialogGenerarComprobanteComponent)
   }
 
 }

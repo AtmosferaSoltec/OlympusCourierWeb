@@ -8,6 +8,7 @@ import { RepartoService } from '../../services/reparto.service';
 export class DetalleRepartoService {
 
   constructor() { }
+  
 
   reparto: Reparto | null = null;
   private repartoService = inject(RepartoService)
