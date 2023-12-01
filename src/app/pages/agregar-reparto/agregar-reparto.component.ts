@@ -21,7 +21,7 @@ import { AgregarRepartoService } from './agregar-reparto.service';
     MatButtonModule, ReactiveFormsModule, BuscarClienteComponent
   ],
   templateUrl: './agregar-reparto.component.html',
-  styleUrl: './agregar-reparto.component.css'
+  styleUrl: './agregar-reparto.component.scss'
 })
 export class AgregarRepartoComponent {
 
@@ -72,25 +72,12 @@ export class AgregarRepartoComponent {
 
 
   getTotal() {
-    return this.service.listItemRepartos.reduce((total, item) => total + item.precio, 0);
+    return this.service.listItemRepartos.reduce((total, item) => total + (item?.precio || 0), 0);
   }
 
-  async guardarReparto() {
-    const toast = Swal.mixin({
-      toast: true,
-      position: 'bottom',
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-
+  guardarReparto() {
     if (this.service.cliente?.id != undefined) {
       if (this.service.listItemRepartos.length > 0) {
-        
         const body = {
           anotacion: this.formulario.get('anotacion')?.value || '',
           clave: this.formulario.get('clave')?.value || '1234',
@@ -101,12 +88,17 @@ export class AgregarRepartoComponent {
 
         this.repartoService.insert(body).subscribe({
           next: (data: any) => {
-            if (data && data.isSuccess) {
+            if (data?.isSuccess) {
               this.service.reset()
               this.router.navigate(['../'])
             } else {
-              console.log(data?.mensaje || 'Error al insertar');
-
+              Swal.fire({
+                icon: 'error',
+                title: 'Opss...',
+                text: data?.mensaje || 'Error al insertar',
+                confirmButtonText: "Continuar",
+                confirmButtonColor: "#047CC4",
+              })
             }
           },
           error: (err) => {
@@ -114,17 +106,22 @@ export class AgregarRepartoComponent {
           }
         })
       } else {
-        toast.fire({
+        Swal.fire({
           icon: 'question',
-          title: 'Ingrese un item'
+          title: 'Sin Items',
+          text: 'Ingresa minimo un item',
+          confirmButtonText: "Continuar",
+          confirmButtonColor: "#047CC4",
         })
       }
     } else {
-
-      toast.fire({
+      Swal.fire({
         icon: 'question',
-        title: 'Ingrese un cliente'
-      })
+          title: 'Sin Cliente',
+          text: 'Debes ingresar un cliente',
+          confirmButtonText: "Continuar",
+          confirmButtonColor: "#047CC4",
+      });
     }
   }
 }

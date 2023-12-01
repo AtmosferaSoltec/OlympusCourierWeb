@@ -8,19 +8,24 @@ import { environment } from '../../environments/environment.development';
   providedIn: 'root'
 })
 export class DistritoService {
+
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/distrito`;
 
-  
+
 
   listarDistritos(): Observable<Distrito[]> {
     return this.http.get<any>(this.url);
   }
 
-  eliminar(distrito: Distrito) {
-    const url = `${this.url}/${distrito.id}`;
+  add(nombre: string) {
+    return this.http.post(this.url, { nombre: nombre })
+  }
+
+  eliminar(id: number | undefined, estado: string) {
+    const url = `${this.url}/${id}`;
     const body = {
-      activo: distrito.activo === 'S' ? 'N' : 'E'
+      activo: estado
     }
     return this.http.patch(url, body);
   }

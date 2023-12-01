@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './generar-comprobante.component.html',
-  styleUrl: './generar-comprobante.component.css'
+  styleUrl: './generar-comprobante.component.scss'
 })
 export class GenerarComprobanteComponent {
 

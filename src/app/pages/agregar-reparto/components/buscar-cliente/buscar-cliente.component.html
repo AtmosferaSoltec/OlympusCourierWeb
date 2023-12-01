@@ -21,16 +21,26 @@
         </div>
 
         <!--Boton Agregar Cliente-->
-        <button mat-button (click)="openDialogCliente()" class="btn__agregar" *ngIf="!service.cliente">
+        @if (!service.cliente) {
+        <button (click)="openDialogCliente()" class="boton">
             <mat-icon>person_add</mat-icon>
-            <span>Agregar Cliente</span>
+            Agregar
         </button>
+        }
 
         <!--Boton Editar Cliente-->
-        <button mat-button (click)="openDialogCliente()" class="btn__agregar" *ngIf="service.cliente">
+        @if (service.cliente) {
+        <button (click)="openDialogCliente()" class="boton">
             <mat-icon>edit</mat-icon>
-            <span>Editar Cliente</span>
+            Editar
         </button>
+        }
+
+        <button (click)="openDialogAddItemReparto()" class="boton">
+            <mat-icon>add</mat-icon>
+            Item
+        </button>
+
     </div>
 
 

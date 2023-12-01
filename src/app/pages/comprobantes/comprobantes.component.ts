@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [CommonModule, MatIconModule, MatButtonModule],
   templateUrl: './comprobantes.component.html',
-  styleUrl: './comprobantes.component.css'
+  styleUrl: './comprobantes.component.scss'
 })
 export class ComprobantesComponent {
 

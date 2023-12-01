@@ -14,7 +14,7 @@ import { DialogAddClienteComponent } from '../../../../components/dialog-add-cli
   standalone: true,
   imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, MatPaginatorModule],
   templateUrl: './tabla.component.html',
-  styleUrl: './tabla.component.css'
+  styleUrl: './tabla.component.scss'
 })
 export class TablaComponent {
   listClientes = new MatTableDataSource<Cliente>();

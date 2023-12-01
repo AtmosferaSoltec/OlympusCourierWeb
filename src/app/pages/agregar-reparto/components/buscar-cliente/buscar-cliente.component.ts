@@ -11,13 +11,15 @@ import { Cliente } from '../../../../models/cliente';
 import { ClienteService } from '../../../../services/cliente.service';
 import { AgregarRepartoComponent } from '../../agregar-reparto.component';
 import { AgregarRepartoService } from '../../agregar-reparto.service';
+import { DialogAddItemRepartoComponent } from '../../../../components/dialog-add-item-reparto/dialog-add-item-reparto.component';
+import { ItemReparto } from '../../../../models/item-reparto';
 
 @Component({
   selector: 'app-buscar-cliente',
   standalone: true,
   imports: [CommonModule, MatIconModule, MatProgressSpinnerModule, ReactiveFormsModule, MatButtonModule],
   templateUrl: './buscar-cliente.component.html',
-  styleUrl: './buscar-cliente.component.css'
+  styleUrl: './buscar-cliente.component.scss'
 })
 export class BuscarClienteComponent {
 
@@ -78,6 +80,20 @@ export class BuscarClienteComponent {
         this.service.cliente = data
       }
     })
+  }
+
+  
+  openDialogAddItemReparto() {
+    const dialogRef = this.dialog.open(DialogAddItemRepartoComponent, {
+      width: "770px"
+    });
+
+    dialogRef.afterClosed().subscribe((data: ItemReparto) => {
+      if (data) {
+        this.service.listItemRepartos.push(data)
+        //this.table.renderRows();
+      }
+    });
   }
 
   selectCliente(item: Cliente) {

@@ -5,6 +5,9 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Usuario } from '../../../../../models/usuario';
 import { MatRadioModule } from '@angular/material/radio';
+import Swal from 'sweetalert2';
+import { UsuarioService } from '../../../../../services/usuario.service';
+import { PanelAdminService } from '../../../panel-admin.service';
 
 @Component({
   selector: 'app-dialog-usuario',
@@ -17,6 +20,8 @@ export class DialogUsuarioComponent {
 
   formulario: FormGroup;
   private fb = inject(FormBuilder);
+  private panelService = inject(PanelAdminService);
+  private usuarioService = inject(UsuarioService);
 
   listDocumento: any[] = []
   listDistritos: any[] = []
@@ -47,7 +52,38 @@ export class DialogUsuarioComponent {
     this.dialogRef.close();
   }
 
+
   guardar() {
-    this.dialogRef.close()
+    if (this.formulario.valid) {
+      this.usuarioService.add(this.formulario).subscribe({
+        next: (data: any) => {
+          if (data?.isSuccess){
+            Swal.fire({
+              title: "Insertado!",
+              text: "Usuario insertado.",
+              icon: "success",
+              confirmButtonText: "Continuar",
+              confirmButtonColor: "#047CC4",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.panelService.obtenerUsuarios()
+                this.dialogRef.close()
+              }
+            });
+
+          }else{
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: data?.mensaje || 'Error al insertar',
+              confirmButtonText: "Cerrar",
+              confirmButtonColor: "#047CC4",
+            });
+          }
+        },
+        error: (err) => console.log(err)
+
+      })
+    }
   }
 }

@@ -18,7 +18,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   imports: [CommonModule, MatIconModule, MatTableModule,
     MatButtonModule, MatTooltipModule, MatMenuModule, MatPaginatorModule],
   templateUrl: './tabla.component.html',
-  styleUrl: './tabla.component.css'
+  styleUrl: './tabla.component.scss'
 })
 export class TablaComponent {
 
@@ -50,11 +50,11 @@ export class TablaComponent {
   }
 
 
-  formatoId(id: number): string {
-    const idStr = id.toString().slice(0, 6).padStart(6, '0');
+  formatoId(id: number | undefined): string {
+    const idStr = id?.toString().slice(0, 6).padStart(6, '0');
     return `#${idStr}`;
   }
-  formatDate(fecha: string): string {
+  formatDate(fecha: string | undefined): string {
     const date = moment(fecha);
     return date.format('DD/MM/YYYY HH:mm');
   }
@@ -77,13 +77,13 @@ export class TablaComponent {
 
   getTotal(rep: Reparto): number {
     if (rep.items != undefined) {
-      return rep.items?.reduce((acumulador, objeto) => acumulador + (objeto.cant * objeto.precio), 0);
+      return rep.items?.reduce((acumulador, objeto) => acumulador + ((objeto?.cant || 1) * (objeto?.precio || 1)), 0);
     } else {
       return 0
     }
   }
 
-  toDetalle(id:number) {
+  toDetalle(id: number | undefined) {
     this.router.navigate(['/menu/detalle-reparto', id]);
   }
 

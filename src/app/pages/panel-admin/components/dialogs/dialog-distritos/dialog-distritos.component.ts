@@ -7,6 +7,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { Usuario } from '../../../../../models/usuario';
 import { DialogUsuarioComponent } from '../dialog-usuario/dialog-usuario.component';
 import { Distrito } from '../../../../../models/distrito';
+import { PanelAdminService } from '../../../panel-admin.service';
+import { DistritoService } from '../../../../../services/distrito.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dialog-distritos',
@@ -18,7 +21,10 @@ import { Distrito } from '../../../../../models/distrito';
 export class DialogDistritosComponent {
 
   formulario: FormGroup;
+
   private fb = inject(FormBuilder);
+  private distritoService = inject(DistritoService);
+  private panelService = inject(PanelAdminService);
 
   listDocumento: any[] = []
   listDistritos: any[] = []
@@ -31,9 +37,6 @@ export class DialogDistritosComponent {
     this.formulario = this.fb.group({
       nombre: [this.data?.nombre || '', [Validators.required]],
     })
-  }
-
-  buscarDoc() {
 
   }
 
@@ -42,6 +45,37 @@ export class DialogDistritosComponent {
   }
 
   guardar() {
-    this.dialogRef.close()
+    if (this.formulario.valid) {
+      
+      this.distritoService.add(this.formulario.get('nombre')?.value).subscribe({
+        next: (data: any) => {
+          if (data?.isSuccess){
+            Swal.fire({
+              title: "Insertado!",
+              text: "Distrito insertado.",
+              icon: "success",
+              confirmButtonText: "Continuar",
+              confirmButtonColor: "#047CC4",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.panelService.obtenerDistritos()
+                this.dialogRef.close()
+              }
+            });
+
+          }else{
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: data?.mensaje || 'Error al insertar',
+              confirmButtonText: "Cerrar",
+              confirmButtonColor: "#047CC4",
+            });
+          }
+        },
+        error: (err) => console.log(err)
+
+      })
+    }
   }
 }

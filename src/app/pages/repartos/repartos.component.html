@@ -1,5 +1,7 @@
 <div class="container">
 
+    <!--
+
     <div class="btn-actions">
 
         <button mat-icon-button class="icon_btn" matTooltip="Perfil">
@@ -11,14 +13,26 @@
         </button>
 
     </div>
+    
+    -->
 
-    <div class="title">
-        <h1>Repartos</h1>
-        <a (click)="toAgregar()" class="btn">
-            <mat-icon>add</mat-icon>
-            Agregar
-        </a>
+
+
+    <div class="header">
+        <div class="header__input">
+
+            <mat-icon>search</mat-icon>
+            <input type="search" placeholder="Buscar" />
+
+        </div>
+        <div class="header__btn">
+            <button (click)="toAgregar()">
+                <mat-icon>add</mat-icon>
+                Añadir
+            </button>
+        </div>
     </div>
+
     <!--
     <app-filtros></app-filtros>
     -->

@@ -10,17 +10,21 @@ export class PaqueteService {
 
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/paquetes`;
-  
+
   constructor() { }
 
-  getAll(){
+  getAll() {
     return this.http.get(`${this.url}`)
   }
+  
+  add(nombre: string) {
+    return this.http.post(this.url, { nombre: nombre })
+  }
 
-  eliminar(tipo: TipoPaquete) {
-    const url = `${this.url}/${tipo.id}`;
+  eliminar(id: number | undefined, estado: string) {
+    const url = `${this.url}/${id}`;
     const body = {
-      activo: tipo.activo === 'S' ? 'N' : 'E'
+      activo: estado
     }
     return this.http.patch(url, body);
   }

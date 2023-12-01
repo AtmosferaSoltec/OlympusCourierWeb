@@ -20,7 +20,7 @@ import { Router, RouterOutlet } from '@angular/router';
     RouterOutlet
   ],
   templateUrl: './repartos.component.html',
-  styleUrl: './repartos.component.css'
+  styleUrl: './repartos.component.scss'
 })
 export class RepartosComponent {
 

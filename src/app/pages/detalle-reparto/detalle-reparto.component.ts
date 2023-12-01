@@ -13,7 +13,7 @@ import { DetalleRepartoService } from './detalle-reparto.service';
   standalone: true,
   imports: [CommonModule, MatIconModule, MatButtonModule, RouterOutlet],
   templateUrl: './detalle-reparto.component.html',
-  styleUrl: './detalle-reparto.component.css'
+  styleUrl: './detalle-reparto.component.scss'
 })
 export class DetalleRepartoComponent implements OnInit {
 

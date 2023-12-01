@@ -57,7 +57,7 @@ export class PaquetesComponent {
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.panelAdminService.eliminarTipoPaquete(item)
+        this.panelAdminService.eliminarTipoPaquete(item, estado)
       }
     });
   }

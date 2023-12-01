@@ -7,17 +7,20 @@ import { ItemReparto } from '../../models/item-reparto';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InputBoxComponent } from '../../shared/components/input-box/input-box.component';
 import { PaqueteService } from '../../services/paquete.service';
+import { TipoPaquete } from '../../models/tipo-paquete';
 
 @Component({
   selector: 'app-dialog-add-item-reparto',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, MatIconModule, MatButtonModule, InputBoxComponent],
   templateUrl: './dialog-add-item-reparto.component.html',
-  styleUrl: './dialog-add-item-reparto.component.css'
+  styleUrl: './dialog-add-item-reparto.component.scss'
 })
 export class DialogAddItemRepartoComponent {
 
   formulario: FormGroup
+
+  listTipoPaquete: TipoPaquete[] = []
 
   paqueteService = inject(PaqueteService)
 
@@ -27,11 +30,10 @@ export class DialogAddItemRepartoComponent {
     private fb: FormBuilder
   ) {
 
-
     this.formulario = this.fb.group({
-      nGuia: [data?.num_guia || '', []],
-      tipoPaquete: [data?.id_tipo_paquete || 0, [Validators.required]],
-      descrip: [data?.detalle || '', []],
+      num_guia: [data?.num_guia || '', []],
+      id_tipo_paquete: [data?.id_tipo_paquete || 1, [Validators.required]],
+      detalle: [data?.detalle || '', []],
       cant: [data?.cant || '', [Validators.required, Validators.min(1)]],
       precio: [data?.precio || '', [Validators.required, Validators.min(1)]]
     })
@@ -54,24 +56,22 @@ export class DialogAddItemRepartoComponent {
     })
   }
 
-  listTipoPaquete: any[] = []
-
 
   closeDialog() {
     this.dialogRef.close();
   }
 
   onAceptar() {
-
-    const itemReparto: ItemReparto = {
-      num_guia: this.formulario.get('nGuia')?.value || 'Sin Guia',
-      id_tipo_paquete: this.formulario.get('tipoPaquete')?.value || '',
-      detalle: this.formulario.get('descrip')?.value || 'Sin Descripción',
-      precio: this.formulario.get('precio')?.value || 0.0,
-      cant: this.formulario.get('cant')?.value || 0,
-    };
-
-    this.dialogRef.close(itemReparto)
+    if (this.formulario.valid) {
+      const itemReparto: ItemReparto = {
+        num_guia: this.formulario.get('num_guia')?.value || 'Sin Guia',
+        id_tipo_paquete: this.formulario.get('id_tipo_paquete')?.value || '',
+        detalle: this.formulario.get('detalle')?.value || 'Sin Descripción',
+        precio: this.formulario.get('precio')?.value || 0.0,
+        cant: this.formulario.get('cant')?.value || 0,
+      };
+      this.dialogRef.close(itemReparto)
+    }
 
   }
 }

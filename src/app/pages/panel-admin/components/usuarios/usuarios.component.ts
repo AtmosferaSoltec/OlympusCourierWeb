@@ -57,7 +57,7 @@ export class UsuariosComponent {
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.panelAdminService.eliminarUsuario(item)
+        this.panelAdminService.eliminarUsuario(item, estado)
       }
     });
   }

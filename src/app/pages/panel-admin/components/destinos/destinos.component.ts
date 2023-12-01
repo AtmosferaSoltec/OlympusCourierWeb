@@ -47,18 +47,24 @@ export class DestinosComponent {
   }
 
   eliminar(item: Distrito, estado: string) {
+    let texto = "";
+    if (estado == "N"){
+      texto = "Se eliminara este distrito!"
+    }else if(estado === "S"){
+      texto = "Se restaurara este distrito!"
+    }
     Swal.fire({
       title: "¿Estas seguro?",
-      text: "Se eliminara este distrito!",
+      text: texto,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Si, Eliminar!",
+      confirmButtonText: "Confirmar",
       confirmButtonColor: "#047CC4",
       cancelButtonText: "Cancelar",
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.panelAdminService.eliminarDistrito(item)
+        this.panelAdminService.eliminarDistrito(item, estado)
       }
     });
   }

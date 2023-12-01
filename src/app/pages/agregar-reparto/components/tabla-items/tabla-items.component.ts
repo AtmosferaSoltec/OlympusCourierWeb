@@ -14,7 +14,7 @@ import { AgregarRepartoService } from '../../agregar-reparto.service';
   standalone: true,
   imports: [CommonModule, MatIconModule, MatTableModule, MatButtonModule, MatTooltipModule],
   templateUrl: './tabla-items.component.html',
-  styleUrl: './tabla-items.component.css'
+  styleUrl: './tabla-items.component.scss'
 })
 export class TablaItemsComponent {
   columnas: string[] = [
@@ -31,18 +31,6 @@ export class TablaItemsComponent {
   service = inject(AgregarRepartoService);
 
   /** Añadir Item Reparto*/
-  openDialogAddItemReparto() {
-    const dialogRef = this.dialog.open(DialogAddItemRepartoComponent, {
-      width: "770px"
-    });
-
-    dialogRef.afterClosed().subscribe((data: ItemReparto) => {
-      if (data) {
-        this.service.listItemRepartos.push(data)
-        this.table.renderRows();
-      }
-    });
-  }
 
   dialog = inject(MatDialog)
 

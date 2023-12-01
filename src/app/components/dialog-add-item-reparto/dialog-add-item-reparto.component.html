@@ -1,57 +1,47 @@
 <div class="container">
-    <div class="mt-3">
-        <h2><strong style="color: var(--colorP1);">Agregar Cliente</strong></h2>
-    </div>
+
+    <h1>
+        Agregar Item Reparto
+    </h1>
 
     <form [formGroup]="formulario">
 
-        <div class="input-group mb-3">
+        <div class="caja">
+            <span class="label">N° de guia </span>
+            <input class="input" type="text" placeholder="Ingrese número de guía" formControlName="num_guia">
+        </div>
 
-            <span class="input-group-text">
-                <mat-icon>description</mat-icon>
-            </span>
-            <input type="text" class="form-control" placeholder="Numero de Guia" formControlName="nGuia">
-
-            <span class="input-group-text ms-2">
-                <mat-icon>inventory_2</mat-icon>
-            </span>
-            <select class="form-select" formControlName="tipoPaquete">
+        <div class="caja">
+            <span class="label">Tipo </span>
+            <select formControlName="id_tipo_paquete">
                 @for (item of listTipoPaquete; track $index) {
-                <option [value]="item.id">{{item.nombre}}</option>
+                    <option [value]="item.id">{{item.nombre}}</option>
                 }
+                <option>Paquete</option>
             </select>
-
-
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text">
-                <mat-icon>notes</mat-icon>
-            </span>
-            <input type="text" class="form-control" placeholder="Detalle" formControlName="descrip">
-
         </div>
 
-        <div class="input-group mb-3">
-
-            <span class="input-group-text">
-                <mat-icon>shopping_cart</mat-icon>
-            </span>
-            <input type="number" class="form-control" placeholder="Cantidad" formControlName="cant">
-
-            <span class="input-group-text ms-2">
-                <mat-icon>sell</mat-icon>
-            </span>
-            <input type="number" class="form-control" placeholder="Precio Total" formControlName="precio">
-
+        <div class="caja">
+            <span class="label">Detalle </span>
+            <input class="input" type="text" placeholder="Ingrese detalle" formControlName="detalle">
         </div>
+
+        <div class="caja">
+            <span class="label">Cantidad </span>
+            <input class="input" type="number" placeholder="Ingrese cantidad" formControlName="cant">
+        </div>
+
+        <div class="caja">
+            <span class="label">Precio </span>
+            <input class="input" type="number" placeholder="Ingrese precio total" formControlName="precio">
+        </div>
+
     </form>
 
 
-    <div class="d-flex justify-content-end mt-3 mb-3">
-        <button type="button" (click)="closeDialog()" class="btn btn-secondary">Cancelar</button>
-        &nbsp;
-        <button type="button" (click)="onAceptar()" [disabled]="!formulario.valid"
-            class="btn btn-primary">Guardar</button>
+    <div class="actions">
+        <button (click)="closeDialog()">Cancelar</button>
+        <button (click)="onAceptar()">Guardar</button>
     </div>
 
 

@@ -58,6 +58,5 @@ export class RepartoService {
     body: any
   ) {
     return this.http.post(this.url, body)
-
   }
 }

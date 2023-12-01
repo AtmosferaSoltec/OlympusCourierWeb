@@ -40,9 +40,8 @@
 
 
     <div class="d-flex justify-content-end mt-3">
-        <button type="button" (click)="cancel()" class="btn btn-secondary">Cancelar</button>
+        <button (click)="cancel()" class="btn btn-secondary">Cancelar</button>
         &nbsp;
-        <button type="button" (click)="guardarReparto()" [disabled]="!formulario.valid"
-            class="btn btn-primary">Guardar</button>
+        <button (click)="guardarReparto()" class="btn btn-primary">Guardar</button>
     </div>
 </div>

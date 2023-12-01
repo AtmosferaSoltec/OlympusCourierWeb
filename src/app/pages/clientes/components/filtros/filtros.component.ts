@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [CommonModule, MatIconModule],
   templateUrl: './filtros.component.html',
-  styleUrl: './filtros.component.css'
+  styleUrl: './filtros.component.scss'
 })
 export class FiltrosComponent {
 

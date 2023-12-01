@@ -7,6 +7,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { Usuario } from '../../../../../models/usuario';
 import { DialogUsuarioComponent } from '../dialog-usuario/dialog-usuario.component';
 import { TipoPaquete } from '../../../../../models/tipo-paquete';
+import { PanelAdminService } from '../../../panel-admin.service';
+import { PaqueteService } from '../../../../../services/paquete.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dialog-paquetes',
@@ -19,6 +22,8 @@ export class DialogPaquetesComponent {
 
   formulario: FormGroup;
   private fb = inject(FormBuilder);
+  private panelService = inject(PanelAdminService);
+  private paqueteService = inject(PaqueteService);
 
   listDocumento: any[] = []
   listDistritos: any[] = []
@@ -41,7 +46,37 @@ export class DialogPaquetesComponent {
     this.dialogRef.close();
   }
 
+
   guardar() {
-    this.dialogRef.close()
+    if (this.formulario.valid) {
+      this.paqueteService.add(this.formulario.get('nombre')?.value).subscribe({
+        next: (data: any) => {
+          if (data?.isSuccess){
+            Swal.fire({
+              title: "Insertado!",
+              text: "Tipo de paquete insertado.",
+              icon: "success",
+              confirmButtonText: "Continuar",
+              confirmButtonColor: "#047CC4",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.panelService.obtenerTipoPaquetes()
+                this.dialogRef.close()
+              }
+            });
+
+          }else{
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: data?.mensaje || 'Error al insertar',
+              confirmButtonText: "Cerrar",
+              confirmButtonColor: "#047CC4",
+            });
+          }
+        },
+        error: (err) => console.log(err)
+      })
+    }
   }
 }

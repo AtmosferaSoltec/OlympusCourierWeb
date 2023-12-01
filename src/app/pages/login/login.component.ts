@@ -11,7 +11,7 @@ import { DistritoService } from '../../services/distrito.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   router = inject(Router)

@@ -18,7 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
     FiltrosComponent, TablaComponent, MatTooltipModule
   ],
   templateUrl: './clientes.component.html',
-  styleUrl: './clientes.component.css'
+  styleUrl: './clientes.component.scss'
 })
 export class ClientesComponent {
 

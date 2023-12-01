@@ -1,0 +1,91 @@
+$colorP1: #047cc4;
+
+table,
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+}
+
+mat-icon {
+  color: gray;
+}
+
+.table {
+  width: 100%;
+  margin: 10px auto;
+  border-radius: 0.6rem;
+  overflow: auto;
+
+  table {
+    width: 100%;
+
+    thead th {
+      position: sticky;
+      top: 0;
+      left: 0;
+      background-color: $colorP1;
+      color: white;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #0000000b;
+    }
+
+    td {
+      .status {
+        padding: 0.3rem 0;
+        border-radius: 2rem;
+        text-align: center;
+        margin: 0;
+      }
+
+      .status.P {
+        background-color: #86e49d;
+        color: #006b21;
+      }
+
+      .status.A {
+        background-color: #d893a3;
+        color: #b30021;
+      }
+
+      .status.E {
+        background-color: #6fcaea;
+      }
+    }
+  }
+}
+
+.table::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.table::-webkit-scrollbar-thumb {
+  border-radius: 0.5rem;
+  background-color: #0004;
+  visibility: hidden;
+}
+
+.table:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
+
+.sin-data {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  color: #808080;
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+@media (max-width: 1000px) {
+  td:not(:first-of-type) {
+    min-width: 12.1rem;
+  }
+}

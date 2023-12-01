@@ -65,8 +65,8 @@ export class PanelAdminService {
     })
   }
 
-  eliminarUsuario(item: Usuario) {
-    this.usuarioService.eliminar(item).subscribe({
+  eliminarUsuario(item: Usuario, estado: string) {
+    this.usuarioService.eliminar(item.id, estado).subscribe({
       next: (data: any) => {
         if (data?.isSuccess) {
           Swal.fire({
@@ -112,8 +112,8 @@ export class PanelAdminService {
     })
   }
 
-  eliminarTipoPaquete(item: TipoPaquete) {
-    this.paqueteService.eliminar(item).subscribe({
+  eliminarTipoPaquete(item: TipoPaquete, estado: string) {
+    this.paqueteService.eliminar(item.id, estado).subscribe({
       next: (data: any) => {
         if (data?.isSuccess) {
           Swal.fire({
@@ -159,8 +159,8 @@ export class PanelAdminService {
     })
   }
 
-  eliminarDistrito(item: Distrito) {
-    this.distritoService.eliminar(item).subscribe({
+  eliminarDistrito(item: Distrito, estado: string) {
+    this.distritoService.eliminar(item.id, estado).subscribe({
       next: (data: any) => {
         if (data?.isSuccess) {
           Swal.fire({
@@ -184,4 +184,6 @@ export class PanelAdminService {
       error: (err) => console.log(err)
     });
   }
+
+  
 }

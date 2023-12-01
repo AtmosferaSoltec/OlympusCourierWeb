@@ -1,79 +1,49 @@
-<table mat-table [dataSource]="listRepartos">
-    <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>N° Reparto</th>
-        <td mat-cell *matCellDef="let item">
-            {{formatoId(item.id)}} <br />
-            C° -
-        </td>
-    </ng-container>
-    <ng-container matColumnDef="cliente">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="nombres">Cliente</th>
-        <td mat-cell *matCellDef="let item">{{item.cliente?.nombres}}
-        </td>
-    </ng-container>
-    <ng-container matColumnDef="fecha">
-        <th mat-header-cell *matHeaderCellDef>Fecha</th>
-        <td mat-cell *matCellDef="let item">{{formatDate(item.fecha_nac)}}</td>
-    </ng-container>
-    <ng-container matColumnDef="flete">
-        <th mat-header-cell *matHeaderCellDef>Flete</th>
-        <td mat-cell *matCellDef="let item">S/{{item.total}} </td>
-    </ng-container>
-    <ng-container matColumnDef="estado">
-        <th mat-header-cell *matHeaderCellDef>Estado</th>
-        <td mat-cell *matCellDef="let item">
-            <span class="item__estado" [ngClass]="
-            {
-                'item__estado_p': item.estado === 'P',
-                'item__estado_e': item.estado === 'E',
-                'item__estado_a': item.estado === 'A',
-            }">
-                {{getEstado(item.estado)}}
-            </span>
-        </td>
-    </ng-container>
-    <ng-container matColumnDef="act">
-        <th mat-header-cell *matHeaderCellDef>Acciones
-        </th>
-        <td mat-cell *matCellDef="let item">
-            <div class="estado-content">
-                <div class="estado-icons">
-                    <button class="btn__icon" mat-icon-button matTooltip="Ver más" [matMenuTriggerFor]="mas">
-                        <mat-icon class="icon__horizontal larger-icon">more_horiz</mat-icon>
+<div class="table">
+    <table>
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (item of listRepartos; track $index) {
+            <tr>
+                <td>{{formatoId(item.id)}}</td>
+                <td>{{item.cliente?.nombres}}</td>
+                <td>{{formatDate(item.fecha_creacion)}}</td>
+                <td>
+                    <p class="status" [ngClass]="item.estado">{{item.estado}}</p>
+                </td>
+                <td>S/{{item.total}}</td>
+                <td>
+                    @if(item.activo !== "E"){
+                    @if(item.activo == "S"){
+                    <button mat-icon-button matTooltip="Detalle" (click)="toDetalle(item.id)">
+                        <mat-icon>visibility</mat-icon>
                     </button>
-
-                    <mat-menu #mas="matMenu">
-                        <button mat-menu-item (click)="toDetalle(item.id)">
-                            <mat-icon color="primary">visibility</mat-icon>
-                            <span>Ver Detalle</span>
-                        </button>
-                        @if (usuarioService.usuario?.cod_rol !== 'U') {
-                        <button mat-menu-item>
-                            <mat-icon color="warn">delete</mat-icon>
-                            <span>Eliminar</span>
-                        </button>
-                        }
-                        <button mat-menu-item (click)="generarComprobante()">
-                            <mat-icon>description</mat-icon>
-                            <span>Generar Comprobante</span>
-                        </button>
-                    </mat-menu>
-                </div>
-
-            </div>
-        </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-    <tr mat-row *matRowDef="let row = index; columns: columnas;"
-        [ngStyle]="{'background-color': row % 2 === 0 ? '#ffffff' : '#f8f8f8'}" style="height: 70px;"></tr>
-
-</table>
-
-@if (listRepartos.length ===0) {
-<div class="sin-repartos">
-    <span>No se obtuvo repartos</span>
+                    <button mat-icon-button matTooltip="Eliminar">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    }@else if(item.activo === "N"){
+                    <button mat-icon-button matTooltip="Restaurar">
+                        <mat-icon>restart_alt</mat-icon>
+                    </button>
+                    }
+                    }
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    @if (listRepartos.length === 0) {
+    <div class="sin-data">
+        <mat-icon>hourglass_empty</mat-icon>
+        Sin Datos
+    </div>
+    }
 </div>
-}@else {
-<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
-</mat-paginator>
-}
