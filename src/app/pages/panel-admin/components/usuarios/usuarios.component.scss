@@ -138,6 +138,11 @@ mat-icon {
       .status.U {
         background-color: #6fcaea;
       }
+
+      .status.E {
+        background-color: lighten($color: gray, $amount: 40%);
+        color: gray;
+      }
     }
   }
 }

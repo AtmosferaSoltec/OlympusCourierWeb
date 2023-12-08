@@ -7,7 +7,7 @@ import { Distrito } from '../../models/distrito';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './menu-select.component.html',
-  styleUrl: './menu-select.component.css'
+  styleUrl: './menu-select.component.scss'
 })
 export class MenuSelectComponent {
   // Asegúrate de que el tipo de datos sea adecuado para tu caso

@@ -15,7 +15,7 @@ import { DocumentoService } from '../../../../services/documento.service';
   standalone: true,
   imports: [CommonModule, MatIconModule, MatButtonModule, ReactiveFormsModule],
   templateUrl: './filtros.component.html',
-  styleUrl: './filtros.component.css'
+  styleUrl: './filtros.component.scss'
 })
 export class FiltrosComponent {
 

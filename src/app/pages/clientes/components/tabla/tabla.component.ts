@@ -39,7 +39,11 @@ export class TablaComponent {
   async listarClientes() {
     this.clienteService.listarClientes().subscribe({
       next: (data: any) => {
-        this.listClientes.data = data.data;
+        if(data?.isSuccess){
+          this.listClientes.data = data.data.map((clienteData: any) => new Cliente(clienteData));
+        }else{
+          console.log(data?.mensaje); 
+        }
       },
       error: error => console.log(error)
     });

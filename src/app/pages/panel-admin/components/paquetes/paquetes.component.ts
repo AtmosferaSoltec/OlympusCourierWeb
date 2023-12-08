@@ -46,12 +46,18 @@ export class PaquetesComponent {
 
 
   eliminar(item: TipoPaquete, estado: string) {
+    let texto = "";
+    if (estado == "N"){
+      texto = "Se eliminara este paquete!"
+    }else if(estado === "S"){
+      texto = "Se restaurara este paquete!"
+    }
     Swal.fire({
       title: "¿Estas seguro?",
-      text: "Se eliminara este tipo de paquete!",
+      text: texto,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Si, Eliminar!",
+      confirmButtonText: "Confirmar",
       confirmButtonColor: "#047CC4",
       cancelButtonText: "Cancelar",
       cancelButtonColor: "#d33",

@@ -11,6 +11,8 @@ import moment from 'moment';
 import { RepartoService } from '../../../../services/reparto.service';
 import { UsuarioService } from '../../../../services/usuario.service';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import Swal from 'sweetalert2';
+import { environment } from '../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-tabla',
@@ -38,6 +40,10 @@ export class TablaComponent {
   usuarioService = inject(UsuarioService);
 
   constructor() {
+    this.listarRepartos();
+  }
+
+  listarRepartos() {
     this.repartoService.listarRepartos().subscribe({
       next: (data: any) => {
         if (data && data.isSuccess) {
@@ -46,7 +52,6 @@ export class TablaComponent {
       },
       error: error => console.log(error)
     });
-
   }
 
 
@@ -55,8 +60,12 @@ export class TablaComponent {
     return `#${idStr}`;
   }
   formatDate(fecha: string | undefined): string {
-    const date = moment(fecha);
-    return date.format('DD/MM/YYYY HH:mm');
+    if (fecha == undefined) {
+      return 'Sin Fecha';
+    } else {
+      const date = moment(fecha);
+      return date.format('DD/MM/YYYY HH:mm');
+    }
   }
   getEstado(estado: string): string {
     switch (estado) {
@@ -90,4 +99,86 @@ export class TablaComponent {
   generarComprobante() {
 
   }
+
+
+
+
+
+
+
+  // Alerta para eliminar un reparto
+  deleteReparto(reparto: Reparto) {
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: "Se eliminara el reparto seleccionado",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Confirmar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.repartoService.delete(reparto.id, 'N').subscribe({
+          next: (data: any) => {
+            if (data?.isSuccess) {
+              Swal.fire({
+                title: "Eliminado",
+                text: "Se elimino el reparto correctamente",
+                icon: "success"
+              });
+              this.listarRepartos();
+            } else {
+              Swal.fire({
+                title: "Error",
+                text: data?.mensaje || "Ocurrio un error al eliminar el reparto",
+                icon: "error"
+              });
+            }
+          }
+        })
+      }
+    });
+  }
+
+
+  // Alerta para recuperar un reparto
+  recuperarReparto(reparto: Reparto) {
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: "Se recuperara el reparto seleccionado",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Confirmar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result?.isConfirmed) {
+        this.repartoService.delete(reparto.id, 'S').subscribe({
+          next: (data: any) => {
+            if (data?.isSuccess) {
+              Swal.fire({
+                title: "Recuperado",
+                text: "Se recupero el reparto correctamente",
+                icon: "success"
+              });
+              this.listarRepartos();
+            } else {
+              Swal.fire({
+                title: "Error",
+                text: data?.mensaje || "Ocurrio un error al recuperar el reparto",
+                icon: "error"
+              });
+            }
+          },
+          error : (err)=>{
+            console.log(err);
+            Swal.fire({
+              title: "Error",
+              text: err || "Ocurrio un error al recuperar el reparto",
+              icon: "error"
+            })
+          }
+        })
+      }
+    })
+  }
+
 }

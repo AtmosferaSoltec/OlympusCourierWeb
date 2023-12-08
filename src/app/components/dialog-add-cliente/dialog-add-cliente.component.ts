@@ -12,21 +12,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { DocumentoService } from '../../services/documento.service';
 import { ConsultasService } from '../../services/consultas.service';
-import { Documento } from '../../models/documento';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-dialog-add-cliente',
   standalone: true,
-  imports: [CommonModule, MenuSelectComponent, ReactiveFormsModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MenuSelectComponent, ReactiveFormsModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './dialog-add-cliente.component.html',
-  styleUrl: './dialog-add-cliente.component.css'
+  styleUrl: './dialog-add-cliente.component.scss'
 })
 export class DialogAddClienteComponent {
   formulario: FormGroup
   clienteService = inject(ClienteService);
   selectedDistrito: any;
   listDistritos: Distrito[] = [];
-  listDocumento: Documento[] = [];
 
   documentoService = inject(DocumentoService)
   consultasService = inject(ConsultasService)
@@ -38,10 +37,9 @@ export class DialogAddClienteComponent {
     @Inject(MAT_DIALOG_DATA) public data: Cliente | undefined,
   ) {
 
-    this.listarDocumentos();
-    this.listarDestinos();
+    this.listarDistritos();
     this.formulario = this.fb.group({
-      tipo: [data?.cod_tipodoc ? data.cod_tipodoc : 'Dni', [Validators.required]],
+      tipo: [data?.cod_tipodoc ? data.cod_tipodoc : '1', [Validators.required]],
       doc: [data?.documento, [Validators.required, Validators.minLength(8)]],
       nombres: [data?.nombres, [Validators.required, Validators.maxLength(100)]],
       cel: [data?.telefono, [Validators.required, Validators.minLength(9)]],
@@ -54,30 +52,15 @@ export class DialogAddClienteComponent {
     })
   }
 
-  listarDocumentos() {
-    this.documentoService.getAll().subscribe({
-      next: (data: any) => {
-        console.log(data.data);
-
-        this.listDocumento = data.data;
-        this.formulario.get('tipo')?.setValue(this.listDocumento[0].cod)
-      },
-      error: (err) => {
-        console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al obtener',
-          text: 'Hubo un problema al obtener los documentos. Por favor, inténtelo de nuevo más tarde.',
-        })
-      }
-    })
-  }
-
-  listarDestinos() {
+  listarDistritos() {
     this.distritoService.listarDistritos().subscribe({
       next: (data: any) => {
-        this.listDistritos = data.data
-        this.formulario.get('distrito')?.setValue(this.listDistritos[0].id)
+        if (data?.isSuccess) {
+          this.listDistritos = data.data.map((distritoData: any) => new Distrito(distritoData));
+          this.formulario.get('distrito')?.setValue(this.listDistritos[0]?.id)
+        } else {
+          console.log(data);
+        }
       },
       error: error => {
         console.log(error)
@@ -90,7 +73,10 @@ export class DialogAddClienteComponent {
     });
   }
 
+  progressBuscarDoc: boolean = false;
+
   buscarDoc() {
+    this.progressBuscarDoc = true;
     const doc = this.formulario.get('doc')
     const tipo = this.formulario.get('tipo')
     if (doc?.valid) {
@@ -101,9 +87,11 @@ export class DialogAddClienteComponent {
               this.formulario.get('nombres')?.setValue(`${data.datos.nombres} ${data.datos.apellidoPaterno} ${data.datos.nombres}`);
               this.formulario.get('direc')?.setValue('');
             }
+            this.progressBuscarDoc = false;
           },
           error: (err) => {
             console.log(err);
+            this.progressBuscarDoc = false;
           }
         })
       }
@@ -115,14 +103,31 @@ export class DialogAddClienteComponent {
               this.formulario.get('nombres')?.setValue(`${data.datos.razonSocial}`);
               this.formulario.get('direc')?.setValue(`${data.datos.direccion}`);
             }
+            this.progressBuscarDoc = false;
           },
           error: (err) => {
             console.log(err);
+            this.progressBuscarDoc = false;
           }
         })
-
       }
+    } else {
+      this.progressBuscarDoc = false;
+    }
+  }
 
+  resetDoc() {
+    this.formulario.get('doc')?.reset();
+  }
+
+  getMaxLength(): number {
+    const tipo = this.formulario.get('tipo')?.value;
+    if (tipo == 1) {
+      return 8;
+    } else if (tipo == 6) {
+      return 11;
+    } else {
+      return 12;
     }
   }
 
@@ -143,16 +148,14 @@ export class DialogAddClienteComponent {
       if (this.data == undefined) {
         this.clienteService.addCliente(body).subscribe({
           next: (data: any) => {
-            if (data) {
-              if (data.isSuccess) {
-                this.dialogRef.close(body);
-              } else {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Error al insertar',
-                  text: data.mensaje,
-                })
-              }
+            if(data?.isSuccess){
+              this.dialogRef.close(data.data);
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: 'Error al insertar',
+                text: data?.mensaje,
+              })
             }
           },
           error: err => console.log(err)
@@ -160,16 +163,18 @@ export class DialogAddClienteComponent {
       } else {
         this.clienteService.updateCliente(body, this.data?.id).subscribe({
           next: (data: any) => {
-            if (data) {
-              if (data.isSuccess) {
-                this.dialogRef.close(body);
-              } else {
-                console.log(data);
-              }
+            if(data?.isSuccess){
+              this.dialogRef.close(this.data?.id);
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: 'Error al actualizar',
+                text: data?.mensaje,
+              })
             }
           },
           error: err => console.log(err)
-        })
+        });
       }
     } else {
       Swal.fire({
@@ -182,7 +187,7 @@ export class DialogAddClienteComponent {
         confirmButtonText: 'Confirmar',
         confirmButtonColor: '#05ACD7',
         confirmButtonAriaLabel: '#FFF'
-      })
+      });
     }
   }
 

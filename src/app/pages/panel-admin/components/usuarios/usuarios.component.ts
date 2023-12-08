@@ -25,7 +25,7 @@ export class UsuariosComponent {
     const inputValue = (event.target as HTMLInputElement).value;
     if (inputValue.length > 0) {
       this.panelAdminService.listUsuarios = this.panelAdminService.listUsuariosTotal.filter(objeto =>
-        objeto.nombres.toLowerCase().includes(inputValue.toLowerCase())
+        objeto.nombres?.toLowerCase().includes(inputValue.toLowerCase())
       );
     } else {
       this.panelAdminService.listUsuarios = this.panelAdminService.listUsuariosTotal;
@@ -46,12 +46,18 @@ export class UsuariosComponent {
   }
 
   eliminar(item: Usuario, estado: string) {
+    let texto = "";
+    if (estado == "N"){
+      texto = "Se eliminara este usuario!"
+    }else if(estado === "S"){
+      texto = "Se restaurara este usuario!"
+    }
     Swal.fire({
       title: "¿Estas seguro?",
-      text: "Se eliminara este usuario!",
+      text: texto,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Si, Eliminar!",
+      confirmButtonText: "Confirmar",
       confirmButtonColor: "#047CC4",
       cancelButtonText: "Cancelar",
       cancelButtonColor: "#d33",

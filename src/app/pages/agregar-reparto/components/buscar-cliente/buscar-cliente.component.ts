@@ -75,9 +75,14 @@ export class BuscarClienteComponent {
       data: this.service.cliente,
     })
 
-    dialogRef.afterClosed().subscribe((data: Cliente) => {
+    dialogRef.afterClosed().subscribe((data: any) => {
       if (data) {
-        this.service.cliente = data
+        this.clienteService.getCliente(data).subscribe({
+          next:(res:any)=>{ 
+            this.service.cliente = new Cliente(res.data)
+          },
+          error: (err:any)=> console.log(err)
+        })
       }
     })
   }

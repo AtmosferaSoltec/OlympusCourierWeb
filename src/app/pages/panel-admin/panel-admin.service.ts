@@ -40,7 +40,7 @@ export class PanelAdminService {
     this.usuarioService.getAll().subscribe({
       next: (data: any) => {
         if (data && data.isSuccess) {
-          this.listUsuarios = data.data
+          this.listUsuarios = data.data.map((usuarioData: any) => new Usuario(usuarioData));
           const listMap = this.listUsuarios.map((usuario: Usuario) => {
             if (usuario.cod_rol == "A") {
               usuario.rol = "Admin"
@@ -99,7 +99,7 @@ export class PanelAdminService {
     this.paqueteService.getAll().subscribe({
       next: (data: any) => {
         if (data?.isSuccess) {
-          this.listPaquetes = data.data
+          this.listPaquetes = data.data.map((paqueteData: any) => new TipoPaquete(paqueteData));
           this.listPaquetesTotal = this.listPaquetes
         } else {
           console.log(data?.mensaje || 'Error al obtener Tipo de Paquetes');
@@ -146,7 +146,7 @@ export class PanelAdminService {
     this.distritoService.listarDistritos().subscribe({
       next: (data: any) => {
         if (data?.isSuccess) {
-          this.listDistritos = data.data
+          this.listDistritos = data.data.map((distritoData: any) => new Distrito(distritoData));
           this.listDistritosTotal = this.listDistritos
         } else {
           console.log(data?.mensaje || 'Error al obtener Distritos');
@@ -185,5 +185,5 @@ export class PanelAdminService {
     });
   }
 
-  
+
 }

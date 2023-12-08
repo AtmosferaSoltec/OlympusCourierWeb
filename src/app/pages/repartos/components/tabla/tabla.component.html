@@ -4,7 +4,8 @@
             <tr>
                 <th>N°</th>
                 <th>Cliente</th>
-                <th>Fecha</th>
+                <th>Creado</th>
+                <th>Entregado</th>
                 <th>Estado</th>
                 <th>Total</th>
                 <th>Acciones</th>
@@ -16,6 +17,7 @@
                 <td>{{formatoId(item.id)}}</td>
                 <td>{{item.cliente?.nombres}}</td>
                 <td>{{formatDate(item.fecha_creacion)}}</td>
+                <td>{{formatDate(item.fecha_entrega)}}</td>
                 <td>
                     <p class="status" [ngClass]="item.estado">{{item.estado}}</p>
                 </td>
@@ -26,11 +28,11 @@
                     <button mat-icon-button matTooltip="Detalle" (click)="toDetalle(item.id)">
                         <mat-icon>visibility</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="Eliminar">
+                    <button mat-icon-button matTooltip="Eliminar" (click)="deleteReparto(item)">
                         <mat-icon>delete</mat-icon>
                     </button>
                     }@else if(item.activo === "N"){
-                    <button mat-icon-button matTooltip="Restaurar">
+                    <button mat-icon-button matTooltip="Restaurar" (click)="recuperarReparto(item)">
                         <mat-icon>restart_alt</mat-icon>
                     </button>
                     }

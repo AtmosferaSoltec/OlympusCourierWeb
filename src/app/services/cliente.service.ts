@@ -15,10 +15,10 @@ export class ClienteService {
     return this.http.get<any>(`${this.url}/search/${data}`)
   }
 
-  addCliente(cliente: Cliente) {
+  addCliente(cliente: any) {
     return this.http.post(this.url, cliente)
   }
-  updateCliente(cliente: Cliente, id: any) {
+  updateCliente(cliente: any, id: any) {
     return this.http.put(`${this.url}/${id}`, cliente)
   }
 
@@ -38,6 +38,10 @@ export class ClienteService {
 
   listarClientes(): Observable<Cliente[]> {
     return this.http.get<any>(this.url);
+  }
+
+  getCliente(id: string) {
+    return this.http.get<any>(`${this.url}/${id}`);
   }
 
 }

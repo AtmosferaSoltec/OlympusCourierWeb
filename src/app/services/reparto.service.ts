@@ -11,7 +11,6 @@ import { ItemReparto } from '../models/item-reparto';
 })
 export class RepartoService {
 
-
   clienteService = inject(ClienteService)
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/repartos`;
@@ -24,35 +23,9 @@ export class RepartoService {
     return this.http.get<any>(this.url);
   }
 
-  /*async listarRepartos(): Promise<Reparto[]> {
-    try {
-      const col = collection(this.fb, 'Reparto')
-      const allRepartos = await getDocs(col);
-      const destinos: Reparto[] = [];
-      allRepartos.docs.forEach(async doc => {
-        const data: any = doc.data();
-        const reparto: Reparto = {
-          cliente: await this.clienteService.getClienteById(data.idCliente),
-          fecha: data.fecha,
-          estado: data.estado,
-          clave: data.clave,
-          anotacion: data.anotacion,
-          items: data.items,
-        }
-        reparto.id = data.id
-        destinos.push(reparto);
-      });
-      return destinos;
-    } catch (error) {
-      console.log(error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al obtener',
-        text: 'Hubo un problema al obtener los repartos. Por favor, inténtelo de nuevo más tarde.',
-      })
-      return []
-    }
-  }*/
+  delete(id: number | undefined, activo: 'N' | 'S') {
+    return this.http.patch(`${this.url}/${id}`, { activo: activo });
+  }
 
   insert(
     body: any

@@ -34,10 +34,13 @@
                     <td><img src="../../../../../assets/user.png" alt="">{{item.nombres}} {{item.ape_paterno}}</td>
                     <td>{{item.telefono}}</td>
                     <td>
-                        <p class="status" [ngClass]="item.cod_rol">{{item.rol}}</p>
+                        @if (item.activo === 'N') {
+                            <p class="status E">Eliminado</p>
+                        }@else {
+                            <p class="status" [ngClass]="item.cod_rol">{{item.rol}}</p>
+                        }
                     </td>
                     <td>
-                        @if(item.activo !== "E"){
                         @if(item.activo == "S"){
                         <button mat-icon-button matTooltip="Editar" (click)="openDialog(item)">
                             <mat-icon>edit</mat-icon>
@@ -49,7 +52,6 @@
                         <button mat-icon-button matTooltip="Restaurar" (click)="eliminar(item, 'S')">
                             <mat-icon>restart_alt</mat-icon>
                         </button>
-                        }
                         }
                     </td>
                 </tr>

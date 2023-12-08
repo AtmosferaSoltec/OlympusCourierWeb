@@ -47,9 +47,16 @@
     <!--Lista de Clientes Encontrados-->
     <div class="sugerencias">
         <ul class="auto__completar" *ngIf="showSugerencias">
-            <li *ngFor="let item of data$" (click)="selectCliente(item)">
+            @for (item of data$; track $index) {
+            <li (click)="selectCliente(item)">
                 {{item.nombres}}
             </li>
+            }
+            @if (data$.length === 0) {
+            <li>
+                No se encontraron resultados
+            </li>
+            }
         </ul>
     </div>
 </div>

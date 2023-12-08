@@ -27,7 +27,7 @@ export class DestinosComponent {
     const inputValue = (event.target as HTMLInputElement).value;
     if (inputValue.length > 0) {
       this.panelAdminService.listDistritos = this.panelAdminService.listDistritosTotal.filter(objeto =>
-        objeto.nombre.toLowerCase().includes(inputValue.toLowerCase())
+        objeto.nombre?.toLowerCase().includes(inputValue.toLowerCase())
       );
     } else {
       this.panelAdminService.listDistritos = this.panelAdminService.listDistritosTotal;
