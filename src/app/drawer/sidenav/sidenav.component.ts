@@ -67,7 +67,9 @@ export class SidenavComponent {
 
   constructor() {
     if (this.idUser) {
-      this.usuarioService.get(this.idUser).subscribe({
+      //Convertir idUser a number
+      const id = Number(this.idUser);
+      this.usuarioService.get(id).subscribe({
         next: (data: any) => {
           if (data && data.isSuccess) {
             this.usuarioService.usuario = data.data;

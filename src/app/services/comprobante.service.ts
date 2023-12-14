@@ -3,6 +3,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { State } from '../interfaces/state';
 import { Comprobante } from '../interfaces/comprobante';
+import { delay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,23 +22,37 @@ export class ComprobanteService {
     this.getAll();
   }
 
-  getAll() {
-    this.http.get(this.url).subscribe({
-      next: (res: any) => {
-        if (res?.isSuccess) {
-          this.#state.set({ loading: false, data: res.data })
-        } else {
-          this.#state.set({ loading: false, error: res?.mensaje ?? 'Error al obtener comprobantes' })
-        }
-      },
-      error: (err: any) => {
-        console.log(err.message)
-        this.#state.set({ loading: false, data: [] })
+  getAll(
+    data: {
+      estado: 'T' | 'A' | 'N',
+      metodoPago: string,
+      tipoDoc: 'T' | '1' | '6',
+      idUser: string
+    } = {
+        estado: 'T',
+        metodoPago: 'T',
+        tipoDoc: '1',
+        idUser: 'T'
       }
-    })
+  ) {
+    this.http.get(this.url, { params: data })
+      .pipe(delay(500))
+      .subscribe({
+        next: (res: any) => {
+          if (res?.isSuccess) {
+            this.#state.set({ loading: false, data: res.data })
+          } else {
+            this.#state.set({ loading: false, error: res?.mensaje ?? 'Error al obtener comprobantes' })
+          }
+        },
+        error: (err: any) => {
+          console.log(err.message)
+          this.#state.set({ loading: false, data: [] })
+        }
+      })
   }
 
-  get(idReparto: number){
+  get(idReparto: number) {
     return this.http.get(`${this.url}/${idReparto}`);
   }
 

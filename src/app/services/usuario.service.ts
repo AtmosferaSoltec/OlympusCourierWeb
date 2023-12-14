@@ -57,7 +57,7 @@ export class UsuarioService {
       })
   }
 
-  get(id: string) {
+  get(id: number) {
     return this.http.get(`${this.baseUrl}/${id}`)
   }
 

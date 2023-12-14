@@ -9,13 +9,14 @@
 
         <div class="flex flex-row items-center justify-between text-lg font-semibold text-textos">
             Datos del Cliente
-            <span class="mr-1">N° Reparto {{service.reparto?.id | mostrarID}}</span>
+            <span class="mr-1">N° Reparto {{service.reparto()?.id | mostrarID}}</span>
         </div>
-        <app-detalle-cliente [cliente]="service.reparto?.cliente"></app-detalle-cliente>
+        <app-detalle-cliente [cliente]="service.reparto()?.cliente"></app-detalle-cliente>
 
         <hr class="border-t border-gray-200 my-4">
 
-        @for (item of reparto?.items; track item.id; let idx = $index) {
+        @for (item of service.reparto()?.items; track item.id; let idx = $index) {
+
         <app-card-item [item]="item" [index]="idx"></app-card-item>
         }
     </div>
@@ -39,32 +40,28 @@
                 </mat-menu>
 
             </span>
-            <app-detalle-item title="Estado" [descrip]="reparto?.estado | mostrarEstado"></app-detalle-item>
-            <app-detalle-item title="Total" [descrip]="'S/'+reparto?.total"></app-detalle-item>
+            <app-detalle-item title="Estado" [descrip]="service.reparto()?.estado | mostrarEstado"></app-detalle-item>
+            <app-detalle-item title="Total" [descrip]="'S/'+service.reparto()?.total"></app-detalle-item>
             <app-detalle-item title="Comprobante"
                 [descrip]="comprobante()?.serie + ' - '+ comprobante()?.num_serie"></app-detalle-item>
-
-            <div class=" flex flex-row items-center justify-center gap-2 mt-3">
-
-            </div>
         </div>
 
         <div>
             <span class="sub-titulo">Creado:</span>
             <app-detalle-item title="Usuario" descrip="Joel Maldonado"></app-detalle-item>
             <app-detalle-item title="Fecha"
-                [descrip]="service.reparto?.fecha_creacion | date: 'dd/MM/yyyy'"></app-detalle-item>
+                [descrip]="service.reparto()?.fecha_creacion | date: 'dd/MM/yyyy'"></app-detalle-item>
             <app-detalle-item title="Hora"
-                [descrip]="service.reparto?.fecha_creacion | date: 'HH:mm'"></app-detalle-item>
+                [descrip]="service.reparto()?.fecha_creacion | date: 'HH:mm'"></app-detalle-item>
         </div>
 
         <div>
             <span class="sub-titulo">Entregado:</span>
             <app-detalle-item title="Usuario" descrip="Joel Maldonado"></app-detalle-item>
             <app-detalle-item title="Fecha"
-                [descrip]="service.reparto?.fecha_entrega | date: 'dd/MM/yyyy'"></app-detalle-item>
+                [descrip]="service.reparto()?.fecha_entrega | date: 'dd/MM/yyyy'"></app-detalle-item>
             <app-detalle-item title="Hora"
-                [descrip]="service.reparto?.fecha_entrega | date: 'HH:mm'"></app-detalle-item>
+                [descrip]="service.reparto()?.fecha_entrega | date: 'HH:mm'"></app-detalle-item>
         </div>
     </div>
 </div>
