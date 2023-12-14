@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { ComprobanteService } from '../../services/comprobante.service';
 
 @Component({
   selector: 'app-comprobantes',
@@ -12,4 +13,5 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ComprobantesComponent {
 
+  comprobanteService = inject(ComprobanteService)
 }

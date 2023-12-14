@@ -1,6 +1,6 @@
 import { Route } from "@angular/router";
 import { UsuariosComponent } from "./components/usuarios/usuarios.component";
-import { DestinosComponent } from "./components/destinos/destinos.component";
+import { DestinosComponent } from "./components/distritos/distritos.component";
 import { PaquetesComponent } from "./components/paquetes/paquetes.component";
 
 export default [

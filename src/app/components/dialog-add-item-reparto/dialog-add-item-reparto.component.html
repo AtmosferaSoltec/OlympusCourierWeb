@@ -14,10 +14,9 @@
         <div class="caja">
             <span class="label">Tipo </span>
             <select formControlName="id_tipo_paquete">
-                @for (item of listTipoPaquete; track $index) {
+                @for (item of paqueteService.listTipoPaquetes(); track $index) {
                     <option [value]="item.id">{{item.nombre}}</option>
                 }
-                <option>Paquete</option>
             </select>
         </div>
 

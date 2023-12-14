@@ -5,26 +5,28 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
-import { Reparto } from '../../../../models/reparto';
+import { Reparto } from '../../../../interfaces/reparto';
 import { Router } from '@angular/router';
-import moment from 'moment';
 import { RepartoService } from '../../../../services/reparto.service';
 import { UsuarioService } from '../../../../services/usuario.service';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
-import { environment } from '../../../../../environments/environment.development';
+import { MostrarFechaPipe } from "../../../../pipes/mostrar-fecha.pipe";
+import { MostrarIDPipe } from "../../../../pipes/mostrar-id.pipe";
+import { MostrarEstadoPipe } from "../../../../pipes/mostrar-estado.pipe";
+import { MostrarComprobantePipe } from "../../../../pipes/mostrar-comprobante.pipe";
+import { ComprobanteService } from '../../../../services/comprobante.service';
 
 @Component({
-  selector: 'app-tabla',
-  standalone: true,
-  imports: [CommonModule, MatIconModule, MatTableModule,
-    MatButtonModule, MatTooltipModule, MatMenuModule, MatPaginatorModule],
-  templateUrl: './tabla.component.html',
-  styleUrl: './tabla.component.scss'
+    selector: 'app-tabla',
+    standalone: true,
+    templateUrl: './tabla.component.html',
+    styleUrl: './tabla.component.scss',
+    imports: [CommonModule, MatIconModule, MatTableModule,
+        MatButtonModule, MatTooltipModule, MatMenuModule, MatPaginatorModule, MostrarFechaPipe, MostrarIDPipe, MostrarEstadoPipe, MostrarComprobantePipe]
 })
 export class TablaComponent {
 
-  listRepartos: Reparto[] = [];
   columnas: string[] = [
     'id',
     'cliente',
@@ -34,55 +36,14 @@ export class TablaComponent {
     'act',
   ];
 
-
-
+  comprobanteService = inject(ComprobanteService);
   repartoService = inject(RepartoService);
   usuarioService = inject(UsuarioService);
-
-  constructor() {
-    this.listarRepartos();
-  }
-
-  listarRepartos() {
-    this.repartoService.listarRepartos().subscribe({
-      next: (data: any) => {
-        if (data && data.isSuccess) {
-          this.listRepartos = data.data;
-        }
-      },
-      error: error => console.log(error)
-    });
-  }
-
-
-  formatoId(id: number | undefined): string {
-    const idStr = id?.toString().slice(0, 6).padStart(6, '0');
-    return `#${idStr}`;
-  }
-  formatDate(fecha: string | undefined): string {
-    if (fecha == undefined) {
-      return 'Sin Fecha';
-    } else {
-      const date = moment(fecha);
-      return date.format('DD/MM/YYYY HH:mm');
-    }
-  }
-  getEstado(estado: string): string {
-    switch (estado) {
-      case 'P':
-        return 'Pendiente';
-      case 'E':
-        return 'Entregado';
-      case 'A':
-        return 'Anulado';
-      default:
-        return 'Sin Valor';
-    }
-  }
-
   router = inject(Router);
 
-
+  constructor() {
+    this.repartoService.getAll();
+  }
 
   getTotal(rep: Reparto): number {
     if (rep.items != undefined) {
@@ -95,16 +56,6 @@ export class TablaComponent {
   toDetalle(id: number | undefined) {
     this.router.navigate(['/menu/detalle-reparto', id]);
   }
-
-  generarComprobante() {
-
-  }
-
-
-
-
-
-
 
   // Alerta para eliminar un reparto
   deleteReparto(reparto: Reparto) {
@@ -125,7 +76,8 @@ export class TablaComponent {
                 text: "Se elimino el reparto correctamente",
                 icon: "success"
               });
-              this.listarRepartos();
+              // Actualizar la lista de repartos
+              this.repartoService.getAll();
             } else {
               Swal.fire({
                 title: "Error",
@@ -138,7 +90,6 @@ export class TablaComponent {
       }
     });
   }
-
 
   // Alerta para recuperar un reparto
   recuperarReparto(reparto: Reparto) {
@@ -159,7 +110,8 @@ export class TablaComponent {
                 text: "Se recupero el reparto correctamente",
                 icon: "success"
               });
-              this.listarRepartos();
+              // Actualizar la lista de repartos
+              this.repartoService.getAll();
             } else {
               Swal.fire({
                 title: "Error",
@@ -168,7 +120,7 @@ export class TablaComponent {
               });
             }
           },
-          error : (err)=>{
+          error: (err) => {
             console.log(err);
             Swal.fire({
               title: "Error",

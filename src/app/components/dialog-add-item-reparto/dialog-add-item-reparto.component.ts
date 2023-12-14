@@ -1,13 +1,12 @@
 import { Component, Inject, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ItemReparto } from '../../models/item-reparto';
+import { ItemReparto } from '../../interfaces/item-reparto';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InputBoxComponent } from '../../shared/components/input-box/input-box.component';
 import { PaqueteService } from '../../services/paquete.service';
-import { TipoPaquete } from '../../models/tipo-paquete';
 
 @Component({
   selector: 'app-dialog-add-item-reparto',
@@ -20,7 +19,6 @@ export class DialogAddItemRepartoComponent {
 
   formulario: FormGroup
 
-  listTipoPaquete: TipoPaquete[] = []
 
   paqueteService = inject(PaqueteService)
 
@@ -36,23 +34,6 @@ export class DialogAddItemRepartoComponent {
       detalle: [data?.detalle || '', []],
       cant: [data?.cant || '', [Validators.required, Validators.min(1)]],
       precio: [data?.precio || '', [Validators.required, Validators.min(1)]]
-    })
-
-    this.paqueteService.getAll().subscribe({
-      next: (data: any) => {
-        if (data && data.isSuccess) {
-          this.listTipoPaquete = data.data;
-          if (!this.data?.id_tipo_paquete && this.listTipoPaquete?.length > 0) {
-            this.formulario.get('tipoPaquete')?.setValue(this.listTipoPaquete[0].id)
-          }
-        } else {
-          console.log(data.mensaje ? data.mensaje : 'No se pudo obtener datos');
-        }
-      },
-      error(err) {
-        console.log(err);
-
-      },
     })
   }
 

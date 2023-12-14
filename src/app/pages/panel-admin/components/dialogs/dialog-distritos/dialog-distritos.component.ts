@@ -4,9 +4,9 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angula
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
-import { Usuario } from '../../../../../models/usuario';
+import { Usuario } from '../../../../../interfaces/usuario';
 import { DialogUsuarioComponent } from '../dialog-usuario/dialog-usuario.component';
-import { Distrito } from '../../../../../models/distrito';
+import { Distrito } from '../../../../../interfaces/distrito';
 import { PanelAdminService } from '../../../panel-admin.service';
 import { DistritoService } from '../../../../../services/distrito.service';
 import Swal from 'sweetalert2';
@@ -58,7 +58,6 @@ export class DialogDistritosComponent {
               confirmButtonColor: "#047CC4",
             }).then((result) => {
               if (result.isConfirmed) {
-                this.panelService.obtenerDistritos()
                 this.dialogRef.close()
               }
             });

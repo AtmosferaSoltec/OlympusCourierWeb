@@ -75,7 +75,7 @@ mat-icon {
   visibility: visible;
 }
 
-.sin-data {
+/*.sin-data {
   width: 100%;
   display: flex;
   gap: 10px;
@@ -86,9 +86,31 @@ mat-icon {
   font-size: 16px;
   font-weight: 500;
 }
-
+*/
 @media (max-width: 1000px) {
   td:not(:first-of-type) {
     min-width: 12.1rem;
+  }
+}
+
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: fit-content;
+  font-weight: bold;
+  margin: 10px auto;
+  font-family: sans-serif;
+  font-size: 24px;
+  color: $colorPendiente;
+  padding-bottom: 8px;
+  background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
+  animation: l2 2s linear infinite;
+}
+.loader:before {
+  content: "Cargando...";
+}
+@keyframes l2 {
+  to {
+    background-size: 100% 3px;
   }
 }

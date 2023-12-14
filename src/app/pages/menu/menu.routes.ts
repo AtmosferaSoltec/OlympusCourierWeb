@@ -5,10 +5,12 @@ import { ComprobantesComponent } from '../comprobantes/comprobantes.component';
 import { DetalleRepartoComponent } from '../detalle-reparto/detalle-reparto.component';
 import { PanelAdminComponent } from '../panel-admin/panel-admin.component';
 import { RepartosComponent } from '../repartos/repartos.component';
+import { GenerarComprobanteComponent } from '../generar-comprobante/generar-comprobante.component';
 
 export default [
     { path: 'repartos', component: RepartosComponent },
     { path: 'detalle-reparto/:id', component: DetalleRepartoComponent },
+    { path: 'generar-comprobante/:id', component: GenerarComprobanteComponent },
     { path: 'clientes', component: ClientesComponent },
     { path: 'comprobantes', component: ComprobantesComponent },
     {

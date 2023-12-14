@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { DialogAddItemRepartoComponent } from '../../../../components/dialog-add-item-reparto/dialog-add-item-reparto.component';
-import { ItemReparto } from '../../../../models/item-reparto';
+import { ItemReparto } from '../../../../interfaces/item-reparto';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';

@@ -1,35 +1,49 @@
-import { Injectable, inject } from '@angular/core';
-import { Reparto } from '../models/reparto';
-import { Observable } from 'rxjs';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { Reparto } from '../interfaces/reparto';
+import { delay } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ClienteService } from './cliente.service';
 import { environment } from '../../environments/environment.development';
-import { ItemReparto } from '../models/item-reparto';
+import { State } from '../interfaces/state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RepartoService {
 
-  clienteService = inject(ClienteService)
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/repartos`;
+
+  #state = signal<State<Reparto[]>>({
+    loading: true,
+    data: []
+  });
+  public listRepartos = computed(() => this.#state().data);
+  public loading = computed(() => this.#state().loading);
 
   get(id: number) {
     return this.http.get(`${this.url}/${id}`);
   }
 
-  listarRepartos(): Observable<Reparto[]> {
-    return this.http.get<any>(this.url);
+  getAll() {
+    this.http.get<any>(this.url)
+      .pipe(delay(500))
+      .subscribe({
+        next: (res: any) => {
+          if (res?.isSuccess) {
+            this.#state.set({
+              loading: false,
+              data: res.data
+            });
+          }
+        }
+      });
   }
 
   delete(id: number | undefined, activo: 'N' | 'S') {
     return this.http.patch(`${this.url}/${id}`, { activo: activo });
   }
 
-  insert(
-    body: any
-  ) {
+  insert(body: any) {
     return this.http.post(this.url, body)
   }
 }

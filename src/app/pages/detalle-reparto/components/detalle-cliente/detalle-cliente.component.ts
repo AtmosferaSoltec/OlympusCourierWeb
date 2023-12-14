@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Reparto } from '../../../../models/reparto';
-import { Cliente } from '../../../../models/cliente';
+import { Reparto } from '../../../../interfaces/reparto';
+import { Cliente } from '../../../../interfaces/cliente';
 
 @Component({
   selector: 'app-detalle-cliente',

@@ -3,9 +3,11 @@
     <div class="table__header">
         <div class="header__input">
 
-            <mat-icon>search</mat-icon>
-            <input type="search" placeholder="Buscar" (input)="onInputChange($event)" />
-
+            <select [formControl]="estado">
+                <option value="S">Activos</option>
+                <option value="N">Inactivos</option>
+                <option value="T">Todos</option>
+            </select>
         </div>
         <div class="header__btn">
             <button (click)="openDialog()">
@@ -26,12 +28,12 @@
                 </tr>
             </thead>
             <tbody>
-                @for (item of panelAdminService.listPaquetes; track $index) {
+                @for (item of paqueteService.listTipoPaquetes(); track $index) {
                 <tr>
                     <td>{{item.id}}</td>
                     <td>{{item.nombre}}</td>
-                    <td>{{item.getFechaCreacion()}}</td>
-                    <td>{{item.activo}}</td>
+                    <td>{{item.fecha_creacion| mostrarFecha}}</td>
+                    <td>{{item.activo | mostrarActivo}}</td>
                     <td>
                         @if(item.activo !== "E"){
                         @if(item.activo == "S"){
@@ -52,7 +54,7 @@
                 }
             </tbody>
         </table>
-        @if (panelAdminService.listPaquetes.length === 0) {
+        @if (paqueteService.listTipoPaquetes()?.length === 0) {
         <div class="sin-data">
             <mat-icon>hourglass_empty</mat-icon>
             Sin Datos

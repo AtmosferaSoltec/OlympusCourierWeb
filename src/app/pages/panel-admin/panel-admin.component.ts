@@ -5,7 +5,8 @@ import { Router, RouterOutlet } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { PaquetesComponent } from './components/paquetes/paquetes.component';
-import { DestinosComponent } from './components/destinos/destinos.component';
+import { DestinosComponent } from './components/distritos/distritos.component';
+import { ComprobantesAdminComponent } from './components/comprobantes-admin/comprobantes-admin.component';
 
 @Component({
   selector: 'app-panel-admin',
@@ -14,7 +15,7 @@ import { DestinosComponent } from './components/destinos/destinos.component';
     CommonModule, MatIconModule,
     RouterOutlet, MatTabsModule,
     UsuariosComponent, PaquetesComponent,
-    DestinosComponent
+    DestinosComponent, ComprobantesAdminComponent
   ],
   templateUrl: './panel-admin.component.html',
   styleUrl: './panel-admin.component.scss'

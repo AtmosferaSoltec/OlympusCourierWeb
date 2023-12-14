@@ -4,9 +4,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import Swal from 'sweetalert2';
 import { ClienteService } from '../../services/cliente.service';
 import { CommonModule } from '@angular/common';
-import { Distrito } from '../../models/distrito';
+import { Distrito } from '../../interfaces/distrito';
 import { DistritoService } from '../../services/distrito.service';
-import { Cliente } from '../../models/cliente';
+import { Cliente } from '../../interfaces/cliente';
 import { MenuSelectComponent } from '../menu-select/menu-select.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,7 +25,7 @@ export class DialogAddClienteComponent {
   formulario: FormGroup
   clienteService = inject(ClienteService);
   selectedDistrito: any;
-  listDistritos: Distrito[] = [];
+  listDistritos = this.distritoService.listDistritos();
 
   documentoService = inject(DocumentoService)
   consultasService = inject(ConsultasService)
@@ -37,7 +37,6 @@ export class DialogAddClienteComponent {
     @Inject(MAT_DIALOG_DATA) public data: Cliente | undefined,
   ) {
 
-    this.listarDistritos();
     this.formulario = this.fb.group({
       tipo: [data?.cod_tipodoc ? data.cod_tipodoc : '1', [Validators.required]],
       doc: [data?.documento, [Validators.required, Validators.minLength(8)]],
@@ -50,27 +49,6 @@ export class DialogAddClienteComponent {
       ref: [data?.referencia],
       maps: [data?.url_maps],
     })
-  }
-
-  listarDistritos() {
-    this.distritoService.listarDistritos().subscribe({
-      next: (data: any) => {
-        if (data?.isSuccess) {
-          this.listDistritos = data.data.map((distritoData: any) => new Distrito(distritoData));
-          this.formulario.get('distrito')?.setValue(this.listDistritos[0]?.id)
-        } else {
-          console.log(data);
-        }
-      },
-      error: error => {
-        console.log(error)
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al obtener',
-          text: 'Hubo un problema al obtener los destinos. Por favor, inténtelo de nuevo más tarde.',
-        })
-      }
-    });
   }
 
   progressBuscarDoc: boolean = false;
@@ -148,9 +126,9 @@ export class DialogAddClienteComponent {
       if (this.data == undefined) {
         this.clienteService.addCliente(body).subscribe({
           next: (data: any) => {
-            if(data?.isSuccess){
+            if (data?.isSuccess) {
               this.dialogRef.close(data.data);
-            }else{
+            } else {
               Swal.fire({
                 icon: 'error',
                 title: 'Error al insertar',
@@ -163,9 +141,9 @@ export class DialogAddClienteComponent {
       } else {
         this.clienteService.updateCliente(body, this.data?.id).subscribe({
           next: (data: any) => {
-            if(data?.isSuccess){
+            if (data?.isSuccess) {
               this.dialogRef.close(this.data?.id);
-            }else{
+            } else {
               Swal.fire({
                 icon: 'error',
                 title: 'Error al actualizar',

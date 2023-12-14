@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Reparto } from '../../models/reparto';
+import { Reparto } from '../../interfaces/reparto';
 import { RepartoService } from '../../services/reparto.service';
 
 @Injectable({
@@ -13,8 +13,8 @@ export class DetalleRepartoService {
   reparto: Reparto | null = null;
   private repartoService = inject(RepartoService)
 
-  getReparto(id: string) {
-    this.repartoService.get(Number(id)).subscribe({
+  getReparto(id: number) {
+    this.repartoService.get(id).subscribe({
       next: (data: any) => {
         if(data && data.isSuccess){
           this.reparto = data.data;

@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [CommonModule, RouterOutlet, MatIconModule],
   templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.css'
+  styleUrl: './sidenav.component.scss'
 })
 export class SidenavComponent {
 
@@ -31,7 +31,7 @@ export class SidenavComponent {
       routerLink: 'comprobantes',
       icon: 'description',
       label: 'Comprobantes',
-      activo: false
+      activo: true
     },
     {
       routerLink: 'panel-admin',

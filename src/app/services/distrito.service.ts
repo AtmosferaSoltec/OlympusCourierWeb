@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Distrito } from '../models/distrito';
+import { Distrito } from '../interfaces/distrito';
 import { environment } from '../../environments/environment.development';
+import { State } from '../interfaces/state';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,24 @@ export class DistritoService {
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/distrito`;
 
+  #state = signal<State<Distrito[]>>({ loading: false, data: [] })
+  listDistritos = computed(() => this.#state().data)
 
+  constructor(){
+    this.getAll()
+  }
 
-  listarDistritos(): Observable<Distrito[]> {
-    return this.http.get<any>(this.url);
+  getAll() {
+    this.http.get<any>(this.url).subscribe({
+      next: (res: any) => {
+        if (res?.isSuccess) {
+          this.#state.set({ loading: false, data: res.data })
+        } else {
+          this.#state.set({ loading: false, data: [], error: res?.mensaje })
+        }
+      },
+      error: (err: any) => console.log(err)
+    })
   }
 
   add(nombre: string) {

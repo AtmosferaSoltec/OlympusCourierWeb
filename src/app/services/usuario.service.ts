@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { Usuario } from '../models/usuario';
+import { Usuario } from '../interfaces/usuario';
 import { FormGroup } from '@angular/forms';
+import { State } from '../interfaces/state';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,19 @@ import { FormGroup } from '@angular/forms';
 export class UsuarioService {
 
 
+  $state = signal<State<Usuario[]>>({ loading: true, data: [] });
+  public listUsuarios = computed(() => this.$state().data);
 
   http = inject(HttpClient);
   baseUrl = `${environment.baseUrl}/api/usuarios`;
 
   usuario: Usuario | null = null;
 
+  constructor() {
+    this.getAll();
+  }
+
+  /** Funciones de Login **/
   login(doc: string, clave: string) {
     return this.http.post(`${this.baseUrl}/login`, {
       documento: doc,
@@ -27,8 +35,22 @@ export class UsuarioService {
     return localStorage.getItem('idUser') ? true : false;
   }
 
-  getAll() {
-    return this.http.get(`${this.baseUrl}`);
+  getAll(estado: string | undefined = 'T') {
+    this.http.get(this.baseUrl, { params: { estado: estado } })
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
+
+          if (res?.isSuccess) {
+            this.$state.set({ loading: false, data: res.data });
+          } else {
+            this.$state.set({ loading: false, data: [], error: res?.mensaje || 'Error al obtener usuarios' });
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+        }
+      })
   }
 
   get(id: string) {

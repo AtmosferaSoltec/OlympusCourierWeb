@@ -2,10 +2,10 @@ import { Component, Inject, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Reparto } from '../../../../models/reparto';
+import { Reparto } from '../../../../interfaces/reparto';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DetalleRepartoService } from '../../detalle-reparto.service';
-import { Documento } from '../../../../models/documento';
+import { Documento } from '../../../../interfaces/documento';
 import { DocumentoService } from '../../../../services/documento.service';
 
 @Component({
@@ -40,15 +40,10 @@ export class DialogGenerarComprobanteComponent {
   }
 
   obtenerTipodocumentos() {
-    this.tipoDocumentoService.getAll().subscribe({
-      next: (data: any) => {
-        if(data?.isSuccess){
-          this.listTipoDoc = data.data
-        }else{
-          console.log(data?.mensaje || 'Error al obtener tipo documentos');
-        }
-      },
-      error: (err) => console.log(err)
+    this.tipoDocumentoService.getAll2().subscribe({
+      next: data=> {
+        this.listTipoDoc = data
+      }
     })
   }
 

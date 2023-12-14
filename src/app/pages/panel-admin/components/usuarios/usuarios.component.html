@@ -3,8 +3,11 @@
     <div class="header">
         <div class="header__input">
 
-            <mat-icon>search</mat-icon>
-            <input type="search" placeholder="Buscar" (input)="onInputChange($event)" />
+            <select [formControl]="estado">
+                <option value="S">Activos</option>
+                <option value="N">Inactivos</option>
+                <option value="T">Todos</option>
+            </select>
 
         </div>
         <div class="header__btn">
@@ -27,17 +30,16 @@
                 </tr>
             </thead>
             <tbody>
-                @for (item of panelAdminService.listUsuarios; track $index) {
-                <tr>
+                <tr *ngFor="let item of usuariosService.listUsuarios()">
                     <td>{{item.id}}</td>
                     <td>{{item.documento}}</td>
                     <td><img src="../../../../../assets/user.png" alt="">{{item.nombres}} {{item.ape_paterno}}</td>
                     <td>{{item.telefono}}</td>
                     <td>
                         @if (item.activo === 'N') {
-                            <p class="status E">Eliminado</p>
+                        <p class="status E">Eliminado</p>
                         }@else {
-                            <p class="status" [ngClass]="item.cod_rol">{{item.rol}}</p>
+                        <p class="status" [ngClass]="item.cod_rol">{{item.cod_rol | mostrarRol}}</p>
                         }
                     </td>
                     <td>
@@ -55,10 +57,10 @@
                         }
                     </td>
                 </tr>
-                }
+                
             </tbody>
         </table>
-        @if (panelAdminService.listUsuarios.length === 0) {
+        @if (usuariosService.listUsuarios()?.length === 0) {
         <div class="sin-data">
             <mat-icon>hourglass_empty</mat-icon>
             Sin Datos

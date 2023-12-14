@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Usuario } from '../../../../../models/usuario';
+import { Usuario } from '../../../../../interfaces/usuario';
 import { MatRadioModule } from '@angular/material/radio';
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../../../../../services/usuario.service';
@@ -66,7 +66,6 @@ export class DialogUsuarioComponent {
               confirmButtonColor: "#047CC4",
             }).then((result) => {
               if (result.isConfirmed) {
-                this.panelService.obtenerUsuarios()
                 this.dialogRef.close()
               }
             });

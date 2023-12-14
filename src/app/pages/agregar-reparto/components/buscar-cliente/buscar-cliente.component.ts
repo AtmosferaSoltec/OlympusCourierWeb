@@ -7,12 +7,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime } from 'rxjs';
 import { DialogAddClienteComponent } from '../../../../components/dialog-add-cliente/dialog-add-cliente.component';
-import { Cliente } from '../../../../models/cliente';
+import { Cliente } from '../../../../interfaces/cliente';
 import { ClienteService } from '../../../../services/cliente.service';
 import { AgregarRepartoComponent } from '../../agregar-reparto.component';
 import { AgregarRepartoService } from '../../agregar-reparto.service';
 import { DialogAddItemRepartoComponent } from '../../../../components/dialog-add-item-reparto/dialog-add-item-reparto.component';
-import { ItemReparto } from '../../../../models/item-reparto';
+import { ItemReparto } from '../../../../interfaces/item-reparto';
 
 @Component({
   selector: 'app-buscar-cliente',
@@ -79,7 +79,7 @@ export class BuscarClienteComponent {
       if (data) {
         this.clienteService.getCliente(data).subscribe({
           next:(res:any)=>{ 
-            this.service.cliente = new Cliente(res.data)
+            this.service.cliente = res.data;
           },
           error: (err:any)=> console.log(err)
         })

@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
   padding: 0;
@@ -21,4 +24,32 @@ body {
   --colorT2: #989eb6;
   --colorS1: #3f4143;
   --colorBox: #f5f7fc;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+
+.titulo {
+  font-size: 18px;
+  color: var(--colorP1);
+  font-weight: 600;
+}
+
+.sub-titulo {
+  font-size: 16px;
+  color: var(--colorT1);
+  font-weight: 600;
+}
+
+.textos {
+  font-size: 14px;
+  color: var(--colorT1);
+  font-weight: 400;
 }

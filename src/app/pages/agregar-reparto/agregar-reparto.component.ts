@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Cliente } from '../../models/cliente';
-import { ItemReparto } from '../../models/item-reparto';
+import { Cliente } from '../../interfaces/cliente';
+import { ItemReparto } from '../../interfaces/item-reparto';
 import { RepartoService } from '../../services/reparto.service';
 import { Router } from '@angular/router';
-import { Reparto } from '../../models/reparto';
+import { Reparto } from '../../interfaces/reparto';
 import Swal from 'sweetalert2';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -87,22 +87,24 @@ export class AgregarRepartoComponent {
         }
 
         this.repartoService.insert(body).subscribe({
-          next: (data: any) => {
-            if (data?.isSuccess) {
+          next: (res: any) => {
+            console.log(res);
+            
+            if (res?.isSuccess) {
               this.service.reset()
               this.router.navigate(['../'])
             } else {
               Swal.fire({
                 icon: 'error',
                 title: 'Opss...',
-                text: data?.mensaje || 'Error al insertar',
+                text: res?.mensaje || 'Error al insertar',
                 confirmButtonText: "Continuar",
                 confirmButtonColor: "#047CC4",
               })
             }
           },
-          error: (err) => {
-            console.log(err)
+          error: (err:any) => {
+            console.log(err.message)
           }
         })
       } else {
@@ -117,10 +119,10 @@ export class AgregarRepartoComponent {
     } else {
       Swal.fire({
         icon: 'question',
-          title: 'Sin Cliente',
-          text: 'Debes ingresar un cliente',
-          confirmButtonText: "Continuar",
-          confirmButtonColor: "#047CC4",
+        title: 'Sin Cliente',
+        text: 'Debes ingresar un cliente',
+        confirmButtonText: "Continuar",
+        confirmButtonColor: "#047CC4",
       });
     }
   }

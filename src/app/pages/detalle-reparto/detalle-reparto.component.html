@@ -1,40 +1,70 @@
 <div class="cuerpo">
-    <div class="uno border-right">
-        <div class="d-flex align-items-center">
-            <button mat-icon-button class="align-items-center" (click)="back()">
+    <div class="uno flex flex-col gap-3 ps-4 pr-4">
+        <div class="flex flex-row items-center text-p1">
+            <button mat-icon-button (click)="back()" matTooltip="Volver">
                 <mat-icon>arrow_back</mat-icon>
             </button>
-            <h2 class="ml-2 mb-0">Detalle de Reparto</h2>
+            <span class="text-xl text-p1 font-bold">Detalle de Reparto</span>
         </div>
 
-        <div class="container_title">
-            <div class="container_title_content">
-                <span>N° Reparto</span>
-                #000{{service.reparto?.id}}
-            </div>
-            <div class="container_title_content">
-                <span>Usuario:</span>
-                {{service.reparto?.usuario?.nombres}}
-            </div>
+        <div class="flex flex-row items-center justify-between text-lg font-semibold text-textos">
+            Datos del Cliente
+            <span class="mr-1">N° Reparto {{service.reparto?.id | mostrarID}}</span>
         </div>
-
         <app-detalle-cliente [cliente]="service.reparto?.cliente"></app-detalle-cliente>
 
-        <hr style="margin-top: 30px; margin-bottom: 30px;">
+        <hr class="border-t border-gray-200 my-4">
 
         @for (item of reparto?.items; track item.id; let idx = $index) {
-            <app-card-item [item]="item" [index]="idx"></app-card-item>
+        <app-card-item [item]="item" [index]="idx"></app-card-item>
         }
     </div>
     <div class="dos">
-        <h2>Datos de Entrega:</h2>
-        <div class="card-estado">
-            <span class="title">Estado:</span>
-            <span class="content">Entregado</span>
+        <span class="text-lg font-semibold text-textos">Datos de Entrega:</span>
+
+        <div>
+            <span class="sub-titulo flex flex-row items-center justify-between">
+                Estado:
+                <button [matMenuTriggerFor]="menuImprimir" mat-icon-button><mat-icon>more_vert</mat-icon></button>
+                <mat-menu #menuImprimir="matMenu">
+                    @if(comprobante()){
+                    <button mat-menu-item (click)="open(comprobante()?.enlace)">Enlace</button>
+                    <button mat-menu-item (click)="open(comprobante()?.url_pdf)">Ticket</button>
+                    <button mat-menu-item (click)="open(comprobante()?.url_xml)">XML</button>
+                    <button mat-menu-item>Enviar</button>
+                    }@else {
+                    <button mat-menu-item (click)="toGenerarComprobante()">Generar Comprobante</button>
+                    <button mat-menu-item>Eliminar Reparto</button>
+                    }
+                </mat-menu>
+
+            </span>
+            <app-detalle-item title="Estado" [descrip]="reparto?.estado | mostrarEstado"></app-detalle-item>
+            <app-detalle-item title="Total" [descrip]="'S/'+reparto?.total"></app-detalle-item>
+            <app-detalle-item title="Comprobante"
+                [descrip]="comprobante()?.serie + ' - '+ comprobante()?.num_serie"></app-detalle-item>
+
+            <div class=" flex flex-row items-center justify-center gap-2 mt-3">
+
+            </div>
         </div>
-        <span class="total">
-            Total
-        </span>
-        <button (click)="toGenerarComprobante()">Generar Comprobante</button>
+
+        <div>
+            <span class="sub-titulo">Creado:</span>
+            <app-detalle-item title="Usuario" descrip="Joel Maldonado"></app-detalle-item>
+            <app-detalle-item title="Fecha"
+                [descrip]="service.reparto?.fecha_creacion | date: 'dd/MM/yyyy'"></app-detalle-item>
+            <app-detalle-item title="Hora"
+                [descrip]="service.reparto?.fecha_creacion | date: 'HH:mm'"></app-detalle-item>
+        </div>
+
+        <div>
+            <span class="sub-titulo">Entregado:</span>
+            <app-detalle-item title="Usuario" descrip="Joel Maldonado"></app-detalle-item>
+            <app-detalle-item title="Fecha"
+                [descrip]="service.reparto?.fecha_entrega | date: 'dd/MM/yyyy'"></app-detalle-item>
+            <app-detalle-item title="Hora"
+                [descrip]="service.reparto?.fecha_entrega | date: 'HH:mm'"></app-detalle-item>
+        </div>
     </div>
 </div>

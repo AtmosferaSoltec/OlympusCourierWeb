@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Distrito } from '../models/distrito';
+import { Observable, catchError, first, map, of } from 'rxjs';
+import { Distrito } from '../interfaces/distrito';
 import { environment } from '../../environments/environment.development';
 
 @Injectable({
@@ -13,5 +13,16 @@ export class DocumentoService {
 
   getAll(): Observable<Distrito[]> {
     return this.http.get<any>(this.url);
+  }
+
+  getAll2(): Observable<Distrito[]> {
+    return this.http.get<Distrito[]>(this.url).pipe(
+      catchError(error => {
+        console.error('Error al obtener los distritos', error);
+        return of([]);
+      }),
+      map(response => response as Distrito[]),
+      first()
+    );
   }
 }

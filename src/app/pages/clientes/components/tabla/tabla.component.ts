@@ -4,7 +4,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { Cliente } from '../../../../models/cliente';
+import { Cliente } from '../../../../interfaces/cliente';
 import { ClienteService } from '../../../../services/cliente.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddClienteComponent } from '../../../../components/dialog-add-cliente/dialog-add-cliente.component';
@@ -38,11 +38,11 @@ export class TablaComponent {
 
   async listarClientes() {
     this.clienteService.listarClientes().subscribe({
-      next: (data: any) => {
-        if(data?.isSuccess){
-          this.listClientes.data = data.data.map((clienteData: any) => new Cliente(clienteData));
+      next: (res: any) => {
+        if(res?.isSuccess){
+          this.listClientes.data = res.data;
         }else{
-          console.log(data?.mensaje); 
+          console.log(res?.mensaje); 
         }
       },
       error: error => console.log(error)

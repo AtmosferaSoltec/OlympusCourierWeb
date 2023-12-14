@@ -1,11 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-
-interface SideNavToggle {
-  screenWidth: number;
-  collapsed: boolean;
-}
+import { HealthService } from './services/health.service';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +11,12 @@ interface SideNavToggle {
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
   title = 'OlympusCourierWeb';
+  healthService = inject(HealthService);
+  ngOnInit(): void {
+    this.healthService.checkServerHealth().subscribe();
+    initFlowbite();
+  }
 }

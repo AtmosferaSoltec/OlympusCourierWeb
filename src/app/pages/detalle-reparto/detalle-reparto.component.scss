@@ -1,76 +1,76 @@
-h2 {
-    color: var(--colorP1);
-}
-
-.cuerpo::-webkit-scrollbar{
-    visibility: hidden;
+.cuerpo::-webkit-scrollbar {
+  visibility: hidden;
 }
 
 .cuerpo {
+  display: flex;
+  font-family: "Metropolis", sans-serif;
+  height: 100vh;
+
+  .uno {
+    width: 70%;
+    overflow-y: auto;
+
+    .uno__top {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+  }
+
+  .uno::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  .uno::-webkit-scrollbar-thumb {
+    border-radius: 0.5rem;
+    background-color: #0004;
+    visibility: hidden;
+  }
+
+  .uno:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+  }
+
+  .dos {
+    width: 30%;
     display: flex;
-    font-family: 'Metropolis', sans-serif;
+    flex-direction: column;
+    gap: 30px;
     overflow-y: hidden;
-    height: 100vh;
 
-    .uno {
-        width: 70%;
-        height: 100vh;
-        overflow-y: auto;
+    .total {
+      color: #808080;
+      font-size: 18px;
+      font-weight: bold;
     }
-
-    .uno::-webkit-scrollbar {
-        width: 0.5rem;
-        height: 0.5rem;
-      }
-      
-      .uno::-webkit-scrollbar-thumb {
-        border-radius: 0.5rem;
-        background-color: #0004;
-        visibility: hidden;
-      }
-      
-      .uno:hover::-webkit-scrollbar-thumb {
-        visibility: visible;
-      }
-
-    .dos {
-        width: 30%;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-
-        .total {
-            color: #808080;
-            font-size: 18px;
-            font-weight: bold;
-        }
-    }
+  }
 }
 
 .container_title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 30px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 30px 0px;
 
-    .container_title_content {
-        font-size: 18px;
-        color: #808080;
+  .container_title_content {
+    font-size: 18px;
+    color: #808080;
 
-        span {
-            font-weight: 500;
-            font-size: 20px;
-        }
+    span {
+      font-weight: 500;
+      font-size: 20px;
     }
+  }
 }
 
 .border-right {
-    border-right: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
 }
 
-
 hr {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #d9d9d9;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #d9d9d9;
 }

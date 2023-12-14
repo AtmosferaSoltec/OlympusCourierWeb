@@ -4,9 +4,9 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angula
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
-import { Usuario } from '../../../../../models/usuario';
+import { Usuario } from '../../../../../interfaces/usuario';
 import { DialogUsuarioComponent } from '../dialog-usuario/dialog-usuario.component';
-import { TipoPaquete } from '../../../../../models/tipo-paquete';
+import { TipoPaquete } from '../../../../../interfaces/tipo-paquete';
 import { PanelAdminService } from '../../../panel-admin.service';
 import { PaqueteService } from '../../../../../services/paquete.service';
 import Swal from 'sweetalert2';
@@ -60,7 +60,6 @@ export class DialogPaquetesComponent {
               confirmButtonColor: "#047CC4",
             }).then((result) => {
               if (result.isConfirmed) {
-                this.panelService.obtenerTipoPaquetes()
                 this.dialogRef.close()
               }
             });

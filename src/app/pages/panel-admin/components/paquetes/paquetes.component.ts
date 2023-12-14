@@ -5,32 +5,28 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
-import { TipoPaquete } from '../../../../models/tipo-paquete';
+import { TipoPaquete } from '../../../../interfaces/tipo-paquete';
 import { DialogPaquetesComponent } from '../dialogs/dialog-paquetes/dialog-paquetes.component';
 import Swal from 'sweetalert2';
+import { MostrarFechaPipe } from "../../../../pipes/mostrar-fecha.pipe";
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { PaqueteService } from '../../../../services/paquete.service';
+import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
 
 @Component({
-  selector: 'app-paquetes',
-  standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule],
-  templateUrl: './paquetes.component.html',
-  styleUrl: './paquetes.component.scss'
+    selector: 'app-paquetes',
+    standalone: true,
+    templateUrl: './paquetes.component.html',
+    styleUrl: './paquetes.component.scss',
+    imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarFechaPipe, ReactiveFormsModule, MostrarActivoPipe]
 })
 export class PaquetesComponent {
 
-  panelAdminService = inject(PanelAdminService)
+  estado = new FormControl('T');
+
+  paqueteService = inject(PaqueteService)
   dialog = inject(MatDialog)
 
-  onInputChange(event: Event): void {
-    const inputValue = (event.target as HTMLInputElement).value;
-    if (inputValue.length > 0) {
-      this.panelAdminService.listPaquetes = this.panelAdminService.listPaquetesTotal.filter(objeto =>
-        objeto.nombre?.toLowerCase().includes(inputValue.toLowerCase())
-      );
-    } else {
-      this.panelAdminService.listPaquetes = this.panelAdminService.listPaquetesTotal;
-    }
-  }
 
   openDialog(item: TipoPaquete | null = null) {
     const dialogRef = this.dialog.open(DialogPaquetesComponent, {
@@ -47,9 +43,9 @@ export class PaquetesComponent {
 
   eliminar(item: TipoPaquete, estado: string) {
     let texto = "";
-    if (estado == "N"){
+    if (estado == "N") {
       texto = "Se eliminara este paquete!"
-    }else if(estado === "S"){
+    } else if (estado === "S") {
       texto = "Se restaurara este paquete!"
     }
     Swal.fire({
@@ -63,7 +59,29 @@ export class PaquetesComponent {
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.panelAdminService.eliminarTipoPaquete(item, estado)
+        this.paqueteService.eliminar(item.id, estado).subscribe({
+          next: (data: any) => {
+            if (data?.isSuccess) {
+              Swal.fire({
+                title: "Eliminado!",
+                text: "Tipo de paquete eliminado.",
+                icon: "success",
+                confirmButtonText: "Continuar",
+                confirmButtonColor: "#047CC4",
+              })
+
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: data?.mensaje || 'Error al eliminar',
+                confirmButtonText: "Cerrar",
+                confirmButtonColor: "#047CC4",
+              });
+            }
+          },
+          error: (err) => console.log(err)
+        });
       }
     });
   }

@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Documento } from '../../../../models/documento';
-import { Distrito } from '../../../../models/distrito';
-import { Usuario } from '../../../../models/usuario';
+import { Documento } from '../../../../interfaces/documento';
+import { Distrito } from '../../../../interfaces/distrito';
+import { Usuario } from '../../../../interfaces/usuario';
 import { DistritoService } from '../../../../services/distrito.service';
 import { UsuarioService } from '../../../../services/usuario.service';
 import { DocumentoService } from '../../../../services/documento.service';
@@ -21,14 +21,14 @@ export class FiltrosComponent {
 
   formulario: FormGroup;
 
-  listTipoDocumento: Documento[] = [];
-  listDistrito: Distrito[] = [];
-  listUsuario: Usuario[] = [];
-
   private fb = inject(FormBuilder)
   distritoService = inject(DistritoService);
   usuarioService = inject(UsuarioService);
   documentoService = inject(DocumentoService);
+
+  listTipoDocumento: Documento[] = [];
+  listDistrito = this.distritoService.listDistritos();
+  listUsuario = this.usuarioService.listUsuarios();
 
   constructor() {
 
@@ -46,20 +46,6 @@ export class FiltrosComponent {
       next: (data: any) => {
         if (data && data.isSuccess) {
           this.listTipoDocumento = data.data;
-        }
-      }
-    });
-    this.usuarioService.getAll().subscribe({
-      next: (data: any) => {
-        if (data && data.isSuccess) {
-          this.listUsuario = data.data;
-        }
-      }
-    });
-    this.distritoService.listarDistritos().subscribe({
-      next: (data: any) => {
-        if (data && data.isSuccess) {
-          this.listDistrito = data.data;
         }
       }
     });

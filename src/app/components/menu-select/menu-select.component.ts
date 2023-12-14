@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Distrito } from '../../models/distrito';
+import { Distrito } from '../../interfaces/distrito';
 
 @Component({
   selector: 'app-menu-select',
