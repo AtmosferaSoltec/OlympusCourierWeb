@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment.development';
 import { Usuario } from '../interfaces/usuario';
 import { FormGroup } from '@angular/forms';
 import { State } from '../interfaces/state';
+import { delay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class UsuarioService {
 
   $state = signal<State<Usuario[]>>({ loading: true, data: [] });
   public listUsuarios = computed(() => this.$state().data);
+  loading = computed(() => this.$state().loading);
 
   http = inject(HttpClient);
   baseUrl = `${environment.baseUrl}/api/usuarios`;
@@ -35,8 +37,10 @@ export class UsuarioService {
     return localStorage.getItem('idUser') ? true : false;
   }
 
-  getAll(estado: string | undefined = 'T') {
+  getAll(estado: 'T' | 'S' | 'N' = 'T') {
+    this.$state.set({ loading: true, data: [] });
     this.http.get(this.baseUrl, { params: { estado: estado } })
+      .pipe(delay(500))
       .subscribe({
         next: (res: any) => {
           console.log(res);

@@ -3,6 +3,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { TipoPaquete } from '../interfaces/tipo-paquete';
 import { State } from '../interfaces/state';
+import { delay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,21 +13,24 @@ export class PaqueteService {
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/paquetes`;
 
-  $state = signal<State<TipoPaquete[]>>({ loading: true, data: [] });
-  public listTipoPaquetes = computed(() => this.$state().data)
+  #state = signal<State<TipoPaquete[]>>({ loading: true, data: [] });
+  listTipoPaquetes = computed(() => this.#state().data)
+  loading = computed(() => this.#state().loading)
 
   constructor() {
     this.getAll()
   }
 
-  getAll() {
-    this.http.get(`${this.url}`)
-    .subscribe({
-      next: (res: any) => {
-        this.$state.set({ loading: false, data: res.data })
-      },
-      error: (err: any) => console.log(err)
-    })
+  getAll(estado: 'T' | 'S' | 'N' = 'T') {
+    this.#state.set({ loading: true, data: [] })
+    this.http.get(`${this.url}`, { params: { estado: estado } })
+      .pipe(delay(500))
+      .subscribe({
+        next: (res: any) => {
+          this.#state.set({ loading: false, data: res.data })
+        },
+        error: (err: any) => console.log(err)
+      })
   }
 
   add(nombre: string) {

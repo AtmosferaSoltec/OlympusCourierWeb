@@ -15,37 +15,39 @@ import { ComprobantesAdminComponent } from './components/comprobantes-admin/comp
     CommonModule, MatIconModule,
     RouterOutlet, MatTabsModule,
     UsuariosComponent, PaquetesComponent,
-    DestinosComponent, ComprobantesAdminComponent
+    DestinosComponent, ComprobantesAdminComponent,
+    RouterOutlet
   ],
   templateUrl: './panel-admin.component.html',
   styleUrl: './panel-admin.component.scss'
 })
 export class PanelAdminComponent {
 
+  url = 'usuarios'
   data = [
     {
-      icon: 'person',
       label: 'Usuarios',
-      color: 'blue',
       url: 'usuarios'
     },
     {
-      icon: 'person',
-      label: 'Destinos',
-      color: 'green',
-      url: 'destinos'
+      label: 'Distritos',
+      url: 'distritos'
     },
     {
-      icon: 'person',
-      label: 'Paquetes',
-      color: 'yeelow',
-      url: 'paquetes'
+      label: 'Tipo de Paquetes',
+      url: 'tipo-paquetes'
+    },
+    {
+      label: 'Comprobantes',
+      url: 'comprobantes-admin'
     },
   ]
 
   private router = inject(Router)
 
   navegar(url: string) {
-    this.router.navigate(['menu', 'panel-admin', url])
+    const d = ['menu', 'panel-admin', `${url}`]
+    this.url = url;
+    this.router.navigate(d)
   }
 }

@@ -7,7 +7,6 @@ import { Usuario } from '../../../../../interfaces/usuario';
 import { MatRadioModule } from '@angular/material/radio';
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../../../../../services/usuario.service';
-import { PanelAdminService } from '../../../panel-admin.service';
 
 @Component({
   selector: 'app-dialog-usuario',
@@ -20,7 +19,6 @@ export class DialogUsuarioComponent {
 
   formulario: FormGroup;
   private fb = inject(FormBuilder);
-  private panelService = inject(PanelAdminService);
   private usuarioService = inject(UsuarioService);
 
   listDocumento: any[] = []
@@ -65,6 +63,7 @@ export class DialogUsuarioComponent {
               confirmButtonText: "Continuar",
               confirmButtonColor: "#047CC4",
             }).then((result) => {
+              this.usuarioService.getAll();
               if (result.isConfirmed) {
                 this.dialogRef.close()
               }

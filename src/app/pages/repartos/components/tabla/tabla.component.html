@@ -1,55 +1,77 @@
-<div class="table">
-    <table>
-        <thead>
+<div class="rounded-xl overflow-x-auto shadow-sm">
+    <table class="w-full text-sm text-center rtl:text-right text-textos">
+        <thead class="text-sm bg-white text-textos uppercase border-b">
             <tr>
-                <th>N°</th>
-                <th>Cliente</th>
-                <th>Creado</th>
-                <th>Entregado</th>
-                <th>Estado</th>
-                <th>Total</th>
-                <th>Acciones</th>
+                <th scope="col" class="px-6 py-3">N° Reparto</th>
+                <th scope="col" class="px-6 py-3">Cliente</th>
+                <th scope="col" class="px-6 py-3">Creado</th>
+                <th scope="col" class="px-6 py-3">Entregado</th>
+                <th scope="col" class="px-6 py-3">Estado</th>
+                <th scope="col" class="px-6 py-3">Total</th>
+                <th scope="col" class="px-6 py-3"></th>
             </tr>
         </thead>
         <tbody>
             @if(repartoService.loading()){
-            <div class="loader"></div>
+            <tr class="bg-white">
+                <td colspan="7" class="py-3">
+                    <div class="flex justify-center items-center">
+                        <div class="loader"></div>
+                    </div>
+                </td>
+            </tr>
             }@else {
             @for (item of repartoService.listRepartos(); track $index) {
-            <tr>
-                <td>{{item.id | mostrarID}}</td>
-                <td>{{item.cliente?.nombres}}</td>
-                <td>{{item.fecha_creacion | mostrarFecha}}</td>
-                <td>{{item.fecha_entrega | mostrarFecha }}</td>
-                <td>
+            <tr class="bg-white border-b">
+                <td class="px-6 py-4">{{item.id | mostrarID}}</td>
+                <td class="px-6 py-4">{{item.cliente?.nombres}}</td>
+                <td class="px-6 py-4">{{item.fecha_creacion | mostrarFecha}}</td>
+                <td class="px-6 py-4">{{item.fecha_entrega | mostrarFecha }}</td>
+                <td class="px-6 py-4">
                     <p class="status" [ngClass]="item.estado">{{item.estado | mostrarEstado}}</p>
                 </td>
-                <td>S/{{item.total}}<br>
+                <td class="px-6 py-4">S/{{item.total}}<br>
                     {{item.id | mostrarComprobante:comprobanteService.listComprobantes()}}
                 </td>
-                <td>
-                    @if(item.activo !== "E"){
-                    @if(item.activo == "S"){
-                    <button mat-icon-button matTooltip="Detalle" (click)="toDetalle(item.id)">
-                        <mat-icon>visibility</mat-icon>
+                <td class="px-6 py-4 ">
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
                     </button>
-                    <!--<button mat-icon-button matTooltip="Eliminar" (click)="deleteReparto(item)">
-                        <mat-icon>delete</mat-icon>
-                    </button>-->
-                    }@else if(item.activo === "N"){
-                    <!-- / <button mat-icon-button matTooltip="Restaurar" (click)="recuperarReparto(item)">
-                        <mat-icon>restart_alt</mat-icon>
+                    <mat-menu #menu="matMenu">
+                        <!--
+                        <button mat-menu-item>
+                            <mat-icon>local_shipping</mat-icon>
+                            Dar Conformidad
                         </button>
                         -->
-                    }
-                    }
+                        @switch (item.activo) {
+                        @case ("S") {
+                        <button mat-menu-item (click)="toDetalle(item.id)">
+                            Ver Detalle<mat-icon>visibility</mat-icon>
+                        </button>
+                        <button mat-menu-item (click)="deleteReparto(item)">
+                            <mat-icon>delete</mat-icon>
+                            Eliminar
+                        </button>
+                        }
+                        @case ("N") {
+                        <button mat-menu-item (click)="recuperarReparto(item)">
+                            <mat-icon>restart_alt</mat-icon>
+                            Restaurar
+                        </button>
+                        }
+                        }
+
+                    </mat-menu>
                 </td>
             </tr>
             }@empty {
-            <tr class="sin-data">
-                <td>
-                    <mat-icon>hourglass_empty</mat-icon>
-                    Sin Datos
+            <tr class="bg-white border-b">
+                <td colspan="7" class="py-2">
+                    <div class="flex flew-row items-center justify-center">
+                        <mat-icon>hourglass_empty</mat-icon>
+                        Sin Datos
+                    </div>
                 </td>
             </tr>
             }

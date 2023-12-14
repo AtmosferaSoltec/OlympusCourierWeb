@@ -10,15 +10,23 @@
                 <select formControlName="tipo" (change)="resetDoc()">
                     <option value="1" selected>DNI</option>
                     <option value="6">RUC</option>
+                    <!--
                     <option value="4">Carnet de Extranjeria</option>
                     <option value="7">Pasaporte</option>
                     <option value="-">Otros</option>
+                    -->
                 </select>
             </div>
         </div>
 
         <div class="caja">
-            <span class="label">Documento</span>
+            <span class="label">
+                @if (formulario.get('tipo')?.value == 1) {
+                Número de DNI
+                }@else {
+                Número de RUC
+                }
+            </span>
             <div class="input">
                 <div class="input-btn">
                     <input type="search" placeholder="Ingrese número de documento" [maxLength]="getMaxLength()"
@@ -36,7 +44,13 @@
         </div>
 
         <div class="caja">
-            <span class="label">Nombre Legal</span>
+            <span class="label">
+                @if (formulario.get('tipo')?.value == 1) {
+                Nombre Completo
+                }@else {
+                Razón Social
+                }
+            </span>
             <div class="input">
                 <input type="text" placeholder="Ingrese nombres y apellidos" formControlName="nombres"
                     autocomplete="off">
@@ -83,7 +97,7 @@
             <span class="label">Distrito</span>
             <div class="input">
                 <select formControlName="distrito">
-                    @for (item of listDistritos; track $index) {
+                    @for (item of distritoService.listDistritos(); track $index) {
                     <option value="{{item.id}}">{{item.nombre}}</option>
                     }
                 </select>

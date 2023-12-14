@@ -1,4 +1,4 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject, OnInit, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -21,18 +21,17 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   templateUrl: './dialog-add-cliente.component.html',
   styleUrl: './dialog-add-cliente.component.scss'
 })
-export class DialogAddClienteComponent {
+export class DialogAddClienteComponent implements OnInit {
   formulario: FormGroup
   clienteService = inject(ClienteService);
   selectedDistrito: any;
-  listDistritos = this.distritoService.listDistritos();
 
   documentoService = inject(DocumentoService)
   consultasService = inject(ConsultasService)
+  distritoService = inject(DistritoService)
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddClienteComponent>,
-    private distritoService: DistritoService,
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: Cliente | undefined,
   ) {
@@ -44,11 +43,14 @@ export class DialogAddClienteComponent {
       cel: [data?.telefono, [Validators.required, Validators.minLength(9)]],
       genero: [data?.genero ? data.genero : 'S'],
       correo: [data?.correo, Validators.email],
-      distrito: [data?.id_distrito, [Validators.required]],
+      distrito: [data?.id_distrito ?? 1, [Validators.required]],
       direc: [data?.direc, [Validators.required, Validators.maxLength(100)]],
       ref: [data?.referencia],
       maps: [data?.url_maps],
     })
+  }
+  ngOnInit(): void {
+    this.distritoService.getAll('S')
   }
 
   progressBuscarDoc: boolean = false;

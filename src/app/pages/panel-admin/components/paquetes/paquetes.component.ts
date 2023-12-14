@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PanelAdminService } from '../../panel-admin.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -14,19 +13,29 @@ import { PaqueteService } from '../../../../services/paquete.service';
 import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
 
 @Component({
-    selector: 'app-paquetes',
-    standalone: true,
-    templateUrl: './paquetes.component.html',
-    styleUrl: './paquetes.component.scss',
-    imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarFechaPipe, ReactiveFormsModule, MostrarActivoPipe]
+  selector: 'app-paquetes',
+  standalone: true,
+  templateUrl: './paquetes.component.html',
+  styleUrl: './paquetes.component.scss',
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarFechaPipe, ReactiveFormsModule, MostrarActivoPipe]
 })
 export class PaquetesComponent {
 
   estado = new FormControl('T');
-
   paqueteService = inject(PaqueteService)
   dialog = inject(MatDialog)
 
+  ngOnInit(): void {
+    this.estado.valueChanges
+      .subscribe({
+        next: (valor: any) => {
+          if (!valor) {
+            return;
+          }
+          this.paqueteService.getAll(valor);
+        }
+      })
+  }
 
   openDialog(item: TipoPaquete | null = null) {
     const dialogRef = this.dialog.open(DialogPaquetesComponent, {

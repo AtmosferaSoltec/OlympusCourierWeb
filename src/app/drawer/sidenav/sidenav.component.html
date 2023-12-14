@@ -15,7 +15,8 @@
         @for (item of navData; track item) {
         @if (item.activo) {
         <li class="sidenav-nav-item">
-            <a class="sidenav-nav-link" (click)="navegar(item.routerLink)">
+            <a class="sidenav-nav-link" (click)="navegar(item.routerLink)" [matTooltip]="item.label"
+                [matTooltipDisabled]="appService.isCollapsed">
                 <mat-icon class="sidenav-link-icon">{{item.icon}}</mat-icon>
                 @if (appService.isCollapsed) {
                 <span class="sidenav-link-text">
@@ -26,7 +27,7 @@
         </li>
         }
         }
-        
+
         <li class="sidenav-nav-item">
             <a class="sidenav-nav-link" (click)="logout()">
                 <mat-icon class="sidenav-link-icon">logout</mat-icon>

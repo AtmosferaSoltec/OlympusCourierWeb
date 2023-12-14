@@ -6,6 +6,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterOutlet } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { UsuarioService } from '../../services/usuario.service';
+import { RepartoService } from '../../services/reparto.service';
 
 @Component({
   selector: 'app-repartos',
@@ -17,7 +20,8 @@ import { Router, RouterOutlet } from '@angular/router';
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
-    RouterOutlet
+    RouterOutlet,
+    ReactiveFormsModule
   ],
   templateUrl: './repartos.component.html',
   styleUrl: './repartos.component.scss'
@@ -30,5 +34,21 @@ export class RepartosComponent {
   toAgregar() {
     this.router.navigateByUrl('/menu/agregar-reparto')
   }
+
+  estado = new FormControl('T');
+  repartoService = inject(RepartoService)
+
+  ngOnInit(): void {
+    this.estado.valueChanges
+      .subscribe({
+        next: (valor: any) => {
+          if (!valor) {
+            return;
+          }
+          this.repartoService.getAll(valor);
+        }
+      })
+  }
+
 
 }

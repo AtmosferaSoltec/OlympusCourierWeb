@@ -1,64 +1,74 @@
-<div class="container">
+<div class="flex flex-row justify-between items-center my-3">
+    <select [formControl]="estado"
+        class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+        <option value="S">Activos</option>
+        <option value="N">Inactivos</option>
+        <option value="T">Todos</option>
+    </select>
+    <button (click)="openDialog()" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
+        Añadir
+    </button>
+</div>
 
-    <div class="table__header">
-        <div class="header__input">
-
-            <select [formControl]="estado">
-                <option value="S">Activos</option>
-                <option value="N">Inactivos</option>
-                <option value="T">Todos</option>
-            </select>
-        </div>
-        <div class="header__btn">
-            <button (click)="openDialog()">
-                <mat-icon>add</mat-icon>
-                Añadir
-            </button>
-        </div>
-    </div>
-    <div class="table__body">
-        <table>
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>Nombre</th>
-                    <th>Fecha de Creación</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (item of paqueteService.listTipoPaquetes(); track $index) {
-                <tr>
-                    <td>{{item.id}}</td>
-                    <td>{{item.nombre}}</td>
-                    <td>{{item.fecha_creacion| mostrarFecha}}</td>
-                    <td>{{item.activo | mostrarActivo}}</td>
-                    <td>
-                        @if(item.activo !== "E"){
-                        @if(item.activo == "S"){
-                        <button mat-icon-button matTooltip="Editar" (click)="openDialog(item)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button mat-icon-button matTooltip="Eliminar" (click)="eliminar(item, 'N')">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                        }@else if(item.activo === "N"){
-                        <button mat-icon-button matTooltip="Restaurar" (click)="eliminar(item, 'S')">
-                            <mat-icon>restart_alt</mat-icon>
-                        </button>
-                        }
-                        }
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
-        @if (paqueteService.listTipoPaquetes()?.length === 0) {
-        <div class="sin-data">
-            <mat-icon>hourglass_empty</mat-icon>
-            Sin Datos
-        </div>
-        }
-    </div>
+<div class="rounded-xl overflow-hidden shadow-sm">
+    <table class="w-full text-sm text-center rtl:text-right text-textos">
+        <thead class="text-sm bg-white text-textos uppercase border-b">
+            <tr>
+                <th scope="col" class="px-6 py-3">ID</th>
+                <th scope="col" class="px-6 py-3">Detalle</th>
+                <th scope="col" class="px-6 py-3">Fecha Creación</th>
+                <th scope="col" class="px-6 py-3">Estado</th>
+                <th scope="col" class="px-6 py-3">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(paqueteService.loading()){
+            <tr class="bg-white border-b">
+                <td colspan="7" class="py-3">
+                    <div class="flex justify-center items-center">
+                        <div class="loader"></div>
+                    </div>
+                </td>
+            </tr>
+            }@else {
+            @for (item of paqueteService.listTipoPaquetes(); track $index) {
+            <tr class="bg-white border-b">
+                <td class="px-6 py-2">{{item.id}}</td>
+                <td class="px-6 py-2">{{item.nombre}}</td>
+                <td class="px-6 py-2">{{item.fecha_creacion | date:'dd/MM/yyyy'}}</td>
+                <td class="px-6 py-2">
+                    <div class="flex flex-row items-center justify-center">
+                        <div [ngClass]="{'bg-green-500': item.activo == 'S', 'bg-red-500': item.activo == 'N'}"
+                            class="h-2.5 w-2.5 rounded-full me-2"></div>
+                        {{item.activo | mostrarActivo}}
+                    </div>
+                </td>
+                <td class="px-6 py-2">
+                    @if(item.activo == "S"){
+                    <button mat-icon-button matTooltip="Editar" (click)="openDialog(item)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="Eliminar" (click)="eliminar(item, 'N')">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    }@else if(item.activo === "N"){
+                    <button mat-icon-button matTooltip="Restaurar" (click)="eliminar(item, 'S')">
+                        <mat-icon>restart_alt</mat-icon>
+                    </button>
+                    }
+                </td>
+            </tr>
+            } @empty {
+            <tr class="bg-white border-b">
+                <td colspan="7" class="py-2">
+                    <div class="flex flew-row items-center justify-center">
+                        <mat-icon>hourglass_empty</mat-icon>
+                        Sin Datos
+                    </div>
+                </td>
+            </tr>
+            }
+            }
+        </tbody>
+    </table>
 </div>

@@ -4,11 +4,12 @@ import { Router, RouterOutlet } from '@angular/router';
 import { AppService } from '../../app.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MatIconModule],
+  imports: [CommonModule, RouterOutlet, MatIconModule, MatTooltipModule],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss'
 })
@@ -79,7 +80,7 @@ export class SidenavComponent {
     }
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('idUser');
     this.router.navigate(['login']);
   }

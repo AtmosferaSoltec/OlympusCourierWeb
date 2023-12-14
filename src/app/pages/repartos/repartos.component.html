@@ -1,47 +1,18 @@
-<div class="container">
+<span class="text-2xl text-p1 font-semibold">Repartos</span>
 
-    <!--
+<div class="flex flex-row justify-between my-3">
+    <select [formControl]="estado"
+        class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+        <option value="S">Activos</option>
+        <option value="N">Inactivos</option>
+        <option value="T">Todos</option>
+    </select>
+    <button (click)="toAgregar()" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
+        Añadir
+    </button>
+</div>
 
-    <div class="btn-actions">
-
-        <button mat-icon-button class="icon_btn" matTooltip="Perfil">
-            <mat-icon>person_outline</mat-icon>
-        </button>
-
-        <button mat-icon-button class="icon_btn" matTooltip="Exportar">
-            <mat-icon>save_alt</mat-icon>
-        </button>
-
-    </div>
-    
-    -->
-
-    <div class="title">
-        <h1>Repartos</h1>
-        <button mat-icon-button matTooltip="Perfil">
-            <mat-icon>person_outline</mat-icon>
-        </button>
-    </div>
-
-
-    <div class="header">
-        <div class="header__input">
-
-            <mat-icon>search</mat-icon>
-            <input type="search" placeholder="Buscar" />
-
-        </div>
-        <div class="header__btn">
-            <button (click)="toAgregar()">
-                <mat-icon>add</mat-icon>
-                Añadir
-            </button>
-        </div>
-    </div>
-
-    <!--
+<!--
     <app-filtros></app-filtros>
     -->
-    <app-tabla></app-tabla>
-
-</div>
+<app-tabla></app-tabla>

@@ -1,7 +1,6 @@
-<div class="container">
-
-    <div class="btn-actions">
-
+<div class="flex flex-row justify-between items-center">
+    <span class="text-2xl text-p1 font-semibold">Clientes</span>
+    <div>
         <button mat-icon-button class="icon_btn" matTooltip="Perfil">
             <mat-icon>person_outline</mat-icon>
         </button>
@@ -9,22 +8,16 @@
         <button mat-icon-button class="icon_btn" matTooltip="Exportar" (click)="exportar()">
             <mat-icon>save_alt</mat-icon>
         </button>
-
     </div>
+</div>
 
-    <div class="title">
-        <h1>Clientes</h1>
-        <a (click)="openDialog()" class="btn">
-            <mat-icon>add</mat-icon>
-            Agregar
-        </a>
-    </div>
-
-
-    <!--
+<div class="flex justify-end">
+    <button (click)="openDialog()" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
+        Agregar
+    </button>
+</div>
+<!--
     <app-filtros></app-filtros>
     -->
-    
-    <app-tabla></app-tabla>
 
-</div>
+<app-tabla></app-tabla>

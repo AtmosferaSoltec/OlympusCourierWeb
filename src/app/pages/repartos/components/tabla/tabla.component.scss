@@ -1,116 +1,22 @@
-$colorP1: #047cc4;
-$colorPendiente: #565656;
-$colorPendienteBack: #f3f3f3;
-
-table,
-th,
-td {
-  padding: 1rem;
-  text-align: left;
-}
-
-mat-icon {
-  color: gray;
-}
-
-.table {
-  width: 100%;
-  margin: 10px auto;
-  border-radius: 0.6rem;
-  overflow: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-  table {
-    width: 100%;
-
-    thead th {
-      position: sticky;
-      top: 0;
-      left: 0;
-      background-color: $colorP1;
-      color: white;
-    }
-
-    tbody tr:nth-child(even) {
-      background-color: $colorPendienteBack;
-    }
-
-    td {
-      .status {
-        padding: 0.3rem 0;
-        border-radius: 2rem;
-        text-align: center;
-        margin: 0;
-      }
-
-      .status.P {
-        background-color: $colorPendienteBack;
-        color: $colorPendiente;
-      }
-
-      .status.A {
-        background-color: #d893a3;
-        color: #b30021;
-      }
-
-      .status.E {
-        background-color: #6fcaea;
-      }
-    }
-  }
-}
-
-.table::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.5rem;
-}
-
-.table::-webkit-scrollbar-thumb {
-  border-radius: 0.5rem;
-  background-color: #0004;
-  visibility: hidden;
-}
-
-.table:hover::-webkit-scrollbar-thumb {
-  visibility: visible;
-}
-
-/*.sin-data {
-  width: 100%;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  color: #808080;
-  margin-top: 150px;
-  font-size: 16px;
-  font-weight: 500;
-}
-*/
-@media (max-width: 1000px) {
-  td:not(:first-of-type) {
-    min-width: 12.1rem;
-  }
-}
-
-/* HTML: <div class="loader"></div> */
-/* HTML: <div class="loader"></div> */
 .loader {
-  width: fit-content;
-  font-weight: bold;
-  margin: 10px auto;
-  font-family: sans-serif;
-  font-size: 24px;
-  color: $colorPendiente;
-  padding-bottom: 8px;
-  background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
-  animation: l2 2s linear infinite;
+  width: 120px;
+  height: 22px;
+  border-radius: 20px;
+  color: var(--colorP1);
+  border: 2px solid;
+  position: relative;
 }
-.loader:before {
-  content: "Cargando...";
+.loader::before {
+  content: "";
+  position: absolute;
+  margin: 2px;
+  inset: 0 100% 0 0;
+  border-radius: inherit;
+  background: currentColor;
+  animation: l6 2s infinite;
 }
-@keyframes l2 {
-  to {
-    background-size: 100% 3px;
+@keyframes l6 {
+  100% {
+    inset: 0;
   }
 }

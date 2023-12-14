@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PanelAdminService } from '../../panel-admin.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -11,22 +10,32 @@ import Swal from 'sweetalert2';
 import { MostrarFechaPipe } from "../../../../pipes/mostrar-fecha.pipe";
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DistritoService } from '../../../../services/distrito.service';
+import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
 
 @Component({
-  selector: 'app-destinos',
-  standalone: true,
-  templateUrl: './distritos.component.html',
-  styleUrl: './distritos.component.scss',
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarFechaPipe, ReactiveFormsModule]
+    selector: 'app-destinos',
+    standalone: true,
+    templateUrl: './distritos.component.html',
+    styleUrl: './distritos.component.scss',
+    imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarFechaPipe, ReactiveFormsModule, MostrarActivoPipe]
 })
 export class DestinosComponent {
 
-  panelAdminService = inject(PanelAdminService)
   distritoService = inject(DistritoService)
-
   dialog = inject(MatDialog)
-
   estado = new FormControl('T');
+
+  ngOnInit(): void {
+    this.estado.valueChanges
+      .subscribe({
+        next: (valor: any) => {
+          if (!valor) {
+            return;
+          }
+          this.distritoService.getAll(valor);
+        }
+      })
+  }
 
   openDialog(item: Distrito | null = null) {
     const dialogRef = this.dialog.open(DialogDistritosComponent, {
@@ -58,7 +67,28 @@ export class DestinosComponent {
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.panelAdminService.eliminarDistrito(item, estado)
+        this.distritoService.eliminar(item.id, estado).subscribe({
+          next: (data: any) => {
+            if (data?.isSuccess) {
+              Swal.fire({
+                title: "Eliminado!",
+                text: "Distrito eliminado.",
+                icon: "success",
+                confirmButtonText: "Continuar",
+                confirmButtonColor: "#047CC4",
+              })
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: data?.mensaje || 'Error al eliminar',
+                confirmButtonText: "Cerrar",
+                confirmButtonColor: "#047CC4",
+              });
+            }
+          },
+          error: (err) => console.log(err)
+        });
       }
     });
   }

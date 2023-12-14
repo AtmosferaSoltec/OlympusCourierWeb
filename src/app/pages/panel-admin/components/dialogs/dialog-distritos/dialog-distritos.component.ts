@@ -4,10 +4,8 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angula
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
-import { Usuario } from '../../../../../interfaces/usuario';
 import { DialogUsuarioComponent } from '../dialog-usuario/dialog-usuario.component';
 import { Distrito } from '../../../../../interfaces/distrito';
-import { PanelAdminService } from '../../../panel-admin.service';
 import { DistritoService } from '../../../../../services/distrito.service';
 import Swal from 'sweetalert2';
 
@@ -24,7 +22,6 @@ export class DialogDistritosComponent {
 
   private fb = inject(FormBuilder);
   private distritoService = inject(DistritoService);
-  private panelService = inject(PanelAdminService);
 
   listDocumento: any[] = []
   listDistritos: any[] = []
@@ -60,6 +57,7 @@ export class DialogDistritosComponent {
               if (result.isConfirmed) {
                 this.dialogRef.close()
               }
+              this.distritoService.getAll()
             });
 
           }else{

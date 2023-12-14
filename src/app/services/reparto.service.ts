@@ -24,8 +24,9 @@ export class RepartoService {
     return this.http.get(`${this.url}/${id}`);
   }
 
-  getAll() {
-    this.http.get<any>(this.url)
+  getAll(estado: 'T' | 'S' | 'N' = 'T') {
+    this.#state.set({ loading: true, data: [] });
+    this.http.get<any>(this.url, { params: { estado: estado } })
       .pipe(delay(500))
       .subscribe({
         next: (res: any) => {

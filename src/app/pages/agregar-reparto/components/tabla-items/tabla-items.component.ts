@@ -12,41 +12,25 @@ import { AgregarRepartoService } from '../../agregar-reparto.service';
 @Component({
   selector: 'app-tabla-items',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatTableModule, MatButtonModule, MatTooltipModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule],
   templateUrl: './tabla-items.component.html',
   styleUrl: './tabla-items.component.scss'
 })
 export class TablaItemsComponent {
-  columnas: string[] = [
-    'guia',
-    'tipo',
-    'descrip',
-    'cant',
-    'precio',
-    'act',
-  ];
-
-  @ViewChild(MatTable) table!: MatTable<ItemReparto>;
 
   service = inject(AgregarRepartoService);
-
-  /** Añadir Item Reparto*/
-
   dialog = inject(MatDialog)
-
 
   editItemReparto(item: ItemReparto) {
     const dialogRef = this.dialog.open(DialogAddItemRepartoComponent, {
       data: item,
       width: "770px"
     })
-
     dialogRef.afterClosed().subscribe((data: ItemReparto) => {
       if (data) {
         const index = this.service.listItemRepartos.findIndex((element) => element === item);
         if (index !== -1) {
           this.service.listItemRepartos[index] = data;
-          this.table.renderRows();
         }
       }
     });
@@ -56,7 +40,6 @@ export class TablaItemsComponent {
     const index = this.service.listItemRepartos.indexOf(item);
     if (index !== -1) {
       this.service.listItemRepartos.splice(index, 1);
-      this.table.renderRows();
     }
   }
 }

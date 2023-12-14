@@ -1,34 +1,22 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { Cliente } from '../../../../interfaces/cliente';
 import { ClienteService } from '../../../../services/cliente.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddClienteComponent } from '../../../../components/dialog-add-cliente/dialog-add-cliente.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-tabla',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, MatPaginatorModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatTooltipModule],
   templateUrl: './tabla.component.html',
   styleUrl: './tabla.component.scss'
 })
 export class TablaComponent {
-  listClientes = new MatTableDataSource<Cliente>();
-  columnas: string[] = [
-    'nombres',
-    'tipo',
-    'documento',
-    'direc',
-    'telf',
-    'act',
-  ];
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
+  listClientes: Cliente[] = []
 
   constructor(
     private clienteService: ClienteService
@@ -39,19 +27,14 @@ export class TablaComponent {
   async listarClientes() {
     this.clienteService.listarClientes().subscribe({
       next: (res: any) => {
-        if(res?.isSuccess){
-          this.listClientes.data = res.data;
-        }else{
-          console.log(res?.mensaje); 
+        if (res?.isSuccess) {
+          this.listClientes = res.data;
+        } else {
+          console.log(res?.mensaje);
         }
       },
       error: error => console.log(error)
     });
-  }
-
-  ngAfterViewInit() {
-    this.listClientes.paginator = this.paginator;
-    this.paginator._intl.itemsPerPageLabel = 'items por página';
   }
 
 
@@ -67,6 +50,10 @@ export class TablaComponent {
       if (data) {
       }
     });
+
+  }
+
+  eliminar(any: any, any2: any) {
 
   }
 }

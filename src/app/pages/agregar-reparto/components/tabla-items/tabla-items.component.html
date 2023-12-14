@@ -1,24 +1,25 @@
-<div class="table">
-    <table>
-        <thead>
+
+<div class="rounded-xl overflow-hidden shadow-sm my-4">
+    <table class="w-full text-sm text-center text-textos">
+        <thead class="text-sm bg-white text-textos uppercase border-b">
             <tr>
-                <th>N° Guía</th>
-                <th>Tipo</th>
-                <th>Detalle</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Acciones</th>
+                <th scope="col" class="px-6 py-3">N° Guía</th>
+                <th scope="col" class="px-6 py-3">Tipo</th>
+                <th scope="col" class="px-6 py-3">Detalle</th>
+                <th scope="col" class="px-6 py-3">Cantidad</th>
+                <th scope="col" class="px-6 py-3">Precio</th>
+                <th scope="col" class="px-6 py-3">Acciones</th>
             </tr>
         </thead>
         <tbody>
             @for (item of service.listItemRepartos; track $index) {
-            <tr>
-                <td>{{item.num_guia}}</td>
-                <td>{{item?.id_tipo_paquete}}</td>
-                <td>{{item?.detalle}}</td>
-                <td>{{item?.cant}}</td>
-                <td>S/{{item?.precio}}</td>
-                <td>
+            <tr class="bg-white border-b">
+                <td class="px-6 py-2">{{item.num_guia}}</td>
+                <td class="px-6 py-2">{{item.id_tipo_paquete}}</td>
+                <td class="px-6 py-2">{{item.detalle}}</td>
+                <td class="px-6 py-2">{{item.cant}}</td>
+                <td class="px-6 py-2">S/{{item.precio}}</td>
+                <td class="px-6 py-2">
                     <button mat-icon-button matTooltip="Editar" (click)="editItemReparto(item)">
                         <mat-icon>edit</mat-icon>
                     </button>
@@ -27,13 +28,16 @@
                     </button>
                 </td>
             </tr>
+            }@empty {
+            <tr class="bg-white">
+                <td colspan="6" class="py-2">
+                    <div class="flex flew-row items-center justify-center">
+                        <mat-icon>hourglass_empty</mat-icon>
+                        Sin Datos
+                    </div>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
-    @if (service.listItemRepartos.length === 0) {
-    <div class="sin-data">
-        <mat-icon>hourglass_empty</mat-icon>
-        Sin Datos
-    </div>
-    }
 </div>

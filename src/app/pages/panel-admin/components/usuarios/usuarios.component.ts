@@ -10,13 +10,14 @@ import Swal from 'sweetalert2';
 import { MostrarRolPipe } from "../../../../pipes/mostrar-rol.pipe";
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService } from '../../../../services/usuario.service';
+import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
 
 @Component({
-  selector: 'app-usuarios',
-  standalone: true,
-  templateUrl: './usuarios.component.html',
-  styleUrl: './usuarios.component.scss',
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarRolPipe, ReactiveFormsModule]
+    selector: 'app-usuarios',
+    standalone: true,
+    templateUrl: './usuarios.component.html',
+    styleUrl: './usuarios.component.scss',
+    imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarRolPipe, ReactiveFormsModule, MostrarActivoPipe]
 })
 export class UsuariosComponent implements OnInit {
 
@@ -38,12 +39,10 @@ export class UsuariosComponent implements OnInit {
   }
 
   openDialog(item: Usuario | undefined = undefined) {
-
     const dialogRef = this.dialog.open(DialogUsuarioComponent, {
       data: item,
       width: "770px"
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
     });
