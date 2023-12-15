@@ -1,30 +1,27 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MetodoPagoService } from '../../../../services/metodo-pago.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MetodoPago } from '../../../../interfaces/metodo-pago';
+import { DialogMetodoPagoComponent } from '../dialogs/dialog-metodo-pago/dialog-metodo-pago.component';
+import Swal from 'sweetalert2';
+import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Usuario } from '../../../../interfaces/usuario';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogUsuarioComponent } from '../dialogs/dialog-usuario/dialog-usuario.component';
-import Swal from 'sweetalert2';
-import { MostrarRolPipe } from "../../../../pipes/mostrar-rol.pipe";
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { UsuarioService } from '../../../../services/usuario.service';
-import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
-import { FormatTelfPipe } from "../../../../pipes/format-telf.pipe";
 
 @Component({
-    selector: 'app-usuarios',
-    standalone: true,
-    templateUrl: './usuarios.component.html',
-    styleUrl: './usuarios.component.scss',
-    imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarRolPipe, ReactiveFormsModule, MostrarActivoPipe, FormatTelfPipe]
+  selector: 'app-metodo-pago',
+  standalone: true,
+  templateUrl: './metodo-pago.component.html',
+  styleUrl: './metodo-pago.component.scss',
+  imports: [CommonModule, ReactiveFormsModule, MostrarActivoPipe, MatIconModule, MatButtonModule, MatTooltipModule]
 })
-export class UsuariosComponent implements OnInit {
+export class MetodoPagoComponent {
 
   estado = new FormControl('T');
-
-  usuariosService = inject(UsuarioService)
+  metodoPagoService = inject(MetodoPagoService)
   dialog = inject(MatDialog)
 
   ngOnInit(): void {
@@ -34,28 +31,30 @@ export class UsuariosComponent implements OnInit {
           if (!valor) {
             return;
           }
-          this.usuariosService.getAll(valor);
+          this.metodoPagoService.getAll(valor);
         }
       })
   }
 
-  openDialog(item: Usuario | undefined = undefined) {
-    const dialogRef = this.dialog.open(DialogUsuarioComponent, {
+  openDialog(item: MetodoPago | null = null) {
+    const dialogRef = this.dialog.open(DialogMetodoPagoComponent, {
       data: item,
       width: "770px"
-    });
+    })
+
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
     });
 
   }
 
-  eliminar(item: Usuario, estado: string) {
+
+  eliminar(item: MetodoPago, estado: string) {
     let texto = "";
     if (estado == "N") {
-      texto = "Se eliminara este usuario!"
+      texto = "Se eliminara este paquete!"
     } else if (estado === "S") {
-      texto = "Se restaurara este usuario!"
+      texto = "Se restaurara este paquete!"
     }
     Swal.fire({
       title: "¿Estas seguro?",
@@ -68,17 +67,18 @@ export class UsuariosComponent implements OnInit {
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usuariosService.eliminar(item.id, estado).subscribe({
+        this.metodoPagoService.eliminar(item.id, estado).subscribe({
           next: (data: any) => {
             if (data?.isSuccess) {
               Swal.fire({
                 title: "Eliminado!",
-                text: "Usuario eliminado.",
+                text: "Tipo de paquete eliminado.",
                 icon: "success",
                 confirmButtonText: "Continuar",
                 confirmButtonColor: "#047CC4",
               })
-              this.usuariosService.getAll()
+              // Actualizar la lista de distritos
+              this.metodoPagoService.getAll();
             } else {
               Swal.fire({
                 icon: "error",
@@ -94,5 +94,4 @@ export class UsuariosComponent implements OnInit {
       }
     });
   }
-
 }

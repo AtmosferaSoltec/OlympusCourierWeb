@@ -6,6 +6,7 @@ import { DetalleRepartoComponent } from '../detalle-reparto/detalle-reparto.comp
 import { PanelAdminComponent } from '../panel-admin/panel-admin.component';
 import { RepartosComponent } from '../repartos/repartos.component';
 import { GenerarComprobanteComponent } from '../generar-comprobante/generar-comprobante.component';
+import { isAdminGuard } from '../../guard/is-admin.guard';
 
 export default [
     { path: 'repartos', component: RepartosComponent },
@@ -16,7 +17,8 @@ export default [
     {
         path: 'panel-admin',
         component: PanelAdminComponent,
-        loadChildren: () => import('../panel-admin/panel.routes')
+        loadChildren: () => import('../panel-admin/panel.routes'),
+        canActivate: [isAdminGuard]
     },
     { path: 'agregar-reparto', component: AgregarRepartoComponent },
 ] as Route[]

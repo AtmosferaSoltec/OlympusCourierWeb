@@ -3,6 +3,8 @@ import { ItemReparto } from "./item-reparto";
 
 export interface Reparto {
     id?: number;
+    id_ruc?: string,
+    num_reparto?: number;
     anotacion?: string;
     clave?: string;
     estado?: string;
@@ -15,7 +17,6 @@ export interface Reparto {
     id_repartidor?: number;
     repartidor?: any;
     id_comprobante?: number;
-    comprobante?: any
     items?: ItemReparto[];
     total?: number;
     activo?:string;

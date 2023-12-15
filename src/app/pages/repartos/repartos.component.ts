@@ -9,6 +9,8 @@ import { Router, RouterOutlet } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import { RepartoService } from '../../services/reparto.service';
+import Swal from 'sweetalert2';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
   selector: 'app-repartos',
@@ -37,6 +39,7 @@ export class RepartosComponent {
 
   estado = new FormControl('T');
   repartoService = inject(RepartoService)
+  globalService = inject(GlobalService)
 
   ngOnInit(): void {
     this.estado.valueChanges
@@ -50,5 +53,51 @@ export class RepartosComponent {
       })
   }
 
+  exportar() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "Se exportará la información de los repartos a un archivo Excel",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const listRepartos = this.repartoService.listRepartos();
+        if (!listRepartos) {
+          Swal.fire(
+            '¡Error!',
+            'No se encontró ningún reparto.',
+            'error'
+          )
+          return;
+        }
+
+        const listItems: any[] = []
+        listRepartos.forEach((reparto) => {
+          reparto.items?.forEach((item) => {
+            listItems.push(item)
+          })
+        })
+
+        this.globalService.exportarVariasListas([
+        {
+          data: listRepartos,
+          nombreHoja: 'REPARTOS'
+        },
+        {
+          data: listItems,
+          nombreHoja: 'ITEMS'
+        }
+        ], 'REPARTOS')
+
+        Swal.fire(
+          '¡Exportado!',
+          'La información ha sido exportada.',
+          'success'
+        )
+      }
+    });
+  }
 
 }

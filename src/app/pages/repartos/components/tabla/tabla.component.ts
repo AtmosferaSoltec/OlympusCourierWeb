@@ -11,30 +11,20 @@ import { RepartoService } from '../../../../services/reparto.service';
 import { UsuarioService } from '../../../../services/usuario.service';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
-import { MostrarFechaPipe } from "../../../../pipes/mostrar-fecha.pipe";
 import { MostrarIDPipe } from "../../../../pipes/mostrar-id.pipe";
 import { MostrarEstadoPipe } from "../../../../pipes/mostrar-estado.pipe";
 import { MostrarComprobantePipe } from "../../../../pipes/mostrar-comprobante.pipe";
 import { ComprobanteService } from '../../../../services/comprobante.service';
 
 @Component({
-    selector: 'app-tabla',
-    standalone: true,
-    templateUrl: './tabla.component.html',
-    styleUrl: './tabla.component.scss',
-    imports: [CommonModule, MatIconModule, MatTableModule,
-        MatButtonModule, MatTooltipModule, MatMenuModule, MatPaginatorModule, MostrarFechaPipe, MostrarIDPipe, MostrarEstadoPipe, MostrarComprobantePipe]
+  selector: 'app-tabla',
+  standalone: true,
+  templateUrl: './tabla.component.html',
+  styleUrl: './tabla.component.scss',
+  imports: [CommonModule, MatIconModule,
+    MatButtonModule, MatTooltipModule, MatMenuModule, MostrarIDPipe, MostrarEstadoPipe, MostrarComprobantePipe]
 })
 export class TablaComponent {
-
-  columnas: string[] = [
-    'id',
-    'cliente',
-    'fecha',
-    'estado',
-    'flete',
-    'act',
-  ];
 
   comprobanteService = inject(ComprobanteService);
   repartoService = inject(RepartoService);
@@ -45,12 +35,11 @@ export class TablaComponent {
     this.repartoService.getAll();
   }
 
-  getTotal(rep: Reparto): number {
-    if (rep.items != undefined) {
-      return rep.items?.reduce((acumulador, objeto) => acumulador + ((objeto?.cant || 1) * (objeto?.precio || 1)), 0);
-    } else {
-      return 0
+  getTotal(listRepartos?: Reparto[]): number {
+    if (!listRepartos) {
+      return 0;
     }
+    return listRepartos.map(r => r.total ?? 0).reduce((acc, value) => acc + value, 0);
   }
 
   toDetalle(id: number | undefined) {
@@ -131,6 +120,21 @@ export class TablaComponent {
         })
       }
     })
+  }
+
+  buscarUsuario(id?: number): string {
+    if (!id) {
+      return 'Desconocido';
+    }
+
+    const usuario = this.usuarioService.listUsuarios()?.find(u => u.id === id);
+
+    if (!usuario) {
+      return 'Desconocido';
+    } else {
+      return `${usuario.nombres}`
+    }
+
   }
 
 }

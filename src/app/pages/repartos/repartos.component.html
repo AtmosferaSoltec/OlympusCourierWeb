@@ -1,4 +1,11 @@
-<span class="text-2xl text-p1 font-semibold">Repartos</span>
+<div class="flex flex-row justify-between items-center pb-3">
+    <span class="text-2xl text-p1 font-semibold">Repartos</span>
+    <div>
+        <button mat-icon-button matTooltip="Exportar" (click)="exportar()">
+            <img src="../../../assets/ic_export.svg" alt="">
+        </button>
+    </div>
+</div>
 
 <div class="flex flex-row justify-between my-3">
     <select [formControl]="estado"

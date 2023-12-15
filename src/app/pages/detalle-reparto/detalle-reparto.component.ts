@@ -5,7 +5,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { DetalleRepartoService } from './detalle-reparto.service';
 import { CardItemComponent } from './components/card-item/card-item.component';
-import { DetalleClienteComponent } from './components/detalle-cliente/detalle-cliente.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MostrarIDPipe } from "../../pipes/mostrar-id.pipe";
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -14,6 +13,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { Comprobante } from '../../interfaces/comprobante';
 import { ComprobanteService } from '../../services/comprobante.service';
 import { MostrarEstadoPipe } from "../../pipes/mostrar-estado.pipe";
+import { FormatTelfPipe } from "../../pipes/format-telf.pipe";
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-detalle-reparto',
@@ -22,9 +23,9 @@ import { MostrarEstadoPipe } from "../../pipes/mostrar-estado.pipe";
   styleUrl: './detalle-reparto.component.scss',
   imports: [
     CommonModule, MatIconModule, MatButtonModule,
-    RouterOutlet, CardItemComponent, DetalleClienteComponent,
-    MostrarIDPipe, MatTooltipModule, DetalleItemComponent, MatMenuModule,
-    MostrarEstadoPipe
+    RouterOutlet, CardItemComponent, MostrarIDPipe,
+    MatTooltipModule, DetalleItemComponent, MatMenuModule,
+    MostrarEstadoPipe, FormatTelfPipe
   ]
 })
 export class DetalleRepartoComponent implements OnInit {
@@ -32,6 +33,7 @@ export class DetalleRepartoComponent implements OnInit {
   comprobante = signal<Comprobante | null>(null);
   router = inject(Router)
   comprobanteService = inject(ComprobanteService)
+  usuarioService = inject(UsuarioService)
 
   back() {
     this.router.navigate(['/menu', '/repartos'])

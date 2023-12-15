@@ -23,9 +23,6 @@ export class DialogDistritosComponent {
   private fb = inject(FormBuilder);
   private distritoService = inject(DistritoService);
 
-  listDocumento: any[] = []
-  listDistritos: any[] = []
-
   constructor(
     public dialogRef: MatDialogRef<DialogUsuarioComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Distrito | undefined
@@ -43,36 +40,68 @@ export class DialogDistritosComponent {
 
   guardar() {
     if (this.formulario.valid) {
-      
-      this.distritoService.add(this.formulario.get('nombre')?.value).subscribe({
-        next: (data: any) => {
-          if (data?.isSuccess){
-            Swal.fire({
-              title: "Insertado!",
-              text: "Distrito insertado.",
-              icon: "success",
-              confirmButtonText: "Continuar",
-              confirmButtonColor: "#047CC4",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.dialogRef.close()
-              }
-              this.distritoService.getAll()
-            });
-
-          }else{
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: data?.mensaje || 'Error al insertar',
-              confirmButtonText: "Cerrar",
-              confirmButtonColor: "#047CC4",
-            });
-          }
-        },
-        error: (err) => console.log(err)
-
-      })
+      //Verificar si es nuevo o editar
+      if (this.data?.id) {
+        this.distritoService.update(this.data?.id, this.formulario.get('nombre')?.value).subscribe({
+          next: (data: any) => {
+            if (data?.isSuccess){
+              Swal.fire({
+                title: "Actualizado!",
+                text: "Distrito actualizado.",
+                icon: "success",
+                confirmButtonText: "Continuar",
+                confirmButtonColor: "#047CC4",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.dialogRef.close()
+                }
+                this.distritoService.getAll()
+              });
+  
+            }else{
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: data?.mensaje || 'Error al actualizar',
+                confirmButtonText: "Cerrar",
+                confirmButtonColor: "#047CC4",
+              });
+            }
+          },
+          error: (err:any) => console.log(err?.message)
+  
+        })
+      }else{
+        this.distritoService.add(this.formulario.get('nombre')?.value).subscribe({
+          next: (data: any) => {
+            if (data?.isSuccess){
+              Swal.fire({
+                title: "Insertado!",
+                text: "Distrito insertado.",
+                icon: "success",
+                confirmButtonText: "Continuar",
+                confirmButtonColor: "#047CC4",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.dialogRef.close()
+                }
+                this.distritoService.getAll()
+              });
+  
+            }else{
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: data?.mensaje || 'Error al insertar',
+                confirmButtonText: "Cerrar",
+                confirmButtonColor: "#047CC4",
+              });
+            }
+          },
+          error: (err) => console.log(err)
+  
+        })
+      }
     }
   }
 }

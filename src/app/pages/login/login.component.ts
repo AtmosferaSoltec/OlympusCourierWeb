@@ -2,9 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ClienteService } from '../../services/cliente.service';
 import { UsuarioService } from '../../services/usuario.service';
-import { DistritoService } from '../../services/distrito.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +16,6 @@ export class LoginComponent {
 
   formulario: FormGroup;
   usuarioService = inject(UsuarioService);
-  distritoService = inject(DistritoService);
 
   constructor(
     private fb: FormBuilder
@@ -37,14 +34,13 @@ export class LoginComponent {
   onSubmit() {
     if (this.formulario.valid) {
       this.usuarioService.login(this.formulario.get('user')?.value, this.formulario.get('clave')?.value).subscribe({
-        next: ((data:any)=>{
-          if(data?.isSuccess){
-            localStorage.setItem('idUser', data.data)
+        next: ((res: any) => {
+          if (res?.isSuccess) {
+            localStorage.setItem('idUser', res.data.id)
+            localStorage.setItem('ruc', res.data.ruc)
             this.router.navigate(['/menu', 'repartos'])
-          }else{
-            console.log(data);
-            
-            console.log('Credenciales incorrectas');
+          } else {
+            console.log(res?.mensaje || 'Error al iniciar sesión');
           }
         }),
         error(err) {

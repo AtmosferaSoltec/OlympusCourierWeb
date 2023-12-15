@@ -23,7 +23,9 @@ export class DistritoService {
 
   getAll(estado: 'T' | 'S' | 'N' = 'T') {
     this.#state.set({ loading: true, data: [] })
-    this.http.get<any>(this.url, { params: { estado: estado } })
+    const id_ruc = localStorage.getItem('ruc');
+    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
+    this.http.get<any>(this.url, { params: { estado: estado, id_ruc } })
       .pipe(delay(500))
       .subscribe({
         next: (res: any) => {
@@ -37,8 +39,18 @@ export class DistritoService {
       })
   }
 
+  get(id:number){
+    return this.http.get(`${this.url}/${id}`)
+  }
+
   add(nombre: string) {
-    return this.http.post(this.url, { nombre: nombre })
+    const id_ruc = localStorage.getItem('ruc');
+    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
+    return this.http.post(this.url, { nombre, id_ruc})
+  }
+
+  update(id: number, nombre: string) {
+    return this.http.put(`${this.url}/${id}`, { nombre: nombre })
   }
 
   eliminar(id: number | undefined, estado: string) {

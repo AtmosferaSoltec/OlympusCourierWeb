@@ -11,5 +11,5 @@ import { CommonModule } from '@angular/common';
 export class DetalleItemComponent {
 
   @Input() title: string | null = '';
-  @Input() descrip?: string | null = '';
+  @Input() descrip: any = '';
 }

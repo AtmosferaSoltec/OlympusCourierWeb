@@ -19,10 +19,20 @@ export class UsuarioService {
   http = inject(HttpClient);
   baseUrl = `${environment.baseUrl}/api/usuarios`;
 
-  usuario: Usuario | null = null;
+  usuario = signal<Usuario | undefined>(undefined)
 
   constructor() {
     this.getAll();
+    const id = Number(localStorage.getItem('idUser'));
+    if (id) {
+      this.get(id).subscribe({
+        next: (res: any) => {
+          if (res?.isSuccess) {
+            this.usuario.set(res.data);
+          }
+        }
+      })
+    }
   }
 
   /** Funciones de Login **/
@@ -39,41 +49,52 @@ export class UsuarioService {
 
   getAll(estado: 'T' | 'S' | 'N' = 'T') {
     this.$state.set({ loading: true, data: [] });
-    this.http.get(this.baseUrl, { params: { estado: estado } })
-      .pipe(delay(500))
-      .subscribe({
-        next: (res: any) => {
-          console.log(res);
-
-          if (res?.isSuccess) {
-            this.$state.set({ loading: false, data: res.data });
-          } else {
-            this.$state.set({ loading: false, data: [], error: res?.mensaje || 'Error al obtener usuarios' });
+    const id_ruc = localStorage.getItem('ruc');
+    if (id_ruc) {
+      this.http.get(this.baseUrl, { params: { estado: estado, id_ruc } })
+        .pipe(delay(500))
+        .subscribe({
+          next: (res: any) => {
+            if (res?.isSuccess) {
+              this.$state.set({ loading: false, data: res.data });
+            } else {
+              this.$state.set({ loading: false, data: [], error: res?.mensaje || 'Error al obtener usuarios' });
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
           }
-        },
-        error: (err: any) => {
-          console.log(err);
-        }
-      })
+        })
+    };
   }
 
   get(id: number) {
     return this.http.get(`${this.baseUrl}/${id}`)
   }
 
-  add(formulario: FormGroup<any>) {
+  add(formulario: any) {
+
+    const id_ruc = localStorage.getItem('ruc');
+    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
+
     const body = {
-      documento: formulario.get("documento")?.value,
-      nombres: formulario.get("nombres")?.value,
-      ape_materno: formulario.get("ape_materno")?.value,
-      ape_paterno: formulario.get("ape_paterno")?.value,
-      telefono: formulario.get("telefono")?.value,
-      correo: formulario.get("correo")?.value,
-      fecha_nac: formulario.get("fecha_nac")?.value,
-      clave: formulario.get("clave")?.value,
-      cod_rol: formulario.get("cod_rol")?.value,
+      documento: formulario.documento,
+      nombres: formulario.nombres,
+      ape_paterno: formulario.ape_paterno,
+      ape_materno: formulario.ape_materno,
+      telefono: formulario.telefono,
+      correo: formulario.correo,
+      fecha_nac: formulario.fecha_nac ?? '1999-01-01',
+      clave: formulario.clave,
+      cod_rol: formulario.cod_rol,
+      id_ruc
     }
     return this.http.post(`${this.baseUrl}`, body);
+  }
+
+
+  update(id: number, value: any) {
+    return this.http.put(`${this.baseUrl}/${id}`, value);
   }
 
   eliminar(id: number | undefined, estado: string) {

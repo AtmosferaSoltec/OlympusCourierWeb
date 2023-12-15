@@ -1,13 +1,16 @@
 <div class="sidenav"
     [ngClass]="{'sidenav-onCollapsed': !appService.isCollapsed, 'sidenav-offCollapsed': appService.isCollapsed}">
     <div class="logo-container">
-        <button class="logo" (click)="toggle()">O</button>
+        <button class="logo" (click)="toggle()">{{getNombre()[0]}}</button>
         @if (appService.isCollapsed) {
-        <div class="logo-text">Olympus</div>
+        <div class="logo-text">
+            {{getNombre()}}<br>
+            <span class="text-xl">{{getRol()}}</span>
+        </div>
         }
         @if (appService.isCollapsed) {
-        <button class="btn-close" (click)="appService.isCollapsed = false">
-            <mat-icon>close</mat-icon>
+        <button style="margin-left: auto;" matTooltip="Cerrar" mat-icon-button (click)="appService.isCollapsed = false">
+            <mat-icon style="color: white">close</mat-icon>
         </button>
         }
     </div>

@@ -5,7 +5,7 @@
                 <th scope="col" class="px-6 py-3">N° Reparto</th>
                 <th scope="col" class="px-6 py-3">Cliente</th>
                 <th scope="col" class="px-6 py-3">Creado</th>
-                <th scope="col" class="px-6 py-3">Entregado</th>
+                <th scope="col" class="px-6 py-3">Usuario</th>
                 <th scope="col" class="px-6 py-3">Estado</th>
                 <th scope="col" class="px-6 py-3">Total</th>
                 <th scope="col" class="px-6 py-3"></th>
@@ -23,17 +23,17 @@
             }@else {
             @for (item of repartoService.listRepartos(); track $index) {
             <tr class="bg-white border-b">
-                <td class="px-6 py-4">{{item.id | mostrarID}}</td>
-                <td class="px-6 py-4">{{item.cliente?.nombres}}</td>
-                <td class="px-6 py-4">{{item.fecha_creacion | mostrarFecha}}</td>
-                <td class="px-6 py-4">{{item.fecha_entrega | mostrarFecha }}</td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-2">{{item.num_reparto | mostrarID}}</td>
+                <td class="px-6 py-2">{{item.cliente?.nombres}}</td>
+                <td class="px-6 py-2">{{item.fecha_creacion | date:'dd/MM/yyyy'}}</td>
+                <td class="px-6 py-2">{{buscarUsuario(item.id_usuario) | uppercase}}</td>
+                <td class="px-6 py-2">
                     <p class="status" [ngClass]="item.estado">{{item.estado | mostrarEstado}}</p>
                 </td>
-                <td class="px-6 py-4">S/{{item.total}}<br>
+                <td class="px-6 py-2">S/{{item.total | number:'1.2-2'}}<br>
                     {{item.id | mostrarComprobante:comprobanteService.listComprobantes()}}
                 </td>
-                <td class="px-6 py-4 ">
+                <td class="px-6 py-2">
                     <button mat-icon-button [matMenuTriggerFor]="menu">
                         <mat-icon>more_vert</mat-icon>
                     </button>
@@ -49,16 +49,20 @@
                         <button mat-menu-item (click)="toDetalle(item.id)">
                             Ver Detalle<mat-icon>visibility</mat-icon>
                         </button>
+                        @if(usuarioService.usuario()?.cod_rol == 'A'){
                         <button mat-menu-item (click)="deleteReparto(item)">
                             <mat-icon>delete</mat-icon>
                             Eliminar
                         </button>
                         }
+                        }
                         @case ("N") {
+                        @if(usuarioService.usuario()?.cod_rol == 'A'){
                         <button mat-menu-item (click)="recuperarReparto(item)">
                             <mat-icon>restart_alt</mat-icon>
                             Restaurar
                         </button>
+                        }
                         }
                         }
 
@@ -78,4 +82,17 @@
             }
         </tbody>
     </table>
+
+
+
+
+</div>
+<!--Mostrar el Total-->
+<div class="flex flex-row justify-end my-3 gap-2">
+    <span class="text-xl text-textos font-semibold">
+        Total de Repartos: {{repartoService.listRepartos()?.length}} -
+    </span>
+    <span class="text-xl text-textos font-semibold">
+        Total: S/{{getTotal(repartoService.listRepartos()) | number:'1.2-2'}}
+    </span>
 </div>

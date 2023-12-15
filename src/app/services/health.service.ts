@@ -14,7 +14,7 @@ export class HealthService {
     return this.http.get('http://localhost:3000/health')
       .pipe(
         catchError(error => {
-          console.error('El servidor está inactivo');
+          //console.error('El servidor está inactivo');
           return of(null);
         })
       );

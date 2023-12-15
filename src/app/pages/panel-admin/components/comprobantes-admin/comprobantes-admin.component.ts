@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContadorService } from '../../../../services/contador.service';
+import { EmpresaService } from '../../../../services/empresa.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class ComprobantesAdminComponent implements OnInit {
 
-  contadorService = inject(ContadorService)
+  empresaService = inject(EmpresaService)
 
   formulario: FormGroup
 
@@ -21,20 +21,22 @@ export class ComprobantesAdminComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.formulario = this.fb.group({
-      ruc: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
-      serie_f: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-      num_f: ['', Validators.required],
-      serie_b: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
-      num_b: ['', Validators.required],
+      ruta: [''],
+      token: [''],
+      serie_f: ['', [Validators.minLength(4), Validators.maxLength(4)]],
+      num_f: [''],
+      serie_b: ['', [Validators.minLength(4), Validators.maxLength(4)]],
+      num_b: [''],
     })
   }
 
   ngOnInit(): void {
-    this.contadorService.get().subscribe({
+    this.empresaService.get().subscribe({
       next: (res: any) => {
         if (res?.isSuccess) {
           this.formulario.patchValue({
-            ruc: res?.data?.ruc,
+            ruta: res?.data?.ruta,
+            token: res?.data?.token,
             serie_f: res?.data?.serie_f,
             num_f: res?.data?.num_f,
             serie_b: res?.data?.serie_b,
@@ -60,7 +62,7 @@ export class ComprobantesAdminComponent implements OnInit {
       return;
     }
 
-    this.contadorService.update(this.formulario.value).subscribe({
+    this.empresaService.update(this.formulario.value).subscribe({
       next: (res: any) => {
         if (res?.isSuccess) {
           Swal.fire({

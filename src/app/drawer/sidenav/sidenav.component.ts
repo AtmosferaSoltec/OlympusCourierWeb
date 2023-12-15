@@ -43,7 +43,6 @@ export class SidenavComponent {
   ]
 
   router = inject(Router)
-
   appService = inject(AppService)
 
 
@@ -70,10 +69,10 @@ export class SidenavComponent {
       //Convertir idUser a number
       const id = Number(this.idUser);
       this.usuarioService.get(id).subscribe({
-        next: (data: any) => {
-          if (data && data.isSuccess) {
-            this.usuarioService.usuario = data.data;
-            if (this.usuarioService.usuario?.cod_rol != 'U') {
+        next: (res: any) => {
+          if (res?.isSuccess) {
+            this.usuarioService.usuario.set(res.data);
+            if (this.usuarioService.usuario()?.cod_rol != 'U') {
               this.navData[3].activo = true
             }
           }
@@ -84,11 +83,12 @@ export class SidenavComponent {
 
   logout() {
     localStorage.removeItem('idUser');
+    localStorage.removeItem('ruc');
     this.router.navigate(['login']);
   }
 
   getRol() {
-    const codRol = this.usuarioService.usuario?.cod_rol || '';
+    const codRol = this.usuarioService.usuario()?.cod_rol || '';
     switch (codRol.toUpperCase()) {
       case 'A':
         return 'Admin';
@@ -104,8 +104,8 @@ export class SidenavComponent {
   }
 
   getNombre() {
-    const nombres = this.usuarioService.usuario?.nombres || '';
-    const apePaterno = this.usuarioService.usuario?.ape_paterno || '';
+    const nombres = this.usuarioService.usuario()?.nombres || '';
+    const apePaterno = this.usuarioService.usuario()?.ape_paterno || '';
     const primeraLetraApellido = apePaterno.length > 0 ? apePaterno.charAt(0) + '.' : '';
     return `${nombres} ${primeraLetraApellido}`;
   }

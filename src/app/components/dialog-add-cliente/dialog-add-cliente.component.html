@@ -4,6 +4,7 @@
 
     <form [formGroup]="formulario">
 
+        <!--Seleccionar Tipo Documento-->
         <div class="caja">
             <span class="label">Tipo de Doc.</span>
             <div class="input">
@@ -19,6 +20,7 @@
             </div>
         </div>
 
+        <!--Ingresar Número de Documento-->
         <div class="caja">
             <span class="label">
                 @if (formulario.get('tipo')?.value == 1) {
@@ -43,6 +45,7 @@
             </div>
         </div>
 
+        <!--Ingresar Nombre Completo o Razón Social-->
         <div class="caja">
             <span class="label">
                 @if (formulario.get('tipo')?.value == 1) {
@@ -60,6 +63,7 @@
             </div>
         </div>
 
+        <!--Ingresar Teléfono-->
         <div class="caja">
             <span class="label">Teléfono</span>
             <div class="input">
@@ -71,6 +75,7 @@
             </div>
         </div>
 
+        <!--Ingresar Correo-->
         <div class="caja">
             <span class="label">Correo</span>
             <div class="input">
@@ -82,6 +87,7 @@
             </div>
         </div>
 
+        <!--Seleccionar Genero-->
         <div class="caja">
             <span class="label">Genero</span>
             <div class="input">
@@ -93,6 +99,7 @@
             </div>
         </div>
 
+        <!--Seleccionar Distrito-->
         <div class="caja">
             <span class="label">Distrito</span>
             <div class="input">
@@ -104,6 +111,7 @@
             </div>
         </div>
 
+        <!--Ingresar Dirección-->
         <div class="caja">
             <span class="label">Dirección</span>
             <div class="input">
@@ -114,16 +122,18 @@
             </div>
         </div>
 
+        <!--Ingresar Referencia-->
         <div class="caja">
             <span class="label">Referencia</span>
             <div class="input">
-                <input type="text" placeholder="Ingrese nombre de distrito" formControlName="ref" autocomplete="off">
+                <input type="text" placeholder="Ingrese una referencia" formControlName="ref" autocomplete="off">
                 @if (formulario.get('ref')?.hasError('required') && formulario.get('ref')?.touched) {
                 <span>Campo Obligatorio</span>
                 }
             </div>
         </div>
 
+        <!--Ingresar URL Maps-->
         <div class="caja">
             <span class="label">URL Maps</span>
             <div class="input">

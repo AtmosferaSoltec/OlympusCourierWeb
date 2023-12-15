@@ -1,0 +1,18 @@
+<div class="flex flex-col px-6 pt-3 pb-9">
+
+    <div class="flex flex-row items-center justify-between">
+        <span class="text-xl font-semibold text-p1">Detalle Item</span>
+        <button  mat-icon-button matTooltip="Cerrar" (click)="close()">
+            <mat-icon class="text-textos" >close</mat-icon>
+        </button>
+    </div>
+    <app-detalle-item title="Tipo de Doc." [descrip]="data?.cod_tipodoc | mostrarTipoDocumento"></app-detalle-item>
+    <app-detalle-item title="Documento" [descrip]="data?.documento | uppercase"></app-detalle-item>
+    <app-detalle-item title="Nombres" [descrip]="data?.nombres | uppercase"></app-detalle-item>
+    <app-detalle-item title="Teléfono" [descrip]="data?.telefono | formatTelf"></app-detalle-item>
+    <app-detalle-item title="Correo" [descrip]="data?.correo | uppercase"></app-detalle-item>
+    <app-detalle-item title="Genero" [descrip]="data?.genero | mostrarGenero"></app-detalle-item>
+    <app-detalle-item title="Distrito" [descrip]="data?.distrito"></app-detalle-item>
+    <app-detalle-item title="Direccíon" [descrip]="data?.direc | uppercase"></app-detalle-item>
+    <app-detalle-item title="Referencia" [descrip]="data?.referencia | uppercase"></app-detalle-item>
+</div>

@@ -8,16 +8,19 @@ import { RepartoService } from '../../services/reparto.service';
 export class DetalleRepartoService {
 
   constructor() { }
-  
 
   reparto = signal<Reparto | null>(null);
   private repartoService = inject(RepartoService)
 
   getReparto(id: number) {
     this.repartoService.get(id).subscribe({
-      next: (data: any) => {
-        if(data?.isSuccess){
-          this.reparto.set(data.data);
+      next: (res: any) => {
+        if (res?.isSuccess) {
+          console.log(res.data);
+          
+          this.reparto.set(res.data);
+        } else {
+          console.log(res?.mensaje || 'Error al obtener el reparto');
         }
       },
       error: (error) => {

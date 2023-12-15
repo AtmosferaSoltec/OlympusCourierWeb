@@ -38,9 +38,13 @@ export class PanelAdminComponent {
       url: 'tipo-paquetes'
     },
     {
+      label: 'Metodo de Pago',
+      url: 'metodo-pago'
+    },
+    {
       label: 'Comprobantes',
       url: 'comprobantes-admin'
-    },
+    }
   ]
 
   private router = inject(Router)

@@ -18,19 +18,43 @@ export class MetodoPagoService {
 
   #state = signal<State<MetodoPago[]>>({ loading: true, data: [] });
   listMetodoPago = computed(() => this.#state().data);
+  loading = computed(() => this.#state().loading)
 
-  getAll() {
-    this.http.get(this.url).subscribe({
-      next: (res: any) => {
-        if (res?.isSuccess) {
-          this.#state.set({ loading: false, data: res?.data });
-        } else {
-          this.#state.set({ loading: false, error: res?.mensaje ?? 'Error desconocido' });
+  getAll(estado: 'T' | 'S' | 'N' = 'T') {
+    this.#state.set({ loading: true, data: [] })
+    const id_ruc = localStorage.getItem('ruc');
+    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
+    this.http.get(this.url, { params: { estado, id_ruc } })
+      .subscribe({
+        next: (res: any) => {
+          if (res?.isSuccess) {
+            this.#state.set({ loading: false, data: res?.data });
+          } else {
+            this.#state.set({ loading: false, error: res?.mensaje ?? 'Error desconocido' });
+          }
+        },
+        error: (err: any) => {
+          this.#state.set({ loading: false, error: err.message });
         }
-      },
-      error: (err: any) => {
-        this.#state.set({ loading: false, error: err.message });
-      }
-    })
+      })
+  }
+
+
+  add(nombre: string) {
+    const id_ruc = localStorage.getItem('ruc');
+    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
+    return this.http.post(this.url, { nombre, id_ruc })
+  }
+
+  update(id: number, nombre: string) {
+    return this.http.put(this.url, { id, nombre })
+  }
+
+  eliminar(id: number | undefined, estado: string) {
+    const url = `${this.url}/${id}`;
+    const body = {
+      activo: estado
+    }
+    return this.http.patch(url, body);
   }
 }

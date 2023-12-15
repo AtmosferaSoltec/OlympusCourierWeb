@@ -1,5 +1,5 @@
 <div class="rounded-xl overflow-hidden shadow-sm mt-3">
-    <table class="w-full text-sm text-center rtl:text-right text-textos">
+    <table class="w-full text-sm text-start text-textos">
         <thead class="text-sm bg-white text-textos uppercase border-b">
             <tr>
                 <th scope="col" class="px-6 py-3">Nombres</th>
@@ -7,30 +7,45 @@
                 <th scope="col" class="px-6 py-3">Documento</th>
                 <th scope="col" class="px-6 py-3">Dirección</th>
                 <th scope="col" class="px-6 py-3">Teléfono</th>
-                <th scope="col" class="px-6 py-3">Acciones</th>
+                <th scope="col" class="px-6 py-3"></th>
             </tr>
         </thead>
         <tbody>
-            @for (item of listClientes; track $index) {
+            @for (item of clienteService.listClientes(); track $index) {
             <tr class="bg-white border-b">
-                <td class="px-6 py-4">{{item.nombres}}</td>
-                <td class="px-6 py-4">{{item.documento}}</td>
-                <td class="px-6 py-4">{{item.documento}}</td>
-                <td class="px-6 py-4">{{item.direc}}</td>
-                <td class="px-6 py-4">{{item.telefono}}</td>
-                <td class="px-6 py-4">
-                    @if(item.activo == "S"){
-                    <button mat-icon-button matTooltip="Editar" (click)="editCliente(item)">
-                        <mat-icon>edit</mat-icon>
+                <td class="px-6 py-2">{{item.nombres | uppercase}}</td>
+                <td class="px-6 py-2">{{item.cod_tipodoc | mostrarTipoDocumento}}</td>
+                <td class="px-6 py-2">{{item.documento }}</td>
+                <td class="px-6 py-2">{{item.direc | uppercase}}</td>
+                <td class="px-6 py-2">{{item.telefono | formatTelf}}</td>
+                <td class="px-6 py-2">
+                    <button mat-icon-button matTooltip="Ver Mas" [matMenuTriggerFor]="menuAccion">
+                        <mat-icon>more_vert</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="Eliminar" (click)="eliminar(item, 'N')">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                    }@else if(item.activo === "N"){
-                    <button mat-icon-button matTooltip="Restaurar" (click)="eliminar(item, 'S')">
-                        <mat-icon>restart_alt</mat-icon>
-                    </button>
-                    }
+
+                    <mat-menu #menuAccion="matMenu">
+                        <button mat-menu-item (click)="openDetalle(item)">
+                            <mat-icon>visibility</mat-icon>
+                            Ver Detalle
+                        </button>
+                        @if (usuarioService.usuario()?.cod_rol == 'A') {
+                        @if(item.activo == "S"){
+                        <button mat-menu-item(click)="editCliente(item)">
+                            <mat-icon>edit</mat-icon>
+                            Editar
+                        </button>
+                        <button mat-menu-item (click)="eliminar(item, 'N')">
+                            <mat-icon>delete</mat-icon>
+                            Eliminar
+                        </button>
+                        }@else if(item.activo === "N"){
+                        <button mat-menu-item(click)="eliminar(item, 'S')">
+                            <mat-icon>restart_alt</mat-icon>
+                            Restaurar
+                        </button>
+                        }
+                        }
+                    </mat-menu>
                 </td>
             </tr>
             }

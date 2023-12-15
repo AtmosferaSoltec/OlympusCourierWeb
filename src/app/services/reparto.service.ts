@@ -21,12 +21,16 @@ export class RepartoService {
   public loading = computed(() => this.#state().loading);
 
   get(id: number) {
-    return this.http.get(`${this.url}/${id}`);
+    const id_ruc = localStorage.getItem('ruc');
+    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
+    return this.http.get(`${this.url}/${id}`, { params: { id_ruc } });
   }
 
   getAll(estado: 'T' | 'S' | 'N' = 'T') {
     this.#state.set({ loading: true, data: [] });
-    this.http.get<any>(this.url, { params: { estado: estado } })
+    const id_ruc = localStorage.getItem('ruc');
+    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
+    this.http.get<any>(this.url, { params: { estado: estado, id_ruc: id_ruc } })
       .pipe(delay(500))
       .subscribe({
         next: (res: any) => {
@@ -35,7 +39,19 @@ export class RepartoService {
               loading: false,
               data: res.data
             });
+          } else {
+            this.#state.set({
+              loading: false,
+              data: [],
+              error: res?.mensaje || 'Error al obtener los repartos'
+            });
           }
+        },
+        error: (err: any) => {
+          this.#state.set({
+            loading: false,
+            error: err.message
+          });
         }
       });
   }

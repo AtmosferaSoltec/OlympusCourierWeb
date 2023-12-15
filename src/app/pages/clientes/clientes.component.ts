@@ -9,6 +9,8 @@ import { TablaComponent } from './components/tabla/tabla.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DialogAddClienteComponent } from '../../components/dialog-add-cliente/dialog-add-cliente.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
   selector: 'app-clientes',
@@ -22,20 +24,10 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ClientesComponent {
 
-  name: string = "Joel";
-
-  listClientes: Cliente[] = []
-
   clienteService = inject(ClienteService);
+  globalService = inject(GlobalService)
 
   constructor() {
-    this.clienteService.listarClientes().subscribe({
-      next: data => this.listClientes = data
-    })
-  }
-
-  exportar() {
-    this.clienteService.exportClientes(this.listClientes);
   }
 
   dialog = inject(MatDialog);
@@ -46,7 +38,39 @@ export class ClientesComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+    });
+  }
 
+  exportToExcel(data: any[], fileName: string): void {
+
+  }
+
+  exportar() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "Se exportará la información de los clientes a un archivo Excel",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const listClientes = this.clienteService.listClientes();
+        if (!listClientes) {
+          Swal.fire(
+            '¡Error!',
+            'No se encontró ningún cliente.',
+            'error'
+          )
+          return;
+        }
+        this.globalService.exportarList(listClientes, 'CLIENTES');
+        Swal.fire(
+          '¡Exportado!',
+          'La información ha sido exportada.',
+          'success'
+        )
+      }
     });
   }
 }

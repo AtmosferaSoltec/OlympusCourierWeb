@@ -7,7 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Distrito } from '../../../../interfaces/distrito';
 import { DialogDistritosComponent } from '../dialogs/dialog-distritos/dialog-distritos.component';
 import Swal from 'sweetalert2';
-import { MostrarFechaPipe } from "../../../../pipes/mostrar-fecha.pipe";
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DistritoService } from '../../../../services/distrito.service';
 import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
@@ -17,7 +16,7 @@ import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
     standalone: true,
     templateUrl: './distritos.component.html',
     styleUrl: './distritos.component.scss',
-    imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarFechaPipe, ReactiveFormsModule, MostrarActivoPipe]
+    imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, ReactiveFormsModule, MostrarActivoPipe]
 })
 export class DestinosComponent {
 
@@ -77,6 +76,8 @@ export class DestinosComponent {
                 confirmButtonText: "Continuar",
                 confirmButtonColor: "#047CC4",
               })
+              // Actualizar la lista de distritos
+              this.distritoService.getAll();
             } else {
               Swal.fire({
                 icon: "error",

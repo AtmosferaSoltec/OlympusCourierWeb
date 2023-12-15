@@ -7,7 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { TipoPaquete } from '../../../../interfaces/tipo-paquete';
 import { DialogPaquetesComponent } from '../dialogs/dialog-paquetes/dialog-paquetes.component';
 import Swal from 'sweetalert2';
-import { MostrarFechaPipe } from "../../../../pipes/mostrar-fecha.pipe";
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PaqueteService } from '../../../../services/paquete.service';
 import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
@@ -17,7 +16,7 @@ import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
   standalone: true,
   templateUrl: './paquetes.component.html',
   styleUrl: './paquetes.component.scss',
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarFechaPipe, ReactiveFormsModule, MostrarActivoPipe]
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, ReactiveFormsModule, MostrarActivoPipe]
 })
 export class PaquetesComponent {
 
@@ -78,7 +77,8 @@ export class PaquetesComponent {
                 confirmButtonText: "Continuar",
                 confirmButtonColor: "#047CC4",
               })
-
+              // Actualizar la lista de distritos
+              this.paqueteService.getAll();
             } else {
               Swal.fire({
                 icon: "error",
