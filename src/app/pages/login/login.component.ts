@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,10 @@ export class LoginComponent {
     })
   }
 
+  loading = signal(false);
+
   onSubmit() {
+    this.loading.set(true);
     if (this.formulario.valid) {
       this.usuarioService.login(this.formulario.get('user')?.value, this.formulario.get('clave')?.value).subscribe({
         next: ((res: any) => {
@@ -40,13 +44,29 @@ export class LoginComponent {
             localStorage.setItem('ruc', res.data.ruc)
             this.router.navigate(['/menu', 'repartos'])
           } else {
-            console.log(res?.mensaje || 'Error al iniciar sesión');
+            Swal.fire({
+              title: "Error!",
+              text: res?.mensaje || 'Error al iniciar sesión',
+              icon: "error",
+              confirmButtonText: "Continuar",
+              confirmButtonColor: "#047CC4",
+            })
           }
         }),
-        error(err) {
+        error: (err) => {
+          this.loading.set(false);
           console.log(err);
         },
       })
+    } else {
+      Swal.fire({
+        title: "Error!",
+        text: "Todos los campos son obligatorios.",
+        icon: "error",
+        confirmButtonText: "Continuar",
+        confirmButtonColor: "#047CC4",
+      })
+      this.loading.set(false);
     }
   }
 }

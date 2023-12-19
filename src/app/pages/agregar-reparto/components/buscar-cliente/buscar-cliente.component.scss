@@ -1,28 +1,5 @@
 $colorP1: #047cc4;
 
-.boton {
-  width: 150px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-
-  font-size: 16px;
-  background-color: $colorP1;
-  color: white;
-  border: 0;
-  padding: 2px 10px;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  mat-icon {
-    color: white;
-  }
-  &:hover {
-    background-color: darken($colorP1, 10%);
-  }
-}
-
 .buscar__container {
   position: relative;
   display: flex;
@@ -104,7 +81,6 @@ $colorP1: #047cc4;
   margin-top: 3px;
   position: absolute;
   top: 100%;
-  left: 81px;
   z-index: 1;
   max-height: 200px;
   overflow-y: auto;

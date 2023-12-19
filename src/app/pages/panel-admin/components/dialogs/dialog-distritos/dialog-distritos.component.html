@@ -1,6 +1,10 @@
 <div class="container">
     <h1>
-        Agregar Distrito
+        @if(data === undefined){
+            Agregar Distrito
+        }@else {
+            Editar Distrito
+        }
     </h1>
     <form [formGroup]="formulario">
 

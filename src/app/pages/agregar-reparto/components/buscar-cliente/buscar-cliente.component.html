@@ -1,7 +1,6 @@
 <div class="buscar__container" style="margin-top: 15px;">
-
-    <span>Cliente</span>
     <div class="buscar">
+        @if(!service.cliente()){
         <div class="input-container">
             <!--Progress Bar-->
             <mat-spinner class="icon" [diameter]="30" color="#047CC4" *ngIf="isLoading"></mat-spinner>
@@ -19,27 +18,37 @@
             <input placeholder="Buscar por documento, nombres o telefono" type="text" [formControl]="documento"
                 class="input-with-icon" />
         </div>
+        }
 
         <!--Boton Agregar Cliente-->
-        @if (!service.cliente) {
-        <button (click)="openDialogCliente()" class="boton">
-            <mat-icon>person_add</mat-icon>
-            Agregar
-        </button>
-        }
 
-        <!--Boton Editar Cliente-->
-        @if (service.cliente) {
-        <button (click)="openDialogCliente()" class="boton">
-            <mat-icon>edit</mat-icon>
-            Editar
-        </button>
-        }
-
-        <button (click)="openDialogAddItemReparto()" class="boton">
-            <mat-icon>add</mat-icon>
-            Item
-        </button>
+        <div class="h-12 flex flex-row gap-3">
+            @if (!service.cliente()) {
+                <button (click)="openDialogCliente()"
+                    class="bg-p1 w-32 hover:bg-p2 text-white font-semibold rounded flex flex-row items-center justify-center gap-2 border-0">
+                    <mat-icon>person_add</mat-icon>
+                    Agregar
+                </button>
+        
+                }@else {
+                <button (click)="borrarCliente()"
+                    class="bg-p1 w-32 hover:bg-p2 text-white font-semibold rounded flex flex-row items-center justify-center gap-2 border-0">
+                    <mat-icon>close</mat-icon>
+                    Limpiar
+                </button>
+                <button (click)="openDialogCliente()"
+                    class="bg-p1 w-32 hover:bg-p2 text-white font-semibold rounded flex flex-row items-center justify-center gap-2 border-0">
+                    <mat-icon>edit</mat-icon>
+                    Editar
+                </button>
+        
+                }
+                <button (click)="openDialogAddItemReparto()"
+                    class="bg-p1 w-32 hover:bg-p2 text-white font-semibold rounded flex flex-row items-center justify-center gap-2 border-0">
+                    <mat-icon>add</mat-icon>
+                    Item
+                </button>
+        </div>
 
     </div>
 
@@ -52,7 +61,7 @@
                 {{item.nombres}}
             </li>
             }
-            @if (data$.length === 0) {
+            @if (data$.length === 0 && !service.cliente()) {
             <li>
                 No se encontraron resultados
             </li>
@@ -64,30 +73,37 @@
 
 <!--Información Cliente Encontrado-->
 <div class="container__completado">
-    <div class="completado" *ngIf="service.cliente">
+    @if(service.cliente()){
+    <div class="completado">
         <div class="span__completado">
             <mat-icon>description</mat-icon><span class="title">Documento</span>
-            <span class="sub__title"> {{service.cliente.documento}} </span>
+            <span class="sub__title"> {{service.cliente()?.documento | uppercase}} </span>
+        </div>
+
+        <div class="span__completado">
+            <mat-icon>description</mat-icon><span class="title">Cliente</span>
+            <span class="sub__title"> {{service.cliente()?.nombres | uppercase}} </span>
         </div>
 
         <div class="span__completado">
             <mat-icon>phone_in_talk</mat-icon><span class="title">Celular</span>
-            <span class="sub__title"> {{service.cliente.telefono}}</span>
+            <span class="sub__title"> {{service.cliente()?.telefono | formatTelf}}</span>
         </div>
 
         <div class="span__completado">
             <mat-icon>location_on</mat-icon><span class="title">Distrito</span>
-            <span class="sub__title"> {{service.cliente.distrito}}</span>
+            <span class="sub__title"> {{service.cliente()?.distrito | uppercase}}</span>
         </div>
 
         <div class="span__completado">
             <mat-icon>person_pin_circle</mat-icon><span class="title">Direccion</span>
-            <span class="sub__title"> {{service.cliente.direc}}</span>
+            <span class="sub__title"> {{service.cliente()?.direc | uppercase}}</span>
         </div>
 
         <div class="span__completado">
             <mat-icon>person</mat-icon><span class="title">Referencia</span>
-            <span class="sub__title"> {{service.cliente.referencia}}</span>
+            <span class="sub__title"> {{service.cliente()?.referencia | uppercase}}</span>
         </div>
     </div>
+    }
 </div>

@@ -1,6 +1,10 @@
 <div class="container">
     <h1>
+        @if(data === undefined){
         Agregar Usuario
+        }@else {
+        Editar Usuario
+        }
     </h1>
     <form [formGroup]="formulario">
 

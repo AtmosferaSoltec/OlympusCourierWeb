@@ -47,14 +47,12 @@ export class MetodoPagoService {
   }
 
   update(id: number, nombre: string) {
-    return this.http.put(this.url, { id, nombre })
+    const id_ruc = localStorage.getItem('ruc');
+    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
+    return this.http.put(this.url, { id, nombre, id_ruc })
   }
 
-  eliminar(id: number | undefined, estado: string) {
-    const url = `${this.url}/${id}`;
-    const body = {
-      activo: estado
-    }
-    return this.http.patch(url, body);
+  eliminar(id: number | undefined, activo: string) {
+    return this.http.patch(this.url, { id, activo });
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { ItemReparto } from '../../interfaces/item-reparto';
 import { Cliente } from '../../interfaces/cliente';
 
@@ -8,13 +8,13 @@ import { Cliente } from '../../interfaces/cliente';
 export class AgregarRepartoService {
 
   listItemRepartos: ItemReparto[] = []
-  cliente: Cliente | null = null
+  cliente = signal<Cliente | null>(null);
 
   constructor() { }
 
   reset() {
     this.listItemRepartos = [];
-    this.cliente = null;
+    this.cliente.set(null);
   }
 
 }

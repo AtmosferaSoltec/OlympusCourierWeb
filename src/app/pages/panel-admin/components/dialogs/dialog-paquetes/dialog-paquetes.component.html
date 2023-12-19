@@ -1,6 +1,10 @@
 <div class="container">
     <h1>
-        Agregar Tipo Paquete
+        @if (data === undefined) {
+            Agregar Tipo Paquete
+        }@else {
+            Editar Tipo Paquete
+        }
     </h1>
     <form [formGroup]="formulario">
         <div class="caja">

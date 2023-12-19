@@ -3,26 +3,20 @@
 <div class="body">
     <div class="container">
 
-        <h1 class="titulo">
-            <i class="fa-solid fa-paper-plane" style="color: #ffffff;"></i>
-            Repartos Olympuss
-        </h1>
+        <img class="w-96" src="../../../assets/full_logo.png" alt="Logo">
 
         <div class="card">
             <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
                 <div class="head">
-                    <span>Login</span>
-                    <p>Empieza a enviar mensajes facil y rápido</p>
+                    <span>Bienvenido</span>
+                    <p>Gestiona tus envíos de forma rápida y sencilla. ¡Inicia sesión!</p>
                 </div>
                 <div class="inputs">
                     <input type="text" placeholder="Usuario" formControlName="user" required>
                     <input type="password" placeholder="Contraseña" formControlName="clave" required>
                 </div>
                 <button type="submit">Ingresar</button>
-            </form> 
-            <div class="form-footer">
-                <p>Olvidaste tu contraseña? <a href="#">Recuperar</a></p>
-            </div>
+            </form>
         </div>
     </div>
 </div>

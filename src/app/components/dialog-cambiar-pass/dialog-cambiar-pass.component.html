@@ -1,0 +1,26 @@
+<div class="container">
+    <h1>
+        Cambiar Contraseña
+    </h1>
+    <form [formGroup]="formulario">
+
+        <div class="caja">
+            <span class="label">Contraseña Anterior </span>
+            <input class="input" type="password" placeholder="Ingrese antigua contraseña" formControlName="passAnterior">
+        </div>
+        <div class="caja">
+            <span class="label">Nueva Contraseña</span>
+            <input class="input" type="password" placeholder="Ingrese nueva contraseña" formControlName="passNueva">
+        </div>
+        <div class="caja">
+            <span class="label">Confirmar Nueva Contraseña </span>
+            <input class="input" type="password" placeholder="Ingrese nuevamente su nueva contraseña"
+                formControlName="passNuevaConfirmar">
+        </div>
+    </form>
+
+    <div class="actions">
+        <button (click)="closeDialog()">Cancelar</button>
+        <button (click)="guardar()">Guardar</button>
+    </div>
+</div>

@@ -11,8 +11,7 @@ import { delay } from 'rxjs';
 })
 export class UsuarioService {
 
-
-  $state = signal<State<Usuario[]>>({ loading: true, data: [] });
+  $state = signal<State<Usuario[]>>({ loading: false, data: [] });
   public listUsuarios = computed(() => this.$state().data);
   loading = computed(() => this.$state().loading);
 
@@ -56,8 +55,10 @@ export class UsuarioService {
         .subscribe({
           next: (res: any) => {
             if (res?.isSuccess) {
+              console.log(res.data);
               this.$state.set({ loading: false, data: res.data });
             } else {
+              console.log(res?.mensaje);
               this.$state.set({ loading: false, data: [], error: res?.mensaje || 'Error al obtener usuarios' });
             }
           },
@@ -94,7 +95,11 @@ export class UsuarioService {
 
 
   update(id: number, value: any) {
-    return this.http.put(`${this.baseUrl}/${id}`, value);
+    const id_ruc = localStorage.getItem('ruc');
+    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
+    value.id_ruc = id_ruc;
+    value.id = id;
+    return this.http.put(this.baseUrl, value);
   }
 
   eliminar(id: number | undefined, estado: string) {
@@ -103,6 +108,11 @@ export class UsuarioService {
       activo: estado
     }
     return this.http.patch(url, body);
+  }
+
+
+  cambiarPass(id: string | null, pass_anterior: string, pass_nueva: string) {
+    return this.http.post(`${this.baseUrl}/cambiarPass`, { id, pass_anterior, pass_nueva })
   }
 
 }

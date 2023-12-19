@@ -14,11 +14,11 @@ import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
 import { FormatTelfPipe } from "../../../../pipes/format-telf.pipe";
 
 @Component({
-    selector: 'app-usuarios',
-    standalone: true,
-    templateUrl: './usuarios.component.html',
-    styleUrl: './usuarios.component.scss',
-    imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarRolPipe, ReactiveFormsModule, MostrarActivoPipe, FormatTelfPipe]
+  selector: 'app-usuarios',
+  standalone: true,
+  templateUrl: './usuarios.component.html',
+  styleUrl: './usuarios.component.scss',
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarRolPipe, ReactiveFormsModule, MostrarActivoPipe, FormatTelfPipe]
 })
 export class UsuariosComponent implements OnInit {
 
@@ -71,9 +71,11 @@ export class UsuariosComponent implements OnInit {
         this.usuariosService.eliminar(item.id, estado).subscribe({
           next: (data: any) => {
             if (data?.isSuccess) {
+              let title = estado === "N" ? "Eliminado!" : "Restaurado!"
+              let text = estado === "N" ? "Usuario eliminado." : "Usuario restaurado."
               Swal.fire({
-                title: "Eliminado!",
-                text: "Usuario eliminado.",
+                title: title,
+                text: text,
                 icon: "success",
                 confirmButtonText: "Continuar",
                 confirmButtonColor: "#047CC4",

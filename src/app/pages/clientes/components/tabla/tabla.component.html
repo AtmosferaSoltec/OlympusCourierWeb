@@ -28,9 +28,9 @@
                             <mat-icon>visibility</mat-icon>
                             Ver Detalle
                         </button>
-                        @if (usuarioService.usuario()?.cod_rol == 'A') {
+                        @if(usuarioService.usuario()?.cod_rol === 'A'){
                         @if(item.activo == "S"){
-                        <button mat-menu-item(click)="editCliente(item)">
+                        <button mat-menu-item (click)="editCliente(item)">
                             <mat-icon>edit</mat-icon>
                             Editar
                         </button>
@@ -39,10 +39,11 @@
                             Eliminar
                         </button>
                         }@else if(item.activo === "N"){
-                        <button mat-menu-item(click)="eliminar(item, 'S')">
+                        <button mat-menu-item (click)="eliminar(item, 'S')">
                             <mat-icon>restart_alt</mat-icon>
                             Restaurar
                         </button>
+
                         }
                         }
                     </mat-menu>

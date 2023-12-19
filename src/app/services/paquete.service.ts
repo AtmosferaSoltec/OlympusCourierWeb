@@ -42,7 +42,9 @@ export class PaqueteService {
   }
 
   update(id: number, nombre: string) {
-    return this.http.put(`${this.url}/${id}`, { nombre: nombre })
+    const id_ruc = localStorage.getItem('ruc');
+    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
+    return this.http.put(this.url, { id, nombre, id_ruc })
   }
 
   eliminar(id: number | undefined, estado: string) {

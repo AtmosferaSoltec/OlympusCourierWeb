@@ -69,9 +69,11 @@ export class DestinosComponent {
         this.distritoService.eliminar(item.id, estado).subscribe({
           next: (data: any) => {
             if (data?.isSuccess) {
+              let title = estado === "N" ? "Eliminado!" : "Restaurado!"
+              let text = estado === "N" ? "Distrito eliminado." : "Distrito restaurado."
               Swal.fire({
-                title: "Eliminado!",
-                text: "Distrito eliminado.",
+                title: title,
+                text: text,
                 icon: "success",
                 confirmButtonText: "Continuar",
                 confirmButtonColor: "#047CC4",

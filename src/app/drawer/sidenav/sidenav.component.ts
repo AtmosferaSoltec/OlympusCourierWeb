@@ -5,6 +5,9 @@ import { AppService } from '../../app.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import Swal from 'sweetalert2';
+import { DialogCambiarPassComponent } from '../../components/dialog-cambiar-pass/dialog-cambiar-pass.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sidenav',
@@ -62,7 +65,7 @@ export class SidenavComponent {
   idUser = localStorage.getItem('idUser');
 
   usuarioService = inject(UsuarioService);
-
+  dialog = inject(MatDialog)
 
   constructor() {
     if (this.idUser) {
@@ -81,10 +84,35 @@ export class SidenavComponent {
     }
   }
 
+  cambiarPass(){
+    
+    const dialogRef = this.dialog.open(DialogCambiarPassComponent, {
+      width: "770px"
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
+
+
+
   logout() {
-    localStorage.removeItem('idUser');
-    localStorage.removeItem('ruc');
-    this.router.navigate(['login']);
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "Cerrar sesión",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#047CC4',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem('idUser');
+        localStorage.removeItem('ruc');
+        this.router.navigate(['login']);
+      }      
+    })
   }
 
   getRol() {

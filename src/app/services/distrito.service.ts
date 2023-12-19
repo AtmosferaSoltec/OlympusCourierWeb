@@ -39,18 +39,20 @@ export class DistritoService {
       })
   }
 
-  get(id:number){
+  get(id: number) {
     return this.http.get(`${this.url}/${id}`)
   }
 
   add(nombre: string) {
     const id_ruc = localStorage.getItem('ruc');
     if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    return this.http.post(this.url, { nombre, id_ruc})
+    return this.http.post(this.url, { nombre, id_ruc })
   }
 
   update(id: number, nombre: string) {
-    return this.http.put(`${this.url}/${id}`, { nombre: nombre })
+    const id_ruc = localStorage.getItem('ruc');
+    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
+    return this.http.put(this.url, { id, nombre, id_ruc })
   }
 
   eliminar(id: number | undefined, estado: string) {

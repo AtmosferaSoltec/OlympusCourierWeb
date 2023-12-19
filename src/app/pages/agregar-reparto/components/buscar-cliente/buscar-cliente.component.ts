@@ -13,13 +13,14 @@ import { AgregarRepartoComponent } from '../../agregar-reparto.component';
 import { AgregarRepartoService } from '../../agregar-reparto.service';
 import { DialogAddItemRepartoComponent } from '../../../../components/dialog-add-item-reparto/dialog-add-item-reparto.component';
 import { ItemReparto } from '../../../../interfaces/item-reparto';
+import { FormatTelfPipe } from "../../../../pipes/format-telf.pipe";
 
 @Component({
-  selector: 'app-buscar-cliente',
-  standalone: true,
-  imports: [CommonModule, MatIconModule, MatProgressSpinnerModule, ReactiveFormsModule, MatButtonModule],
-  templateUrl: './buscar-cliente.component.html',
-  styleUrl: './buscar-cliente.component.scss'
+    selector: 'app-buscar-cliente',
+    standalone: true,
+    templateUrl: './buscar-cliente.component.html',
+    styleUrl: './buscar-cliente.component.scss',
+    imports: [CommonModule, MatIconModule, MatProgressSpinnerModule, ReactiveFormsModule, MatButtonModule, FormatTelfPipe]
 })
 export class BuscarClienteComponent {
 
@@ -44,7 +45,7 @@ export class BuscarClienteComponent {
     if (!this.documento.value) {
       return;
     }
-    if (this.service.cliente) {
+    if (this.service.cliente()) {
       return;
     }
     this.isLoading = true;
@@ -65,29 +66,31 @@ export class BuscarClienteComponent {
   }
 
   borrarCliente() {
-    this.service.cliente = null;
+    this.service.cliente.set(null);
     this.documento.setValue('');
   }
 
   openDialogCliente() {
     const dialogRef = this.dialog.open(DialogAddClienteComponent, {
       width: "950px",
-      data: this.service.cliente,
+      data: this.service.cliente()
     })
 
     dialogRef.afterClosed().subscribe((data: any) => {
+      console.log(data);
       if (data) {
         this.clienteService.getCliente(data).subscribe({
-          next:(res:any)=>{ 
-            this.service.cliente = res.data;
+          next: (res: any) => {
+            
+            this.service.cliente.set(res.data);
           },
-          error: (err:any)=> console.log(err)
+          error: (err: any) => console.log(err)
         })
       }
     })
   }
 
-  
+
   openDialogAddItemReparto() {
     const dialogRef = this.dialog.open(DialogAddItemRepartoComponent, {
       width: "770px"
@@ -102,7 +105,7 @@ export class BuscarClienteComponent {
   }
 
   selectCliente(item: Cliente) {
-    this.service.cliente = item;
+    this.service.cliente.set(item);
     this.documento.setValue(item.nombres ? item.nombres : this.documento.value)
     this.showSugerencias = false
     this.data$ = []

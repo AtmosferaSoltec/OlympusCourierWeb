@@ -32,6 +32,17 @@
         }
 
         <li class="sidenav-nav-item">
+            <a class="sidenav-nav-link" (click)="cambiarPass()">
+                <mat-icon class="sidenav-link-icon">sync_lock</mat-icon>
+                @if (appService.isCollapsed) {
+                <span class="sidenav-link-text">
+                    Cambiar Contraseña
+                </span>
+                }
+            </a>
+        </li>
+
+        <li class="sidenav-nav-item">
             <a class="sidenav-nav-link" (click)="logout()">
                 <mat-icon class="sidenav-link-icon">logout</mat-icon>
                 @if (appService.isCollapsed) {

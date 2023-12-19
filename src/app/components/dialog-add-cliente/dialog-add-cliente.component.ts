@@ -111,7 +111,7 @@ export class DialogAddClienteComponent implements OnInit {
     }
   }
 
-  async guardar() {
+  guardar() {
     if (this.formulario.valid) {
       const body = {
         cod_tipodoc: this.formulario.get('tipo')?.value,
@@ -130,6 +130,11 @@ export class DialogAddClienteComponent implements OnInit {
           next: (data: any) => {
             if (data?.isSuccess) {
               this.dialogRef.close(data.data);
+              Swal.fire({
+                icon: 'success',
+                title: 'Cliente registrado',
+                text: data?.mensaje
+              })
             } else {
               Swal.fire({
                 icon: 'error',
@@ -145,6 +150,11 @@ export class DialogAddClienteComponent implements OnInit {
           next: (data: any) => {
             if (data?.isSuccess) {
               this.dialogRef.close(this.data?.id);
+              Swal.fire({
+                icon: 'success',
+                title: 'Cliente actualizado',
+                text: data?.mensaje
+              })
             } else {
               Swal.fire({
                 icon: 'error',
@@ -157,17 +167,31 @@ export class DialogAddClienteComponent implements OnInit {
         });
       }
     } else {
+      let error = '';
+      if (this.formulario.get('tipo')?.invalid) {
+        error += 'Tipo de documento, ';
+      }
+      if (this.formulario.get('doc')?.invalid) {
+        error += 'Documento, ';
+      }
+      if (this.formulario.get('nombres')?.invalid) {
+        error += 'Nombres, ';
+      }
+      if (this.formulario.get('cel')?.invalid) {
+        error += 'Celular, ';
+      }
+      if (this.formulario.get('distrito')?.invalid) {
+        error += 'Distrito, ';
+      }
+      if (this.formulario.get('direc')?.invalid) {
+        error += 'Dirección, ';
+      }
+      error = error.slice(0, -2);
       Swal.fire({
-        title: 'Error de Validación',
-        text: 'Por favor, complete todos los campos requeridos',
-        icon: 'question',
-        customClass: {
-          confirmButton: 'btn-alert',
-        },
-        confirmButtonText: 'Confirmar',
-        confirmButtonColor: '#05ACD7',
-        confirmButtonAriaLabel: '#FFF'
-      });
+        icon: 'error',
+        title: 'Error al guardar',
+        text: `Los siguientes campos son obligatorios: ${error}`,
+      })
     }
   }
 

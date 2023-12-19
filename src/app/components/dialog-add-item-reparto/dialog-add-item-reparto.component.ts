@@ -7,6 +7,7 @@ import { ItemReparto } from '../../interfaces/item-reparto';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InputBoxComponent } from '../../shared/components/input-box/input-box.component';
 import { PaqueteService } from '../../services/paquete.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dialog-add-item-reparto',
@@ -52,6 +53,22 @@ export class DialogAddItemRepartoComponent {
         cant: this.formulario.get('cant')?.value || 0,
       };
       this.dialogRef.close(itemReparto)
+    } else {
+      let error = 'Faltan completar campos'
+      if (this.formulario.get('cant')?.invalid) {
+        error = 'Cantidad'
+      }
+      if (this.formulario.get('precio')?.invalid) {
+        error = 'Precio'
+      }
+      if (this.formulario.get('id_tipo_paquete')?.invalid) {
+        error = 'Tipo de paquete'
+      }
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `Los siguientes campos son obligatorios: ${error}`,
+      })
     }
 
   }

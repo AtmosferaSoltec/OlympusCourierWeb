@@ -16,7 +16,7 @@ export class ClienteService {
   listClientes = computed(() => this.#state().data);
   loading = computed(() => this.#state().loading);
 
-  constructor(){
+  constructor() {
     this.getAll()
   }
 
@@ -59,12 +59,21 @@ export class ClienteService {
       },
       error: (err: any) => {
         console.log(err);
-        this.#state.set({ data: [], loading: false, error: err.message});
+        this.#state.set({ data: [], loading: false, error: err.message });
       }
     });
   }
 
-  getCliente(id: string) {
+  delete(id: number | undefined, estado: string) {
+    if (!id) throw new Error('No se encontró el id del cliente');
+    const body = {
+      id,
+      activo: estado
+    }
+    return this.http.patch(this.url, body);
+  }
+
+  getCliente(id: string | null) {
     return this.http.get<any>(`${this.url}/${id}`);
   }
 

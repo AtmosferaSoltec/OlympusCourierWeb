@@ -70,9 +70,11 @@ export class PaquetesComponent {
         this.paqueteService.eliminar(item.id, estado).subscribe({
           next: (data: any) => {
             if (data?.isSuccess) {
+              let title = estado === "N" ? "Eliminado!" : "Restaurado!"
+              let text = estado === "N" ? "El paquete ha sido eliminado." : "El paquete ha sido restaurado."
               Swal.fire({
-                title: "Eliminado!",
-                text: "Tipo de paquete eliminado.",
+                title: title,
+                text: text,
                 icon: "success",
                 confirmButtonText: "Continuar",
                 confirmButtonColor: "#047CC4",

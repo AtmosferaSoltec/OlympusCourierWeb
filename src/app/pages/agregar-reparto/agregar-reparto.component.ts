@@ -50,7 +50,7 @@ export class AgregarRepartoComponent {
   }
 
   cancel() {
-    if (this.service.cliente && this.service.listItemRepartos) {
+    if (this.service.cliente() && this.service.listItemRepartos) {
       Swal.fire({
         title: '¡Alerta de Seguridad!',
         text: '¿Estás seguro de que deseas regresar a la pantalla anterior? Todos los datos ingresados se perderán.',
@@ -76,20 +76,19 @@ export class AgregarRepartoComponent {
   }
 
   guardarReparto() {
-    if (this.service.cliente?.id != undefined) {
+    if (this.service.cliente()?.id != undefined) {
       if (this.service.listItemRepartos.length > 0) {
         const body = {
+          id_ruc: localStorage.getItem('ruc'),
           anotacion: this.formulario.get('anotacion')?.value || '',
           clave: this.formulario.get('clave')?.value || '1234',
-          id_cliente: this.service.cliente.id,
+          id_cliente: this.service.cliente()?.id,
           id_usuario: localStorage.getItem('idUser'),
           items: this.service.listItemRepartos
         }
 
         this.repartoService.insert(body).subscribe({
           next: (res: any) => {
-            console.log(res);
-            
             if (res?.isSuccess) {
               this.service.reset()
               this.router.navigate(['../'])
