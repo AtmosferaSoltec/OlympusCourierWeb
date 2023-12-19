@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { SidenavComponent } from '../../drawer/sidenav/sidenav.component';
 import { AppService } from '../../app.service';
 
@@ -14,12 +14,7 @@ import { AppService } from '../../app.service';
 export class MenuComponent {
 
 
-  router = inject(Router);
   appService = inject(AppService)
-
-  menu(url: string) {
-    this.router.navigateByUrl('/menu/' + url)
-  }
 
   getBodyClass(): string {
     let styleClass = '';

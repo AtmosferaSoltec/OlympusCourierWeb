@@ -60,15 +60,11 @@ export class ComprobantesComponent {
 
 
   filtrarComprobantes() {
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-
     this.comprobanteService.getAll({
       estado: this.formulario.get('estado')?.value,
       metodoPago: this.formulario.get('metodoPago')?.value,
       tipoDoc: this.formulario.get('tipoDoc')?.value,
-      idUser: this.formulario.get('idUser')?.value,
-      id_ruc: id_ruc
+      idUser: this.formulario.get('idUser')?.value
     })
   }
 

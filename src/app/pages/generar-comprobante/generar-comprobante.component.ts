@@ -165,8 +165,6 @@ export class GenerarComprobanteComponent implements OnInit {
       direc: this.formulario.get('direc')?.value,
       correo: this.formulario.get('correo')?.value,
       telefono: this.formulario.get('telefono')?.value,
-      id_usuario: localStorage.getItem('idUser'),
-      id_ruc: localStorage.getItem('ruc'),
     }
 
     this.comprobanteService.insert(data).subscribe({

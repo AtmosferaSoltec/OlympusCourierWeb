@@ -4,6 +4,7 @@ import { delay } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { State } from '../interfaces/state';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,26 +12,23 @@ import { State } from '../interfaces/state';
 export class RepartoService {
 
   http = inject(HttpClient);
+  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/repartos`;
 
   #state = signal<State<Reparto[]>>({
-    loading: true,
+    loading: false,
     data: []
   });
   public listRepartos = computed(() => this.#state().data);
   public loading = computed(() => this.#state().loading);
 
   get(id: number) {
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    return this.http.get(`${this.url}/${id}`, { params: { id_ruc } });
+    return this.http.get(`${this.url}/${id}`, { headers: { 'Authorization': `${this.token}` } });
   }
 
-  getAll(estado: 'T' | 'S' | 'N' = 'T') {
+  getAll(params: any) {
     this.#state.set({ loading: true, data: [] });
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    this.http.get<any>(this.url, { params: { estado: estado, id_ruc: id_ruc } })
+    this.http.get<any>(this.url, { params: params, headers: { 'Authorization': `${this.token}` } })
       .pipe(delay(500))
       .subscribe({
         next: (res: any) => {

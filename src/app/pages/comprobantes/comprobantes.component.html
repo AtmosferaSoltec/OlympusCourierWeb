@@ -19,7 +19,9 @@
                 <option value="S">ACTIVOS</option>
                 <option value="N">INACTIVOS</option>
             </select>
+
         </div>
+        <!--
         <div>
             <label class="block mb-2 text-sm font-medium text-t">Método de Pago</label>
             <select formControlName="metodoPago"
@@ -49,6 +51,8 @@
                 }
             </select>
         </div>
+
+    -->
     </div>
     <button type="submit" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
         Buscar
@@ -59,6 +63,7 @@
     <table class="w-full text-sm text-center rtl:text-right text-textos">
         <thead class="text-sm bg-white text-textos uppercase border-b">
             <tr>
+                <th scope="col" class="px-6 py-3">Comprobante</th>
                 <th scope="col" class="px-6 py-3">Usuario</th>
                 <th scope="col" class="px-6 py-3">Estado</th>
                 <th scope="col" class="px-6 py-3">Fecha Emisión</th>
@@ -82,6 +87,7 @@
             }@else {
             @for (item of comprobanteService.listComprobantes(); track $index) {
             <tr class="bg-white border-b">
+                <td class="px-6 py-3">{{item.serie}}-{{item.num_serie}}</td>
                 <td class="px-6 py-3">{{buscarUsuario(item.id_usuario)}}</td>
                 <td class="px-6 py-3">En Revisión</td>
                 <td class="px-6 py-3">{{item.fecha_creacion | date: 'dd/MM/yyyy'}}</td>
@@ -108,7 +114,7 @@
             </tr>
             }@empty {
             <tr class="bg-white border-b">
-                <td colspan="8" class="py-2">
+                <td colspan="9" class="py-2">
                     <div class="flex flew-row items-center justify-center">
                         <mat-icon>hourglass_empty</mat-icon>
                         Sin Datos

@@ -1,14 +1,20 @@
-<div class="flex flex-row justify-between items-center my-3">
-    <select [formControl]="estado"
+<form [formGroup]="formulario" class="flex flex-row items-center my-3 gap-2">
+    <select formControlName="estado"
         class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
         <option value="S">Activos</option>
         <option value="N">Inactivos</option>
         <option value="T">Todos</option>
     </select>
+
+    <div class="spacer"></div>
+    <button (click)="filtrar()" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
+        Buscar
+    </button>
+
     <button (click)="openDialog()" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
         Añadir
     </button>
-</div>
+</form>
 
 <div class="rounded-xl overflow-hidden shadow-sm">
     <table class="w-full text-sm text-start text-textos">

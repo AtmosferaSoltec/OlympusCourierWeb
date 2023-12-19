@@ -16,15 +16,14 @@ export class DetalleRepartoService {
     this.repartoService.get(id).subscribe({
       next: (res: any) => {
         if (res?.isSuccess) {
-          console.log(res.data);
-          
           this.reparto.set(res.data);
         } else {
           console.log(res?.mensaje || 'Error al obtener el reparto');
         }
       },
-      error: (error) => {
-        console.log(error);
+      error: (err: any) => {
+        alert(err.message)
+        console.log(err);
       }
     })
   }

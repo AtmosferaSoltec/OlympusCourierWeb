@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment.development';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,22 +10,16 @@ export class EmpresaService {
 
 
   http = inject(HttpClient);
+  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/empresa`;
 
 
   get() {
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    return this.http.get(this.url, { params: { id_ruc } });
+    return this.http.get(this.url, { headers: { 'Authorization': `${this.token}` } });
   }
 
   update(formulario: any) {
-
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-
     const body = {
-      id_ruc,
       ruta: formulario.ruta,
       token: formulario.token,
       serie_f: formulario.serie_f,
@@ -32,8 +27,6 @@ export class EmpresaService {
       serie_b: formulario.serie_b,
       num_b: formulario.num_b,
     }
-    console.log(body);
-    
-    return this.http.put(this.url, body);
+    return this.http.put(this.url, body, { headers: { 'Authorization': `${this.token}` } });
   }
 }

@@ -6,24 +6,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterOutlet } from '@angular/router';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import { RepartoService } from '../../services/reparto.service';
 import Swal from 'sweetalert2';
 import { GlobalService } from '../../services/global.service';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
 @Component({
   selector: 'app-repartos',
   standalone: true,
   imports: [
-    CommonModule,
-    FiltrosComponent,
-    TablaComponent,
-    MatIconModule,
-    MatButtonModule,
-    MatTooltipModule,
-    RouterOutlet,
-    ReactiveFormsModule
+    CommonModule, FiltrosComponent, TablaComponent,
+    MatIconModule, MatButtonModule, MatTooltipModule,
+    RouterOutlet, ReactiveFormsModule, MatDatepickerModule,
+    MatFormFieldModule, MatInputModule, MatNativeDateModule
   ],
   templateUrl: './repartos.component.html',
   styleUrl: './repartos.component.scss'
@@ -37,20 +36,26 @@ export class RepartosComponent {
     this.router.navigateByUrl('/menu/agregar-reparto')
   }
 
-  estado = new FormControl('T');
+  formulario = new FormGroup({
+    estado: new FormControl<string>('T'),
+    estado_envio: new FormControl<string>('T'),
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  })
+
   repartoService = inject(RepartoService)
   globalService = inject(GlobalService)
 
-  ngOnInit(): void {
-    this.estado.valueChanges
-      .subscribe({
-        next: (valor: any) => {
-          if (!valor) {
-            return;
-          }
-          this.repartoService.getAll(valor);
-        }
-      })
+  filtrar() {
+    const estado = this.formulario.controls.estado.value;
+    const params = {
+      estado: estado === 'T' ? undefined : estado,
+      estado_envio: this.formulario.controls.estado_envio.value,
+      start: this.formulario.controls.start.value,
+      end: this.formulario.controls.end.value
+    }
+    this.repartoService.getAll(params)
+
   }
 
   exportar() {
@@ -81,14 +86,14 @@ export class RepartosComponent {
         })
 
         this.globalService.exportarVariasListas([
-        {
-          data: listRepartos,
-          nombreHoja: 'REPARTOS'
-        },
-        {
-          data: listItems,
-          nombreHoja: 'ITEMS'
-        }
+          {
+            data: listRepartos,
+            nombreHoja: 'REPARTOS'
+          },
+          {
+            data: listItems,
+            nombreHoja: 'ITEMS'
+          }
         ], 'REPARTOS')
 
         Swal.fire(

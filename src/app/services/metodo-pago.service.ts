@@ -3,6 +3,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { State } from '../interfaces/state';
 import { MetodoPago } from '../interfaces/metodo-pago';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { MetodoPago } from '../interfaces/metodo-pago';
 export class MetodoPagoService {
 
   http = inject(HttpClient);
+  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/metodopago`;
 
   constructor() {
@@ -20,11 +22,9 @@ export class MetodoPagoService {
   listMetodoPago = computed(() => this.#state().data);
   loading = computed(() => this.#state().loading)
 
-  getAll(estado: 'T' | 'S' | 'N' = 'T') {
+  getAll(estado: 'T' | 'S' | 'N' = 'S') {
     this.#state.set({ loading: true, data: [] })
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    this.http.get(this.url, { params: { estado, id_ruc } })
+    this.http.get(this.url, { params: { estado }, headers: { 'Authorization': `${this.token}` } })
       .subscribe({
         next: (res: any) => {
           if (res?.isSuccess) {
@@ -41,18 +41,15 @@ export class MetodoPagoService {
 
 
   add(nombre: string) {
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    return this.http.post(this.url, { nombre, id_ruc })
+    return this.http.post(this.url, { nombre }, { headers: { 'Authorization': `${this.token}` } })
   }
 
   update(id: number, nombre: string) {
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    return this.http.put(this.url, { id, nombre, id_ruc })
+    return this.http.put(this.url, { id, nombre }, { headers: { 'Authorization': `${this.token}` } })
   }
 
   eliminar(id: number | undefined, activo: string) {
-    return this.http.patch(this.url, { id, activo });
+    const headers = { 'Authorization': `${this.token}` };
+    return this.http.patch(this.url, { id, activo }, { headers: headers });
   }
 }

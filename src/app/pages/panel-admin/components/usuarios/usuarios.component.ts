@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogUsuarioComponent } from '../dialogs/dialog-usuario/dialog-usuario.component';
 import Swal from 'sweetalert2';
 import { MostrarRolPipe } from "../../../../pipes/mostrar-rol.pipe";
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService } from '../../../../services/usuario.service';
 import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
 import { FormatTelfPipe } from "../../../../pipes/format-telf.pipe";
@@ -20,23 +20,23 @@ import { FormatTelfPipe } from "../../../../pipes/format-telf.pipe";
   styleUrl: './usuarios.component.scss',
   imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarRolPipe, ReactiveFormsModule, MostrarActivoPipe, FormatTelfPipe]
 })
-export class UsuariosComponent implements OnInit {
+export class UsuariosComponent {
 
-  estado = new FormControl('T');
+  formulario: FormGroup;
 
   usuariosService = inject(UsuarioService)
   dialog = inject(MatDialog)
 
-  ngOnInit(): void {
-    this.estado.valueChanges
-      .subscribe({
-        next: (valor: any) => {
-          if (!valor) {
-            return;
-          }
-          this.usuariosService.getAll(valor);
-        }
-      })
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.formulario = this.fb.group({
+      estado: ['S']
+    })
+  }
+
+  filtrar() {
+    this.usuariosService.getAll(this.formulario.value.estado)
   }
 
   openDialog(item: Usuario | undefined = undefined) {
@@ -91,7 +91,10 @@ export class UsuariosComponent implements OnInit {
               });
             }
           },
-          error: (err) => console.log(err)
+          error: (err: any) => {
+            alert(err.message)
+            console.log(err);
+          }
         });
       }
     });

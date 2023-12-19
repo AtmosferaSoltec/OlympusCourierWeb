@@ -4,12 +4,14 @@ import { environment } from '../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { Cliente } from '../interfaces/cliente';
 import { State } from '../interfaces/state';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
   http = inject(HttpClient);
+  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/clientes`;
 
   #state = signal<State<Cliente[]>>({ data: [], loading: false });
@@ -21,16 +23,17 @@ export class ClienteService {
   }
 
   searchCliente(data: string): Observable<Cliente[]> {
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    return this.http.get<any>(`${this.url}/search/${data}`, { params: { id_ruc } })
+    const headers = { 'Authorization': `${this.token}` };
+    return this.http.get<any>(`${this.url}/search/${data}`, { headers: headers })
   }
 
   addCliente(cliente: any) {
-    return this.http.post(this.url, cliente)
+    const headers = { 'Authorization': `${this.token}` };
+    return this.http.post(this.url, cliente, { headers: headers })
   }
   updateCliente(cliente: any, id: any) {
-    return this.http.put(`${this.url}/${id}`, cliente)
+    const headers = { 'Authorization': `${this.token}` };
+    return this.http.put(`${this.url}/${id}`, cliente, { headers: headers })
   }
 
   exportClientes(listClientes: Cliente[]) {
@@ -49,32 +52,37 @@ export class ClienteService {
 
   getAll(estado: 'T' | 'S' | 'N' = 'T') {
     this.#state.set({ data: [], loading: true });
-    this.http.get<any>(this.url, { params: { estado } }).subscribe({
-      next: (res: any) => {
-        if (res?.isSuccess) {
-          this.#state.set({ data: res.data, loading: false });
-        } else {
-          this.#state.set({ data: [], loading: false });
+    const headers = { 'Authorization': `${this.token}` };
+    this.http.get<any>(this.url, { params: { estado }, headers: headers })
+      .subscribe({
+        next: (res: any) => {
+          if (res?.isSuccess) {
+            this.#state.set({ data: res.data, loading: false });
+          } else {
+            this.#state.set({ data: [], loading: false });
+          }
+        },
+        error: (err: any) => {
+          alert(err.message);
+          console.log(err);
+          this.#state.set({ data: [], loading: false, error: err.message });
         }
-      },
-      error: (err: any) => {
-        console.log(err);
-        this.#state.set({ data: [], loading: false, error: err.message });
-      }
-    });
+      });
   }
 
   delete(id: number | undefined, estado: string) {
     if (!id) throw new Error('No se encontró el id del cliente');
+    const headers = { 'Authorization': `${this.token}` };
     const body = {
       id,
       activo: estado
     }
-    return this.http.patch(this.url, body);
+    return this.http.patch(this.url, body, { headers: headers });
   }
 
   getCliente(id: string | null) {
-    return this.http.get<any>(`${this.url}/${id}`);
+    const headers = { 'Authorization': `${this.token}` };
+    return this.http.get<any>(`${this.url}/${id}`, { headers: headers });
   }
 
 }

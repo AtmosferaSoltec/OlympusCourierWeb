@@ -4,6 +4,7 @@ import { Observable, delay } from 'rxjs';
 import { Distrito } from '../interfaces/distrito';
 import { environment } from '../../environments/environment.development';
 import { State } from '../interfaces/state';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { State } from '../interfaces/state';
 export class DistritoService {
 
   http = inject(HttpClient);
+  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/distrito`;
 
   #state = signal<State<Distrito[]>>({ loading: false, data: [] })
@@ -21,11 +23,9 @@ export class DistritoService {
     this.getAll()
   }
 
-  getAll(estado: 'T' | 'S' | 'N' = 'T') {
+  getAll(estado: 'T' | 'S' | 'N' = 'S') {
     this.#state.set({ loading: true, data: [] })
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    this.http.get<any>(this.url, { params: { estado: estado, id_ruc } })
+    this.http.get<any>(this.url, { params: { estado: estado }, headers: { 'Authorization': `${this.token}` } })
       .pipe(delay(500))
       .subscribe({
         next: (res: any) => {
@@ -44,15 +44,13 @@ export class DistritoService {
   }
 
   add(nombre: string) {
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    return this.http.post(this.url, { nombre, id_ruc })
+    const headers = { 'Authorization': `${this.token}` };
+    return this.http.post(this.url, { nombre }, { headers: headers })
   }
 
   update(id: number, nombre: string) {
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    return this.http.put(this.url, { id, nombre, id_ruc })
+    const headers = { 'Authorization': `${this.token}` };
+    return this.http.put(this.url, { id, nombre }, { headers: headers })
   }
 
   eliminar(id: number | undefined, estado: string) {
@@ -60,6 +58,7 @@ export class DistritoService {
     const body = {
       activo: estado
     }
-    return this.http.patch(url, body);
+    const headers = { 'Authorization': `${this.token}` };
+    return this.http.patch(url, body, { headers: headers });
   }
 }

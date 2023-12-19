@@ -15,7 +15,6 @@
         <thead class="text-sm bg-white text-textos uppercase border-b">
             <tr>
                 <th scope="col" class="px-6 py-3">Detalle</th>
-                <th scope="col" class="px-6 py-3">Fecha Creación</th>
                 <th scope="col" class="px-6 py-3">Estado</th>
                 <th scope="col" class="px-6 py-3">Acciones</th>
             </tr>
@@ -33,7 +32,6 @@
             @for (item of metodoPagoService.listMetodoPago(); track $index) {
             <tr class="bg-white border-b">
                 <td class="px-6 py-2">{{item.nombre}}</td>
-                <td class="px-6 py-2">{{item.fecha_creacion | date:'dd/MM/yyyy'}}</td>
                 <td class="px-6 py-2">
                     <div class="flex flex-row items-center">
                         <div [ngClass]="{'bg-green-500': item.activo == 'S', 'bg-red-500': item.activo == 'N'}"

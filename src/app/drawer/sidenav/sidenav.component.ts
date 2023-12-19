@@ -18,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class SidenavComponent {
 
+  usuarioService = inject(UsuarioService)
   navData = [
     {
       routerLink: 'repartos',
@@ -38,10 +39,10 @@ export class SidenavComponent {
       activo: true
     },
     {
-      routerLink: 'panel-admin',
+      routerLink: 'panel-admin/usuarios',
       icon: 'admin_panel_settings',
       label: 'Panel Admin',
-      activo: false
+      activo: this.usuarioService.usuario()?.cod_rol === 'A' || this.usuarioService.usuario()?.cod_rol === 'S'
     }
   ]
 
@@ -50,7 +51,7 @@ export class SidenavComponent {
 
 
   navegar(url: string) {
-    this.router.navigate(['/menu', url])
+    this.router.navigateByUrl(`/menu/${url}`)
   }
 
   toggle() {
@@ -61,31 +62,12 @@ export class SidenavComponent {
     this.appService.isCollapsed = false;
   }
 
-
-  idUser = localStorage.getItem('idUser');
-
-  usuarioService = inject(UsuarioService);
   dialog = inject(MatDialog)
 
   constructor() {
-    if (this.idUser) {
-      //Convertir idUser a number
-      const id = Number(this.idUser);
-      this.usuarioService.get(id).subscribe({
-        next: (res: any) => {
-          if (res?.isSuccess) {
-            this.usuarioService.usuario.set(res.data);
-            if (this.usuarioService.usuario()?.cod_rol != 'U') {
-              this.navData[3].activo = true
-            }
-          }
-        }
-      })
-    }
   }
 
-  cambiarPass(){
-    
+  cambiarPass() {
     const dialogRef = this.dialog.open(DialogCambiarPassComponent, {
       width: "770px"
     });
@@ -108,10 +90,9 @@ export class SidenavComponent {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.removeItem('idUser');
-        localStorage.removeItem('ruc');
+        localStorage.removeItem('token');
         this.router.navigate(['login']);
-      }      
+      }
     })
   }
 

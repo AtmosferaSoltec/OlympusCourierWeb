@@ -6,16 +6,9 @@ import { firstValueFrom } from 'rxjs';
 export const isAdminGuard: CanActivateFn = async (route, state) => {
   const usuarioService = inject(UsuarioService);
   const router = inject(Router);
-  const idUser = localStorage.getItem('idUser');
 
-  if (!idUser) {
-    router.navigate(['/login']);
-    return false;
-  }
-
-  const id = Number(idUser);
-  const usuario: any = await firstValueFrom(usuarioService.get(id));
-  if (usuario?.data?.cod_rol === 'A') {
+  const usuario = usuarioService.usuario()
+  if (usuario?.cod_rol === 'A') {
     return true;
   } else {
     router.navigate(['/menu/repartos']);

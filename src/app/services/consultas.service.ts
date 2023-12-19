@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment.development';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { environment } from '../../environments/environment.development';
 export class ConsultasService {
 
   http = inject(HttpClient);
+  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/consultas`;
 
   searchDni(doc: string) {

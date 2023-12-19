@@ -31,7 +31,11 @@
                     <p class="status" [ngClass]="item.estado">{{item.estado | mostrarEstado}}</p>
                 </td>
                 <td class="px-6 py-2">S/{{item.total | number:'1.2-2'}}<br>
+                @if(item.id_comprobante){
                     {{item.id | mostrarComprobante:comprobanteService.listComprobantes()}}
+                }@else {
+                    -
+                }
                 </td>
                 <td class="px-6 py-2">
                     <button mat-icon-button [matMenuTriggerFor]="menu">

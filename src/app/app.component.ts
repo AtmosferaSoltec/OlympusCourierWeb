@@ -1,8 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { HealthService } from './services/health.service';
-import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-root',

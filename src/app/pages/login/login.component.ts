@@ -22,14 +22,20 @@ export class LoginComponent {
     private fb: FormBuilder
   ) {
 
-    if (this.usuarioService.isLogged()) {
-      this.router.navigate(['/menu', 'repartos'])
-    }
+    this.verificarLogin()
+
 
     this.formulario = this.fb.group({
       user: ['', [Validators.minLength(8)]],
       clave: ['', [Validators.minLength(4)]]
     })
+  }
+
+  async verificarLogin(){
+    const isLogged = await this.usuarioService.isLogged();
+    if (isLogged) {
+      this.router.navigate(['/menu', 'repartos'])
+    }
   }
 
   loading = signal(false);
@@ -40,8 +46,8 @@ export class LoginComponent {
       this.usuarioService.login(this.formulario.get('user')?.value, this.formulario.get('clave')?.value).subscribe({
         next: ((res: any) => {
           if (res?.isSuccess) {
-            localStorage.setItem('idUser', res.data.id)
-            localStorage.setItem('ruc', res.data.ruc)
+            console.log(res);
+            localStorage.setItem('token', res.data.token)
             this.router.navigate(['/menu', 'repartos'])
           } else {
             Swal.fire({

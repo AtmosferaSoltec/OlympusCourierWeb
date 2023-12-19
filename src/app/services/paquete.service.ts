@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment.development';
 import { TipoPaquete } from '../interfaces/tipo-paquete';
 import { State } from '../interfaces/state';
 import { delay } from 'rxjs';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { delay } from 'rxjs';
 export class PaqueteService {
 
   http = inject(HttpClient);
+  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/paquetes`;
 
   #state = signal<State<TipoPaquete[]>>({ loading: true, data: [] });
@@ -21,11 +23,9 @@ export class PaqueteService {
     this.getAll()
   }
 
-  getAll(estado: 'T' | 'S' | 'N' = 'T') {
+  getAll(estado: 'T' | 'S' | 'N' = 'S') {
     this.#state.set({ loading: true, data: [] })
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    this.http.get(`${this.url}`, { params: { estado, id_ruc } })
+    this.http.get(`${this.url}`, { params: { estado }, headers: { 'Authorization': `${this.token}` } })
       .pipe(delay(500))
       .subscribe({
         next: (res: any) => {
@@ -36,22 +36,21 @@ export class PaqueteService {
   }
 
   add(nombre: string) {
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    return this.http.post(this.url, { nombre, id_ruc })
+    const headers = { 'Authorization': `${this.token}` };
+    return this.http.post(this.url, { nombre }, { headers: headers })
   }
 
   update(id: number, nombre: string) {
-    const id_ruc = localStorage.getItem('ruc');
-    if (!id_ruc) throw new Error('No se encontró el ruc del usuario');
-    return this.http.put(this.url, { id, nombre, id_ruc })
+    const headers = { 'Authorization': `${this.token}` };
+    return this.http.put(this.url, { id, nombre }, { headers: headers })
   }
 
   eliminar(id: number | undefined, estado: string) {
     const url = `${this.url}/${id}`;
+    const headers = { 'Authorization': `${this.token}` };
     const body = {
       activo: estado
     }
-    return this.http.patch(url, body);
+    return this.http.patch(url, body, { headers: headers });
   }
 }

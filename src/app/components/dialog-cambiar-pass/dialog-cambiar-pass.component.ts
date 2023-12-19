@@ -73,9 +73,8 @@ export class DialogCambiarPassComponent {
       })
       return;
     }
-    //Verificar que la contraseña anterior sea correcta
-    const id = localStorage.getItem('idUser')
-    this.usuarioService.cambiarPass(id, passAnterior, passNueva).subscribe({
+
+    this.usuarioService.cambiarPass(passAnterior, passNueva).subscribe({
       next: (res: any) => {
         if (res?.isSuccess) {
           Swal.fire({
