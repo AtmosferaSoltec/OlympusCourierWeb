@@ -22,7 +22,7 @@ export class DestinosComponent {
 
   distritoService = inject(DistritoService)
   dialog = inject(MatDialog)
-  estado = new FormControl('T');
+  estado = new FormControl('A');
 
   ngOnInit(): void {
     this.estado.valueChanges

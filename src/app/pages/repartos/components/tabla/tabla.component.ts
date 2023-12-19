@@ -32,7 +32,10 @@ export class TablaComponent {
   router = inject(Router);
 
   constructor() {
-    this.repartoService.getAll();
+    const params = {
+      estado: 'S'
+    }
+    this.repartoService.getAll(params);
   }
 
   getTotal(listRepartos?: Reparto[]): number {
@@ -66,7 +69,10 @@ export class TablaComponent {
                 icon: "success"
               });
               // Actualizar la lista de repartos
-              this.repartoService.getAll();
+              const params = {
+                estado: 'S'
+              }
+              this.repartoService.getAll(params);
             } else {
               Swal.fire({
                 title: "Error",
@@ -100,7 +106,10 @@ export class TablaComponent {
                 icon: "success"
               });
               // Actualizar la lista de repartos
-              this.repartoService.getAll();
+              const params = {
+                estado: 'S'
+              }
+              this.repartoService.getAll(params);
             } else {
               Swal.fire({
                 title: "Error",

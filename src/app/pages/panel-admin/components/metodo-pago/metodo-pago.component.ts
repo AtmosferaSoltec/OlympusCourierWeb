@@ -20,7 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 })
 export class MetodoPagoComponent {
 
-  estado = new FormControl('T');
+  estado = new FormControl('A');
   metodoPagoService = inject(MetodoPagoService)
   dialog = inject(MatDialog)
 

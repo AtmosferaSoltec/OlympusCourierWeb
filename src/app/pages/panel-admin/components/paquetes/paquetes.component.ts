@@ -20,7 +20,7 @@ import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
 })
 export class PaquetesComponent {
 
-  estado = new FormControl('T');
+  estado = new FormControl('A');
   paqueteService = inject(PaqueteService)
   dialog = inject(MatDialog)
 
