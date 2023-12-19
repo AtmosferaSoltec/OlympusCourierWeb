@@ -7,7 +7,8 @@
     </div>
 </div>
 
-<form [formGroup]="formulario" (submit)="toAgregar()" class="flex flex-row my-3 gap-2">
+<form [formGroup]="formulario" (submit)="filtrar()" class="flex my-3 gap-2 items-center">
+
     <select formControlName="estado"
         class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
         <option value="T">Todos</option>
@@ -21,6 +22,10 @@
         <option value="E">Entregados</option>
         <option value="A">Anulados</option>
     </select>
+    <input formControlName="num_reparto" type="text" placeholder="Número de reparto"
+        class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+    <input formControlName="cliente" type="text" placeholder="Cliente"
+        class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
     <!--
     <button matDatePick></button>
     <mat-form-field>
@@ -43,12 +48,8 @@
     -->
 
     <div class="spacer"></div>
-    <button (click)="filtrar()" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
-        Buscar
-    </button>
-    <button type="submit" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
-        Añadir
-    </button>
+    <app-boton icon="search" text="Buscar" type="submit"></app-boton>
+    <app-boton icon="add" text="Añadir" (clickEvent)="toAgregar()"></app-boton>
 </form>
 
 <!--

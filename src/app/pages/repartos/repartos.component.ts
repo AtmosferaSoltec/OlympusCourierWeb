@@ -15,6 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { BotonComponent } from '../../components/boton/boton.component';
 @Component({
   selector: 'app-repartos',
   standalone: true,
@@ -22,7 +23,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     CommonModule, FiltrosComponent, TablaComponent,
     MatIconModule, MatButtonModule, MatTooltipModule,
     RouterOutlet, ReactiveFormsModule, MatDatepickerModule,
-    MatFormFieldModule, MatInputModule, MatNativeDateModule
+    MatFormFieldModule, MatInputModule, MatNativeDateModule,
+    BotonComponent
   ],
   templateUrl: './repartos.component.html',
   styleUrl: './repartos.component.scss'
@@ -39,6 +41,8 @@ export class RepartosComponent {
   formulario = new FormGroup({
     estado: new FormControl<string>('T'),
     estado_envio: new FormControl<string>('T'),
+    num_reparto: new FormControl<string>(''),
+    cliente: new FormControl<string>(''),
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   })
@@ -51,6 +55,8 @@ export class RepartosComponent {
     const params = {
       estado: estado === 'T' ? undefined : estado,
       estado_envio: this.formulario.controls.estado_envio.value,
+      num_reparto: this.formulario.controls.num_reparto.value,
+      cliente: this.formulario.controls.cliente.value,
       start: this.formulario.controls.start.value,
       end: this.formulario.controls.end.value
     }

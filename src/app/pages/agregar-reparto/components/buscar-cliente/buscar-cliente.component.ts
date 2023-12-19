@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -9,18 +9,22 @@ import { debounceTime } from 'rxjs';
 import { DialogAddClienteComponent } from '../../../../components/dialog-add-cliente/dialog-add-cliente.component';
 import { Cliente } from '../../../../interfaces/cliente';
 import { ClienteService } from '../../../../services/cliente.service';
-import { AgregarRepartoComponent } from '../../agregar-reparto.component';
 import { AgregarRepartoService } from '../../agregar-reparto.service';
 import { DialogAddItemRepartoComponent } from '../../../../components/dialog-add-item-reparto/dialog-add-item-reparto.component';
 import { ItemReparto } from '../../../../interfaces/item-reparto';
 import { FormatTelfPipe } from "../../../../pipes/format-telf.pipe";
+import { BotonComponent } from '../../../../components/boton/boton.component';
 
 @Component({
-    selector: 'app-buscar-cliente',
-    standalone: true,
-    templateUrl: './buscar-cliente.component.html',
-    styleUrl: './buscar-cliente.component.scss',
-    imports: [CommonModule, MatIconModule, MatProgressSpinnerModule, ReactiveFormsModule, MatButtonModule, FormatTelfPipe]
+  selector: 'app-buscar-cliente',
+  standalone: true,
+  templateUrl: './buscar-cliente.component.html',
+  styleUrl: './buscar-cliente.component.scss',
+  imports: [
+    CommonModule, MatIconModule, MatProgressSpinnerModule,
+    ReactiveFormsModule, MatButtonModule, FormatTelfPipe,
+    BotonComponent
+  ]
 })
 export class BuscarClienteComponent {
 
@@ -81,7 +85,7 @@ export class BuscarClienteComponent {
       if (data) {
         this.clienteService.getCliente(data).subscribe({
           next: (res: any) => {
-            
+
             this.service.cliente.set(res.data);
           },
           error: (err: any) => console.log(err)

@@ -1,11 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Cliente } from '../../interfaces/cliente';
-import { ItemReparto } from '../../interfaces/item-reparto';
 import { RepartoService } from '../../services/reparto.service';
 import { Router } from '@angular/router';
-import { Reparto } from '../../interfaces/reparto';
 import Swal from 'sweetalert2';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -13,17 +10,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { BuscarClienteComponent } from './components/buscar-cliente/buscar-cliente.component';
 import { TablaItemsComponent } from './components/tabla-items/tabla-items.component';
 import { AgregarRepartoService } from './agregar-reparto.service';
+import { BotonComponent } from '../../components/boton/boton.component';
 @Component({
   selector: 'app-agregar-reparto',
   standalone: true,
   imports: [
     CommonModule, TablaItemsComponent, MatIconModule,
-    MatButtonModule, ReactiveFormsModule, BuscarClienteComponent
+    MatButtonModule, ReactiveFormsModule, BuscarClienteComponent,
+    BotonComponent
   ],
   templateUrl: './agregar-reparto.component.html',
   styleUrl: './agregar-reparto.component.scss'
 })
-export class AgregarRepartoComponent {
+export class AgregarRepartoComponent implements OnDestroy {
 
   formulario: FormGroup;
 
@@ -38,6 +37,9 @@ export class AgregarRepartoComponent {
       anotacion: ['']
     })
   }
+  ngOnDestroy(): void {
+    this.service.reset();
+  }
 
 
   displayFn(option: any): string {
@@ -46,6 +48,7 @@ export class AgregarRepartoComponent {
 
 
   back() {
+
     this.router.navigateByUrl('/menu/repartos');
   }
 
@@ -102,7 +105,7 @@ export class AgregarRepartoComponent {
               })
             }
           },
-          error: (err:any) => {
+          error: (err: any) => {
             console.log(err.message)
           }
         })

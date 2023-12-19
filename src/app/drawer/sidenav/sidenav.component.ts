@@ -16,9 +16,15 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss'
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit {
 
+
+
+
+  router = inject(Router)
+  dialog = inject(MatDialog)
   usuarioService = inject(UsuarioService)
+  appService = inject(AppService)
   navData = [
     {
       routerLink: 'repartos',
@@ -46,9 +52,9 @@ export class SidenavComponent {
     }
   ]
 
-  router = inject(Router)
-  appService = inject(AppService)
-
+  ngOnInit(): void {
+    this.usuarioService.validarSesion();
+  }
 
   navegar(url: string) {
     this.router.navigateByUrl(`/menu/${url}`)
@@ -62,10 +68,6 @@ export class SidenavComponent {
     this.appService.isCollapsed = false;
   }
 
-  dialog = inject(MatDialog)
-
-  constructor() {
-  }
 
   cambiarPass() {
     const dialogRef = this.dialog.open(DialogCambiarPassComponent, {

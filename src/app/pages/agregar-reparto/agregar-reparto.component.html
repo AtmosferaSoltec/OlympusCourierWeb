@@ -37,9 +37,8 @@
 
 
 
-    <div class="d-flex justify-content-end mt-3">
-        <button (click)="cancel()" class="btn btn-secondary">Cancelar</button>
-        &nbsp;
-        <button (click)="guardarReparto()" class="btn btn-primary">Guardar</button>
+    <div class="flex justify-end flex-row gap-2 mt-3">
+        <app-boton text="Cancelar" (clickEvent)="cancel()" color="Secundario" witdh="w-24"></app-boton>
+        <app-boton text="Guardar" (clickEvent)="guardarReparto()" witdh="w-24"></app-boton>
     </div>
 </div>

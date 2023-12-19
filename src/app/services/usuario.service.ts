@@ -24,7 +24,6 @@ export class UsuarioService {
 
   constructor() {
     this.getAll();
-    this.validarSesion()
   }
 
   validarSesion() {
@@ -33,12 +32,12 @@ export class UsuarioService {
         next: (res: any) => {
           if (res?.isSuccess) {
             this.usuario.set(res.data);
-
           } else {
             console.log(res?.mensaje);
           }
         },
         error: (err: any) => {
+          alert(err.message)
           console.log(err);
         }
       })

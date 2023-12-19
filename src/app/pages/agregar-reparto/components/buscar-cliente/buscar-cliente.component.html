@@ -5,11 +5,6 @@
             <!--Progress Bar-->
             <mat-spinner class="icon" [diameter]="30" color="#047CC4" *ngIf="isLoading"></mat-spinner>
 
-            <!--Boton Buscar Cliente-->
-            <button class="icon" mat-icon-button matTooltip="Buscar" (click)="buscarCliente()"
-                *ngIf="!isLoading && !service.cliente">
-                <mat-icon>search</mat-icon>
-            </button>
 
             <!--Boton Borrar Cliente-->
             <button class="icon" mat-icon-button (click)="borrarCliente()" matTooltip="Limpiar"
@@ -24,30 +19,14 @@
 
         <div class="h-12 flex flex-row gap-3">
             @if (!service.cliente()) {
-                <button (click)="openDialogCliente()"
-                    class="bg-p1 w-32 hover:bg-p2 text-white font-semibold rounded flex flex-row items-center justify-center gap-2 border-0">
-                    <mat-icon>person_add</mat-icon>
-                    Agregar
-                </button>
-        
-                }@else {
-                <button (click)="borrarCliente()"
-                    class="bg-p1 w-32 hover:bg-p2 text-white font-semibold rounded flex flex-row items-center justify-center gap-2 border-0">
-                    <mat-icon>close</mat-icon>
-                    Limpiar
-                </button>
-                <button (click)="openDialogCliente()"
-                    class="bg-p1 w-32 hover:bg-p2 text-white font-semibold rounded flex flex-row items-center justify-center gap-2 border-0">
-                    <mat-icon>edit</mat-icon>
-                    Editar
-                </button>
-        
-                }
-                <button (click)="openDialogAddItemReparto()"
-                    class="bg-p1 w-32 hover:bg-p2 text-white font-semibold rounded flex flex-row items-center justify-center gap-2 border-0">
-                    <mat-icon>add</mat-icon>
-                    Item
-                </button>
+            <app-boton icon="person_add" text="Agregar" (clickEvent)="openDialogCliente()"></app-boton>
+            }@else {
+            <app-boton icon="close" text="Limpiar" (clickEvent)="borrarCliente()"></app-boton>
+            <app-boton icon="edit" text="Editar" (clickEvent)="openDialogCliente()"></app-boton>
+
+            }
+            <app-boton icon="add" text="Item" (clickEvent)="openDialogAddItemReparto()"></app-boton>
+     
         </div>
 
     </div>
