@@ -5,14 +5,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ItemReparto } from '../../interfaces/item-reparto';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { InputBoxComponent } from '../../shared/components/input-box/input-box.component';
 import { PaqueteService } from '../../services/paquete.service';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dialog-add-item-reparto',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatIconModule, MatButtonModule, InputBoxComponent],
+  imports: [CommonModule, ReactiveFormsModule, MatIconModule, MatButtonModule],
   templateUrl: './dialog-add-item-reparto.component.html',
   styleUrl: './dialog-add-item-reparto.component.scss'
 })

@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            @if(usuariosService.loading()){
+            @if(panelAdminService.isLoading()){
             <tr class="bg-white border-b">
                 <td colspan="7" class="py-3">
                     <div class="flex justify-center items-center">
@@ -38,7 +38,7 @@
                 </td>
             </tr>
             }@else {
-            @for (item of usuariosService.listUsuarios(); track $index) {
+            @for (item of panelAdminService.listUsuarios(); track $index) {
             <tr class="bg-white border-b">
                 <td class="px-6 py-2">{{item.documento}}</td>
                 <td class="px-6 py-2">{{item.nombres | uppercase}} {{item.ape_paterno | uppercase}}</td>

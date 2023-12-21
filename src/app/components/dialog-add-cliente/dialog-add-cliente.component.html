@@ -33,7 +33,7 @@
                 <div class="input-btn">
                     <input type="search" placeholder="Ingrese número de documento" [maxLength]="getMaxLength()"
                         formControlName="doc" autocomplete="off">
-                    @if (progressBuscarDoc) {
+                    @if (progressBuscarDoc()) {
                     <div class="loader"></div>
                     }@else {
                     <button (click)="buscarDoc()">Buscar</button>
@@ -137,7 +137,8 @@
         <div class="caja">
             <span class="label">URL Maps</span>
             <div class="input">
-                <input type="url" placeholder="Ingrese url de enlace (Google Maps)" formControlName="maps" autocomplete="off">
+                <input type="url" placeholder="Ingrese url de enlace (Google Maps)" formControlName="maps"
+                    autocomplete="off">
                 @if (formulario.get('maps')?.hasError('required') && formulario.get('maps')?.touched) {
                 <span>Campo Obligatorio</span>
                 }

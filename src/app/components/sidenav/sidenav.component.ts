@@ -6,7 +6,7 @@ import { UsuarioService } from '../../services/usuario.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import Swal from 'sweetalert2';
-import { DialogCambiarPassComponent } from '../../components/dialog-cambiar-pass/dialog-cambiar-pass.component';
+import { DialogCambiarPassComponent } from '../dialog-cambiar-pass/dialog-cambiar-pass.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -20,7 +20,6 @@ export class SidenavComponent implements OnInit {
 
 
 
-
   router = inject(Router)
   dialog = inject(MatDialog)
   usuarioService = inject(UsuarioService)
@@ -29,26 +28,22 @@ export class SidenavComponent implements OnInit {
     {
       routerLink: 'repartos',
       icon: 'local_shipping',
-      label: 'Repartos',
-      activo: true
+      label: 'Repartos'
     },
     {
       routerLink: 'clientes',
       icon: 'group',
-      label: 'Clientes',
-      activo: true
+      label: 'Clientes'
     },
     {
       routerLink: 'comprobantes',
       icon: 'description',
-      label: 'Comprobantes',
-      activo: true
+      label: 'Comprobantes'
     },
     {
-      routerLink: 'panel-admin/usuarios',
-      icon: 'admin_panel_settings',
-      label: 'Panel Admin',
-      activo: this.usuarioService.usuario()?.cod_rol === 'A' || this.usuarioService.usuario()?.cod_rol === 'S'
+      routerLink: 'pagos',
+      icon: 'payments',
+      label: 'Pagos'
     }
   ]
 

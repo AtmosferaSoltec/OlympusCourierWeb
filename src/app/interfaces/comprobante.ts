@@ -13,11 +13,29 @@ export interface Comprobante {
     direc?: string;
     correo?: string;
     telefono?: string;
-    enlace?: string;
-    url_pdf?: string;
-    url_xml?: string;
-    url_cdr?: string;
     id_usuario?: number;
     fecha_creacion?: string;
     activo?: string;
+    nubefact?: Nubefact;
+}
+
+export interface Nubefact {
+    tipo_de_comprobante?: string;
+    serie?: string;
+    numero?: string;
+    enlace?: string;
+    aceptada_por_sunat?: string;
+    sunat_description?: string;
+    sunat_note?: string;
+    sunat_responsecode?: string;
+    sunat_soap_error?: string;
+    anulado?: string;
+    pdf_zip_base64?: string;
+    xml_zip_base64?: string;
+    cdr_zip_base64?: string;
+    cadena_para_codigo_qr?: string;
+    codigo_hash?: string;
+    enlace_del_pdf?: string;
+    enlace_del_xml?: string;
+    enlace_del_cdr?: string;
 }

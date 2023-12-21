@@ -4,7 +4,6 @@ import { environment } from '../../environments/environment.development';
 import { TipoPaquete } from '../interfaces/tipo-paquete';
 import { State } from '../interfaces/state';
 import { delay } from 'rxjs';
-import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,6 @@ import { TokenService } from './token.service';
 export class PaqueteService {
 
   http = inject(HttpClient);
-  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/paquetes`;
 
   #state = signal<State<TipoPaquete[]>>({ loading: true, data: [] });
@@ -25,7 +23,7 @@ export class PaqueteService {
 
   getAll(estado: 'T' | 'S' | 'N' = 'S') {
     this.#state.set({ loading: true, data: [] })
-    this.http.get(`${this.url}`, { params: { estado }, headers: { 'Authorization': `${this.token}` } })
+    this.http.get(`${this.url}`, { params: { estado } })
       .pipe(delay(500))
       .subscribe({
         next: (res: any) => {
@@ -36,21 +34,18 @@ export class PaqueteService {
   }
 
   add(nombre: string) {
-    const headers = { 'Authorization': `${this.token}` };
-    return this.http.post(this.url, { nombre }, { headers: headers })
+    return this.http.post(this.url, { nombre })
   }
 
   update(id: number, nombre: string) {
-    const headers = { 'Authorization': `${this.token}` };
-    return this.http.put(this.url, { id, nombre }, { headers: headers })
+    return this.http.put(this.url, { id, nombre })
   }
 
   eliminar(id: number | undefined, estado: string) {
     const url = `${this.url}/${id}`;
-    const headers = { 'Authorization': `${this.token}` };
     const body = {
       activo: estado
     }
-    return this.http.patch(url, body, { headers: headers });
+    return this.http.patch(url, body);
   }
 }

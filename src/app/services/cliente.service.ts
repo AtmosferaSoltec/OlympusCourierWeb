@@ -4,14 +4,12 @@ import { environment } from '../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { Cliente } from '../interfaces/cliente';
 import { State } from '../interfaces/state';
-import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
   http = inject(HttpClient);
-  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/clientes`;
 
   #state = signal<State<Cliente[]>>({ data: [], loading: false });
@@ -23,17 +21,14 @@ export class ClienteService {
   }
 
   searchCliente(data: string): Observable<Cliente[]> {
-    const headers = { 'Authorization': `${this.token}` };
-    return this.http.get<any>(`${this.url}/search/${data}`, { headers: headers })
+    return this.http.get<any>(`${this.url}/search/${data}`)
   }
 
   addCliente(cliente: any) {
-    const headers = { 'Authorization': `${this.token}` };
-    return this.http.post(this.url, cliente, { headers: headers })
+    return this.http.post(this.url, cliente)
   }
   updateCliente(cliente: any, id: any) {
-    const headers = { 'Authorization': `${this.token}` };
-    return this.http.put(`${this.url}/${id}`, cliente, { headers: headers })
+    return this.http.put(`${this.url}/${id}`, cliente)
   }
 
   exportClientes(listClientes: Cliente[]) {
@@ -52,8 +47,7 @@ export class ClienteService {
 
   getAll(estado: 'T' | 'S' | 'N' = 'T') {
     this.#state.set({ data: [], loading: true });
-    const headers = { 'Authorization': `${this.token}` };
-    this.http.get<any>(this.url, { params: { estado }, headers: headers })
+    this.http.get<any>(this.url, { params: { estado } })
       .subscribe({
         next: (res: any) => {
           if (res?.isSuccess) {
@@ -72,17 +66,15 @@ export class ClienteService {
 
   delete(id: number | undefined, estado: string) {
     if (!id) throw new Error('No se encontró el id del cliente');
-    const headers = { 'Authorization': `${this.token}` };
     const body = {
       id,
       activo: estado
     }
-    return this.http.patch(this.url, body, { headers: headers });
+    return this.http.patch(this.url, body);
   }
 
   getCliente(id: string | null) {
-    const headers = { 'Authorization': `${this.token}` };
-    return this.http.get<any>(`${this.url}/${id}`, { headers: headers });
+    return this.http.get<any>(`${this.url}/${id}`);
   }
 
 }

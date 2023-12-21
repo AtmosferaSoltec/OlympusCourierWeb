@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +9,11 @@ export class EmpresaService {
 
 
   http = inject(HttpClient);
-  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/empresa`;
 
 
   get() {
-    return this.http.get(this.url, { headers: { 'Authorization': `${this.token}` } });
+    return this.http.get(this.url);
   }
 
   update(formulario: any) {
@@ -27,6 +25,6 @@ export class EmpresaService {
       serie_b: formulario.serie_b,
       num_b: formulario.num_b,
     }
-    return this.http.put(this.url, body, { headers: { 'Authorization': `${this.token}` } });
+    return this.http.put(this.url, body);
   }
 }

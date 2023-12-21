@@ -13,14 +13,20 @@ import { DocumentoService } from '../../services/documento.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { GlobalService } from '../../services/global.service';
+import { MostrarEstadoNubefactPipe } from '../../pipes/mostrar-estado-nubefact.pipe';
+import { Reparto } from '../../interfaces/reparto';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-comprobantes',
   standalone: true,
   templateUrl: './comprobantes.component.html',
   styleUrl: './comprobantes.component.scss',
-  imports: [CommonModule, MatIconModule, MatButtonModule,
-    MatMenuModule, MatTooltipModule, MostrarTipoDocumentoPipe, MostrarMetodoPagoPipe, ReactiveFormsModule]
+  imports: [
+    CommonModule, MatIconModule, MatButtonModule,
+    MatMenuModule, MatTooltipModule, MostrarTipoDocumentoPipe,
+    MostrarMetodoPagoPipe, ReactiveFormsModule, MostrarEstadoNubefactPipe, RouterOutlet
+  ]
 })
 export class ComprobantesComponent {
 
@@ -29,6 +35,7 @@ export class ComprobantesComponent {
   metodoPagoService = inject(MetodoPagoService)
   tipoDocumentoService = inject(DocumentoService)
   globalService = inject(GlobalService)
+  router = inject(Router)
 
   formulario: FormGroup
 
@@ -43,21 +50,6 @@ export class ComprobantesComponent {
     })
   }
 
-  buscarUsuario(id?: number): string {
-    if (!id) {
-      return 'Desconocido';
-    }
-
-    const usuario = this.usuarioService.listUsuarios()?.find(u => u.id === id);
-
-    if (!usuario) {
-      return 'Desconocido';
-    } else {
-      return `${usuario.nombres}`
-    }
-
-  }
-
 
   filtrarComprobantes() {
     this.comprobanteService.getAll({
@@ -69,7 +61,7 @@ export class ComprobantesComponent {
   }
 
   exportar() {
-    
+
     Swal.fire({
       title: '¿Estás seguro?',
       text: "Se exportará la información de los comprobantes a un archivo Excel",
@@ -96,5 +88,25 @@ export class ComprobantesComponent {
         )
       }
     });
+  }
+
+  openPdf(url?: string) {
+    if (!url) {
+      alert('No se encontró el comprobante');
+      return;
+    }
+    window.open(url, '_blank');
+  }
+
+  verReparto(id?: number) {
+    if (!id) {
+      alert('No se encontró el comprobante');
+      return;
+    }
+    this.router.navigate(['menu', 'detalle-reparto', id]);
+  }
+
+  anular(reparto: Reparto) {
+
   }
 }

@@ -71,10 +71,6 @@ export class DetalleRepartoComponent implements OnInit {
 
   dialog = inject(MatDialog)
 
-  toGenerarComprobante() {
-    this.router.navigate(['/menu/generar-comprobante', this.id]);
-  }
-
   open(url?: string) {
     if (url) {
       console.log(url);

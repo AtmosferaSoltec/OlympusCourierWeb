@@ -17,7 +17,12 @@ export interface Reparto {
     id_repartidor?: number;
     repartidor?: any;
     id_comprobante?: number;
+    comprobante?: {
+        tipo_comprobante?: number;
+        serie?: string;
+        num_serie?: number;
+    }
     items?: ItemReparto[];
     total?: number;
-    activo?:string;
+    activo?: string;
 }

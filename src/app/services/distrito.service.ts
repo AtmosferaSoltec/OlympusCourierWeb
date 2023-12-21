@@ -4,7 +4,6 @@ import { Observable, delay } from 'rxjs';
 import { Distrito } from '../interfaces/distrito';
 import { environment } from '../../environments/environment.development';
 import { State } from '../interfaces/state';
-import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,6 @@ import { TokenService } from './token.service';
 export class DistritoService {
 
   http = inject(HttpClient);
-  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/distrito`;
 
   #state = signal<State<Distrito[]>>({ loading: false, data: [] })
@@ -25,7 +23,7 @@ export class DistritoService {
 
   getAll(estado: 'T' | 'S' | 'N' = 'S') {
     this.#state.set({ loading: true, data: [] })
-    this.http.get<any>(this.url, { params: { estado: estado }, headers: { 'Authorization': `${this.token}` } })
+    this.http.get<any>(this.url, { params: { estado: estado }})
       .pipe(delay(500))
       .subscribe({
         next: (res: any) => {
@@ -44,13 +42,11 @@ export class DistritoService {
   }
 
   add(nombre: string) {
-    const headers = { 'Authorization': `${this.token}` };
-    return this.http.post(this.url, { nombre }, { headers: headers })
+    return this.http.post(this.url, { nombre })
   }
 
   update(id: number, nombre: string) {
-    const headers = { 'Authorization': `${this.token}` };
-    return this.http.put(this.url, { id, nombre }, { headers: headers })
+    return this.http.put(this.url, { id, nombre })
   }
 
   eliminar(id: number | undefined, estado: string) {
@@ -58,7 +54,6 @@ export class DistritoService {
     const body = {
       activo: estado
     }
-    const headers = { 'Authorization': `${this.token}` };
-    return this.http.patch(url, body, { headers: headers });
+    return this.http.patch(url, body);
   }
 }

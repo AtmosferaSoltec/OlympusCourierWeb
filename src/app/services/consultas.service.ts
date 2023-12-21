@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { TokenService } from './token.service';
+import { firstValueFrom } from 'rxjs';
+import { Result } from '../interfaces/state';
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +10,17 @@ import { TokenService } from './token.service';
 export class ConsultasService {
 
   http = inject(HttpClient);
-  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/consultas`;
 
-  searchDni(doc: string) {
-    return this.http.get(`${this.url}/dni/${doc}`);
-  }
-
-  searchRuc(doc: string) {
-    return this.http.get(`${this.url}/ruc/${doc}`);
+  async searchDoc(doc: string, tipoDoc: 'dni' | 'ruc') {
+    const call = this.http.get(`${this.url}/${tipoDoc}/${doc}`);
+    const res: Result = await firstValueFrom(call);
+    if (res?.isSuccess) {
+      return res.data
+    } else {
+      alert(res?.mensaje)
+      return null;
+    }
   }
 
 }

@@ -7,6 +7,7 @@ import { Usuario } from '../../../../../interfaces/usuario';
 import { MatRadioModule } from '@angular/material/radio';
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../../../../../services/usuario.service';
+import { PanelAdminService } from '../../../panel-admin.service';
 
 @Component({
   selector: 'app-dialog-usuario',
@@ -18,7 +19,7 @@ import { UsuarioService } from '../../../../../services/usuario.service';
 export class DialogUsuarioComponent {
 
   formulario: FormGroup;
-  private usuarioService = inject(UsuarioService);
+  private panelAdminService = inject(PanelAdminService);
 
   listDocumento: any[] = []
   listDistritos: any[] = []
@@ -53,70 +54,7 @@ export class DialogUsuarioComponent {
 
   guardar() {
     if (this.formulario.valid) {
-      //Verificar si es nuevo o editar
-
-      if (this.data?.id) {
-        this.usuarioService.update(this.data?.id, this.formulario.value).subscribe({
-          next: (data: any) => {
-            if (data?.isSuccess) {
-              Swal.fire({
-                title: "Actualizado!",
-                text: "Usuario actualizado.",
-                icon: "success",
-                confirmButtonText: "Continuar",
-                confirmButtonColor: "#047CC4",
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  this.dialogRef.close()
-                }
-                this.usuarioService.getAll();
-              });
-
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: data?.mensaje || 'Error al actualizar',
-                confirmButtonText: "Cerrar",
-                confirmButtonColor: "#047CC4",
-              });
-            }
-          },
-          error: (err) => console.log(err)
-        })
-      } else {
-        this.usuarioService.add(this.formulario.value).subscribe({
-          next: (data: any) => {
-            if (data?.isSuccess) {
-              Swal.fire({
-                title: "Insertado!",
-                text: "Usuario insertado.",
-                icon: "success",
-                confirmButtonText: "Continuar",
-                confirmButtonColor: "#047CC4",
-              }).then((result) => {
-                this.usuarioService.getAll();
-                if (result.isConfirmed) {
-                  this.dialogRef.close()
-                }
-              });
-              // Actualizar Lista de Usuarios
-              this.usuarioService.getAll();
-
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: data?.mensaje || 'Error al insertar',
-                confirmButtonText: "Cerrar",
-                confirmButtonColor: "#047CC4",
-              });
-            }
-          },
-          error: (err) => console.log(err)
-        })
-      }
-
+      this.dialogRef.close(this.formulario.value)
     } else {
       console.log(this.formulario.value);
     }

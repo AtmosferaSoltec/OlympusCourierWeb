@@ -2,7 +2,6 @@ import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ItemReparto } from '../../../../interfaces/item-reparto';
 import { MatIconModule } from '@angular/material/icon';
-import { ShowTipoPaquetePipe } from "../../../../pipes/show-tipo-paquete.pipe";
 import { PaqueteService } from '../../../../services/paquete.service';
 
 @Component({
@@ -10,7 +9,7 @@ import { PaqueteService } from '../../../../services/paquete.service';
   standalone: true,
   templateUrl: './card-item.component.html',
   styleUrl: './card-item.component.scss',
-  imports: [CommonModule, MatIconModule, ShowTipoPaquetePipe]
+  imports: [CommonModule, MatIconModule]
 })
 export class CardItemComponent {
 

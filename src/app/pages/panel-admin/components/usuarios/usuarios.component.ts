@@ -12,6 +12,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import { UsuarioService } from '../../../../services/usuario.service';
 import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
 import { FormatTelfPipe } from "../../../../pipes/format-telf.pipe";
+import { PanelAdminService } from '../../panel-admin.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -24,7 +25,7 @@ export class UsuariosComponent {
 
   formulario: FormGroup;
 
-  usuariosService = inject(UsuarioService)
+  panelAdminService = inject(PanelAdminService)
   dialog = inject(MatDialog)
 
   constructor(
@@ -36,7 +37,7 @@ export class UsuariosComponent {
   }
 
   filtrar() {
-    this.usuariosService.getAll(this.formulario.value.estado)
+    this.panelAdminService.listarUsuarios(this.formulario.value.estado)
   }
 
   openDialog(item: Usuario | undefined = undefined) {
@@ -44,13 +45,17 @@ export class UsuariosComponent {
       data: item,
       width: "770px"
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+    dialogRef.afterClosed().subscribe({
+      next: (res) => {
+        if (res) {
+          this.panelAdminService.guardarUsuario(item?.id, res)
+        }
+      }
     });
 
   }
 
-  eliminar(item: Usuario, estado: string) {
+  eliminar(item: Usuario, estado: 'S' | 'N') {
     let texto = "";
     if (estado == "N") {
       texto = "Se eliminara este usuario!"
@@ -68,34 +73,10 @@ export class UsuariosComponent {
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usuariosService.eliminar(item.id, estado).subscribe({
-          next: (data: any) => {
-            if (data?.isSuccess) {
-              let title = estado === "N" ? "Eliminado!" : "Restaurado!"
-              let text = estado === "N" ? "Usuario eliminado." : "Usuario restaurado."
-              Swal.fire({
-                title: title,
-                text: text,
-                icon: "success",
-                confirmButtonText: "Continuar",
-                confirmButtonColor: "#047CC4",
-              })
-              this.usuariosService.getAll()
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: data?.mensaje || 'Error al eliminar',
-                confirmButtonText: "Cerrar",
-                confirmButtonColor: "#047CC4",
-              });
-            }
-          },
-          error: (err: any) => {
-            alert(err.message)
-            console.log(err);
-          }
-        });
+        if (!item.id) {
+          return alert("No se pudo eliminar el usuario");
+        }
+        this.panelAdminService.setEstadoUsuario(item.id, estado)
       }
     });
   }

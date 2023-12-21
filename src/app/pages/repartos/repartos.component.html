@@ -1,4 +1,4 @@
-<div class="flex flex-row justify-between items-center pb-3">
+<div class="flex flex-row justify-between items-center">
     <span class="text-2xl text-p1 font-semibold">Repartos</span>
     <div>
         <button mat-icon-button matTooltip="Exportar" (click)="exportar()">
@@ -7,52 +7,7 @@
     </div>
 </div>
 
-<form [formGroup]="formulario" (submit)="filtrar()" class="flex my-3 gap-2 items-center">
 
-    <select formControlName="estado"
-        class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-        <option value="T">Todos</option>
-        <option value="S">Activos</option>
-        <option value="N">Inactivos</option>
-    </select>
-    <select formControlName="estado_envio"
-        class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-        <option value="T">Todos</option>
-        <option value="P">Pendientes</option>
-        <option value="E">Entregados</option>
-        <option value="A">Anulados</option>
-    </select>
-    <input formControlName="num_reparto" type="text" placeholder="Número de reparto"
-        class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-    <input formControlName="cliente" type="text" placeholder="Cliente"
-        class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-    <!--
-    <button matDatePick></button>
-    <mat-form-field>
-        <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker2">
-        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker>
-    </mat-form-field>
+<app-filtros></app-filtros>
 
-    <mat-form-field>
-        <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate formControlName="start" placeholder="Start date">
-            <input matEndDate formControlName="end" placeholder="End date">
-        </mat-date-range-input>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-    </mat-form-field>
-
-    -->
-
-    <div class="spacer"></div>
-    <app-boton icon="search" text="Buscar" type="submit"></app-boton>
-    <app-boton icon="add" text="Añadir" (clickEvent)="toAgregar()"></app-boton>
-</form>
-
-<!--
-    <app-filtros></app-filtros>
-    -->
 <app-tabla></app-tabla>

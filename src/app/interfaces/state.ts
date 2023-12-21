@@ -3,3 +3,9 @@ export interface State<T> {
     data?: T;
     error?: string | null;
 }
+
+export interface Result {
+    isSuccess?: boolean;
+    data?: any;
+    mensaje?: string;
+}

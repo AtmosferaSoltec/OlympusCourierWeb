@@ -12,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-            @if(repartoService.loading()){
+            @if(repartosService.isLoading()){
             <tr class="bg-white">
                 <td colspan="7" class="py-3">
                     <div class="flex justify-center items-center">
@@ -21,21 +21,21 @@
                 </td>
             </tr>
             }@else {
-            @for (item of repartoService.listRepartos(); track $index) {
+            @for (item of repartosService.listRepartos(); track $index) {
             <tr class="bg-white border-b">
                 <td class="px-6 py-2">{{item.num_reparto | mostrarID}}</td>
                 <td class="px-6 py-2">{{item.cliente?.nombres}}</td>
                 <td class="px-6 py-2">{{item.fecha_creacion | date:'dd/MM/yyyy'}}</td>
-                <td class="px-6 py-2">{{buscarUsuario(item.id_usuario) | uppercase}}</td>
+                <td class="px-6 py-2">{{item.usuario.nombres | uppercase}}</td>
                 <td class="px-6 py-2">
                     <p class="status" [ngClass]="item.estado">{{item.estado | mostrarEstado}}</p>
                 </td>
                 <td class="px-6 py-2">S/{{item.total | number:'1.2-2'}}<br>
-                @if(item.id_comprobante){
-                    {{item.id | mostrarComprobante:comprobanteService.listComprobantes()}}
-                }@else {
+                    @if(item.comprobante){
+                    {{item.comprobante.serie}}-{{item.comprobante.num_serie | formatNum:4}}
+                    }@else {
                     -
-                }
+                    }
                 </td>
                 <td class="px-6 py-2">
                     <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -94,9 +94,9 @@
 <!--Mostrar el Total-->
 <div class="flex flex-row justify-end my-3 gap-2">
     <span class="text-xl text-textos font-semibold">
-        Total de Repartos: {{repartoService.listRepartos()?.length}} -
+        Total de Repartos: {{repartosService.listRepartos().length}} -
     </span>
     <span class="text-xl text-textos font-semibold">
-        Total: S/{{getTotal(repartoService.listRepartos()) | number:'1.2-2'}}
+        Total: S/{{getTotal(repartosService.listRepartos()) | number:'1.2-2'}}
     </span>
 </div>

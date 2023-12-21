@@ -45,7 +45,7 @@
                 <mat-menu #menuImprimir="matMenu">
                     @if(service.reparto()?.id_comprobante){
 
-                    <button mat-menu-item (click)="open(comprobante()?.enlace)">
+                    <button mat-menu-item (click)="open(comprobante()?.nubefact?.enlace)">
                         <mat-icon>link</mat-icon>
                         Enlace
                     </button>
@@ -54,11 +54,10 @@
                         Imprimir
                     </button>
                     <mat-menu #imprimir="matMenu">
-                        <button mat-menu-item (click)="open(comprobante()?.url_pdf)">Ticket</button>
-                        <button mat-menu-item (click)="open(comprobante()?.url_xml)">XML</button>
+                        <button mat-menu-item (click)="open(comprobante()?.nubefact?.enlace_del_pdf)">Ticket</button>
+                        <button mat-menu-item (click)="open(comprobante()?.nubefact?.enlace_del_xml)">XML</button>
                     </mat-menu>
                     }@else {
-                    <button mat-menu-item (click)="toGenerarComprobante()">Generar Comprobante</button>
                     @if (usuarioService.usuario()?.cod_rol === 'A') {
                     <button mat-menu-item>Eliminar Reparto</button>
                     }

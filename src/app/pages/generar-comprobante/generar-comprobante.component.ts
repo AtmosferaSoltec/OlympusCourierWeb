@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
@@ -7,29 +7,41 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Reparto } from '../../interfaces/reparto';
 import { RepartoService } from '../../services/reparto.service';
-import { ShowTipoPaquetePipe } from "../../pipes/show-tipo-paquete.pipe";
 import { PaqueteService } from '../../services/paquete.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmpresaService } from '../../services/empresa.service';
-import { FormatNumComprobantePipe } from "../../pipes/format-num-comprobante.pipe";
 import Swal from 'sweetalert2';
 import { ComprobanteService } from '../../services/comprobante.service';
 import { MetodoPagoService } from '../../services/metodo-pago.service';
+import { FormatNumPipe } from "../../pipes/format-num.pipe";
+import { GenerarComprobanteService } from './generar-comprobante.service';
+import { ConsultasService } from '../../services/consultas.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MostrarContenidoPipe } from '../../pipes/mostrar-contenido.pipe';
 
 @Component({
   selector: 'app-generar-comprobante',
   standalone: true,
   templateUrl: './generar-comprobante.component.html',
   styleUrl: './generar-comprobante.component.scss',
-  imports: [CommonModule, MatIconModule, RouterOutlet, MostrarIDPipe, MatButtonModule, MatTooltipModule, ShowTipoPaquetePipe, ReactiveFormsModule, FormatNumComprobantePipe]
+  imports: [
+    CommonModule, MatIconModule, RouterOutlet,
+    MostrarIDPipe, MatButtonModule, MatTooltipModule,
+    ReactiveFormsModule, FormatNumPipe,
+    MatProgressSpinnerModule, MostrarContenidoPipe
+  ]
 })
-export class GenerarComprobanteComponent implements OnInit {
+export class GenerarComprobanteComponent implements OnInit, OnDestroy {
 
+
+  generarComprobanteService = inject(GenerarComprobanteService)
+  consultaService = inject(ConsultasService)
 
   serie_f = signal<string>('F001');
   num_f = signal<number>(0);
   serie_b = signal<string>('B001');
   num_b = signal<number>(0);
+
   loading = signal<boolean>(false);
   tipoComprobante = signal<number>(2)
   metodoPagoService = inject(MetodoPagoService)
@@ -37,46 +49,39 @@ export class GenerarComprobanteComponent implements OnInit {
   router = inject(Router)
   repartoService = inject(RepartoService)
   reparto: Reparto | null = null;
-  private actRoute = inject(ActivatedRoute)
   paqueteService = inject(PaqueteService)
   comprobanteService = inject(ComprobanteService)
-  id: number = 0;
-  formulario: FormGroup
 
-  constructor(private fb: FormBuilder) {
-    this.formulario = this.fb.group({
-      metodoPago: [1, [Validators.required]],
-      num_operacion: [''],
-      doc: ['', [Validators.required]],
-      nombre: ['', [Validators.required]],
-      direc: ['', [Validators.required]],
-      telefono: ['', [Validators.maxLength(9)]],
-      correo: ['', [Validators.email]],
+
+  formulario = new FormGroup({
+    metodoPago: new FormControl(1, [Validators.required]),
+    num_operacion: new FormControl(''),
+    doc: new FormControl('', [Validators.required]),
+    nombre: new FormControl('', [Validators.required]),
+    direc: new FormControl('', [Validators.required]),
+    telefono: new FormControl('', [Validators.maxLength(9)]),
+    correo: new FormControl('', [Validators.email]),
+  })
+
+  ngOnDestroy(): void {
+    this.generarComprobanteService.reset();
+  }
+
+  getTotal(): number {
+    const list = this.generarComprobanteService.listRepartos();
+    let total = 0;
+    list.forEach((item: any) => {
+      total += item.total;
     })
+    return total;
   }
 
   ngOnInit(): void {
-    //Obtener el id del reparto
-    this.actRoute.params.subscribe(params => {
-      this.id = params['id'];
-      this.obtenerReparto(this.id);
-    });
 
-    //Verificar si ya existe un comprobante para este reparto
-    this.comprobanteService.get(this.id).subscribe({
-      next: (res: any) => {
-        if (res?.isSuccess) {
-          Swal.fire({
-            title: 'Error',
-            text: 'Ya existe un comprobante para este reparto',
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          })
-          this.router.navigate(['/menu', '/comprobantes'])
-        }
-      },
-      error: (err: any) => console.log(err.message)
-    });
+    //Verificar si hay repartos seleccionados
+    if (this.generarComprobanteService.listRepartos().length === 0) {
+      this.router.navigate(['menu', 'pagos'])
+    }
 
     //Obtener serie y numero de comprobante
     this.empresaService.get().subscribe({
@@ -91,30 +96,45 @@ export class GenerarComprobanteComponent implements OnInit {
     })
   }
 
-  obtenerReparto(id: number) {
-    this.repartoService.get(id).subscribe({
-      next: (res: any) => {
-        if (res?.isSuccess) {
-          this.reparto = res.data;
-          this.formulario.controls['doc'].setValue(this.reparto?.cliente?.documento);
-          this.formulario.controls['nombre'].setValue(this.reparto?.cliente?.nombres);
-          this.formulario.controls['direc'].setValue(this.reparto?.cliente?.direc);
-          this.formulario.controls['telefono'].setValue(this.reparto?.cliente?.telefono);
-          this.formulario.controls['correo'].setValue(this.reparto?.cliente?.correo);
-        }
-      }
-    })
-  }
 
   back() {
-    this.router.navigate(['/menu/detalle-reparto', this.id]);
+    this.router.navigate(['menu', 'pagos'])
   }
 
   setTipoComprobante(valor: 1 | 2) {
     this.tipoComprobante.set(valor)
   }
 
+  isLoadingSearchDoc = signal<boolean>(false);
+
+  async buscarDoc() {
+    this.isLoadingSearchDoc.set(true);
+    const controls = this.formulario.controls
+    if (controls.doc.value) {
+      if (this.tipoComprobante() === 1) {
+        const data = await this.consultaService.searchDoc(controls.doc.value, 'ruc')
+        controls.nombre.setValue(data?.nombres)
+        controls.direc.setValue(data?.direc)
+        controls.correo.setValue(data?.correo)
+        controls.telefono.setValue(data?.telefono)
+      }
+
+      if (this.tipoComprobante() === 2) {
+        const data = await this.consultaService.searchDoc(controls.doc.value, 'dni')
+        if (data) {
+          controls.nombre.setValue(`${data?.nombres}`)
+          controls.direc.setValue(data?.direc)
+          controls.correo.setValue(data?.correo)
+          controls.telefono.setValue(data?.telefono)
+
+        }
+      }
+    }
+    this.isLoadingSearchDoc.set(false);
+  }
+
   generarComprobante() {
+    const controls = this.formulario.controls;
     if (this.formulario.invalid) {
       Swal.fire({
         title: 'Error',
@@ -126,7 +146,7 @@ export class GenerarComprobanteComponent implements OnInit {
     }
 
     //Verificar si el tipo de comprobante coincide con el tipo de documento
-    if (this.tipoComprobante() == 1 && this.formulario.get('doc')?.value.length != 11) {
+    if (this.tipoComprobante() == 1 && controls.doc.value?.length != 11) {
       Swal.fire({
         title: 'Error',
         text: 'El documento debe tener 11 dígitos',
@@ -134,7 +154,7 @@ export class GenerarComprobanteComponent implements OnInit {
         confirmButtonText: 'Ok'
       })
       return;
-    } else if (this.tipoComprobante() == 2 && this.formulario.get('doc')?.value.length != 8) {
+    } else if (this.tipoComprobante() == 2 && controls.doc.value?.length != 8) {
       Swal.fire({
         title: 'Error',
         text: 'El documento debe tener 8 dígitos',
@@ -154,7 +174,6 @@ export class GenerarComprobanteComponent implements OnInit {
     }
 
     const data = {
-      id_reparto: this.id,
       tipo_comprobante: this.tipoComprobante(),
       id_metodo_pago: this.formulario.get('metodoPago')?.value,
       num_operacion: this.formulario.get('num_operacion')?.value,

@@ -8,6 +8,7 @@ import { PaquetesComponent } from './components/paquetes/paquetes.component';
 import { DestinosComponent } from './components/distritos/distritos.component';
 import { ComprobantesAdminComponent } from './components/comprobantes-admin/comprobantes-admin.component';
 
+
 @Component({
   selector: 'app-panel-admin',
   standalone: true,
@@ -22,6 +23,7 @@ import { ComprobantesAdminComponent } from './components/comprobantes-admin/comp
   styleUrl: './panel-admin.component.scss'
 })
 export class PanelAdminComponent {
+
 
   url = 'usuarios'
   data = [

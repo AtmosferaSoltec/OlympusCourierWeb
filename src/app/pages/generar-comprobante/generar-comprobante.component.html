@@ -7,31 +7,25 @@
             <span>Generar Comprobante</span>
         </div>
 
-        <div class="container_title">
-            <div class="container_title_content">
-                <span>N° Reparto</span>
-                {{reparto?.id| mostrarID}}
-            </div>
-        </div>
-
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-6 py-3">N° Guía</th>
-                    <th scope="col" class="px-6 py-3">Tipo</th>
-                    <th scope="col" class="px-6 py-3">Descripción</th>
+                    <th scope="col" class="px-6 py-3">N° Reparto</th>
+                    <th scope="col" class="px-6 py-3">Cliente</th>
+                    <th scope="col" class="px-6 py-3">Contenido</th>
                     <th scope="col" class="px-6 py-3">Precio</th>
                 </tr>
             </thead>
             <tbody>
 
-                @for (item of reparto?.items; track $index) {
+                @for (item of generarComprobanteService.listRepartos(); track $index) {
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <td class="px-6 py-4">{{item.num_guia}}</td>
-                    <td class="px-6 py-4">{{item.id_tipo_paquete | showTipoPaquete:paqueteService.listTipoPaquetes()}}
+                    <td class="px-6 py-4">{{item.num_reparto| mostrarID}}</td>
+                    <td class="px-6 py-4">{{item.cliente?.nombres}}</td>
+                    <td class="px-6 py-4">
+                        {{item.items | mostrarContenido}}
                     </td>
-                    <td class="px-6 py-4">{{item.detalle}}</td>
-                    <td class="px-6 py-4">S/{{item.precio}}</td>
+                    <td class="px-6 py-4">S/{{item.total | number:'1.2-2'}}</td>
                 </tr>
                 }
             </tbody>
@@ -39,7 +33,7 @@
 
         <div class="total">
             <span>Total</span>
-            <span>S/.{{reparto?.total}}</span>
+            <span>S/{{getTotal() | number:"1.2-2"}}</span>
         </div>
 
     </div>
@@ -83,9 +77,9 @@
                 </span>
                 <span>
                     @if (tipoComprobante() == 2) {
-                    {{num_b() | formatNumComprobante}}
+                    {{num_b() | formatNum:8}}
                     }@else if(tipoComprobante() == 1) {
-                    {{num_f() | formatNumComprobante}}
+                    {{num_f() | formatNum:8}}
                     }
                 </span>
             </div>
@@ -93,23 +87,27 @@
 
         <form [formGroup]="formulario">
 
-            <div>
-                <label class="mt-2 mb-2 block text-sm font-medium text-gray-900 dark:text-white">Tipo de
-                    Pago</label>
-                <select formControlName="metodoPago"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    @for (item of metodoPagoService.listMetodoPago(); track $index) {
-                    <option [value]="item.id">{{item.nombre}}</option>
-                    }
-                </select>
+            <div class="flex mt-2 justify-between gap-2">
+
+                <div class="w-full">
+                    <label class=" block mb-2 text-sm font-medium text-gray-900">
+                        Tipo de Pago</label>
+                    <select formControlName="metodoPago"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                        @for (item of metodoPagoService.listMetodoPago(); track $index) {
+                        <option [value]="item.id">{{item.nombre}}</option>
+                        }
+                    </select>
+                </div>
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900">
+                        N° Operación
+                    </label>
+                    <input type="text" formControlName="num_operacion"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                </div>
             </div>
-            <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    N° Operación
-                </label>
-                <input type="text" formControlName="num_operacion"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            </div>
+
 
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -118,13 +116,18 @@
                     @else { Documento }
                 </label>
                 <div class="relative">
-                    <input type="text" formControlName="doc"
-                        class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    <input type="number" formControlName="doc"
+                        class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                         placeholder="Ingresar documento" required>
                     <button matTooltip="Buscar"
                         class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white  rounded-e-lg"
-                        style="background-color: var(--colorP1);">
+                        style="background-color: var(--colorP1);" (click)="buscarDoc()">
+                        @if (isLoadingSearchDoc()) {
+                        <mat-spinner diameter="20" style="color: white;"></mat-spinner>
+
+                        }@else{
                         <mat-icon>search</mat-icon>
+                        }
                     </button>
                 </div>
             </div>
@@ -140,22 +143,19 @@
             </div>
 
             <div>
-                <label
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
                 <input type="text" formControlName="direc"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
 
             <div>
-                <label
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo</label>
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo</label>
                 <input type="text" formControlName="correo"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
 
             <div>
-                <label
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono</label>
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono</label>
                 <input type="text" formControlName="telefono"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>

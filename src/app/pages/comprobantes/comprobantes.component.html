@@ -19,7 +19,6 @@
                 <option value="S">ACTIVOS</option>
                 <option value="N">INACTIVOS</option>
             </select>
-
         </div>
         <!--
         <div>
@@ -72,13 +71,14 @@
                 <th scope="col" class="px-6 py-3">Documento</th>
                 <th scope="col" class="px-6 py-3">Razon Social</th>
                 <th scope="col" class="px-6 py-3">Monto</th>
+                <th scope="col" class="px-6 py-3"></th>
             </tr>
         </thead>
         <tbody>
             @if (comprobanteService.loading()) {
 
             <tr class="bg-white">
-                <td colspan="8" class="py-3">
+                <td colspan="10" class="py-3">
                     <div class="flex justify-center items-center">
                         <div class="loader"></div>
                     </div>
@@ -88,8 +88,8 @@
             @for (item of comprobanteService.listComprobantes(); track $index) {
             <tr class="bg-white border-b">
                 <td class="px-6 py-3">{{item.serie}}-{{item.num_serie}}</td>
-                <td class="px-6 py-3">{{buscarUsuario(item.id_usuario)}}</td>
-                <td class="px-6 py-3">En Revisión</td>
+                <td class="px-6 py-3">{{item.id_usuario}}</td>
+                <td class="px-6 py-3">{{item.nubefact | mostrarEstadoNubefact}}</td>
                 <td class="px-6 py-3">{{item.fecha_creacion | date: 'dd/MM/yyyy'}}</td>
                 <td class="px-6 py-3">{{item.id_metodo_pago | mostrarMetodoPago: metodoPagoService.listMetodoPago()}}
                 </td>
@@ -97,24 +97,32 @@
                 <td class="px-6 py-3">{{item.documento}}</td>
                 <td class="px-6 py-3">{{item.nombre}}</td>
                 <td class="px-6 py-3 font-semibold">S/100</td>
-                <!--
-                        <td class="px-6 py-2">
-                            <button mat-icon-button [matMenuTriggerFor]="menuAction" matTooltip="Ver más">
-                                <mat-icon>more_vert</mat-icon>
-                            </button>
-        
-                            <mat-menu #menuAction="matMenu">
-                                <button mat-menu-item>
-                                    <mat-icon>local_shipping</mat-icon>
-                                    Dar Conformidad
-                                </button>
-                            </mat-menu>
-                        </td>
-                        -->
+
+                <td class="px-6 py-2">
+                    <button mat-icon-button [matMenuTriggerFor]="menuAction" matTooltip="Ver más">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+
+                    <mat-menu #menuAction="matMenu">
+                        <button mat-menu-item (click)="openPdf(item.nubefact?.enlace_del_pdf)">
+                            <mat-icon>description</mat-icon>
+                            Ver Ticket
+                        </button>
+                        <button mat-menu-item (click)="verReparto(item.id_reparto)">
+                            <mat-icon>visibility</mat-icon>
+                            Ver Reparto
+                        </button>
+                        <button mat-menu-item (click)="anular(item)">
+                            <mat-icon>delete</mat-icon>
+                            Anular
+                        </button>
+                    </mat-menu>
+                </td>
+
             </tr>
             }@empty {
             <tr class="bg-white border-b">
-                <td colspan="9" class="py-2">
+                <td colspan="10" class="py-2">
                     <div class="flex flew-row items-center justify-center">
                         <mat-icon>hourglass_empty</mat-icon>
                         Sin Datos

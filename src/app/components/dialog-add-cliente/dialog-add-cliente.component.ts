@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, inject } from '@angular/core';
+import { Component, Inject, OnInit, inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -53,47 +53,25 @@ export class DialogAddClienteComponent implements OnInit {
     this.distritoService.getAll('S')
   }
 
-  progressBuscarDoc: boolean = false;
+  progressBuscarDoc = signal<boolean>(false);
 
-  buscarDoc() {
-    this.progressBuscarDoc = true;
+  async buscarDoc() {
+    this.progressBuscarDoc.set(true);
     const doc = this.formulario.get('doc')
     const tipo = this.formulario.get('tipo')
     if (doc?.valid) {
       if (tipo?.value == 1) {
-        this.consultasService.searchDni(doc.value).subscribe({
-          next: (data: any) => {
-            if (data?.datos) {
-              this.formulario.get('nombres')?.setValue(`${data.datos.nombres} ${data.datos.apellidoPaterno} ${data.datos.nombres}`);
-              this.formulario.get('direc')?.setValue('');
-            }
-            this.progressBuscarDoc = false;
-          },
-          error: (err) => {
-            console.log(err);
-            this.progressBuscarDoc = false;
-          }
-        })
+        const data: any = this.consultasService.searchDoc(doc.value, 'dni')
+        this.formulario.get('nombres')?.setValue(`${data.nombres} ${data.apellidoPaterno} ${data.apellidoMaterno}`);
+        this.formulario.get('direc')?.setValue('');
       }
-
       if (tipo?.value == 6) {
-        this.consultasService.searchRuc(doc.value).subscribe({
-          next: (data: any) => {
-            if (data?.datos) {
-              this.formulario.get('nombres')?.setValue(`${data.datos.razonSocial}`);
-              this.formulario.get('direc')?.setValue(`${data.datos.direccion}`);
-            }
-            this.progressBuscarDoc = false;
-          },
-          error: (err) => {
-            console.log(err);
-            this.progressBuscarDoc = false;
-          }
-        })
+        const data: any = this.consultasService.searchDoc(doc.value, 'ruc')
+        this.formulario.get('nombres')?.setValue(`${data.razonSocial}`);
+        this.formulario.get('direc')?.setValue(`${data.direccion}`);
       }
-    } else {
-      this.progressBuscarDoc = false;
     }
+    this.progressBuscarDoc.set(false);
   }
 
   resetDoc() {

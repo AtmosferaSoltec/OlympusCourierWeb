@@ -4,7 +4,6 @@ import { environment } from '../../environments/environment.development';
 import { State } from '../interfaces/state';
 import { Comprobante } from '../interfaces/comprobante';
 import { delay } from 'rxjs';
-import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,6 @@ import { TokenService } from './token.service';
 export class ComprobanteService {
 
   http = inject(HttpClient);
-  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/comprobantes`;
 
   #state = signal<State<Comprobante[]>>({ loading: true, data: [] })
@@ -39,7 +37,7 @@ export class ComprobanteService {
       }
   ) {
     this.#state.set({ loading: true, data: [] })
-    this.http.get(this.url, { params: data, headers: { 'Authorization': `${this.token}` } })
+    this.http.get(this.url, { params: data })
       .pipe(delay(500))
       .subscribe({
         next: (res: any) => {
@@ -57,11 +55,11 @@ export class ComprobanteService {
   }
 
   get(idReparto: number) {
-    return this.http.get(`${this.url}/${idReparto}`, { headers: { 'Authorization': `${this.token}` } });
+    return this.http.get(`${this.url}/${idReparto}`);
   }
 
   insert(data: any) {
-    return this.http.post(this.url, data, { headers: { 'Authorization': `${this.token}` } });
+    return this.http.post(this.url, data);
   }
 
 }

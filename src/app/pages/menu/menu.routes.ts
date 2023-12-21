@@ -7,13 +7,15 @@ import { PanelAdminComponent } from '../panel-admin/panel-admin.component';
 import { RepartosComponent } from '../repartos/repartos.component';
 import { GenerarComprobanteComponent } from '../generar-comprobante/generar-comprobante.component';
 import { isAdminGuard } from '../../guard/is-admin.guard';
+import { PagosComponent } from '../pagos/pagos.component';
 
 export default [
     { path: 'repartos', component: RepartosComponent },
     { path: 'detalle-reparto/:id', component: DetalleRepartoComponent },
-    { path: 'generar-comprobante/:id', component: GenerarComprobanteComponent },
+    { path: 'generar-comprobante', component: GenerarComprobanteComponent },
     { path: 'clientes', component: ClientesComponent },
     { path: 'comprobantes', component: ComprobantesComponent },
+    { path: 'pagos', component: PagosComponent },
     {
         path: 'panel-admin',
         component: PanelAdminComponent,

@@ -16,7 +16,6 @@
     </div>
     <ul class="sidenav-nav">
         @for (item of navData; track item) {
-        @if (item.activo) {
         <li class="sidenav-nav-item">
             <a class="sidenav-nav-link" (click)="navegar(item.routerLink)" [matTooltip]="item.label"
                 [matTooltipDisabled]="appService.isCollapsed">
@@ -29,6 +28,19 @@
             </a>
         </li>
         }
+
+        @if( this.usuarioService.usuario()?.cod_rol === 'A' || this.usuarioService.usuario()?.cod_rol === 'S'){
+        <li class="sidenav-nav-item">
+            <a class="sidenav-nav-link" (click)="navegar('panel-admin/usuarios')" matTooltip="Panel Admin"
+                [matTooltipDisabled]="appService.isCollapsed">
+                <mat-icon class="sidenav-link-icon">admin_panel_settings</mat-icon>
+                @if (appService.isCollapsed) {
+                <span class="sidenav-link-text">
+                    Panel Admin
+                </span>
+                }
+            </a>
+        </li>
         }
 
         <li class="sidenav-nav-item">

@@ -3,7 +3,6 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { State } from '../interfaces/state';
 import { MetodoPago } from '../interfaces/metodo-pago';
-import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,6 @@ import { TokenService } from './token.service';
 export class MetodoPagoService {
 
   http = inject(HttpClient);
-  token = inject(TokenService).token();
   url = `${environment.baseUrl}/api/metodopago`;
 
   constructor() {
@@ -24,7 +22,7 @@ export class MetodoPagoService {
 
   getAll(estado: 'T' | 'S' | 'N' = 'S') {
     this.#state.set({ loading: true, data: [] })
-    this.http.get(this.url, { params: { estado }, headers: { 'Authorization': `${this.token}` } })
+    this.http.get(this.url, { params: { estado }})
       .subscribe({
         next: (res: any) => {
           if (res?.isSuccess) {
@@ -41,15 +39,14 @@ export class MetodoPagoService {
 
 
   add(nombre: string) {
-    return this.http.post(this.url, { nombre }, { headers: { 'Authorization': `${this.token}` } })
+    return this.http.post(this.url, { nombre })
   }
 
   update(id: number, nombre: string) {
-    return this.http.put(this.url, { id, nombre }, { headers: { 'Authorization': `${this.token}` } })
+    return this.http.put(this.url, { id, nombre })
   }
 
   eliminar(id: number | undefined, activo: string) {
-    const headers = { 'Authorization': `${this.token}` };
-    return this.http.patch(this.url, { id, activo }, { headers: headers });
+    return this.http.patch(this.url, { id, activo });
   }
 }

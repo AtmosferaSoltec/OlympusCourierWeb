@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { SidenavComponent } from '../../drawer/sidenav/sidenav.component';
+import { SidenavComponent } from '../../components/sidenav/sidenav.component';
 import { AppService } from '../../app.service';
 
 @Component({

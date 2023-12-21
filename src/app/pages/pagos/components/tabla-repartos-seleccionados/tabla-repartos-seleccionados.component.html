@@ -1,0 +1,53 @@
+<div class="rounded-xl overflow-hidden shadow-sm">
+    <table class="w-full text-sm text-start text-textos">
+        <thead class="text-sm bg-white text-textos uppercase border-b">
+            <tr>
+                <th scope="col" class="px-6 py-3">N° Reparto</th>
+                <th scope="col" class="px-6 py-3">Cliente</th>
+                <th scope="col" class="px-6 py-3">Contenido</th>
+                <th scope="col" class="px-6 py-3">Monto</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(pagosService.isLoading()){
+            <tr class="bg-white border-b">
+                <td colspan="5" class="py-3">
+                    <div class="flex justify-center items-center">
+                        <div class="loader"></div>
+                    </div>
+                </td>
+            </tr>
+            }@else {
+            @for (item of pagosService.listRepartosSeleccionados(); track $index) {
+            <tr class="bg-white border-b">
+                <td class="px-6 py-2">{{item.num_reparto | mostrarID}}</td>
+                <td class="px-6 py-2">{{item.cliente?.nombres}}</td>
+                <td class="px-6 py-2">{{item.items | mostrarContenido}}</td>
+                <td class="px-6 py-2 font-medium">
+                    <div class="flex justify-between items-center">
+                        S/{{item.total | number:'1.2-2'}}
+
+                        <button mat-icon-button (click)="quitarReparto(item)" matTooltip="Quitar">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            } @empty {
+            <tr class="bg-white border-b">
+                <td colspan="5" class="py-3">
+                    <div class="flex flew-row items-center justify-center">
+                        <mat-icon>hourglass_empty</mat-icon>
+                        Sin Datos
+                    </div>
+                </td>
+            </tr>
+            }
+            }
+        </tbody>
+    </table>
+
+    <span class="flex justify-end text-textos bg-white py-2 text-lg pr-2 font-medium">
+        Total S/{{getTotal() |number:"1.2-2"}}
+    </span>
+</div>
