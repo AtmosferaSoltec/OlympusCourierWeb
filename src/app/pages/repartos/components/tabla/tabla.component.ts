@@ -8,18 +8,22 @@ import { Reparto } from '../../../../interfaces/reparto';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../../../services/usuario.service';
 import Swal from 'sweetalert2';
-import { MostrarIDPipe } from "../../../../pipes/mostrar-id.pipe";
 import { MostrarEstadoPipe } from "../../../../pipes/mostrar-estado.pipe";
 import { RepartosService } from '../../repartos.service';
 import { FormatNumPipe } from "../../../../pipes/format-num.pipe";
+import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
 
 @Component({
-    selector: 'app-tabla',
-    standalone: true,
-    templateUrl: './tabla.component.html',
-    styleUrl: './tabla.component.scss',
-    imports: [CommonModule, MatIconModule,
-        MatButtonModule, MatTooltipModule, MatMenuModule, MostrarIDPipe, MostrarEstadoPipe, FormatNumPipe]
+  selector: 'app-tabla',
+  standalone: true,
+  templateUrl: './tabla.component.html',
+  styleUrl: './tabla.component.scss',
+  imports: [
+    CommonModule, MatIconModule, MatButtonModule,
+    MatTooltipModule, MatMenuModule, MostrarEstadoPipe,
+    FormatNumPipe,
+    MostrarActivoPipe
+  ]
 })
 export class TablaComponent {
 
@@ -40,6 +44,19 @@ export class TablaComponent {
 
   // Alerta para eliminar un reparto
   deleteReparto(reparto: Reparto) {
+    if (reparto.id_comprobante) {
+      //No se puede elimnar porque tiene un comprobante asociado
+      Swal.fire({
+        title: "No se puede eliminar",
+        text: "El reparto seleccionado tiene un comprobante asociado",
+        icon: "warning",
+        showCancelButton: false,
+        confirmButtonText: "Confirmar",
+        confirmButtonColor: "#047CC4"
+      })
+      return;
+    }
+
     Swal.fire({
       title: "¿Estas seguro?",
       text: "Se eliminara el reparto seleccionado",
@@ -47,6 +64,7 @@ export class TablaComponent {
       showCancelButton: true,
       confirmButtonText: "Confirmar",
       cancelButtonText: "Cancelar",
+      confirmButtonColor: "#047CC4"
     }).then((result) => {
       if (result.isConfirmed) {
         if (!reparto.id) {

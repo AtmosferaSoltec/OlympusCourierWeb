@@ -6,6 +6,7 @@
                 <th scope="col" class="px-6 py-3">Cliente</th>
                 <th scope="col" class="px-6 py-3">Creado</th>
                 <th scope="col" class="px-6 py-3">Usuario</th>
+                <th scope="col" class="px-6 py-3">Estado Envio</th>
                 <th scope="col" class="px-6 py-3">Estado</th>
                 <th scope="col" class="px-6 py-3">Total</th>
                 <th scope="col" class="px-6 py-3"></th>
@@ -23,13 +24,14 @@
             }@else {
             @for (item of repartosService.listRepartos(); track $index) {
             <tr class="bg-white border-b">
-                <td class="px-6 py-2">{{item.num_reparto | mostrarID}}</td>
+                <td class="px-6 py-2">#{{item.num_reparto | formatNum:6}}</td>
                 <td class="px-6 py-2">{{item.cliente?.nombres}}</td>
                 <td class="px-6 py-2">{{item.fecha_creacion | date:'dd/MM/yyyy'}}</td>
                 <td class="px-6 py-2">{{item.usuario.nombres | uppercase}}</td>
                 <td class="px-6 py-2">
                     <p class="status" [ngClass]="item.estado">{{item.estado | mostrarEstado}}</p>
                 </td>
+                <td class="px-6 py-2">{{item.activo | mostrarActivo}}</td>
                 <td class="px-6 py-2">S/{{item.total | number:'1.2-2'}}<br>
                     @if(item.comprobante){
                     {{item.comprobante.serie}}-{{item.comprobante.num_serie | formatNum:4}}

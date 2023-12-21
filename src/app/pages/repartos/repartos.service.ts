@@ -3,6 +3,8 @@ import { Reparto } from '../../interfaces/reparto';
 import { RepartoService } from '../../services/reparto.service';
 import { delay } from 'rxjs';
 import Swal from 'sweetalert2';
+import { FormControl, FormGroup } from '@angular/forms';
+import { fechaActual } from '../../util/funciones';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +15,26 @@ export class RepartosService {
   public listRepartos = signal<Reparto[]>([]);
   public isLoading = signal<boolean>(false);
 
+
+  formulario = new FormGroup({
+    estado: new FormControl<string>('S'),
+    estado_envio: new FormControl<string>('T'),
+    num_reparto: new FormControl<string>(''),
+    cliente: new FormControl<string>(''),
+    desde: new FormControl<string>(fechaActual()),
+    hasta: new FormControl<string>(fechaActual()),
+  })
+
+
   listarRepartos(
-    params: any
+    params: any = {
+      estado: this.formulario.controls.estado.value,
+      estado_envio: this.formulario.controls.estado_envio.value,
+      num_reparto: this.formulario.controls.num_reparto.value,
+      cliente: this.formulario.controls.cliente.value,
+      desde: this.formulario.controls.desde.value,
+      hasta: this.formulario.controls.hasta.value,
+    }
   ) {
     this.isLoading.set(true);
     this.repartoService.getAll(params)
@@ -36,7 +56,7 @@ export class RepartosService {
   }
 
   retaurarReparto(id_reparto: number) {
-    this.repartoService.delete(id_reparto, 'S')
+    this.repartoService.setActivo(id_reparto, 'S')
       .subscribe({
         next: (res) => {
           if (res?.isSuccess) {
@@ -60,7 +80,7 @@ export class RepartosService {
   }
 
   eliminarReparto(id_reparto: number) {
-    this.repartoService.delete(id_reparto, 'N')
+    this.repartoService.setActivo(id_reparto, 'N')
       .subscribe({
         next: (res) => {
           if (res?.isSuccess) {

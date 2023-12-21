@@ -1,0 +1,76 @@
+<div class="rounded-xl overflow-hidden shadow-sm mt-3">
+    <table class="w-full text-sm text-center rtl:text-right text-textos">
+        <thead class="text-sm bg-white text-textos uppercase border-b">
+            <tr>
+                <th scope="col" class="px-6 py-3">Comprobante</th>
+                <th scope="col" class="px-6 py-3">Usuario</th>
+                <th scope="col" class="px-6 py-3">Estado</th>
+                <th scope="col" class="px-6 py-3">Fecha Emisión</th>
+                <th scope="col" class="px-6 py-3">Forma de Pago</th>
+                <th scope="col" class="px-6 py-3">Tipo Documento</th>
+                <th scope="col" class="px-6 py-3">Documento</th>
+                <th scope="col" class="px-6 py-3">Razon Social</th>
+                <th scope="col" class="px-6 py-3">Monto</th>
+                <th scope="col" class="px-6 py-3"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (comprobantesService.isLoading()) {
+
+            <tr class="bg-white">
+                <td colspan="10" class="py-3">
+                    <div class="flex justify-center items-center">
+                        <div class="loader"></div>
+                    </div>
+                </td>
+            </tr>
+            }@else {
+            @for (item of comprobantesService.listComprobantes(); track $index) {
+            <tr class="bg-white border-b">
+                <td class="px-6 py-3">{{item.serie}}-{{item.num_serie | formatNum:4}}</td>
+                <td class="px-6 py-3">{{item.id_usuario}}</td>
+                <td class="px-6 py-3">{{item.estado_sunat | mostrarEstadoNubefact}}</td>
+                <td class="px-6 py-3">{{item.fecha_creacion | date: 'dd/MM/yyyy'}}</td>
+                <td class="px-6 py-3">{{item.id_metodo_pago}}
+                </td>
+                <td class="px-6 py-3">{{item.tipo_doc | mostrarTipoDocumento}}</td>
+                <td class="px-6 py-3">{{item.documento}}</td>
+                <td class="px-6 py-3">{{item.nombre}}</td>
+                <td class="px-6 py-3 font-semibold">S/100</td>
+
+                <td class="px-6 py-2">
+                    <button mat-icon-button [matMenuTriggerFor]="menuAction" matTooltip="Ver más">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+
+                    <mat-menu #menuAction="matMenu">
+                        <button mat-menu-item (click)="openPdf(item.enlace_pdf)">
+                            <mat-icon>description</mat-icon>
+                            Ver Ticket
+                        </button>
+                        <button mat-menu-item (click)="verReparto(item.id_reparto)">
+                            <mat-icon>visibility</mat-icon>
+                            Ver Reparto
+                        </button>
+                        <button mat-menu-item (click)="anular(item)">
+                            <mat-icon>delete</mat-icon>
+                            Anular
+                        </button>
+                    </mat-menu>
+                </td>
+
+            </tr>
+            }@empty {
+            <tr class="bg-white border-b">
+                <td colspan="10" class="py-2">
+                    <div class="flex flew-row items-center justify-center">
+                        <mat-icon>hourglass_empty</mat-icon>
+                        Sin Datos
+                    </div>
+                </td>
+            </tr>
+            }
+            }
+        </tbody>
+    </table>
+</div>

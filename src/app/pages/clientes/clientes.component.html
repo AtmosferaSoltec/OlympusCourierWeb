@@ -1,19 +1,10 @@
-<div class="flex flex-row justify-between items-center pb-3">
-    <span class="text-2xl text-p1 font-semibold">Clientes</span>
-    <div>
-        <button mat-icon-button matTooltip="Exportar" (click)="exportar()">
-            <img src="../../../assets/ic_export.svg" alt="">
-        </button>
-    </div>
-</div>
-
-<div class="flex justify-end">
-    <button (click)="openDialog()" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
-        Agregar
+<div class="flex items-center justify-between">
+    <app-titulo titulo="Clientes"></app-titulo>
+    <button mat-icon-button matTooltip="Exportar" (click)="exportar()">
+        <img src="../../../assets/ic_export.svg" alt="">
     </button>
 </div>
-<!--
-    <app-filtros></app-filtros>
-    -->
+
+<app-filtros></app-filtros>
 
 <app-tabla></app-tabla>

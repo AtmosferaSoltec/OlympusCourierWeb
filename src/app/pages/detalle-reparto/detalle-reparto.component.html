@@ -9,7 +9,7 @@
 
         <div class="flex flex-row items-center justify-between text-lg font-semibold text-textos">
             Datos del Cliente
-            <span class="mr-1">N° Reparto {{service.reparto()?.id | mostrarID}}</span>
+            <span class="mr-1">N° Reparto #{{service.reparto()?.num_reparto | formatNum:6}}</span>
         </div>
 
         <!--Datos del Cliente-->
@@ -39,32 +39,6 @@
         <span class="text-lg font-semibold text-textos">Datos de Entrega:</span>
 
         <div>
-            <span class="sub-titulo flex flex-row items-center justify-between">
-                Estado:
-                <button [matMenuTriggerFor]="menuImprimir" mat-icon-button><mat-icon>more_vert</mat-icon></button>
-                <mat-menu #menuImprimir="matMenu">
-                    @if(service.reparto()?.id_comprobante){
-
-                    <button mat-menu-item (click)="open(comprobante()?.nubefact?.enlace)">
-                        <mat-icon>link</mat-icon>
-                        Enlace
-                    </button>
-                    <button mat-menu-item [matMenuTriggerFor]="imprimir">
-                        <mat-icon>print</mat-icon>
-                        Imprimir
-                    </button>
-                    <mat-menu #imprimir="matMenu">
-                        <button mat-menu-item (click)="open(comprobante()?.nubefact?.enlace_del_pdf)">Ticket</button>
-                        <button mat-menu-item (click)="open(comprobante()?.nubefact?.enlace_del_xml)">XML</button>
-                    </mat-menu>
-                    }@else {
-                    @if (usuarioService.usuario()?.cod_rol === 'A') {
-                    <button mat-menu-item>Eliminar Reparto</button>
-                    }
-                    }
-                </mat-menu>
-
-            </span>
             <app-detalle-item title="Estado" [descrip]="service.reparto()?.estado | mostrarEstado"></app-detalle-item>
             <app-detalle-item title="Total" [descrip]="'S/ ' + (service.reparto()?.total | number:'1.2-2')" />
             @if (service.reparto()?.id_comprobante) {

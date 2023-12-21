@@ -1,6 +1,6 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RepartoService } from '../../services/reparto.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -11,32 +11,30 @@ import { BuscarClienteComponent } from './components/buscar-cliente/buscar-clien
 import { TablaItemsComponent } from './components/tabla-items/tabla-items.component';
 import { AgregarRepartoService } from './agregar-reparto.service';
 import { BotonComponent } from '../../components/boton/boton.component';
+import { TituloComponent } from '../../components/titulo/titulo.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'app-agregar-reparto',
   standalone: true,
   imports: [
     CommonModule, TablaItemsComponent, MatIconModule,
     MatButtonModule, ReactiveFormsModule, BuscarClienteComponent,
-    BotonComponent
+    BotonComponent, TituloComponent, MatTooltipModule
   ],
   templateUrl: './agregar-reparto.component.html',
   styleUrl: './agregar-reparto.component.scss'
 })
 export class AgregarRepartoComponent implements OnDestroy {
 
-  formulario: FormGroup;
+  formulario = new FormGroup({
+    clave: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    anotacion: new FormControl('')
+  })
 
   private repartoService = inject(RepartoService);
   private service = inject(AgregarRepartoService);
   private router = inject(Router);
-  private fb = inject(FormBuilder);
 
-  constructor() {
-    this.formulario = this.fb.group({
-      clave: ['', [Validators.required, Validators.minLength(4)]],
-      anotacion: ['']
-    })
-  }
   ngOnDestroy(): void {
     this.service.reset();
   }
@@ -48,12 +46,11 @@ export class AgregarRepartoComponent implements OnDestroy {
 
 
   back() {
-
-    this.router.navigateByUrl('/menu/repartos');
+    this.router.navigate(['menu', 'repartos'])
   }
 
   cancel() {
-    if (this.service.cliente() && this.service.listItemRepartos) {
+    if (this.service.cliente() && this.service.listItemRepartos()) {
       Swal.fire({
         title: '¡Alerta de Seguridad!',
         text: '¿Estás seguro de que deseas regresar a la pantalla anterior? Todos los datos ingresados se perderán.',
@@ -75,50 +72,13 @@ export class AgregarRepartoComponent implements OnDestroy {
 
 
   getTotal() {
-    return this.service.listItemRepartos.reduce((total, item) => total + (item?.precio || 0), 0);
+    return this.service.listItemRepartos().reduce((total, item) => total + (item?.precio || 0), 0);
   }
 
   guardarReparto() {
-    if (this.service.cliente()?.id != undefined) {
-      if (this.service.listItemRepartos.length > 0) {
-        const body = {
-          id_ruc: localStorage.getItem('ruc'),
-          anotacion: this.formulario.get('anotacion')?.value || '',
-          clave: this.formulario.get('clave')?.value || '1234',
-          id_cliente: this.service.cliente()?.id,
-          id_usuario: localStorage.getItem('idUser'),
-          items: this.service.listItemRepartos
-        }
+    const controls = this.formulario.controls;
 
-        this.repartoService.insert(body).subscribe({
-          next: (res: any) => {
-            if (res?.isSuccess) {
-              this.service.reset()
-              this.router.navigate(['../'])
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Opss...',
-                text: res?.mensaje || 'Error al insertar',
-                confirmButtonText: "Continuar",
-                confirmButtonColor: "#047CC4",
-              })
-            }
-          },
-          error: (err: any) => {
-            console.log(err.message)
-          }
-        })
-      } else {
-        Swal.fire({
-          icon: 'question',
-          title: 'Sin Items',
-          text: 'Ingresa minimo un item',
-          confirmButtonText: "Continuar",
-          confirmButtonColor: "#047CC4",
-        })
-      }
-    } else {
+    if (!this.service.cliente()?.id) {
       Swal.fire({
         icon: 'question',
         title: 'Sin Cliente',
@@ -126,6 +86,29 @@ export class AgregarRepartoComponent implements OnDestroy {
         confirmButtonText: "Continuar",
         confirmButtonColor: "#047CC4",
       });
+      return;
     }
+
+    if (this.service.listItemRepartos.length === 0) {
+      Swal.fire({
+        icon: 'question',
+        title: 'Sin Items',
+        text: 'Ingresa minimo un item',
+        confirmButtonText: "Continuar",
+        confirmButtonColor: "#047CC4",
+      });
+      return;
+    }
+
+    const body = {
+      anotacion: controls.anotacion?.value,
+      clave: controls.clave?.value,
+      id_cliente: this.service.cliente()?.id,
+      items: this.service.listItemRepartos
+    }
+
+    this.service.agregarReparto(body);
+
   }
+
 }

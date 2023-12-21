@@ -1,39 +1,35 @@
-
-<div class="container__fecha">
-
-    <div class="date-input">
-
-
-        <div class="container__1">
-
-            <div class="input__search">
-                <label for="">Tipo Doc.</label>
-                <div class="container__input">
-                    <select type="text" class="search-input" placeholder="Nombres, Razón social">
-                        <option value="">asdas</option>
-                        <option value="">asdas</option>
-                        <option value="">asdas</option>
-                    </select>
-                </div>
-            </div>
-
-
-
-        </div>
-
+<form [formGroup]="formulario" (submit)="filtrar()" class="flex mt-2 mb-4 gap-2 items-end">
+    <div>
+        <label class="block mb-1 text-sm font-medium text-t">Estado</label>
+        <select formControlName="estado"
+            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+            <option value="T">Todos</option>
+            <option value="S">Activos</option>
+            <option value="N">Inactivos</option>
+        </select>
+    </div>
+    <div>
+        <label class="block mb-1 text-sm font-medium text-t">Tipo Doc.</label>
+        <select formControlName="estado_envio"
+            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+            <option value="T">Todos</option>
+            <option value="1">DNI</option>
+            <option value="6">RUC</option>
+        </select>
     </div>
 
-
-</div>
-
-<div class="input__search">
-    <label for="">Nombres</label>
-    <div style="display: flex; gap: 6px; align-items: center;" class="container__input">
-        <input type="text" class="input" placeholder="Ingrese nombre legal">
-        <div class="icon__search">
-            <a href="">
-                <mat-icon class="search">search</mat-icon>
-            </a>
-        </div>
+    <div>
+        <label class="block mb-1 text-sm font-medium text-t">Documento</label>
+        <input formControlName="num_reparto" type="text" placeholder="Número de documento"
+            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
     </div>
-</div>
+    <div>
+        <label class="block mb-1 text-sm font-medium text-t">Cliente</label>
+        <input formControlName="cliente" type="text" placeholder="Nombre del cliente"
+            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+    </div>
+
+    <div class="flex-auto"></div>
+    <app-boton icon="search" text="Buscar" type="submit"></app-boton>
+    <app-boton icon="add" text="Añadir" (clickEvent)="toAgregar()"></app-boton>
+</form>

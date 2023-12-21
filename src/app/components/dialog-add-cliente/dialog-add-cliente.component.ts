@@ -61,14 +61,14 @@ export class DialogAddClienteComponent implements OnInit {
     const tipo = this.formulario.get('tipo')
     if (doc?.valid) {
       if (tipo?.value == 1) {
-        const data: any = this.consultasService.searchDoc(doc.value, 'dni')
-        this.formulario.get('nombres')?.setValue(`${data.nombres} ${data.apellidoPaterno} ${data.apellidoMaterno}`);
+        const data: any = await this.consultasService.searchDoc(doc.value, 'dni')
+        this.formulario.get('nombres')?.setValue(`${data.nombres}`);
         this.formulario.get('direc')?.setValue('');
       }
       if (tipo?.value == 6) {
-        const data: any = this.consultasService.searchDoc(doc.value, 'ruc')
-        this.formulario.get('nombres')?.setValue(`${data.razonSocial}`);
-        this.formulario.get('direc')?.setValue(`${data.direccion}`);
+        const data: any = await this.consultasService.searchDoc(doc.value, 'ruc')
+        this.formulario.get('nombres')?.setValue(`${data.nombres}`);
+        this.formulario.get('direc')?.setValue(`${data.direc}`);
       }
     }
     this.progressBuscarDoc.set(false);

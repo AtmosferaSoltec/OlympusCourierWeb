@@ -22,7 +22,7 @@
             <tr [ngClass]="{
                 'bg-p1 text-white': verificarSiEstadoSeleccionado(item),
                 'bg-white': !verificarSiEstadoSeleccionado(item)}" class="border-b">
-                <td class="px-6 py-2">{{item.num_reparto | mostrarID}}</td>
+                <td class="px-6 py-2">#{{item.num_reparto | formatNum:6}}</td>
                 <td class="px-6 py-2">{{item.cliente?.nombres}}</td>
                 <td class="px-6 py-2">{{item.items | mostrarContenido}}</td>
                 <td class="px-6 py-2 font-medium">

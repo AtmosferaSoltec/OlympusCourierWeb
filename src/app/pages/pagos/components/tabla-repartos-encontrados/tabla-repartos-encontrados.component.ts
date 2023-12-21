@@ -5,16 +5,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PagosService } from '../../pagos.service';
 import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
-import { MostrarIDPipe } from "../../../../pipes/mostrar-id.pipe";
 import { Reparto } from '../../../../interfaces/reparto';
 import { MostrarContenidoPipe } from "../../../../pipes/mostrar-contenido.pipe";
+import { FormatNumPipe } from '../../../../pipes/format-num.pipe';
 
 @Component({
   selector: 'app-tabla-repartos-encontrados',
   standalone: true,
   templateUrl: './tabla-repartos-encontrados.component.html',
   styleUrl: './tabla-repartos-encontrados.component.scss',
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarActivoPipe, MostrarIDPipe, MostrarContenidoPipe]
+  imports: [
+    CommonModule, MatIconModule, MatButtonModule,
+    MatTooltipModule, MostrarActivoPipe, FormatNumPipe,
+    MostrarContenidoPipe]
 })
 export class TablaRepartosEncontradosComponent {
 

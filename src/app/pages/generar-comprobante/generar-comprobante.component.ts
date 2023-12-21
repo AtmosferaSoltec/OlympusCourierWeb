@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
-import { MostrarIDPipe } from "../../pipes/mostrar-id.pipe";
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Reparto } from '../../interfaces/reparto';
@@ -26,7 +25,7 @@ import { MostrarContenidoPipe } from '../../pipes/mostrar-contenido.pipe';
   styleUrl: './generar-comprobante.component.scss',
   imports: [
     CommonModule, MatIconModule, RouterOutlet,
-    MostrarIDPipe, MatButtonModule, MatTooltipModule,
+    FormatNumPipe, MatButtonModule, MatTooltipModule,
     ReactiveFormsModule, FormatNumPipe,
     MatProgressSpinnerModule, MostrarContenidoPipe
   ]

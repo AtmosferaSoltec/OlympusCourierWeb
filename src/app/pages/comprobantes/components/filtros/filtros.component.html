@@ -1,0 +1,72 @@
+<form [formGroup]="comprobantesService.formulario" (submit)="filtrarComprobantes()" class="flex items-end my-4">
+
+    <div class="flex flex-col gap-3">
+        <div class="flex gap-3 items-center">
+
+            <div>
+                <label class="block mb-1 text-sm font-medium text-t">Serie</label>
+                <input formControlName="serie" type="text" placeholder="Ingrese Serie"
+                    class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+            </div>
+
+            <div>
+                <label class="block mb-1 text-sm font-medium text-t">Comprobante</label>
+                <input formControlName="comprobante" type="text" placeholder="Número de comprobante"
+                    class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+            </div>
+
+            <div>
+                <label class="block mb-1 text-sm font-medium text-t">Cliente</label>
+                <input formControlName="cliente" type="text" placeholder="Nombre de cliente"
+                    class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+            </div>
+
+            <div>
+                <label class="block mb-1 text-sm font-medium text-t">Desde</label>
+                <input formControlName="desde" type="date"
+                    class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+            </div>
+            <div>
+                <label class="block mb-1 text-sm font-medium text-t">Hasta</label>
+                <input formControlName="hasta" type="date"
+                    class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+            </div>
+        </div>
+        <div class="flex gap-3 items-center">
+            <div>
+                <label class="block mb-2 text-sm font-medium text-t">Tipo Comprobante</label>
+                <select formControlName="tipo_comprobante"
+                    class="bg-gray-50 border w-48 sm:w-40 border-gray-300 text-t text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+                    <option value="T">TODOS</option>
+                    <option value="S">ACTIVOS</option>
+                    <option value="N">INACTIVOS</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block mb-2 text-sm font-medium text-t">Estado</label>
+                <select formControlName="activo"
+                    class="bg-gray-50 border w-48 sm:w-40 border-gray-300 text-t text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+                    <option value="T">TODOS</option>
+                    <option value="S">ACTIVOS</option>
+                    <option value="N">INACTIVOS</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block mb-2 text-sm font-medium text-t">Método de Pago</label>
+                <select formControlName="id_metodo_pago"
+                    class="bg-gray-50 border w-48 sm:w-40 border-gray-300 text-t text-sm rounded-lg focus:ring-p1 focus:border-p1 block p-2.5">
+                    <option value="">TODOS</option>
+                    @for (item of metodoPagoService.listMetodoPago(); track $index) {
+                    <option [value]="item.id">{{item.nombre | uppercase}}</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="flex-auto"></div>
+    <app-boton type="submit" text="Buscar" icon="search"></app-boton>
+</form>

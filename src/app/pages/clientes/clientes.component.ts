@@ -10,13 +10,15 @@ import { DialogAddClienteComponent } from '../../components/dialog-add-cliente/d
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { GlobalService } from '../../services/global.service';
+import { TituloComponent } from '../../components/titulo/titulo.component';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
   imports: [
     CommonModule, MatIconModule, MatButtonModule,
-    FiltrosComponent, TablaComponent, MatTooltipModule
+    FiltrosComponent, TablaComponent, MatTooltipModule,
+    TituloComponent
   ],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.scss'
@@ -29,16 +31,7 @@ export class ClientesComponent {
   constructor() {
   }
 
-  dialog = inject(MatDialog);
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogAddClienteComponent, {
-      width: "950px"
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-    });
-  }
 
   exportToExcel(data: any[], fileName: string): void {
 

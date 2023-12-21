@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Cliente } from '../../../../interfaces/cliente';
-import { ClienteService } from '../../../../services/cliente.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddClienteComponent } from '../../../../components/dialog-add-cliente/dialog-add-cliente.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -13,19 +12,20 @@ import { UsuarioService } from '../../../../services/usuario.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { DialogDetalleClienteComponent } from '../dialog-detalle-cliente/dialog-detalle-cliente.component';
 import Swal from 'sweetalert2';
+import { ClientesService } from '../../clientes.service';
+import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
 
 @Component({
-  selector: 'app-tabla',
-  standalone: true,
-  templateUrl: './tabla.component.html',
-  styleUrl: './tabla.component.scss',
-  imports: [CommonModule, MatButtonModule, MatIconModule,
-    MatTooltipModule, MostrarTipoDocumentoPipe, FormatTelfPipe, MatMenuModule
-  ]
+    selector: 'app-tabla',
+    standalone: true,
+    templateUrl: './tabla.component.html',
+    styleUrl: './tabla.component.scss',
+    imports: [CommonModule, MatButtonModule, MatIconModule,
+        MatTooltipModule, MostrarTipoDocumentoPipe, FormatTelfPipe, MatMenuModule, MostrarActivoPipe]
 })
 export class TablaComponent {
   usuarioService = inject(UsuarioService);
-  clienteService = inject(ClienteService);
+  clientesService = inject(ClientesService);
 
   dialog = inject(MatDialog);
 
@@ -36,7 +36,7 @@ export class TablaComponent {
     })
 
     dialogRef.afterClosed().subscribe((data: any) => {
-      this.clienteService.getAll()
+      this.clientesService.listarClientes()
     });
 
   }
@@ -59,31 +59,11 @@ export class TablaComponent {
       cancelButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.clienteService.delete(cliente.id, estado).subscribe({
-          next: (data: any) => {
-            if (data?.isSuccess) {
-              let title = estado === "N" ? "Eliminado!" : "Restaurado!"
-              let text = estado === "N" ? "Cliente eliminado." : "Cliente restaurado."
-              Swal.fire({
-                title: title,
-                text: text,
-                icon: "success",
-                confirmButtonText: "Continuar",
-                confirmButtonColor: "#047CC4",
-              })
-              this.clienteService.getAll()
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: data?.mensaje || 'Error al eliminar',
-                confirmButtonText: "Cerrar",
-                confirmButtonColor: "#047CC4",
-              });
-            }
-          },
-          error: (err) => console.log(err)
-        });
+        if (!cliente.id) {
+          alert('No se encontró el id del cliente');
+          return;
+        }
+        this.clientesService.setEstado(cliente.id, estado)
       }
     });
   }

@@ -2,8 +2,8 @@
     <table class="w-full text-sm text-start text-textos">
         <thead class="text-sm bg-white text-textos uppercase border-b">
             <tr>
+                <th scope="col" class="px-6 py-3">Tipo Doc.</th>
                 <th scope="col" class="px-6 py-3">Nombres</th>
-                <th scope="col" class="px-6 py-3">Tipo</th>
                 <th scope="col" class="px-6 py-3">Documento</th>
                 <th scope="col" class="px-6 py-3">Dirección</th>
                 <th scope="col" class="px-6 py-3">Teléfono</th>
@@ -11,13 +11,23 @@
             </tr>
         </thead>
         <tbody>
-            @for (item of clienteService.listClientes(); track $index) {
+            @if(clientesService.isLoading()){
+            <tr class="bg-white">
+                <td colspan="6" class="py-3">
+                    <div class="flex justify-center items-center">
+                        <div class="loader"></div>
+                    </div>
+                </td>
+            </tr>
+            }@else {
+            @for (item of clientesService.listClientes(); track $index) {
             <tr class="bg-white border-b">
-                <td class="px-6 py-2">{{item.nombres | uppercase}}</td>
                 <td class="px-6 py-2">{{item.cod_tipodoc | mostrarTipoDocumento}}</td>
+                <td class="px-6 py-2">{{item.nombres | uppercase}}</td>
                 <td class="px-6 py-2">{{item.documento }}</td>
                 <td class="px-6 py-2">{{item.direc | uppercase}}</td>
                 <td class="px-6 py-2">{{item.telefono | formatTelf}}</td>
+                <td class="px-6 py-2">{{item.activo | mostrarActivo}}</td>
                 <td class="px-6 py-2">
                     <button mat-icon-button matTooltip="Ver Mas" [matMenuTriggerFor]="menuAccion">
                         <mat-icon>more_vert</mat-icon>
@@ -49,6 +59,16 @@
                     </mat-menu>
                 </td>
             </tr>
+            }@empty {
+            <tr class="bg-white border-b">
+                <td colspan="6" class="py-2">
+                    <div class="flex flew-row items-center justify-center">
+                        <mat-icon>hourglass_empty</mat-icon>
+                        Sin Datos
+                    </div>
+                </td>
+            </tr>
+            }
             }
         </tbody>
     </table>

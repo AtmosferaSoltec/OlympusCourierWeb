@@ -28,25 +28,8 @@ export class FiltrosComponent {
   repartosService = inject(RepartosService)
   router = inject(Router)
 
-  formulario = new FormGroup({
-    estado: new FormControl<string>('T'),
-    estado_envio: new FormControl<string>('T'),
-    num_reparto: new FormControl<string>(''),
-    cliente: new FormControl<string>(''),
-    desde: new FormControl<string>(fechaActual()),
-    hasta: new FormControl<string>(fechaActual()),
-  })
-
-  constructor(){
-    const params = {
-      desde: this.formulario.controls.desde.value,
-      hasta: this.formulario.controls.hasta.value
-    }
-    this.repartosService.listarRepartos(params)
-  }
-
   filtrar() {
-    const controls = this.formulario.controls;
+    const controls = this.repartosService.formulario.controls;
 
     //Validar si la fecha esta bien ingresada
     if (!controls.desde.value) {

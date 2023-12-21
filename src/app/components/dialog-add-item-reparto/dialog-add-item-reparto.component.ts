@@ -47,6 +47,7 @@ export class DialogAddItemRepartoComponent {
       const itemReparto: ItemReparto = {
         num_guia: this.formulario.get('num_guia')?.value || 'Sin Guia',
         id_tipo_paquete: this.formulario.get('id_tipo_paquete')?.value || '',
+        tipo_paquete: this.paqueteService.listTipoPaquetes()?.find((element) => element.id === this.formulario.get('id_tipo_paquete')?.value)?.nombre || '',
         detalle: this.formulario.get('detalle')?.value || 'Sin Descripción',
         precio: this.formulario.get('precio')?.value || 0.0,
         cant: this.formulario.get('cant')?.value || 0,

@@ -12,10 +12,10 @@
             </tr>
         </thead>
         <tbody>
-            @for (item of service.listItemRepartos; track $index) {
+            @for (item of service.listItemRepartos(); track $index) {
             <tr class="bg-white border-b">
                 <td class="px-6 py-2">{{item.num_guia}}</td>
-                <td class="px-6 py-2">{{item.id_tipo_paquete}}</td>
+                <td class="px-6 py-2">{{item.tipo_paquete}}</td>
                 <td class="px-6 py-2">{{item.detalle}}</td>
                 <td class="px-6 py-2">{{item.cant}}</td>
                 <td class="px-6 py-2">S/{{item.precio}}</td>

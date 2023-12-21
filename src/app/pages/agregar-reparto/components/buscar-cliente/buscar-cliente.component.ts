@@ -102,8 +102,7 @@ export class BuscarClienteComponent {
 
     dialogRef.afterClosed().subscribe((data: ItemReparto) => {
       if (data) {
-        this.service.listItemRepartos.push(data)
-        //this.table.renderRows();
+        this.service.listItemRepartos().push(data)
       }
     });
   }

@@ -28,18 +28,18 @@ export class TablaItemsComponent {
     })
     dialogRef.afterClosed().subscribe((data: ItemReparto) => {
       if (data) {
-        const index = this.service.listItemRepartos.findIndex((element) => element === item);
+        const index = this.service.listItemRepartos().findIndex((element) => element === item);
         if (index !== -1) {
-          this.service.listItemRepartos[index] = data;
+          this.service.listItemRepartos()[index] = data;
         }
       }
     });
   }
 
   deleteItemReparto(item: ItemReparto) {
-    const index = this.service.listItemRepartos.indexOf(item);
+    const index = this.service.listItemRepartos().indexOf(item);
     if (index !== -1) {
-      this.service.listItemRepartos.splice(index, 1);
+      this.service.listItemRepartos().splice(index, 1);
     }
   }
 }
