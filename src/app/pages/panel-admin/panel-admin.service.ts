@@ -45,7 +45,7 @@ export class PanelAdminService {
 
   guardarUsuario(form: any, id_usuario?: number) {
     if (!id_usuario) {
-      this.usuarioService.add(form.value).subscribe({
+      this.usuarioService.add(form).subscribe({
         next: (data) => {
           if (data?.isSuccess) {
             Swal.fire({
@@ -66,7 +66,7 @@ export class PanelAdminService {
         }
       })
     } else {
-      this.usuarioService.update(id_usuario, form.value)
+      this.usuarioService.update(id_usuario, form)
         .subscribe({
           next: (data: any) => {
             if (data?.isSuccess) {

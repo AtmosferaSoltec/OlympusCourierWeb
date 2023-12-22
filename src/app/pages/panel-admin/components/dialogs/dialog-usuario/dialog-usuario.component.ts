@@ -1,13 +1,10 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Usuario } from '../../../../../interfaces/usuario';
 import { MatRadioModule } from '@angular/material/radio';
-import Swal from 'sweetalert2';
-import { UsuarioService } from '../../../../../services/usuario.service';
-import { PanelAdminService } from '../../../panel-admin.service';
 
 @Component({
   selector: 'app-dialog-usuario',
@@ -18,29 +15,20 @@ import { PanelAdminService } from '../../../panel-admin.service';
 })
 export class DialogUsuarioComponent {
 
-  formulario: FormGroup;
-  private panelAdminService = inject(PanelAdminService);
-
-  listDocumento: any[] = []
-  listDistritos: any[] = []
-
+  documento = new FormControl('', Validators.required)
+  nombres = new FormControl('', Validators.required)
+  ape_paterno = new FormControl('')
+  ape_materno = new FormControl('')
+  telefono = new FormControl('')
+  correo = new FormControl('')
+  fecha_nac = new FormControl('')
+  clave = new FormControl('', Validators.required)
+  cod_rol = new FormControl('U', Validators.required)
 
   constructor(
-    private fb: FormBuilder,
     public dialogRef: MatDialogRef<DialogUsuarioComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Usuario | undefined
   ) {
-    this.formulario = this.fb.group({
-      documento: [this.data?.documento || '', [Validators.required]],
-      nombres: [this.data?.nombres || '', [Validators.required]],
-      ape_paterno: [this.data?.ape_paterno || '', [Validators.required]],
-      ape_materno: [this.data?.ape_materno || ''],
-      telefono: [this.data?.telefono || '', [Validators.required]],
-      correo: [this.data?.correo || ''],
-      fecha_nac: [this.data?.fecha_nac ? new Date(this.data.fecha_nac).toISOString().split('T')[0] : '',],
-      clave: [this.data?.clave || '', [Validators.required]],
-      cod_rol: [this.data?.cod_rol || '', [Validators.required]]
-    })
   }
 
   buscarDoc() {
@@ -53,10 +41,54 @@ export class DialogUsuarioComponent {
 
 
   guardar() {
-    if (this.formulario.valid) {
-      this.dialogRef.close(this.formulario.value)
-    } else {
-      console.log(this.formulario.value);
+
+
+    //Validar si el documento tiene 8 digitos
+
+    if (this.documento.value || this.nombres.value || this.ape_paterno.value || this.ape_materno.value || this.telefono.value || this.correo.value || this.fecha_nac.value || this.clave.value || this.cod_rol.value) {
+      alert("Debe ingresar todos los campos")
+      return
     }
+
+    if (this.documento.value?.length != 8) {
+      alert("El documento debe tener 8 digitos")
+      return
+    }
+
+    //Debe ingresar un nombre
+    if (!this.nombres.value?.length) {
+      alert("Debe ingresar un nombre")
+      return
+    }
+
+    //Di ingresa correo, debe ser un correo valido
+    if (this.correo.value?.length && !this.correo.value?.includes("@")) {
+      alert("Debe ingresar un correo valido")
+      return
+    }
+
+    //Si ingresa telefono, debe ser un telefono valido
+    if (this.telefono.value?.length && this.telefono.value?.length != 9) {
+      alert("Debe ingresar un telefono valido")
+      return
+    }
+
+    //Si ingresa fecha de nacimiento, debe ser una fecha valida
+    if (this.fecha_nac.value?.length && this.fecha_nac.value?.length != 10) {
+      alert("Debe ingresar una fecha valida")
+      return
+    }
+
+    //Si ingresa clave, debe ser una clave valida
+    if (this.clave.value?.length && this.clave.value?.length <= 4) {
+      alert("La clave debe tener minimo 4 caracteres")
+      return
+    }
+
+    this.dialogRef.close()
+    //this.dialogRef.close(this.formulario.value)
+
+
+
   }
 }

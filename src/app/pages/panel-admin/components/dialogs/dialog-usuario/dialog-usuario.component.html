@@ -6,63 +6,63 @@
         Editar Usuario
         }
     </h1>
-    <form [formGroup]="formulario">
+    <form (submit)="guardar()">
 
         <div class="caja">
             <span class="label">N° Documento </span>
-            <input class="input" type="number" placeholder="Ingrese número de doc" formControlName="documento">
+            <input class="input numerico" type="number" placeholder="Ingrese número de doc" [formControl]="documento">
         </div>
 
         <div class="caja">
             <span class="label">Nombres </span>
-            <input class="input" type="text" placeholder="Ingrese nombres" formControlName="nombres">
+            <input class="input" type="text" placeholder="Ingrese nombres" [formControl]="nombres">
         </div>
 
         <div class="caja">
             <span class="label"> Primer Apellido </span>
-            <input class="input" type="text" placeholder="Ingrese apellido paterno" formControlName="ape_paterno">
+            <input class="input" type="text" placeholder="Ingrese apellido paterno" [formControl]="ape_paterno">
         </div>
 
         <div class="caja">
             <span class="label"> Segundo Apellido </span>
-            <input class="input" type="text" placeholder="Ingrese apellido materno" formControlName="ape_materno">
+            <input class="input" type="text" placeholder="Ingrese apellido materno" [formControl]="ape_materno">
         </div>
 
         <div class="caja">
             <span class="label"> Teléfono </span>
-            <input class="input" type="tel" max="999999999" placeholder="Ingrese teléfono" formControlName="telefono">
+            <input class="input numerico" type="tel" max="999999999" placeholder="Ingrese teléfono"
+                [formControl]="telefono">
         </div>
 
         <div class="caja">
             <span class="label"> Correo </span>
-            <input class="input" type="email" placeholder="Ingrese correo electrónico" formControlName="correo">
+            <input class="input" type="email" placeholder="Ingrese correo electrónico" [formControl]="correo">
         </div>
 
         <div class="caja">
             <span class="label"> Fecha Nacimiento </span>
-            <input class="input" type="date" placeholder="Ingrese fecha de nacimiento" formControlName="fecha_nac">
+            <input class="input" type="date" placeholder="Ingrese fecha de nacimiento" [formControl]="fecha_nac">
         </div>
 
         @if (data === undefined) {
         <div class="caja">
             <span class="label"> Clave </span>
-            <input class="input" type="password" placeholder="Ingrese una clave (min 4 digitos)"
-                formControlName="clave">
+            <input class="input" type="password" placeholder="Ingrese una clave (min 4 digitos)" [formControl]="clave">
         </div>
         }
 
         <div class="caja">
             <span class="label"> Rol </span>
-            <mat-radio-group class="checks" formControlName="cod_rol">
+            <mat-radio-group class="checks" [formControl]="cod_rol">
                 <mat-radio-button value="A">Admin</mat-radio-button>
                 <mat-radio-button value="U">Usuario</mat-radio-button>
                 <mat-radio-button value="D">Delivery</mat-radio-button>
             </mat-radio-group>
         </div>
-    </form>
 
-    <div class="actions">
-        <button (click)="closeDialog()">Cancelar</button>
-        <button (click)="guardar()">Guardar</button>
-    </div>
+        <div class="actions">
+            <button (click)="closeDialog()">Cancelar</button>
+            <button type="submit">Guardar</button>
+        </div>
+    </form>
 </div>

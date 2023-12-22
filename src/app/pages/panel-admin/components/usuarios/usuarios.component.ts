@@ -48,7 +48,7 @@ export class UsuariosComponent {
     dialogRef.afterClosed().subscribe({
       next: (res) => {
         if (res) {
-          this.panelAdminService.guardarUsuario(item?.id, res)
+          this.panelAdminService.guardarUsuario(res, item?.id)
         }
       }
     });
