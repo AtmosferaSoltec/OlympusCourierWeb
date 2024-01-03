@@ -31,7 +31,8 @@ export class ComprobantesAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.empresaService.get().subscribe({
+    this.empresaService.get()
+    .subscribe({
       next: (res: any) => {
         if (res?.isSuccess) {
           this.formulario.patchValue({

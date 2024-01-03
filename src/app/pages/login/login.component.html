@@ -6,7 +6,7 @@
         <img class="w-96" src="../../../assets/full_logo.png" alt="Logo">
 
         <div class="card">
-            <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+            <form [formGroup]="formulario" (submit)="onSubmit()">
                 <div class="head">
                     <span>Bienvenido</span>
                     <p>Gestiona tus envíos de forma rápida y sencilla. ¡Inicia sesión!</p>
@@ -15,7 +15,11 @@
                     <input type="text" placeholder="Usuario" formControlName="user" required>
                     <input type="password" placeholder="Contraseña" formControlName="clave" required>
                 </div>
-                <button type="submit">Ingresar</button>
+                @if (loading()) {
+                    <div class="loader"></div>
+                }@else {
+                    <button type="submit">Ingresar</button>
+                }
             </form>
         </div>
     </div>
