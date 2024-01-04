@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
-import { Reparto } from '../../../../interfaces/reparto';
+import { HistorialReparto, Reparto } from '../../../../interfaces/reparto';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../../../services/usuario.service';
 import Swal from 'sweetalert2';
@@ -73,6 +73,14 @@ export class TablaComponent {
         this.repartosService.eliminarReparto(reparto.id)
       }
     });
+  }
+
+  getUsuario(list?: HistorialReparto[]): string {
+    if (!list || list.length === 0) {
+      return '';
+    }
+    const usuario = list[0];
+    return usuario.nombre ?? '';
   }
 
   // Alerta para recuperar un reparto

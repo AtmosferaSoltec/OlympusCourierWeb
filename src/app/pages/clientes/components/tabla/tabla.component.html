@@ -7,13 +7,14 @@
                 <th scope="col" class="px-6 py-3">Documento</th>
                 <th scope="col" class="px-6 py-3">Dirección</th>
                 <th scope="col" class="px-6 py-3">Teléfono</th>
+                <th scope="col" class="px-6 py-3">Estado</th>
                 <th scope="col" class="px-6 py-3"></th>
             </tr>
         </thead>
         <tbody>
             @if(clientesService.isLoading()){
             <tr class="bg-white">
-                <td colspan="6" class="py-3">
+                <td colspan="7" class="py-3">
                     <div class="flex justify-center items-center">
                         <div class="loader"></div>
                     </div>
@@ -27,7 +28,13 @@
                 <td class="px-6 py-2">{{item.documento }}</td>
                 <td class="px-6 py-2">{{item.direc | uppercase}}</td>
                 <td class="px-6 py-2">{{item.telefono | formatTelf}}</td>
-                <td class="px-6 py-2">{{item.activo | mostrarActivo}}</td>
+                <td class="px-6 py-2">
+                    <div class="flex flex-row items-center">
+                        <div [ngClass]="{'bg-green-500': item.activo == 'S', 'bg-red-500': item.activo == 'N'}"
+                            class="h-2.5 w-2.5 rounded-full me-2"></div>
+                        {{item.activo | mostrarActivo}}
+                    </div>
+                </td>
                 <td class="px-6 py-2">
                     <button mat-icon-button matTooltip="Ver Mas" [matMenuTriggerFor]="menuAccion">
                         <mat-icon>more_vert</mat-icon>
@@ -61,7 +68,7 @@
             </tr>
             }@empty {
             <tr class="bg-white border-b">
-                <td colspan="6" class="py-2">
+                <td colspan="7" class="py-2">
                     <div class="flex flew-row items-center justify-center">
                         <mat-icon>hourglass_empty</mat-icon>
                         Sin Datos

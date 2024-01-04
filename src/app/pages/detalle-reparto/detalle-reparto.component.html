@@ -50,24 +50,53 @@
             }
         </div>
 
-        <div>
-            <span class="sub-titulo">Creado:</span>
-            <app-detalle-item title="Usuario"
-                [descrip]="service.reparto()?.usuario.nombres | uppercase"></app-detalle-item>
-            <app-detalle-item title="Fecha"
-                [descrip]="service.reparto()?.fecha_creacion | date: 'dd/MM/yyyy'"></app-detalle-item>
-            <app-detalle-item title="Hora"
-                [descrip]="service.reparto()?.fecha_creacion | date: 'hh:mm a'"></app-detalle-item>
-        </div>
+        <table class="w-full text-sm text-textos">
+            <thead class="text-sm bg-white text-textos uppercase border-b">
+                <tr>
+                    <th scope="col" class="px-6 py-3">Usuario</th>
+                    <th scope="col" class="px-6 py-3">Operacion</th>
+                    <th scope="col" class="px-6 py-3">Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(false){
+                <tr class="bg-white border-b">
+                    <td colspan="7" class="py-3">
+                        <div class="flex justify-center items-center">
+                            <div class="loader"></div>
+                        </div>
+                    </td>
+                </tr>
+                }@else {
 
-        <div>
-            <span class="sub-titulo">Entregado:</span>
-            <app-detalle-item title="Usuario"
-                [descrip]="service.reparto()?.repartidor?.nombres | uppercase"></app-detalle-item>
-            <app-detalle-item title="Fecha"
-                [descrip]="service.reparto()?.fecha_entrega | date: 'dd/MM/yyyy'"></app-detalle-item>
-            <app-detalle-item title="Hora"
-                [descrip]="service.reparto()?.fecha_entrega | date: 'hh:mm a'"></app-detalle-item>
-        </div>
+                @for (item of service.reparto()?.historial; track $index) {
+                <tr class="bg-white border-b text-center">
+                    <td class="px-6 py-2">{{item.nombre}}</td>
+                    <td class="px-6 py-2">{{item.tipo_operacion}}</td>
+                    <td class="px-6 py-2">
+                        <div class="flex flex-col justify-center items-center">
+                            <div>
+                                {{item.fecha | date: 'dd/MM/yyyy'}}
+                            </div>
+                            <div>
+                                {{item.fecha | date: 'hh:mm a'}}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                } @empty {
+                <tr class="bg-white border-b">
+                    <td colspan="7" class="py-2">
+                        <div class="flex flew-row items-center justify-center">
+                            <mat-icon>hourglass_empty</mat-icon>
+                            Sin Datos
+                        </div>
+                    </td>
+                </tr>
+                }
+                }
+            </tbody>
+        </table>
+
     </div>
 </div>

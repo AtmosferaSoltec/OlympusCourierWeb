@@ -109,6 +109,7 @@
             </div>
 
 
+            <!-- Ingresar Documento -->
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     @if (tipoComprobante() == 2) { Dni }
@@ -116,7 +117,7 @@
                     @else { Documento }
                 </label>
                 <div class="relative">
-                    <input type="number" formControlName="doc"
+                    <input type="text" formControlName="doc"
                         class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                         placeholder="Ingresar documento" required>
                     <button matTooltip="Buscar"

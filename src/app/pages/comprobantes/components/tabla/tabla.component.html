@@ -28,15 +28,15 @@
             @for (item of comprobantesService.listComprobantes(); track $index) {
             <tr class="bg-white border-b">
                 <td class="px-6 py-3">{{item.serie}}-{{item.num_serie | formatNum:4}}</td>
-                <td class="px-6 py-3">{{item.id_usuario}}</td>
+                <td class="px-6 py-3">{{item.usuario | uppercase}}</td>
                 <td class="px-6 py-3">{{item.estado_sunat | mostrarEstadoNubefact}}</td>
                 <td class="px-6 py-3">{{item.fecha_creacion | date: 'dd/MM/yyyy'}}</td>
-                <td class="px-6 py-3">{{item.id_metodo_pago}}
+                <td class="px-6 py-3">{{item.metodo_pago | uppercase}}
                 </td>
                 <td class="px-6 py-3">{{item.tipo_doc | mostrarTipoDocumento}}</td>
                 <td class="px-6 py-3">{{item.documento}}</td>
                 <td class="px-6 py-3">{{item.nombre}}</td>
-                <td class="px-6 py-3 font-semibold">S/100</td>
+                <td class="px-6 py-3 font-semibold">S/{{item.importe_total}}</td>
 
                 <td class="px-6 py-2">
                     <button mat-icon-button [matMenuTriggerFor]="menuAction" matTooltip="Ver más">
@@ -73,4 +73,13 @@
             }
         </tbody>
     </table>
+</div>
+<!--Mostrar el Total-->
+<div class="flex flex-row justify-end my-3 gap-2">
+    <span class="text-xl text-textos font-semibold">
+        Cantidad: {{comprobantesService.listComprobantes().length}} -
+    </span>
+    <span class="text-xl text-textos font-semibold">
+        Total: S/{{getTotal(comprobantesService.listComprobantes()) | number:'1.2-2'}}
+    </span>
 </div>

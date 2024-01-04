@@ -27,7 +27,7 @@
                 <td class="px-6 py-2">#{{item.num_reparto | formatNum:6}}</td>
                 <td class="px-6 py-2">{{item.cliente?.nombres}}</td>
                 <td class="px-6 py-2">{{item.fecha_creacion | date:'dd/MM/yyyy'}}</td>
-                <td class="px-6 py-2">{{item.usuario.nombres | uppercase}}</td>
+                <td class="px-6 py-2">{{getUsuario(item.historial) | uppercase}}</td>
                 <td class="px-6 py-2">
                     <p class="status" [ngClass]="item.estado">{{item.estado | mostrarEstado}}</p>
                 </td>

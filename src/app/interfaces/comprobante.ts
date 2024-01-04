@@ -5,6 +5,7 @@ export interface Comprobante {
     serie?: string;
     num_serie?: number;
     id_metodo_pago?: number;
+    metodo_pago?: string;
     num_operacion?: string;
     foto_operacion?: string;
     tipo_doc?: string;
@@ -14,6 +15,7 @@ export interface Comprobante {
     correo?: string;
     telefono?: string;
     id_usuario?: number;
+    usuario?: string;
     fecha_creacion?: string;
     activo?: string;
     enlace?: string;
@@ -21,4 +23,5 @@ export interface Comprobante {
     sunat_descrip?: string;
     enlace_pdf?: string;
     enlace_xml?: string;
+    importe_total?: number;
 }

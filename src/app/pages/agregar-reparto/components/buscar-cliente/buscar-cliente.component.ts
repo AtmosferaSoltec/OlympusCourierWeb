@@ -10,8 +10,6 @@ import { DialogAddClienteComponent } from '../../../../components/dialog-add-cli
 import { Cliente } from '../../../../interfaces/cliente';
 import { ClienteService } from '../../../../services/cliente.service';
 import { AgregarRepartoService } from '../../agregar-reparto.service';
-import { DialogAddItemRepartoComponent } from '../../../../components/dialog-add-item-reparto/dialog-add-item-reparto.component';
-import { ItemReparto } from '../../../../interfaces/item-reparto';
 import { FormatTelfPipe } from "../../../../pipes/format-telf.pipe";
 import { BotonComponent } from '../../../../components/boton/boton.component';
 
@@ -92,19 +90,6 @@ export class BuscarClienteComponent {
         })
       }
     })
-  }
-
-
-  openDialogAddItemReparto() {
-    const dialogRef = this.dialog.open(DialogAddItemRepartoComponent, {
-      width: "770px"
-    });
-
-    dialogRef.afterClosed().subscribe((data: ItemReparto) => {
-      if (data) {
-        this.service.listItemRepartos().push(data)
-      }
-    });
   }
 
   selectCliente(item: Cliente) {

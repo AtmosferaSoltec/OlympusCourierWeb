@@ -55,7 +55,7 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
   formulario = new FormGroup({
     metodoPago: new FormControl(1, [Validators.required]),
     num_operacion: new FormControl(''),
-    doc: new FormControl('', [Validators.required]),
+    doc: new FormControl<string>('', [Validators.required]),
     nombre: new FormControl('', [Validators.required]),
     direc: new FormControl('', [Validators.required]),
     telefono: new FormControl('', [Validators.maxLength(9)]),
@@ -133,7 +133,7 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
   }
 
   generarComprobante() {
-    const controls = this.formulario.controls;
+    const controls = this.formulario.value;
     if (this.formulario.invalid) {
       Swal.fire({
         title: 'Error',
@@ -145,7 +145,7 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
     }
 
     //Verificar si el tipo de comprobante coincide con el tipo de documento
-    if (this.tipoComprobante() == 1 && controls.doc.value?.length != 11) {
+    if (this.tipoComprobante() == 1 && controls.doc?.length != 11) {
       Swal.fire({
         title: 'Error',
         text: 'El documento debe tener 11 dígitos',
@@ -153,10 +153,10 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
         confirmButtonText: 'Ok'
       })
       return;
-    } else if (this.tipoComprobante() == 2 && controls.doc.value?.length != 8) {
+    } else if (this.tipoComprobante() == 2 && controls.doc?.length != 8) {
       Swal.fire({
         title: 'Error',
-        text: 'El documento debe tener 8 dígitos',
+        text: 'El documento debe tener 8 dígitos' + controls.doc,
         icon: 'error',
         confirmButtonText: 'Ok'
       })
@@ -183,6 +183,9 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
       direc: this.formulario.get('direc')?.value,
       correo: this.formulario.get('correo')?.value,
       telefono: this.formulario.get('telefono')?.value,
+      repartos: this.generarComprobanteService.listRepartos().map((item) => {
+        return item.id
+      })
     }
 
     this.comprobanteService.insert(data).subscribe({

@@ -19,8 +19,8 @@ export class RepartoService {
     return this.http.get<Result>(this.url, { params: params })
   }
 
-  setActivo(id: number, activo: 'S' | 'N') {
-    return this.http.patch<Result>(`${this.url}/${id}`, { activo });
+  setActivo(id_reparto: number, activo: 'S' | 'N') {
+    return this.http.patch<Result>(`${this.url}/${id_reparto}`, { activo });
   }
 
   insert(body: any) {

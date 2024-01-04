@@ -13,13 +13,16 @@ import { AgregarRepartoService } from './agregar-reparto.service';
 import { BotonComponent } from '../../components/boton/boton.component';
 import { TituloComponent } from '../../components/titulo/titulo.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DialogAddItemRepartoComponent } from '../../components/dialog-add-item-reparto/dialog-add-item-reparto.component';
+import { ItemReparto } from '../../interfaces/item-reparto';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-agregar-reparto',
   standalone: true,
   imports: [
     CommonModule, TablaItemsComponent, MatIconModule,
     MatButtonModule, ReactiveFormsModule, BuscarClienteComponent,
-    BotonComponent, TituloComponent, MatTooltipModule
+    BotonComponent, TituloComponent, MatTooltipModule, BotonComponent
   ],
   templateUrl: './agregar-reparto.component.html',
   styleUrl: './agregar-reparto.component.scss'
@@ -32,9 +35,22 @@ export class AgregarRepartoComponent implements OnDestroy {
   })
 
   private repartoService = inject(RepartoService);
-  private service = inject(AgregarRepartoService);
+  service = inject(AgregarRepartoService);
   private router = inject(Router);
+  private dialog = inject(MatDialog);
 
+  openDialogAddItemReparto() {
+    const dialogRef = this.dialog.open(DialogAddItemRepartoComponent, {
+      width: "770px"
+    });
+
+    dialogRef.afterClosed().subscribe((data: ItemReparto) => {
+      if (data) {
+        this.service.listItemRepartos().push(data)
+      }
+    });
+  }
+  
   ngOnDestroy(): void {
     this.service.reset();
   }
@@ -89,7 +105,7 @@ export class AgregarRepartoComponent implements OnDestroy {
       return;
     }
 
-    if (this.service.listItemRepartos.length === 0) {
+    if (this.service.listItemRepartos().length === 0) {
       Swal.fire({
         icon: 'question',
         title: 'Sin Items',
@@ -104,7 +120,7 @@ export class AgregarRepartoComponent implements OnDestroy {
       anotacion: controls.anotacion?.value,
       clave: controls.clave?.value,
       id_cliente: this.service.cliente()?.id,
-      items: this.service.listItemRepartos
+      items: this.service.listItemRepartos()
     }
 
     this.service.agregarReparto(body);

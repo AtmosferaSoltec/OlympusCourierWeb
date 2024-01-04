@@ -9,6 +9,12 @@
 
     <app-buscar-cliente></app-buscar-cliente>
 
+    <div class="flex items-center justify-between">
+
+        <span class="text-xl text-textos font-medium">Lista de Items</span>
+        <app-boton text="Agregar Item" icon="add" witdh="w-36" (clickEvent)="openDialogAddItemReparto()"></app-boton>
+
+    </div>
     <app-tabla-items></app-tabla-items>
 
     <form [formGroup]="formulario" class="flex items-center gap-3">
@@ -31,7 +37,11 @@
     </form>
 
     <div class="flex justify-end gap-3 mt-3">
-        <app-boton text="Cancelar" (clickEvent)="cancel()" color="Secundario" witdh="w-24"></app-boton>
-        <app-boton text="Guardar" (clickEvent)="guardarReparto()" witdh="w-24"></app-boton>
+        @if (service.isLoadingAgregarReparto()) {
+            <div class="loader"></div>
+        }@else {
+            <app-boton text="Cancelar" (clickEvent)="cancel()" color="Secundario" witdh="w-24"></app-boton>
+            <app-boton text="Guardar" (clickEvent)="guardarReparto()" witdh="w-24"></app-boton>
+        }
     </div>
 </div>

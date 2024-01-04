@@ -10,19 +10,20 @@ import { ComprobantesService } from '../../comprobantes.service';
 import { Router } from '@angular/router';
 import { Reparto } from '../../../../interfaces/reparto';
 import { FormatNumPipe } from "../../../../pipes/format-num.pipe";
+import { Comprobante } from '../../../../interfaces/comprobante';
 
 @Component({
-    selector: 'app-tabla',
-    standalone: true,
-    templateUrl: './tabla.component.html',
-    styleUrl: './tabla.component.scss',
-    imports: [
-        CommonModule, MatIconModule, MatButtonModule,
-        MatTooltipModule, MatMenuModule,
-        MostrarEstadoNubefactPipe,
-        MostrarTipoDocumentoPipe,
-        FormatNumPipe
-    ]
+  selector: 'app-tabla',
+  standalone: true,
+  templateUrl: './tabla.component.html',
+  styleUrl: './tabla.component.scss',
+  imports: [
+    CommonModule, MatIconModule, MatButtonModule,
+    MatTooltipModule, MatMenuModule,
+    MostrarEstadoNubefactPipe,
+    MostrarTipoDocumentoPipe,
+    FormatNumPipe
+  ]
 })
 export class TablaComponent {
 
@@ -48,4 +49,12 @@ export class TablaComponent {
   anular(reparto: Reparto) {
 
   }
+
+  getTotal(listComprobante?: Comprobante[]): number {
+    if (!listComprobante) {
+      return 0;
+    }
+    return listComprobante.map(r => r.importe_total ?? 0).reduce((acc, value) => acc + value, 0);
+  }
+
 }

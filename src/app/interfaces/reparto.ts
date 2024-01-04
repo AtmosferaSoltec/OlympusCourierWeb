@@ -12,10 +12,6 @@ export interface Reparto {
     fecha_entrega?: string;
     id_cliente?: number;
     cliente?: Cliente;
-    id_usuario?: number;
-    usuario?: any;
-    id_repartidor?: number;
-    repartidor?: any;
     id_comprobante?: number;
     comprobante?: {
         tipo_comprobante?: number;
@@ -25,4 +21,15 @@ export interface Reparto {
     items?: ItemReparto[];
     total?: number;
     activo?: string;
+    historial?: HistorialReparto[];
+}
+
+export interface HistorialReparto {
+    id?: number;
+    id_reparto?: number;
+    id_usuario?: number;
+    id_tipo_operacion?: number;
+    tipo_operacion?: string;
+    fecha?: string;
+    nombre?: string;
 }
