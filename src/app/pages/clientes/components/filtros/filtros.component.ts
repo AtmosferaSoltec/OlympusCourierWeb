@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RepartosService } from '../../../repartos/repartos.service';
 import { BotonComponent } from '../../../../components/boton/boton.component';
@@ -19,26 +19,28 @@ export class FiltrosComponent {
   clientesService = inject(ClientesService)
   router = inject(Router)
 
-  formulario = new FormGroup({
-    estado: new FormControl<string>('T'),
-    tipo_doc: new FormControl<string>('T'),
-    doc: new FormControl<string>(''),
-    cliente: new FormControl<string>('')
-  })
+  formulario: FormGroup
 
-  constructor() {
-
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.formulario = this.fb.group({
+      estado: ['S'],
+      tipo_doc: ['T'],
+      doc: [''],
+      cliente: [''],
+    })
   }
 
   filtrar() {
-    const controls = this.formulario.controls;
-    const params = {
-      estado: controls.estado.value,
-      tipo_doc: controls.tipo_doc.value,
-      doc: controls.doc.value,
-      cliente: controls.cliente.value
+    const form = this.formulario.value;
+    const query = {
+      estado: form.estado,
+      tipo_doc: form.tipo_doc,
+      doc: form.doc,
+      cliente: form.cliente
     }
-    this.clientesService.listarClientes(params)
+    this.clientesService.listarClientes(query)
   }
 
   toAgregar() {

@@ -28,15 +28,6 @@ export class ClientesComponent {
   clienteService = inject(ClienteService);
   globalService = inject(GlobalService)
 
-  constructor() {
-  }
-
-
-
-  exportToExcel(data: any[], fileName: string): void {
-
-  }
-
   exportar() {
     Swal.fire({
       title: '¿Estás seguro?',

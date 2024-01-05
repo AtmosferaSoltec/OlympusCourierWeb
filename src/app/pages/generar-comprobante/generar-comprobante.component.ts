@@ -52,15 +52,22 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
   comprobanteService = inject(ComprobanteService)
 
 
-  formulario = new FormGroup({
-    metodoPago: new FormControl(1, [Validators.required]),
-    num_operacion: new FormControl(''),
-    doc: new FormControl<string>('', [Validators.required]),
-    nombre: new FormControl('', [Validators.required]),
-    direc: new FormControl('', [Validators.required]),
-    telefono: new FormControl('', [Validators.maxLength(9)]),
-    correo: new FormControl('', [Validators.email]),
-  })
+  formulario: FormGroup;
+
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.formulario = this.fb.group({
+
+      metodoPago: [1, [Validators.required]],
+      num_operacion: [''],
+      doc: ['', [Validators.required]],
+      nombre: ['', [Validators.required]],
+      direc: ['', [Validators.required]],
+      telefono: ['', [Validators.maxLength(9)]],
+      correo: ['', [Validators.email]],
+    })
+  }
 
   ngOnDestroy(): void {
     this.generarComprobanteService.reset();
@@ -108,23 +115,23 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
 
   async buscarDoc() {
     this.isLoadingSearchDoc.set(true);
-    const controls = this.formulario.controls
-    if (controls.doc.value) {
+    const form = this.formulario.value
+    if (form.doc) {
       if (this.tipoComprobante() === 1) {
-        const data = await this.consultaService.searchDoc(controls.doc.value, 'ruc')
-        controls.nombre.setValue(data?.nombres)
-        controls.direc.setValue(data?.direc)
-        controls.correo.setValue(data?.correo)
-        controls.telefono.setValue(data?.telefono)
+        const data = await this.consultaService.searchDoc(form.doc, 'ruc')
+        this.formulario.get('nombre')?.setValue(data?.nombres)
+        this.formulario.get('direc')?.setValue(data?.direc)
+        this.formulario.get('correo')?.setValue(data?.correo)
+        this.formulario.get('telefono')?.setValue(data?.telefono)
       }
 
       if (this.tipoComprobante() === 2) {
-        const data = await this.consultaService.searchDoc(controls.doc.value, 'dni')
+        const data = await this.consultaService.searchDoc(form.doc, 'dni')
         if (data) {
-          controls.nombre.setValue(`${data?.nombres}`)
-          controls.direc.setValue(data?.direc)
-          controls.correo.setValue(data?.correo)
-          controls.telefono.setValue(data?.telefono)
+          this.formulario.get('nombre')?.setValue(`${data?.nombres}`)
+          this.formulario.get('direc')?.setValue(data?.direc)
+          this.formulario.get('correo')?.setValue(data?.correo)
+          this.formulario.get('telefono')?.setValue(data?.telefono)
 
         }
       }
@@ -172,7 +179,7 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
       tipoDoc = 1;
     }
 
-    const data = {
+    const body = {
       tipo_comprobante: this.tipoComprobante(),
       id_metodo_pago: this.formulario.get('metodoPago')?.value,
       num_operacion: this.formulario.get('num_operacion')?.value,
@@ -188,8 +195,9 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
       })
     }
 
-    this.comprobanteService.insert(data).subscribe({
-      next: (res: any) => {
+    this.comprobanteService.insert(body).subscribe({
+      next: (res) => {
+      
         if (res?.isSuccess) {
           Swal.fire({
             title: 'Éxito',

@@ -2,8 +2,7 @@ export interface Usuario {
     id?: number;
     documento?: string;
     nombres?: string;
-    ape_paterno?: string;
-    ape_materno?: string;
+    apellidos?: string;
     telefono?: string;
     correo?: string;
     fecha_nac?: string;

@@ -10,7 +10,6 @@ import { MostrarTipoDocumentoPipe } from "../../../../pipes/mostrar-tipo-documen
 import { FormatTelfPipe } from "../../../../pipes/format-telf.pipe";
 import { UsuarioService } from '../../../../services/usuario.service';
 import { MatMenuModule } from '@angular/material/menu';
-import { DialogDetalleClienteComponent } from '../dialog-detalle-cliente/dialog-detalle-cliente.component';
 import Swal from 'sweetalert2';
 import { ClientesService } from '../../clientes.service';
 import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
@@ -68,17 +67,4 @@ export class TablaComponent {
     });
   }
 
-
-  openDetalle(item: Cliente) {
-    const dialogRef = this.dialog.open(DialogDetalleClienteComponent, {
-      data: item,
-      width: "800px"
-    })
-
-    dialogRef.afterClosed().subscribe((data: Cliente) => {
-      if (data) {
-
-      }
-    });
-  }
 }

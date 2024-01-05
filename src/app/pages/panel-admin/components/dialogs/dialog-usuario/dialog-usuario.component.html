@@ -10,59 +10,75 @@
 
         <div class="caja">
             <span class="label">N° Documento </span>
-            <input class="input numerico" type="number" placeholder="Ingrese número de doc" formControlName="documento">
+            <div class="input">
+                <input type="text" maxlength="8" (keypress)="numerico($event)" placeholder="Ingrese número de doc"
+                    formControlName="documento">
+                @if(formulario.get('documento')?.touched){
+                @if (formulario.get('documento')?.hasError('required')) {
+                <span>Campo Obligatorio</span>
+                }
+                @if (formulario.get('documento')?.hasError('minlength')) {
+                <span>El número de documento debe tener 8 dígitos</span>
+                }
+                }
+            </div>
         </div>
 
         <div class="caja">
             <span class="label">Nombres </span>
-            <input class="input" type="text" placeholder="Ingrese nombres" formControlName="nombres">
+            <div class="input">
+                <input type="text" placeholder="Ingrese nombres" formControlName="nombres">
+            </div>
         </div>
 
         <div class="caja">
-            <span class="label"> Primer Apellido </span>
-            <input class="input" type="text" placeholder="Ingrese apellido paterno" formControlName="ape_paterno">
-        </div>
-
-        <div class="caja">
-            <span class="label"> Segundo Apellido </span>
-            <input class="input" type="text" placeholder="Ingrese apellido materno" formControlName="ape_materno">
+            <span class="label"> Apellidos </span>
+            <div class="input">
+                <input type="text" placeholder="Ingrese apellidos" formControlName="apellidos">
+            </div>
         </div>
 
         <div class="caja">
             <span class="label"> Teléfono </span>
-            <input class="input numerico" type="tel" maxlength="9" placeholder="Ingrese teléfono"
-                formControlName="telefono">
+            <div class="input">
+                <input type="text" placeholder="Ingrese teléfono" maxlength="9" (keypress)="numerico($event)"
+                    formControlName="telefono">
+                @if (formulario.get('telefono')?.touched){
+                @if (formulario.get('telefono')?.hasError('minlength')) {
+                <span>El número de teléfono debe tener al menos 9 dígitos</span>
+                }
+                }
+            </div>
         </div>
 
         <div class="caja">
             <span class="label"> Correo </span>
-            <input class="input" type="email" placeholder="Ingrese correo electrónico" formControlName="correo">
+            <div class="input">
+                <input type="email" placeholder="Ingrese correo electrónico" formControlName="correo">
+            </div>
         </div>
 
         <div class="caja">
             <span class="label"> Fecha Nacimiento </span>
-            <input class="input" type="date" placeholder="Ingrese fecha de nacimiento" formControlName="fecha_nac">
+            <div class="input">
+                <input type="date" placeholder="Ingrese fecha de nacimiento" formControlName="fecha_nac">
+            </div>
         </div>
 
-        @if (data === undefined) {
+        <!--Seleccionar Distrito-->
         <div class="caja">
-            <span class="label"> Clave </span>
-            <input class="input" type="password" placeholder="Ingrese una clave (min 4 digitos)"
-                formControlName="clave">
-        </div>
-        }
-
-        <div class="caja">
-            <span class="label"> Rol </span>
-            <mat-radio-group class="checks" formControlName="cod_rol">
-                <mat-radio-button value="A">Admin</mat-radio-button>
-                <mat-radio-button value="U">Usuario</mat-radio-button>
-                <mat-radio-button value="D">Delivery</mat-radio-button>
-            </mat-radio-group>
+            <span class="label">Rol</span>
+            <div class="input">
+                <select formControlName="cod_rol">
+                    <option value="A">Admin</option>
+                    <option value="U">Usuario</option>
+                    <option value="D">Delivery</option>
+                </select>
+            </div>
         </div>
 
         <div class="actions">
-            <button (click)="closeDialog()">Cancelar</button>
+            <button type="button" (click)="closeDialog()">Cancelar</button>
             <button type="submit">Guardar</button>
         </div>
     </form>

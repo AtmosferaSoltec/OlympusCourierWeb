@@ -41,16 +41,9 @@ export class UsuariosComponent {
   }
 
   openDialog(item: Usuario | undefined = undefined) {
-    const dialogRef = this.dialog.open(DialogUsuarioComponent, {
+    this.dialog.open(DialogUsuarioComponent, {
       data: item,
       width: "770px"
-    });
-    dialogRef.afterClosed().subscribe({
-      next: (res) => {
-        if (res) {
-          this.panelAdminService.guardarUsuario(res, item?.id)
-        }
-      }
     });
 
   }

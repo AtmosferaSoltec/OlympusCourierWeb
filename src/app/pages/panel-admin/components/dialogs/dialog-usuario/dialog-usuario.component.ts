@@ -1,10 +1,13 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Usuario } from '../../../../../interfaces/usuario';
 import { MatRadioModule } from '@angular/material/radio';
+import { UsuarioService } from '../../../../../services/usuario.service';
+import Swal from 'sweetalert2';
+import { PanelAdminService } from '../../../panel-admin.service';
 
 @Component({
   selector: 'app-dialog-usuario',
@@ -18,48 +21,109 @@ import { MatRadioModule } from '@angular/material/radio';
 })
 export class DialogUsuarioComponent {
 
-  formulario = new FormGroup({
-    documento: new FormControl('', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]),
-    nombres: new FormControl('', Validators.required),
-    ape_paterno: new FormControl(''),
-    ape_materno: new FormControl(''),
-    telefono: new FormControl('', [Validators.maxLength(9)]),
-    correo: new FormControl(''),
-    fecha_nac: new FormControl(''),
-    clave: new FormControl('', Validators.required),
-    cod_rol: new FormControl('U', Validators.required)
-  })
+  formulario: FormGroup;
+
+  usuarioService = inject(UsuarioService)
+  panelService = inject(PanelAdminService)
 
   constructor(
+    private fb: FormBuilder,
     public dialogRef: MatDialogRef<DialogUsuarioComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Usuario | undefined
   ) {
+
+    //Formulario
+    this.formulario = this.fb.group({
+      documento: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]],
+      nombres: ['', Validators.required],
+      apellidos: [''],
+      telefono: ['', [Validators.minLength(9), Validators.maxLength(9), Validators.pattern("^[0-9]*$")]],
+      correo: [''],
+      fecha_nac: [''],
+      cod_rol: ['U']
+    })
+
+    if (data) {
+      data.fecha_nac = data.fecha_nac?.split('T')[0];
+      this.formulario.patchValue(data);
+    }
   }
 
-  buscarDoc() {
-
-  }
 
   closeDialog() {
     this.dialogRef.close();
   }
 
+  numerico(event: any) {
+    return /[0-9]/i.test(event.key)
+  }
+
   guardar() {
-    const controls = this.formulario.value;
+    console.log('d');
 
-
-    const fecha_nac = controls.fecha_nac;
-    if (!fecha_nac || fecha_nac.toString().length < 10) {
-      alert('Fecha invalida')
+    if (this.formulario.invalid) {
+      alert("Complete los campos requeridos")
       return;
     }
 
-    const telefono = controls.telefono;
-    if (!telefono || telefono.toString().length < 9 || isNaN(Number(telefono))) {
-      alert('Telefono invalido')
-      return;
+    if (!this.data) {
+      this.usuarioService.add(this.formulario.value).subscribe({
+        next: (data) => {
+          if (data?.isSuccess) {
+            this.closeDialog();
+            Swal.fire({
+              title: "Insertado!",
+              text: "Usuario insertado.",
+              icon: "success",
+              confirmButtonText: "Continuar",
+              confirmButtonColor: "#047CC4",
+            })
+            this.panelService.listarUsuarios()
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: data?.mensaje || 'Error al insertar',
+              confirmButtonText: "Cerrar",
+              confirmButtonColor: "#047CC4",
+            })
+          }
+        },
+        error: (err: any) => {
+          alert(err.message)
+          console.log(err)
+        }
+      })
+    } else {
+      this.usuarioService.update(this.formulario.value, this.data.id)
+        .subscribe({
+          next: (data: any) => {
+            if (data?.isSuccess) {
+              this.closeDialog();
+              Swal.fire({
+                title: "Actualizado!",
+                text: "Usuario actualizado.",
+                icon: "success",
+                confirmButtonText: "Continuar",
+                confirmButtonColor: "#047CC4"
+              })
+              this.panelService.listarUsuarios()
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: data?.mensaje || 'Error al actualizar',
+                confirmButtonText: "Cerrar",
+                confirmButtonColor: "#047CC4"
+              })
+            }
+          },
+          error: (err) => {
+            alert(err.message)
+            console.log(err)
+          }
+        })
     }
 
-    //this.dialogRef.close(this.formulario.value)
   }
 }

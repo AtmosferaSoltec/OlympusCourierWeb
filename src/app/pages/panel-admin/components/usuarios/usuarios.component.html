@@ -3,7 +3,6 @@
         class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
         <option value="S">Activos</option>
         <option value="N">Inactivos</option>
-        <option value="T">Todos</option>
     </select>
 
     <div class="spacer"></div>
@@ -41,7 +40,7 @@
             @for (item of panelAdminService.listUsuarios(); track $index) {
             <tr class="bg-white border-b">
                 <td class="px-6 py-2">{{item.documento}}</td>
-                <td class="px-6 py-2">{{item.nombres | uppercase}} {{item.ape_paterno | uppercase}}</td>
+                <td class="px-6 py-2">{{item.nombres | uppercase}} {{item.apellidos | uppercase}}</td>
                 <td class="px-6 py-2">{{item.telefono | formatTelf}}</td>
                 <td class="px-6 py-2">
                     <span

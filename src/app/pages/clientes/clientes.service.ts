@@ -18,7 +18,9 @@ export class ClientesService {
   isLoading = signal<boolean>(false);
 
   constructor(){
-    this.listarClientes()
+    this.listarClientes({
+      estado: 'S'
+    })
   }
 
   setEstado(id_cliente: number, estado: 'S' | 'N') {
@@ -53,9 +55,9 @@ export class ClientesService {
       });
   }
 
-  listarClientes(params?: any) {
+  listarClientes(query?: any) {
     this.isLoading.set(true);
-    this.clienteService.getAll(params)
+    this.clienteService.getAll(query)
     .pipe(delay(800))
     .subscribe({
       next: (res) => {

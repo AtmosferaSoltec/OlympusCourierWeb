@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { Usuario } from '../interfaces/usuario';
-import { Result, State } from '../interfaces/state';
-import { delay, firstValueFrom } from 'rxjs';
+import { Result } from '../interfaces/state';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -59,7 +59,7 @@ export class UsuarioService {
     return this.http.post<Result>(`${this.baseUrl}`, form);
   }
 
-  update(id_usuario: number, form: any) {
+  update(form: any, id_usuario?: number) {
     return this.http.put<Result>(`${this.baseUrl}/${id_usuario}`, form);
   }
 
@@ -70,7 +70,6 @@ export class UsuarioService {
     }
     return this.http.patch<Result>(url, body);
   }
-
 
   cambiarPass(pass_anterior: string, pass_nueva: string) {
     return this.http.post<Result>(`${this.baseUrl}/cambiarPass`, { pass_anterior, pass_nueva })

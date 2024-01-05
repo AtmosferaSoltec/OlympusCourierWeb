@@ -43,53 +43,6 @@ export class PanelAdminService {
       })
   }
 
-  guardarUsuario(form: any, id_usuario?: number) {
-    if (!id_usuario) {
-      this.usuarioService.add(form).subscribe({
-        next: (data) => {
-          if (data?.isSuccess) {
-            Swal.fire({
-              title: "Insertado!",
-              text: "Usuario insertado.",
-              icon: "success",
-              confirmButtonText: "Continuar",
-              confirmButtonColor: "#047CC4",
-            })
-            this.listarUsuarios();
-          } else {
-            alert(data?.mensaje || 'Error al insertar');
-          }
-        },
-        error: (err: any) => {
-          alert(err.message)
-          console.log(err)
-        }
-      })
-    } else {
-      this.usuarioService.update(id_usuario, form)
-        .subscribe({
-          next: (data: any) => {
-            if (data?.isSuccess) {
-              Swal.fire({
-                title: "Actualizado!",
-                text: "Usuario actualizado.",
-                icon: "success",
-                confirmButtonText: "Continuar",
-                confirmButtonColor: "#047CC4",
-              })
-              this.listarUsuarios();
-            } else {
-              alert(data?.mensaje || 'Error al actualizar');
-            }
-          },
-          error: (err) => {
-            alert(err.message)
-            console.log(err)
-          }
-        })
-    }
-  }
-
   setEstadoUsuario(id_usuario: number, estado: 'S' | 'N') {
     this.usuarioService.delete(id_usuario, estado)
       .subscribe({

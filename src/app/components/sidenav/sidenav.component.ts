@@ -111,7 +111,7 @@ export class SidenavComponent implements OnInit {
 
   getNombre() {
     const nombres = this.usuarioService.usuario()?.nombres || '';
-    const apePaterno = this.usuarioService.usuario()?.ape_paterno || '';
+    const apePaterno = this.usuarioService.usuario()?.apellidos || '';
     const primeraLetraApellido = apePaterno.length > 0 ? apePaterno.charAt(0) + '.' : '';
     return `${nombres} ${primeraLetraApellido}`;
   }

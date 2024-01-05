@@ -77,10 +77,10 @@ export class TablaComponent {
 
   getUsuario(list?: HistorialReparto[]): string {
     if (!list || list.length === 0) {
-      return '';
+      return '-';
     }
     const usuario = list[0];
-    return usuario.nombre ?? '';
+    return usuario.nombre ?? '-';
   }
 
   // Alerta para recuperar un reparto

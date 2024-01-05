@@ -10,6 +10,7 @@ import { delay } from 'rxjs';
 })
 export class ComprobanteService {
 
+
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/comprobantes`;
 
@@ -24,6 +25,9 @@ export class ComprobanteService {
 
   insert(data: any) {
     return this.http.post<Result>(this.url, data);
+  }
+  anular(body: any) {
+    return this.http.post<Result>(`${this.url}/anular`, body);
   }
 
 }

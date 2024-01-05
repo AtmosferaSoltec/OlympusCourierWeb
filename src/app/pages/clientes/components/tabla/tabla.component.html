@@ -7,8 +7,7 @@
                 <th scope="col" class="px-6 py-3">Documento</th>
                 <th scope="col" class="px-6 py-3">Dirección</th>
                 <th scope="col" class="px-6 py-3">Teléfono</th>
-                <th scope="col" class="px-6 py-3">Estado</th>
-                <th scope="col" class="px-6 py-3"></th>
+                <th scope="col" class="px-6 py-3 text-start">Estado</th>
             </tr>
         </thead>
         <tbody>
@@ -33,37 +32,33 @@
                         <div [ngClass]="{'bg-green-500': item.activo == 'S', 'bg-red-500': item.activo == 'N'}"
                             class="h-2.5 w-2.5 rounded-full me-2"></div>
                         {{item.activo | mostrarActivo}}
+
+                        <div class="w-4"></div>
+                        <button mat-icon-button matTooltip="Ver Mas" [matMenuTriggerFor]="menuAccion">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+
+                        <mat-menu #menuAccion="matMenu">
+                            @if(usuarioService.usuario()?.cod_rol === 'A'){
+                            @if(item.activo == "S"){
+                            <button mat-menu-item (click)="editCliente(item)">
+                                <mat-icon>edit</mat-icon>
+                                Editar
+                            </button>
+                            <button mat-menu-item (click)="eliminar(item, 'N')">
+                                <mat-icon>delete</mat-icon>
+                                Eliminar
+                            </button>
+                            }@else if(item.activo === "N"){
+                            <button mat-menu-item (click)="eliminar(item, 'S')">
+                                <mat-icon>restart_alt</mat-icon>
+                                Restaurar
+                            </button>
+
+                            }
+                            }
+                        </mat-menu>
                     </div>
-                </td>
-                <td class="px-6 py-2">
-                    <button mat-icon-button matTooltip="Ver Mas" [matMenuTriggerFor]="menuAccion">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-
-                    <mat-menu #menuAccion="matMenu">
-                        <button mat-menu-item (click)="openDetalle(item)">
-                            <mat-icon>visibility</mat-icon>
-                            Ver Detalle
-                        </button>
-                        @if(usuarioService.usuario()?.cod_rol === 'A'){
-                        @if(item.activo == "S"){
-                        <button mat-menu-item (click)="editCliente(item)">
-                            <mat-icon>edit</mat-icon>
-                            Editar
-                        </button>
-                        <button mat-menu-item (click)="eliminar(item, 'N')">
-                            <mat-icon>delete</mat-icon>
-                            Eliminar
-                        </button>
-                        }@else if(item.activo === "N"){
-                        <button mat-menu-item (click)="eliminar(item, 'S')">
-                            <mat-icon>restart_alt</mat-icon>
-                            Restaurar
-                        </button>
-
-                        }
-                        }
-                    </mat-menu>
                 </td>
             </tr>
             }@empty {

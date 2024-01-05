@@ -41,8 +41,8 @@ export class ClienteService {
     });
   }
 
-  getAll(params: any) {
-    return this.http.get<Result>(this.url, { params: params });
+  getAll(query: any) {
+    return this.http.get<Result>(this.url, { params: query });
   }
 
   setEstado(id: number, estado: string) {

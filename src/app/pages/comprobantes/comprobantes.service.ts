@@ -25,10 +25,10 @@ export class ComprobantesService {
     hasta: new FormControl<string>(fechaActual()),
     tipo_comprobante: new FormControl('T'),
     activo: new FormControl('S'),
-    id_metodo_pago: new FormControl(''),
+    id_metodo_pago: new FormControl('T'),
   });
 
-  listarComprobantes(params: any) {
+  listarComprobantes(params: any = this.formulario.value) {
     this.isLoading.set(true);
     this.comprobanteService.getAll(params)
       .pipe(delay(800))

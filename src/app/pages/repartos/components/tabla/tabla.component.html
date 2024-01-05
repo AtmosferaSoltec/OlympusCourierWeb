@@ -5,7 +5,6 @@
                 <th scope="col" class="px-6 py-3">N° Reparto</th>
                 <th scope="col" class="px-6 py-3">Cliente</th>
                 <th scope="col" class="px-6 py-3">Creado</th>
-                <th scope="col" class="px-6 py-3">Usuario</th>
                 <th scope="col" class="px-6 py-3">Estado Envio</th>
                 <th scope="col" class="px-6 py-3">Estado</th>
                 <th scope="col" class="px-6 py-3">Total</th>
@@ -24,10 +23,12 @@
             }@else {
             @for (item of repartosService.listRepartos(); track $index) {
             <tr class="bg-white border-b">
-                <td class="px-6 py-2">#{{item.num_reparto | formatNum:6}}</td>
+                <td class="px-6 py-2">
+                    #{{item.num_reparto | formatNum:6}}<br>
+                    {{getUsuario(item.historial) | uppercase}}
+                </td>
                 <td class="px-6 py-2">{{item.cliente?.nombres}}</td>
                 <td class="px-6 py-2">{{item.fecha_creacion | date:'dd/MM/yyyy'}}</td>
-                <td class="px-6 py-2">{{getUsuario(item.historial) | uppercase}}</td>
                 <td class="px-6 py-2">
                     <p class="status" [ngClass]="item.estado">{{item.estado | mostrarEstado}}</p>
                 </td>
@@ -55,7 +56,7 @@
                         <button mat-menu-item (click)="toDetalle(item.id)">
                             Ver Detalle<mat-icon>visibility</mat-icon>
                         </button>
-                        @if(usuarioService.usuario()?.cod_rol == 'A'){
+                        @if(usuarioService.usuario()?.cod_rol == 'A' && !item.id_comprobante){
                         <button mat-menu-item (click)="deleteReparto(item)">
                             <mat-icon>delete</mat-icon>
                             Eliminar
