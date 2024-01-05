@@ -50,7 +50,7 @@ export class AgregarRepartoComponent implements OnDestroy {
       }
     });
   }
-  
+
   ngOnDestroy(): void {
     this.service.reset();
   }
@@ -78,11 +78,11 @@ export class AgregarRepartoComponent implements OnDestroy {
         cancelButtonText: 'Cancelar',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.router.navigate(['../']);
+          this.router.navigate(['menu', 'repartos'])
         }
       });
     } else {
-      this.router.navigate(['../']);
+      this.router.navigate(['menu', 'repartos'])
     }
   }
 

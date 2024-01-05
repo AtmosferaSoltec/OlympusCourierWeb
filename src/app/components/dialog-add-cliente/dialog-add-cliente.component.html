@@ -105,7 +105,7 @@
             <div class="input">
                 <select formControlName="distrito">
                     @for (item of distritoService.listDistritos(); track $index) {
-                    <option value="{{item.id}}">{{item.nombre}}</option>
+                    <option [value]="item.id">{{item.nombre}}</option>
                     }
                 </select>
             </div>
@@ -115,7 +115,7 @@
         <div class="caja">
             <span class="label">Dirección</span>
             <div class="input">
-                <input type="text" placeholder="Ingrese nombre de distrito" formControlName="direc" autocomplete="off">
+                <input type="text" placeholder="Ingrese direción" formControlName="direc" autocomplete="off">
                 @if (formulario.get('direc')?.hasError('required') && formulario.get('direc')?.touched) {
                 <span>Campo Obligatorio</span>
                 }

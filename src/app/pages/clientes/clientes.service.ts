@@ -17,7 +17,7 @@ export class ClientesService {
   listClientes = signal<Cliente[]>([]);
   isLoading = signal<boolean>(false);
 
-  constructor(){
+  constructor() {
     this.listarClientes({
       estado: 'S'
     })
@@ -37,7 +37,7 @@ export class ClientesService {
               confirmButtonText: "Continuar",
               confirmButtonColor: "#047CC4",
             })
-            this.listarClientes()
+            this.listarClientes({ estado: 'S' })
           } else {
             Swal.fire({
               icon: "error",
@@ -58,23 +58,23 @@ export class ClientesService {
   listarClientes(query?: any) {
     this.isLoading.set(true);
     this.clienteService.getAll(query)
-    .pipe(delay(800))
-    .subscribe({
-      next: (res) => {
-        if (res?.isSuccess) {
-          this.listClientes.set(res.data)
-        } else {
-          alert(res?.mensaje);
+      .pipe(delay(800))
+      .subscribe({
+        next: (res) => {
+          if (res?.isSuccess) {
+            this.listClientes.set(res.data)
+          } else {
+            alert(res?.mensaje);
+          }
+        },
+        error: (err: any) => {
+          alert(err.message);
+          console.log(err);
+        },
+        complete: () => {
+          this.isLoading.set(false);
         }
-      },
-      error: (err: any) => {
-        alert(err.message);
-        console.log(err);
-      },
-      complete: () => {
-        this.isLoading.set(false);
-      }
-    })
+      })
   }
 
   openDialogCliente(): void {

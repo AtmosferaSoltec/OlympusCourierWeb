@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BotonComponent } from '../../../../components/boton/boton.component';
 import { PagosService } from '../../pagos.service';
 import { fechaActual } from '../../../../util/funciones';
@@ -19,18 +19,27 @@ export class BuscarRepartoComponent {
 
   pagosService = inject(PagosService);
 
-  formulario = new FormGroup({
-    desde: new FormControl<string>(fechaActual()),
-    hasta: new FormControl<string>(fechaActual()),
-    buscar: new FormControl('')
-  })
+  formulario: FormGroup;
+
+  constructor(
+    fb: FormBuilder
+  ) {
+
+    this.formulario = fb.group({
+      desde: [fechaActual()],
+      hasta: [fechaActual()],
+      buscar: ['']
+    })
+
+  }
 
   buscar() {
-    const controls = this.formulario.controls;
+    const controls = this.formulario.value;
     const params = {
       estado: 'S',
-      desde: controls.desde.value,
-      hasta: controls.hasta.value,
+      desde: controls.desde,
+      hasta: controls.hasta,
+      num_reparto: controls.buscar
     }
     this.pagosService.buscarRepartos(params);
   }

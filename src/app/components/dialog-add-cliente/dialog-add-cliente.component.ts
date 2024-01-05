@@ -49,6 +49,7 @@ export class DialogAddClienteComponent implements OnInit {
       maps: [data?.url_maps],
     })
   }
+
   ngOnInit(): void {
     this.distritoService.getAll('S')
   }
@@ -176,4 +177,5 @@ export class DialogAddClienteComponent implements OnInit {
   closeDialog(): void {
     this.dialogRef.close();
   }
+
 }

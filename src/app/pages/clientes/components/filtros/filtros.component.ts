@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { RepartosService } from '../../../repartos/repartos.service';
 import { BotonComponent } from '../../../../components/boton/boton.component';
 import { ClientesService } from '../../clientes.service';
+import { UsuarioService } from '../../../../services/usuario.service';
 
 @Component({
   selector: 'app-filtros',
@@ -16,6 +17,7 @@ import { ClientesService } from '../../clientes.service';
 })
 export class FiltrosComponent {
 
+  uuarioService = inject(UsuarioService)
   clientesService = inject(ClientesService)
   router = inject(Router)
 

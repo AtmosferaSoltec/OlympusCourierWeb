@@ -15,7 +15,7 @@
             <span class="label">Tipo </span>
             <select formControlName="id_tipo_paquete">
                 @for (item of paqueteService.listTipoPaquetes(); track $index) {
-                    <option [value]="item.id">{{item.nombre}}</option>
+                <option [value]="item.id">{{item.nombre}}</option>
                 }
             </select>
         </div>
@@ -27,12 +27,12 @@
 
         <div class="caja">
             <span class="label">Cantidad </span>
-            <input class="input" type="number" placeholder="Ingrese cantidad" formControlName="cant">
+            <input class="input numerico" type="number" placeholder="Ingrese cantidad" formControlName="cant">
         </div>
 
         <div class="caja">
             <span class="label">Precio </span>
-            <input class="input" type="number" placeholder="Ingrese precio total" formControlName="precio">
+            <input class="input numerico" type="number" placeholder="Ingrese precio total" formControlName="precio">
         </div>
 
     </form>

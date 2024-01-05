@@ -3,14 +3,14 @@
         <thead class="text-sm bg-white text-textos uppercase border-b">
             <tr>
                 <th scope="col" class="px-6 py-3">Comprobante</th>
+                <!--
                 <th scope="col" class="px-6 py-3">Estado</th>
-                <th scope="col" class="px-6 py-3">Fecha Emisión</th>
-                <th scope="col" class="px-6 py-3">Forma de Pago</th>
+                -->
                 <th scope="col" class="px-6 py-3">Tipo Documento</th>
                 <th scope="col" class="px-6 py-3">Documento</th>
                 <th scope="col" class="px-6 py-3" colspan="2">Razon Social</th>
-                <th scope="col" class="px-6 py-3">Monto</th>
-                <th scope="col" class="px-6 py-3"></th>
+                <th scope="col" class="px-6 py-3">Fecha Emisión</th>
+                <th scope="col" class="px-6 py-3 text-start">Monto</th>
             </tr>
         </thead>
         <tbody>
@@ -29,36 +29,44 @@
                     {{item.serie}}-{{item.num_serie | formatNum:4}}<br>
                     {{item.usuario | uppercase}}
                 </td>
+                <!--
                 <td class="px-6 py-3">{{item.estado_sunat | mostrarEstadoNubefact}}</td>
-                <td class="px-6 py-3">{{item.fecha_creacion | date: 'dd/MM/yyyy'}}</td>
-                <td class="px-6 py-3">{{item.metodo_pago | uppercase}}
-                </td>
+                -->
                 <td class="px-6 py-3">{{item.tipo_doc | mostrarTipoDocumento}}</td>
                 <td class="px-6 py-3">{{item.documento}}</td>
                 <td class="px-6 py-3" colspan="2">{{item.nombre}}</td>
-                <td class="px-6 py-3 font-semibold">S/{{item.importe_total}}</td>
+                <td class="px-6 py-3">{{item.fecha_creacion | date: 'dd/MM/yyyy'}}</td>
+                <td class="px-6 py-3 font-semibold">
+                    <div class="flex items-center gap-6">
+                        <div>
+                            S/{{item.importe_total}}<br>
+                            {{item.metodo_pago | uppercase}}
+                        </div>
+                        <div>
 
-                <td class="px-6 py-2">
-                    <button mat-icon-button [matMenuTriggerFor]="menuAction" matTooltip="Ver más">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
 
-                    <mat-menu #menuAction="matMenu">
-                        <button mat-menu-item (click)="openPdf(item.enlace_pdf)">
-                            <mat-icon>description</mat-icon>
-                            Ver Ticket
-                        </button>
+                            <button mat-icon-button [matMenuTriggerFor]="menuAction" matTooltip="Ver más">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
 
-                        
-                        @if(usuarioService.usuario()?.cod_rol == 'A'){
-                            @if(verificarTiempo(item.fecha_creacion)){
+                            <mat-menu #menuAction="matMenu">
+                                <button mat-menu-item (click)="openPdf(item.enlace_pdf)">
+                                    <mat-icon>description</mat-icon>
+                                    Ver Ticket
+                                </button>
+
+
+                                @if(usuarioService.usuario()?.cod_rol == 'A'){
+                                @if(verificarTiempo(item.fecha_creacion)){
                                 <button mat-menu-item (click)="anular(item)">
                                     <mat-icon>delete</mat-icon>
                                     Anular
                                 </button>
-                            }
-                        }
-                    </mat-menu>
+                                }
+                                }
+                            </mat-menu>
+                        </div>
+                    </div>
                 </td>
 
             </tr>

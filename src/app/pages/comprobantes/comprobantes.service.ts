@@ -44,4 +44,9 @@ export class ComprobantesService {
         }
       }))
   }
+  
+  reset() {
+    //this.formulario.reset();
+    this.listComprobantes.set([]);
+  }
 }

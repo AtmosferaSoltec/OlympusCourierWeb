@@ -31,7 +31,7 @@ export class MetodoPagoComponent {
           if (!valor) {
             return;
           }
-          this.metodoPagoService.getAll(valor);
+          this.metodoPagoService.listarMetodosPago(valor);
         }
       })
   }
@@ -78,7 +78,7 @@ export class MetodoPagoComponent {
                 confirmButtonColor: "#047CC4",
               })
               // Actualizar la lista de distritos
-              this.metodoPagoService.getAll();
+              this.metodoPagoService.listarMetodosPago();
             } else {
               Swal.fire({
                 icon: "error",

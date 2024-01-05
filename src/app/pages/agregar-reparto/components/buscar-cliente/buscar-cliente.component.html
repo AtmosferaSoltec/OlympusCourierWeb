@@ -5,13 +5,14 @@
             <!--Progress Bar-->
             <mat-spinner class="icon" [diameter]="30" color="#047CC4" *ngIf="isLoading"></mat-spinner>
 
-
-            <!--Boton Borrar Cliente-->
-            <button class="icon" mat-icon-button (click)="borrarCliente()" matTooltip="Limpiar"
-                *ngIf="service.cliente"><mat-icon>close</mat-icon></button>
-
-            <input placeholder="Buscar por documento, nombres o telefono" type="text" [formControl]="documento"
-                class="input-with-icon" />
+            <form [formGroup]="formulario" (submit)="buscarCliente()">
+                <input placeholder="Buscar por documento o nombre" type="text" formControlName="buscador"
+                    class="input-with-icon" />
+                <!--Boton Borrar Cliente-->
+                <button class="icon" mat-icon-button type="submit" matTooltip="Buscar" *ngIf="service.cliente">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </form>
         </div>
         }
 
@@ -35,7 +36,7 @@
         <ul class="auto__completar" *ngIf="showSugerencias">
             @for (item of data$; track $index) {
             <li (click)="selectCliente(item)">
-                {{item.nombres}}
+                {{item.nombres | uppercase}}
             </li>
             }
             @if (data$.length === 0 && !service.cliente()) {

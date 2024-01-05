@@ -5,6 +5,7 @@ import { MetodoPagoService } from '../../../../services/metodo-pago.service';
 import { BotonComponent } from '../../../../components/boton/boton.component';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { fechaActual } from '../../../../util/funciones';
+import { UsuarioService } from '../../../../services/usuario.service';
 
 @Component({
   selector: 'app-filtros',
@@ -16,7 +17,7 @@ import { fechaActual } from '../../../../util/funciones';
 export class FiltrosComponent {
   metodoPagoService = inject(MetodoPagoService);
   comprobantesService = inject(ComprobantesService);
-
+  usuarioService = inject(UsuarioService)
 
   filtrarComprobantes() {
     const controls = this.comprobantesService.formulario.controls;

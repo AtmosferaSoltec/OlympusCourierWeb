@@ -51,7 +51,7 @@ export class DialogMetodoPagoComponent {
                 if (result.isConfirmed) {
                   this.dialogRef.close()
                 }
-                this.metodoPagoService.getAll()
+                this.metodoPagoService.listarMetodosPago()
               });
 
             } else {
@@ -81,7 +81,7 @@ export class DialogMetodoPagoComponent {
                 if (result.isConfirmed) {
                   this.dialogRef.close()
                 }
-                this.metodoPagoService.getAll()
+                this.metodoPagoService.listarMetodosPago()
               });
 
             } else {

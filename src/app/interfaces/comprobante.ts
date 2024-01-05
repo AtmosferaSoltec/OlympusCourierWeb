@@ -23,5 +23,5 @@ export interface Comprobante {
     sunat_descrip?: string;
     enlace_pdf?: string;
     enlace_xml?: string;
-    importe_total?: number;
+    importe_total?: string;
 }

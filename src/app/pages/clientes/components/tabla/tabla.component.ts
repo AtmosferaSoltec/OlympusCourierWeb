@@ -35,7 +35,7 @@ export class TablaComponent {
     })
 
     dialogRef.afterClosed().subscribe((data: any) => {
-      this.clientesService.listarClientes()
+      this.clientesService.listarClientes({ activo: 'S'})
     });
 
   }
@@ -63,6 +63,7 @@ export class TablaComponent {
           return;
         }
         this.clientesService.setEstado(cliente.id, estado)
+        
       }
     });
   }

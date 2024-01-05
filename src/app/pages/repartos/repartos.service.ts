@@ -25,6 +25,10 @@ export class RepartosService {
     hasta: new FormControl<string>(fechaActual()),
   })
 
+  reset() {
+    this.listRepartos.set([]);
+    this.isLoading.set(false);
+  }
 
   listarRepartos(
     params: any = {

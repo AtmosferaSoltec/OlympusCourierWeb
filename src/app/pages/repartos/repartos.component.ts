@@ -1,10 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FiltrosComponent } from './components/filtros/filtros.component';
 import { TablaComponent } from './components/tabla/tabla.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RepartoService } from '../../services/reparto.service';
 import Swal from 'sweetalert2';
 import { GlobalService } from '../../services/global.service';
 import { RepartosService } from './repartos.service';
@@ -19,7 +18,10 @@ import { RepartosService } from './repartos.service';
   templateUrl: './repartos.component.html',
   styleUrl: './repartos.component.scss'
 })
-export class RepartosComponent {
+export class RepartosComponent implements OnDestroy {
+  ngOnDestroy(): void {
+    this.repartosService.reset()
+  }
 
   repartosService = inject(RepartosService)
   globalService = inject(GlobalService)

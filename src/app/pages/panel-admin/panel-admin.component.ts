@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterOutlet } from '@angular/router';
@@ -7,6 +7,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { PaquetesComponent } from './components/paquetes/paquetes.component';
 import { DestinosComponent } from './components/distritos/distritos.component';
 import { ComprobantesAdminComponent } from './components/comprobantes-admin/comprobantes-admin.component';
+import { PanelAdminService } from './panel-admin.service';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { ComprobantesAdminComponent } from './components/comprobantes-admin/comp
   templateUrl: './panel-admin.component.html',
   styleUrl: './panel-admin.component.scss'
 })
-export class PanelAdminComponent {
+export class PanelAdminComponent implements OnDestroy {
 
 
   url = 'usuarios'
@@ -50,6 +51,10 @@ export class PanelAdminComponent {
   ]
 
   private router = inject(Router)
+  private panelService = inject(PanelAdminService);
+  ngOnDestroy(): void {
+    this.panelService.reset()
+  }
 
   navegar(url: string) {
     const d = ['menu', 'panel-admin', `${url}`]

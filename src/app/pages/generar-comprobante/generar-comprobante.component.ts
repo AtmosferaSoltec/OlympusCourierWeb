@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
@@ -43,7 +43,7 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
 
   loading = signal<boolean>(false);
   tipoComprobante = signal<number>(2)
-  metodoPagoService = inject(MetodoPagoService)
+  listMetodoPago = computed(() => this.generarComprobanteService.listMetodoPago())
   empresaService = inject(EmpresaService)
   router = inject(Router)
   repartoService = inject(RepartoService)
@@ -58,7 +58,6 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
     private fb: FormBuilder
   ) {
     this.formulario = this.fb.group({
-
       metodoPago: [1, [Validators.required]],
       num_operacion: [''],
       doc: ['', [Validators.required]],
@@ -88,6 +87,8 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
     if (this.generarComprobanteService.listRepartos().length === 0) {
       this.router.navigate(['menu', 'pagos'])
     }
+
+    this.generarComprobanteService.listarMetodosPago();
 
     //Obtener serie y numero de comprobante
     this.empresaService.get().subscribe({
@@ -210,7 +211,7 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
             icon: 'success',
             confirmButtonText: 'Ok'
           })
-          this.router.navigate(['/menu', '/comprobantes'])
+          this.router.navigate(['menu', 'comprobantes'])
         } else {
           Swal.fire({
             title: 'Error',

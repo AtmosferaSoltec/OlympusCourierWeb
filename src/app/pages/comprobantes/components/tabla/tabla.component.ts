@@ -77,9 +77,9 @@ export class TablaComponent {
 
   getTotal(listComprobante?: Comprobante[]): number {
     if (!listComprobante) {
-      return 0;
+      return 50;
     }
-    return listComprobante.map(r => r.importe_total ?? 0).reduce((acc, value) => acc + value, 0);
+    return listComprobante.map(r => Number(r.importe_total) ?? 0).reduce((acc, value) => acc + value, 0);
   }
 
 }

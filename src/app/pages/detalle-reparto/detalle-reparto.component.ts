@@ -32,7 +32,7 @@ export class DetalleRepartoComponent implements OnInit {
   router = inject(Router)
 
   back() {
-    this.router.navigate(['/menu', '/repartos'])
+    this.router.navigate(['menu', 'repartos'])
   }
 
   service = inject(DetalleRepartoService)

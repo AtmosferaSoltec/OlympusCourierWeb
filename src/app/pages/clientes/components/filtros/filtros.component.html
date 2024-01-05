@@ -1,4 +1,5 @@
-<form [formGroup]="formulario" (submit)="filtrar()" class="flex mt-2 mb-4 gap-2 items-end">
+<form [formGroup]="formulario" (submit)="filtrar()" class="flex mt-2 mb-4 gap-2 items-end flex-wrap">
+    @if (uuarioService.usuario()?.cod_rol === 'A') {
     <div>
         <label class="block mb-1 text-sm font-medium text-t">Estado</label>
         <select formControlName="estado"
@@ -7,6 +8,7 @@
             <option value="N">Inactivos</option>
         </select>
     </div>
+    }
     <div>
         <label class="block mb-1 text-sm font-medium text-t">Tipo Doc.</label>
         <select formControlName="tipo_doc"

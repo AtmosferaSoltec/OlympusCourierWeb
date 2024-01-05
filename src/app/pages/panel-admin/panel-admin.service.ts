@@ -17,6 +17,10 @@ export class PanelAdminService {
     this.listarUsuarios();
   }
 
+  reset() {
+    this.listUsuarios.set([]);
+    this.isLoading.set(false);
+  }
 
   listarUsuarios(estado: 'S' | 'N' = 'S') {
     this.isLoading.set(true);

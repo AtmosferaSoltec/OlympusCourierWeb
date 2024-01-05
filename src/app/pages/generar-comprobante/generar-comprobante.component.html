@@ -7,7 +7,9 @@
             <span>Generar Comprobante</span>
         </div>
 
-        <table class="w-full text-sm text-left text-gray-500">
+        <span class="text-xl text-textos font-medium mt-3">Lista de Repartos</span>
+
+        <table class="w-full text-sm text-left mt-3 text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3">N° Reparto</th>
@@ -21,7 +23,9 @@
                 @for (item of generarComprobanteService.listRepartos(); track $index) {
                 <tr class="bg-white border-b">
                     <td class="px-6 py-4">#{{item.num_reparto| formatNum:6}}</td>
-                    <td class="px-6 py-4">{{item.cliente?.nombres}}</td>
+                    <td class="px-6 py-4">{{item.cliente?.nombres | uppercase}}<br>
+                        {{item.cliente?.documento}}
+                    </td>
                     <td class="px-6 py-4">
                         {{item.items | mostrarContenido}}
                     </td>
@@ -43,13 +47,13 @@
         <div class="tipo_comprobante">
             <div class="flex items-center">
                 <input id="default-radio-2" type="radio" name="default-radio" (change)="setTipoComprobante(1)"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                 <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Factura
                 </label>
             </div>
             <div class="flex items-center">
                 <input checked id="default-radio-1" type="radio" name="default-radio" (change)="setTipoComprobante(2)"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                 <label for="default-radio-1"
                     class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Boleta</label>
             </div>
@@ -94,7 +98,7 @@
                         Tipo de Pago</label>
                     <select formControlName="metodoPago"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                        @for (item of metodoPagoService.listMetodoPago(); track $index) {
+                        @for (item of listMetodoPago(); track $index) {
                         <option [value]="item.id">{{item.nombre}}</option>
                         }
                     </select>
@@ -111,7 +115,7 @@
 
             <!-- Ingresar Documento -->
             <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label class="block mb-2 text-sm font-medium text-gray-900">
                     @if (tipoComprobante() == 2) { Dni }
                     @else if (tipoComprobante() == 1) { Ruc }
                     @else { Documento }
@@ -121,7 +125,7 @@
                         class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                         placeholder="Ingresar documento" required>
                     <button matTooltip="Buscar"
-                        class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white  rounded-e-lg"
+                        class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white rounded-e-lg"
                         style="background-color: var(--colorP1);" (click)="buscarDoc()">
                         @if (isLoadingSearchDoc()) {
                         <mat-spinner diameter="20" style="color: white;"></mat-spinner>
@@ -135,30 +139,30 @@
 
 
             <div>
-                <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900">
                     @if (tipoComprobante() == 2) { Nombre }
                     @else if (tipoComprobante() == 1) { Razón Social }
                 </label>
                 <input type="text" id="default-input" formControlName="nombre"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
             </div>
 
             <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
+                <label class="block mb-2 text-sm font-medium text-gray-900">Dirección</label>
                 <input type="text" formControlName="direc"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
             </div>
 
             <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo</label>
+                <label class="block mb-2 text-sm font-medium text-gray-900">Correo</label>
                 <input type="text" formControlName="correo"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
             </div>
 
             <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono</label>
+                <label class="block mb-2 text-sm font-medium text-gray-900">Teléfono</label>
                 <input type="text" formControlName="telefono"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
             </div>
 
         </form>
@@ -170,7 +174,6 @@
             Generar Comprobante
         </button>
         }
-
 
     </div>
 </div>

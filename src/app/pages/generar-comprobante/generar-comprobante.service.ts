@@ -1,5 +1,7 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { Reparto } from '../../interfaces/reparto';
+import { MetodoPagoService } from '../../services/metodo-pago.service';
+import { MetodoPago } from '../../interfaces/metodo-pago';
 
 @Injectable({
   providedIn: 'root'
@@ -7,11 +9,26 @@ import { Reparto } from '../../interfaces/reparto';
 export class GenerarComprobanteService {
 
   listRepartos = signal<Reparto[]>([]);
+  listMetodoPago = signal<MetodoPago[]>([]);
 
-  constructor() { }
+  metodoPagoService = inject(MetodoPagoService);
 
   reset() {
     this.listRepartos.set([])
+    this.listMetodoPago.set([]);
+  }
+
+  listarMetodosPago() {
+    this.metodoPagoService.getAll({ estado: 'S' }).subscribe({
+      next: (res) => {
+        if (res?.isSuccess) {
+          this.listMetodoPago.set(res?.data);
+        }
+      },
+      error: (err) => {
+        alert(err.message)
+      }
+    })
   }
 
 }

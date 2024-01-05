@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime } from 'rxjs';
@@ -12,6 +12,7 @@ import { ClienteService } from '../../../../services/cliente.service';
 import { AgregarRepartoService } from '../../agregar-reparto.service';
 import { FormatTelfPipe } from "../../../../pipes/format-telf.pipe";
 import { BotonComponent } from '../../../../components/boton/boton.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-buscar-cliente',
@@ -21,22 +22,23 @@ import { BotonComponent } from '../../../../components/boton/boton.component';
   imports: [
     CommonModule, MatIconModule, MatProgressSpinnerModule,
     ReactiveFormsModule, MatButtonModule, FormatTelfPipe,
-    BotonComponent
+    BotonComponent, MatTooltipModule
   ]
 })
 export class BuscarClienteComponent {
 
-  documento = new FormControl('')
   data$: Cliente[] = [];
   showSugerencias = false;
   isLoading = false;
 
-  constructor() {
-    this.documento.valueChanges.pipe(
-      debounceTime(1000)
-    ).subscribe(() => {
-      this.buscarCliente();
-    });
+  formulario: FormGroup
+
+  constructor(
+    private fb: FormBuilder
+  ) {
+    this.formulario = this.fb.group({
+      buscador: ['']
+    })
   }
 
   clienteService = inject(ClienteService)
@@ -44,7 +46,8 @@ export class BuscarClienteComponent {
   dialog = inject(MatDialog)
 
   buscarCliente() {
-    if (!this.documento.value) {
+    const buscador = this.formulario.get('buscador')?.value;
+    if (!buscador) {
       return;
     }
     if (this.service.cliente()) {
@@ -52,7 +55,7 @@ export class BuscarClienteComponent {
     }
     this.isLoading = true;
     this.showSugerencias = true;
-    this.clienteService.searchCliente(this.documento.value).subscribe({
+    this.clienteService.searchCliente(buscador).subscribe({
       next: (data: any) => {
         console.log(data);
         if (data?.isSuccess) {
@@ -69,7 +72,7 @@ export class BuscarClienteComponent {
 
   borrarCliente() {
     this.service.cliente.set(null);
-    this.documento.setValue('');
+    this.formulario.reset();
   }
 
   openDialogCliente() {
@@ -94,7 +97,7 @@ export class BuscarClienteComponent {
 
   selectCliente(item: Cliente) {
     this.service.cliente.set(item);
-    this.documento.setValue(item.nombres ? item.nombres : this.documento.value)
+    this.formulario.get('buscador')?.setValue(item.nombres);
     this.showSugerencias = false
     this.data$ = []
   }

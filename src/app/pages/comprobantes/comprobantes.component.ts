@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2';
@@ -18,7 +18,10 @@ import { TablaComponent } from './components/tabla/tabla.component';
     FiltrosComponent, TablaComponent
   ]
 })
-export class ComprobantesComponent {
+export class ComprobantesComponent implements OnDestroy{
+  ngOnDestroy(): void {
+    this.comprobantesService.reset()
+  }
 
   comprobantesService = inject(ComprobantesService)
   globalService = inject(GlobalService)

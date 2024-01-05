@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { State } from '../interfaces/state';
+import { Result, State } from '../interfaces/state';
 import { MetodoPago } from '../interfaces/metodo-pago';
 
 @Injectable({
@@ -13,16 +13,17 @@ export class MetodoPagoService {
   url = `${environment.baseUrl}/api/metodopago`;
 
   constructor() {
-    this.getAll();
+    this.listarMetodosPago();
   }
 
   #state = signal<State<MetodoPago[]>>({ loading: true, data: [] });
   listMetodoPago = computed(() => this.#state().data);
   loading = computed(() => this.#state().loading)
 
-  getAll(estado: 'T' | 'S' | 'N' = 'S') {
+  listarMetodosPago(estado: 'T' | 'S' | 'N' = 'S') {
     this.#state.set({ loading: true, data: [] })
-    this.http.get(this.url, { params: { estado }})
+    const queryParams = { estado }
+    this.getAll(queryParams)
       .subscribe({
         next: (res: any) => {
           if (res?.isSuccess) {
@@ -35,6 +36,10 @@ export class MetodoPagoService {
           this.#state.set({ loading: false, error: err.message });
         }
       })
+  }
+
+  getAll(queryParams: any) {
+    return this.http.get<Result>(this.url, { params: queryParams })
   }
 
 
