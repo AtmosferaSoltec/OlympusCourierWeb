@@ -139,7 +139,10 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
     this.isLoadingSearchDoc.set(false);
   }
 
+  isLoading = signal<boolean>(false);
+
   generarComprobante() {
+    this.isLoading.set(true);
     const controls = this.formulario.value;
     if (this.formulario.invalid) {
       Swal.fire({
@@ -148,6 +151,7 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
         icon: 'error',
         confirmButtonText: 'Ok'
       })
+      this.isLoading.set(false);
       return;
     }
 
@@ -159,6 +163,7 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
         icon: 'error',
         confirmButtonText: 'Ok'
       })
+      this.isLoading.set(false);
       return;
     } else if (this.tipoComprobante() == 2 && controls.doc?.length != 8) {
       Swal.fire({
@@ -167,6 +172,7 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
         icon: 'error',
         confirmButtonText: 'Ok'
       })
+      this.isLoading.set(false);
       return;
     }
 
@@ -197,7 +203,6 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
 
     this.comprobanteService.insert(body).subscribe({
       next: (res) => {
-      
         if (res?.isSuccess) {
           Swal.fire({
             title: 'Éxito',
@@ -219,6 +224,9 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
       error: (err: any) => {
         this.loading.set(false);
         console.log(err.message);
+      },
+      complete: () => {
+        this.isLoading.set(false);
       }
     })
   }
