@@ -1,20 +1,14 @@
-.body {
-    width: 100%;
+.cuerpo {
+    width: 100vw;
     height: 100vh;
-    background: -webkit-linear-gradient(to right, var(--colorP1), var(--colorP2));
-    background: linear-gradient(to right, var(--colorP1), var(--colorP2));
-}
-
-.container {
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 50px;
+    background: -webkit-linear-gradient(to right, var(--colorP1), var(--colorP2));
+    background: linear-gradient(to right, var(--colorP1), var(--colorP2));
 }
-
 .titulo {
     color: white;
 }

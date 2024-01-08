@@ -1,19 +1,19 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../services/usuario.service';
-import Swal from 'sweetalert2';
 import { delay } from 'rxjs';
+import Swal from 'sweetalert2';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-login-main',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  templateUrl: './login-main.component.html',
+  styleUrl: './login-main.component.scss'
 })
-export class LoginComponent {
+export class LoginMainComponent {
   router = inject(Router)
 
   formulario = new FormGroup({

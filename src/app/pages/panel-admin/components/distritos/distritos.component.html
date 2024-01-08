@@ -30,7 +30,7 @@
             }@else {
             @for (item of distritoService.listDistritos(); track $index) {
             <tr class="bg-white border-b">
-                <td class="px-6 py-2">{{item.nombre}}</td>
+                <td class="px-6 py-2">{{item.nombre | uppercase}}</td>
                 <td class="px-6 py-2">
                     <div class="flex flex-row items-center justify-center">
                         <div [ngClass]="{'bg-green-500': item.activo == 'S', 'bg-red-500': item.activo == 'N'}"
