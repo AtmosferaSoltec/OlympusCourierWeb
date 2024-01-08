@@ -20,6 +20,7 @@ export interface Reparto {
     }
     items?: ItemReparto[];
     total?: number;
+    cobro_adicional?: number;
     activo?: string;
     historial?: HistorialReparto[];
 }

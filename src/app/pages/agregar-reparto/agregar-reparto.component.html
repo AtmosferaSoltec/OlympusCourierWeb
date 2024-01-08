@@ -28,6 +28,11 @@
             <input formControlName="anotacion" type="text" placeholder="Ingrese alguna observación"
                 class="w-80 bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5" />
         </div>
+        <div>
+            <label class="block mb-1 text-sm font-medium text-t">Adicional</label>
+            <input formControlName="cobro_adicional" type="text" placeholder="Cobro adicional"
+                class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5" />
+        </div>
 
         <div class="flex-auto"></div>
 
@@ -38,10 +43,10 @@
 
     <div class="flex justify-end gap-3 mt-3">
         @if (service.isLoadingAgregarReparto()) {
-            <div class="loader"></div>
+        <div class="loader"></div>
         }@else {
-            <app-boton text="Cancelar" (clickEvent)="cancel()" color="Secundario" witdh="w-24"></app-boton>
-            <app-boton text="Guardar" (clickEvent)="guardarReparto()" witdh="w-24"></app-boton>
+        <app-boton text="Cancelar" (clickEvent)="cancel()" color="Secundario" witdh="w-24"></app-boton>
+        <app-boton text="Guardar" (clickEvent)="guardarReparto()" witdh="w-24"></app-boton>
         }
     </div>
 </div>

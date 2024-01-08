@@ -47,23 +47,8 @@ export class RepartosComponent implements OnDestroy {
           return;
         }
 
-        const listItems: any[] = []
-        listRepartos.forEach((reparto) => {
-          reparto.items?.forEach((item) => {
-            listItems.push(item)
-          })
-        })
 
-        this.globalService.exportarVariasListas([
-          {
-            data: listRepartos,
-            nombreHoja: 'REPARTOS'
-          },
-          {
-            data: listItems,
-            nombreHoja: 'ITEMS'
-          }
-        ], 'REPARTOS')
+        this.globalService.exportarListRepartos(listRepartos)
 
         Swal.fire(
           '¡Exportado!',

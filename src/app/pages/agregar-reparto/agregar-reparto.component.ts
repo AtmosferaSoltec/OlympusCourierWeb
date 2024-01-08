@@ -31,7 +31,8 @@ export class AgregarRepartoComponent implements OnDestroy {
 
   formulario = new FormGroup({
     clave: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    anotacion: new FormControl('')
+    anotacion: new FormControl(''),
+    cobro_adicional: new FormControl(''),
   })
 
   private repartoService = inject(RepartoService);
@@ -119,6 +120,7 @@ export class AgregarRepartoComponent implements OnDestroy {
     const body = {
       anotacion: controls.anotacion?.value,
       clave: controls.clave?.value,
+      cobro_adicional: controls.cobro_adicional?.value,
       id_cliente: this.service.cliente()?.id,
       items: this.service.listItemRepartos()
     }
