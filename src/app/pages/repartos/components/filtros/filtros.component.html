@@ -41,6 +41,17 @@
             class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
     </div>
 
+    <div>
+        <label class="block mb-1 text-sm font-medium text-t">Usuario</label>
+        <select formControlName="usuario"
+            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+            <option value="T">Todos</option>
+            @for (item of listUsuarios(); track $index) {
+            <option [value]="item.id">{{item.nombres | uppercase}}</option>
+            }
+        </select>
+    </div>
+
     <div class="flex-auto"></div>
     <app-boton icon="search" text="Buscar" type="submit"></app-boton>
     <app-boton icon="add" text="Añadir" (clickEvent)="toAgregar()"></app-boton>

@@ -23,6 +23,7 @@ export class RepartosService {
     cliente: new FormControl<string>(''),
     desde: new FormControl<string>(fechaActual()),
     hasta: new FormControl<string>(fechaActual()),
+    usuario: new FormControl<string>('T'),
   })
 
   reset() {

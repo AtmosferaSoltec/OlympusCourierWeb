@@ -11,6 +11,8 @@ export interface Reparto {
     fecha_creacion?: string;
     fecha_entrega?: string;
     id_cliente?: number;
+    id_usuario?: number;
+    nombre_usuario?: string;
     cliente?: Cliente;
     id_comprobante?: number;
     comprobante?: {

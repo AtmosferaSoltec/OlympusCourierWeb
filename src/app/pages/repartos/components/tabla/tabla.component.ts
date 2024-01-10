@@ -75,14 +75,6 @@ export class TablaComponent {
     });
   }
 
-  getUsuario(list?: HistorialReparto[]): string {
-    if (!list || list.length === 0) {
-      return '-';
-    }
-    const usuario = list[0];
-    return usuario.nombre ?? '-';
-  }
-
   // Alerta para recuperar un reparto
   recuperarReparto(reparto: Reparto) {
     Swal.fire({
