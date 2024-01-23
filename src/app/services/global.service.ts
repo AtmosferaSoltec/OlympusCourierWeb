@@ -43,16 +43,17 @@ export class GlobalService {
   convertirListReparto(list: Reparto[]): any[] {
     const listExcel: any = []
     list.forEach((reparto) => {
+      const entregado = reparto.historial?.find((item) => item.id_tipo_operacion === 4);
       const item = {
         FECHA_CREACION: reparto.fecha_creacion ? format(parseISO(reparto.fecha_creacion), 'dd/MM/yyyy hh:mm a') : '',
-        FECHA_ENTREGA: reparto.fecha_entrega ? format(parseISO(reparto.fecha_entrega), 'dd/MM/yyyy hh:mm a') : '',
         ESTADO_ENCOMIENDA: reparto.estado === 'P' ? 'Pendiente' : reparto.estado === 'E' ? 'Entregado' : reparto.estado === 'A' ? 'Anulado' : '',
         USUARIO: reparto?.historial && reparto.historial.length > 0 ? reparto.historial[0].nombre : '',
+        ENTREGADO: entregado?.nombre,
         NRO_GUIAS: reparto.items?.map((item) => item.num_guia).join(','),
         CLIENTE: reparto.cliente?.nombres,
         CLAVE: reparto.clave,
-        COBRO_ADICIONAL: reparto.cobro_adicional,
-        TOTAL: reparto.total
+        COBRO_ADICIONAL: Number(reparto.cobro_adicional),
+        TOTAL: Number(reparto.total)
       }
       listExcel.push(item);
     })
