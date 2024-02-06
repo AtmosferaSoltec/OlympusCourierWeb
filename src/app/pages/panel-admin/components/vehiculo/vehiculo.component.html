@@ -1,0 +1,69 @@
+<div class="flex flex-row justify-between items-center my-3">
+    <select [formControl]="estado"
+        class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+        <option value="S">Activos</option>
+        <option value="N">Inactivos</option>
+    </select>
+    <button (click)="openDialog()" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
+        Añadir
+    </button>
+</div>
+
+<div class="rounded-xl overflow-hidden shadow-sm">
+    <table class="w-full text-sm text-center text-textos">
+        <thead class="text-sm bg-white text-textos uppercase border-b">
+            <tr>
+                <th scope="col" class="px-6 py-3">Detalle</th>
+                <th scope="col" class="px-6 py-3">Estado</th>
+                <th scope="col" class="px-6 py-3">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(isLoading()){
+            <tr class="bg-white border-b">
+                <td colspan="7" class="py-3">
+                    <div class="flex justify-center items-center">
+                        <div class="loader"></div>
+                    </div>
+                </td>
+            </tr>
+            }@else {
+            @for (item of listVehiculos(); track $index) {
+            <tr class="bg-white border-b">
+                <td class="px-6 py-2">{{item.nombre | uppercase}}</td>
+                <td class="px-6 py-2">
+                    <div class="flex flex-row justify-center items-center">
+                        <div [ngClass]="{'bg-green-500': item.activo == 'S', 'bg-red-500': item.activo == 'N'}"
+                            class="h-2.5 w-2.5 rounded-full me-2"></div>
+                        {{item.activo | mostrarActivo}}
+                    </div>
+                </td>
+                <td class="px-6 py-2">
+                    @if(item.activo == "S"){
+                    <button mat-icon-button matTooltip="Editar" (click)="openDialog(item)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="Eliminar" (click)="setEstado(item, 'N')">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    }@else if(item.activo === "N"){
+                    <button mat-icon-button matTooltip="Restaurar" (click)="setEstado(item, 'S')">
+                        <mat-icon>restart_alt</mat-icon>
+                    </button>
+                    }
+                </td>
+            </tr>
+            } @empty {
+            <tr class="bg-white border-b">
+                <td colspan="7" class="py-2">
+                    <div class="flex flew-row items-center justify-center">
+                        <mat-icon>hourglass_empty</mat-icon>
+                        Sin Datos
+                    </div>
+                </td>
+            </tr>
+            }
+            }
+        </tbody>
+    </table>
+</div>

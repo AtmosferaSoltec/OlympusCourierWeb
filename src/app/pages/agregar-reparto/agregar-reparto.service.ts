@@ -5,6 +5,8 @@ import { RepartoService } from '../../services/reparto.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { delay } from 'rxjs';
+import { VehiculoService } from '../../services/vehiculo.service';
+import { Vehiculo } from '../../interfaces/vehiculo';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +19,13 @@ export class AgregarRepartoService {
 
   repartoService = inject(RepartoService)
 
+  vehiculoService = inject(VehiculoService)
+
   router = inject(Router)
 
-  constructor() { }
+  constructor() {
+    this.listarVehiculos()
+  }
 
   reset() {
     this.listItemRepartos.set([]);
@@ -29,7 +35,6 @@ export class AgregarRepartoService {
   agregarReparto(body: any) {
     this.isLoadingAgregarReparto.set(true);
     this.repartoService.insert(body)
-      .pipe(delay(5000))
       .subscribe({
         next: (res) => {
           if (res?.isSuccess) {
@@ -60,5 +65,20 @@ export class AgregarRepartoService {
           this.isLoadingAgregarReparto.set(false);
         }
       })
+  }
+
+  listVehiculos = signal<Vehiculo[]>([]);
+
+  listarVehiculos() {
+    this.vehiculoService.getAll().subscribe({
+      next: (res) => {
+        if (res?.isSuccess) {
+          this.listVehiculos.set(res.data);
+        } else {
+          alert(res?.mensaje);
+        }
+      },
+      error: (err) => console.log(err)
+    })
   }
 }

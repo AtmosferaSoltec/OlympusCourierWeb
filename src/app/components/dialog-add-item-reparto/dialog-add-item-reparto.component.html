@@ -4,45 +4,38 @@
         Agregar Item Reparto
     </h1>
 
-    <form [formGroup]="formulario">
+    <div class="form">
 
         <div class="caja">
-            <span class="label">N° de guia </span>
-            <input class="input" type="text" placeholder="Ingrese número de guía" formControlName="num_guia">
+            <span class="label">N° de guia</span>
+            <input class="input" type="text" placeholder="Ingrese número de guía" [(ngModel)]="num_guia">
         </div>
 
         <div class="caja">
-            <span class="label">Tipo </span>
-            <select formControlName="id_tipo_paquete">
-                @for (item of paqueteService.listTipoPaquetes(); track $index) {
-                <option [value]="item.id">{{item.nombre}}</option>
-                }
-            </select>
+            <span class="label">Precio</span>
+            <input class="input numerico" type="number" placeholder="Ingrese precio total" [(ngModel)]="precio">
         </div>
 
         <div class="caja">
-            <span class="label">Detalle </span>
-            <input class="input" type="text" placeholder="Ingrese detalle" formControlName="detalle">
+            <span class="label">Adicional</span>
+            <input class="input numerico" type="number" placeholder="Ingrese cobro adicional" [(ngModel)]="adicional">
         </div>
 
         <div class="caja">
-            <span class="label">Cantidad </span>
-            <input class="input numerico" type="number" placeholder="Ingrese cantidad" formControlName="cant">
+            <span class="label">Clave</span>
+            <input class="input" type="text" placeholder="Ingrese clave" [(ngModel)]="clave">
         </div>
 
-        <div class="caja">
-            <span class="label">Precio </span>
-            <input class="input numerico" type="number" placeholder="Ingrese precio total" formControlName="precio">
+        <div class="flex flex-col gap-1">
+            <span class="text-lg text-textos font-medium">Detalle</span>
+            <textarea [(ngModel)]="detalle" class="bg-fondo rounded-xl border-hidden" placeholder="Ingresa descripción del pedido" cols="20" rows="10"></textarea>
         </div>
 
-    </form>
-
+    </div>
 
     <div class="actions">
         <button (click)="closeDialog()">Cancelar</button>
         <button (click)="onAceptar()">Guardar</button>
     </div>
-
-
 
 </div>

@@ -34,7 +34,8 @@ module.exports = {
         't': '#1c2134',
         'textos': '#808080',
         't2': '#989eb6',
-        'box': '#f5f7fc'
+        'box': '#f5f7fc',
+        'fondo': '#f1f1f1'
       }
     },
   },

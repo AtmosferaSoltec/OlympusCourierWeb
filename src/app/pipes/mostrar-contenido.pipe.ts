@@ -8,7 +8,7 @@ import { ItemReparto } from '../interfaces/item-reparto';
 export class MostrarContenidoPipe implements PipeTransform {
 
   transform(item?: ItemReparto[]): unknown {
-    return item?.map(i => `(${i.cant}) ${i.tipo_paquete}`).join(', ');
+    return item?.map(i => `${i.detalle}`).join(', ');
   }
 
 }

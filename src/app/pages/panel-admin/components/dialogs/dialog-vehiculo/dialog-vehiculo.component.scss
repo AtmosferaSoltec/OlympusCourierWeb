@@ -3,22 +3,22 @@ $color-fondo: #f1f1f1;
 $color-boton1: #05acd7;
 $color-btn-off: #e8e8e8;
 
+h1 {
+  color: var(--colorP1);
+  font-weight: 600;
+  text-align: start;
+  width: 100%;
+}
+
 .container {
   max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px 50px;
-
-  h1 {
-    color: var(--colorP1);
-    font-weight: 600;
-    text-align: start;
-    width: 100%;
-  }
 }
 
-.form {
+form {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -36,10 +36,11 @@ $color-btn-off: #e8e8e8;
       display: block;
       font-size: 18px;
       color: $color-textos;
+      font-family: "Roboto", sans-serif;
       font-weight: 500;
     }
 
-    .input, select{
+    .input {
       width: 70%;
       padding: 8px 15px;
       border: 2px solid $color-fondo;
@@ -59,7 +60,7 @@ $color-btn-off: #e8e8e8;
         display: none;
       }
 
-      .input, select {
+      .input {
         width: 100%;
       }
     }

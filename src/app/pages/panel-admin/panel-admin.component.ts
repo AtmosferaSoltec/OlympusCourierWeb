@@ -45,6 +45,10 @@ export class PanelAdminComponent implements OnDestroy {
       url: 'metodo-pago'
     },
     {
+      label: 'Vehiculos',
+      url: 'vehiculos'
+    },
+    {
       label: 'Comprobantes',
       url: 'comprobantes-admin'
     }

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RepartoService } from '../../services/reparto.service';
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
@@ -16,12 +15,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DialogAddItemRepartoComponent } from '../../components/dialog-add-item-reparto/dialog-add-item-reparto.component';
 import { ItemReparto } from '../../interfaces/item-reparto';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogAddPedidoComponent } from '../../components/dialog-add-pedido/dialog-add-pedido.component';
 @Component({
   selector: 'app-agregar-reparto',
   standalone: true,
   imports: [
     CommonModule, TablaItemsComponent, MatIconModule,
-    MatButtonModule, ReactiveFormsModule, BuscarClienteComponent,
+    MatButtonModule, FormsModule, BuscarClienteComponent,
     BotonComponent, TituloComponent, MatTooltipModule, BotonComponent
   ],
   templateUrl: './agregar-reparto.component.html',
@@ -29,13 +29,9 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class AgregarRepartoComponent implements OnDestroy {
 
-  formulario = new FormGroup({
-    clave: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    anotacion: new FormControl(''),
-    cobro_adicional: new FormControl(''),
-  })
+  anotacion = ''
+  vehiculo = 'T'
 
-  private repartoService = inject(RepartoService);
   service = inject(AgregarRepartoService);
   private router = inject(Router);
   private dialog = inject(MatDialog);
@@ -50,6 +46,16 @@ export class AgregarRepartoComponent implements OnDestroy {
         this.service.listItemRepartos().push(data)
       }
     });
+  }
+
+  openDialogAddPedido() {
+    const dialogRef = this.dialog.open(DialogAddPedidoComponent, {
+      width: "990px"
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(data => {
+      });
   }
 
   ngOnDestroy(): void {
@@ -93,7 +99,6 @@ export class AgregarRepartoComponent implements OnDestroy {
   }
 
   guardarReparto() {
-    const controls = this.formulario.controls;
 
     if (!this.service.cliente()?.id) {
       Swal.fire({
@@ -118,9 +123,8 @@ export class AgregarRepartoComponent implements OnDestroy {
     }
 
     const body = {
-      anotacion: controls.anotacion?.value,
-      clave: controls.clave?.value,
-      cobro_adicional: controls.cobro_adicional?.value,
+      anotacion: this.anotacion,
+      id_vehiculo: this.vehiculo,
       id_cliente: this.service.cliente()?.id,
       items: this.service.listItemRepartos()
     }

@@ -1,0 +1,99 @@
+<div class="container">
+
+    <h1>
+        Agregar Item Reparto
+    </h1>
+
+    <div class="form">
+
+        <div class="caja">
+            <span class="label">N° de guia </span>
+            <input class="input" type="text" placeholder="Ingrese número de guía" [(ngModel)]="num_guia">
+        </div>
+
+        <div class="caja">
+            <span class="label">Detalle </span>
+            <input class="input" type="text" placeholder="Ingrese detalle" [(ngModel)]="detalle">
+        </div>
+
+        <div class="caja">
+            <span class="label">Precio Adicional</span>
+            <input class="input numerico" placeholder="Ingrese precio a cobrar adicional" [(ngModel)]="precio_adicional">
+        </div>
+
+        <div class="caja">
+            <span class="label">Precio</span>
+            <input class="input numerico" placeholder="Ingrese precio total" [(ngModel)]="precio">
+        </div>
+
+        <div class="caja">
+            <span class="label">Clave</span>
+            <input class="input" type="text" placeholder="Ingrese clave" [(ngModel)]="clave">
+        </div>
+
+    </div>
+
+    <div class="rounded-xl overflow-hidden w-full shadow-sm my-4">
+        <table class="w-full text-sm text-center text-textos">
+            <thead class="text-sm bg-white text-textos uppercase border-b">
+                <tr>
+                    <th scope="col" class="px-6 py-3">N°</th>
+                    <th scope="col" class="px-6 py-3">Tipo</th>
+                    <th scope="col" class="px-6 py-3">Cantidad</th>
+                    <th scope="col" class="px-6 py-3"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of listItemPedido; track $index) {
+                <tr class="bg-white border-b">
+                    <td class="px-6 py-2">
+                        <span>{{ $index + 1 }}</span>
+                    </td>
+                    <td class="px-6 py-2 flex justify-center">
+                        <select [(ngModel)]="item.id_tipo_paquete"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-p1 focus:border-p1 block w-52">
+                            <option value="0">Sin Seleccionar</option>
+                            @for (item of paqueteService.listTipoPaquetes(); track $index) {
+                                <option [value]="item.id">{{item.nombre}}</option>
+                            }
+                        </select>
+                    </td>
+                    <td class="px-6 py-2">
+                        <div class="flex flex-row items-center justify-center">
+                            <button mat-icon-button (click)="disminuirCant(item)">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                            <span>
+                                {{item.cant}}
+                            </span>
+                            <button mat-icon-button (click)="aumentarCant(item)">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <button (click)="deleteItemPedido()">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+                }
+                <tr>
+                    <td class="py-2" colspan="4">
+                        <button mat-mini-fab (click)="addItemPedido()" matTooltip="Añadir Item" style="background-color: #047CC4; color: white;">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="actions">
+        <button (click)="closeDialog()">Cancelar</button>
+        <button (click)="onAceptar()">Guardar</button>
+    </div>
+
+
+
+</div>

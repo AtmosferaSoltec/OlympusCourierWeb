@@ -1,0 +1,21 @@
+<div class="container">
+    <h1>
+        @if(data){
+        Editar Vehiculo
+        }@else{
+        Agregar Vehiculo
+        }
+    </h1>
+    <form [formGroup]="formulario">
+
+        <div class="caja">
+            <span class="label">Nombre </span>
+            <input class="input" type="text" placeholder="Ingrese tipo de vehiculo" formControlName="nombre">
+        </div>
+    </form>
+
+    <div class="actions">
+        <button (click)="closeDialog()">Cancelar</button>
+        <button (click)="guardar()">Guardar</button>
+    </div>
+</div>

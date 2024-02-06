@@ -1,6 +1,6 @@
 import { Component, Inject, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ItemReparto } from '../../interfaces/item-reparto';
@@ -11,30 +11,26 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-dialog-add-item-reparto',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, FormsModule, MatIconModule, MatButtonModule],
   templateUrl: './dialog-add-item-reparto.component.html',
   styleUrl: './dialog-add-item-reparto.component.scss'
 })
 export class DialogAddItemRepartoComponent {
 
-  formulario: FormGroup
-
 
   paqueteService = inject(PaqueteService)
 
+  num_guia = ''
+  precio = ''
+  adicional = ''
+  clave = ''
+  detalle = ''
+
   constructor(
     public dialogRef: MatDialogRef<DialogAddItemRepartoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ItemReparto | undefined,
-    private fb: FormBuilder
+    @Inject(MAT_DIALOG_DATA) public data: ItemReparto | undefined
   ) {
 
-    this.formulario = this.fb.group({
-      num_guia: [data?.num_guia || '', []],
-      id_tipo_paquete: [data?.id_tipo_paquete || 1, [Validators.required]],
-      detalle: [data?.detalle || '', []],
-      cant: [data?.cant || '', [Validators.required, Validators.min(1)]],
-      precio: [data?.precio || '', [Validators.required, Validators.min(1)]]
-    })
   }
 
 
@@ -43,33 +39,40 @@ export class DialogAddItemRepartoComponent {
   }
 
   onAceptar() {
-    if (this.formulario.valid) {
-      const itemReparto: ItemReparto = {
-        num_guia: this.formulario.get('num_guia')?.value || 'Sin Guia',
-        id_tipo_paquete: this.formulario.get('id_tipo_paquete')?.value || '',
-        tipo_paquete: this.paqueteService.listTipoPaquetes()?.find((element) => element.id === this.formulario.get('id_tipo_paquete')?.value)?.nombre || '',
-        detalle: this.formulario.get('detalle')?.value || 'Sin Descripción',
-        precio: this.formulario.get('precio')?.value || 0.0,
-        cant: this.formulario.get('cant')?.value || 0,
-      };
-      this.dialogRef.close(itemReparto)
-    } else {
-      let error = 'Faltan completar campos'
-      if (this.formulario.get('cant')?.invalid) {
-        error = 'Cantidad'
-      }
-      if (this.formulario.get('precio')?.invalid) {
-        error = 'Precio'
-      }
-      if (this.formulario.get('id_tipo_paquete')?.invalid) {
-        error = 'Tipo de paquete'
-      }
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: `Los siguientes campos son obligatorios: ${error}`,
-      })
+
+    //Validar si el precio es un número y mayor a 1
+    if (isNaN(Number(this.precio)) || Number(this.precio) < 1) {
+      Swal.fire('Error', 'El precio debe ser un número mayor a 0', 'error')
+      return;
     }
+
+    //Validar si el adicional no esta vacio, si no esta validar si el valor es numero y mayor a 1
+    if (this.adicional && (isNaN(Number(this.adicional)) || Number(this.adicional) < 1)) {
+      Swal.fire('Error', 'El adicional debe ser un número mayor a 0', 'error')
+      return;
+    }
+
+    //Validar si el detalle no esta vacio
+    if (!this.detalle) {
+      Swal.fire('Error', 'El detalle no puede estar vacio', 'error')
+      return;
+    }
+
+    //Validar si la clave tiene 4 caracteres
+    if (this.clave.length !== 4) {
+      Swal.fire('Error', 'La clave debe tener 4 caracteres', 'error')
+      return;
+    }
+
+    const itemReparto: ItemReparto = {
+      num_guia: this.num_guia,
+      precio: Number(this.precio),
+      adicional: Number(this.adicional),
+      clave: this.clave,
+      detalle: this.detalle
+    };
+    
+    this.dialogRef.close(itemReparto)
 
   }
 }
