@@ -51,10 +51,13 @@ export class GlobalService {
         ENTREGADO: entregado?.nombre,
         NRO_GUIAS: reparto.items?.map((item) => item.num_guia).join(','),
         CLIENTE: reparto.cliente?.nombres,
-        CLAVE: reparto.clave,
-        COBRO_ADICIONAL: Number(reparto.cobro_adicional),
+        GUIAS: reparto.items?.map((item) => item.num_guia).join(','),
+        DETALLE: reparto.items?.map((item) => item.detalle).join(','),
+        CLAVES: reparto.items?.map((item) => item.clave).join(','),
+        COBRO_ADICIONAL: reparto?.items?.reduce((total, item) => total + (Number(item.adicional) || 0), 0),
         TOTAL: Number(reparto.total)
       }
+
       listExcel.push(item);
     })
     return listExcel;
