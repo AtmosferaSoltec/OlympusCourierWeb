@@ -94,4 +94,8 @@ export class TablaComponent {
     })
   }
 
+  totalAdicional(reparto: Reparto): number {
+    return reparto?.items?.reduce((total, item) => total + (Number(item.adicional) || 0), 0) ?? 0
+  }
+
 }

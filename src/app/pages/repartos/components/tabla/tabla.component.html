@@ -36,7 +36,7 @@
                     <p class="status" [ngClass]="item.estado">{{item.estado | mostrarEstado}}</p>
                 </td>
                 <td class="px-6 py-2">{{item.activo | mostrarActivo}}</td>
-                <td class="px-6 py-2">S/{{item.cobro_adicional | number:'1.2-2'}}<br>
+                <td class="px-6 py-2">S/{{totalAdicional(item) | number:'1.2-2'}}<br>
                 <td class="px-6 py-2">S/{{item.total | number:'1.2-2'}}<br>
                     @if(item.comprobante){
                     {{item.comprobante.serie}}-{{item.comprobante.num_serie | formatNum:4}}
