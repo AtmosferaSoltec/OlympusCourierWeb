@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterOutlet } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
-import { PaquetesComponent } from './components/paquetes/paquetes.component';
 import { DestinosComponent } from './components/distritos/distritos.component';
 import { ComprobantesAdminComponent } from './components/comprobantes-admin/comprobantes-admin.component';
 import { PanelAdminService } from './panel-admin.service';
@@ -16,7 +15,7 @@ import { PanelAdminService } from './panel-admin.service';
   imports: [
     CommonModule, MatIconModule,
     RouterOutlet, MatTabsModule,
-    UsuariosComponent, PaquetesComponent,
+    UsuariosComponent,
     DestinosComponent, ComprobantesAdminComponent,
     RouterOutlet
   ],
@@ -35,10 +34,6 @@ export class PanelAdminComponent implements OnDestroy {
     {
       label: 'Distritos',
       url: 'distritos'
-    },
-    {
-      label: 'Tipo de Paquetes',
-      url: 'tipo-paquetes'
     },
     {
       label: 'Metodo de Pago',
