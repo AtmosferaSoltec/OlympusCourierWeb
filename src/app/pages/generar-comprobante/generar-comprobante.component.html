@@ -89,14 +89,14 @@
             </div>
         </div>
 
-        <form [formGroup]="formulario">
+        <div class="form">
 
             <div class="flex mt-2 justify-between gap-2">
 
                 <div class="w-full">
                     <label class=" block mb-2 text-sm font-medium text-gray-900">
                         Tipo de Pago</label>
-                    <select formControlName="metodoPago"
+                    <select [(ngModel)]="metodoPago"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                         @for (item of listMetodoPago(); track $index) {
                         <option [value]="item.id">{{item.nombre}}</option>
@@ -107,7 +107,7 @@
                     <label class="block mb-2 text-sm font-medium text-gray-900">
                         N° Operación
                     </label>
-                    <input type="text" formControlName="num_operacion"
+                    <input type="text" [(ngModel)]="num_operacion"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 </div>
             </div>
@@ -116,12 +116,12 @@
             <!-- Ingresar Documento -->
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-900">
-                    @if (tipoComprobante() == 2) { Dni }
-                    @else if (tipoComprobante() == 1) { Ruc }
+                    @if (tipoComprobante() == 2) { DNI/CE }
+                    @else if (tipoComprobante() == 1) { RUC }
                     @else { Documento }
                 </label>
                 <div class="relative">
-                    <input type="text" formControlName="doc"
+                    <input type="text" [(ngModel)]="doc"
                         class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                         placeholder="Ingresar documento" required>
                     <button matTooltip="Buscar"
@@ -143,29 +143,29 @@
                     @if (tipoComprobante() == 2) { Nombre }
                     @else if (tipoComprobante() == 1) { Razón Social }
                 </label>
-                <input type="text" id="default-input" formControlName="nombre"
+                <input type="text" id="default-input" [(ngModel)]="nombre"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
             </div>
 
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-900">Dirección</label>
-                <input type="text" formControlName="direc"
+                <input type="text" [(ngModel)]="direc"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
             </div>
 
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-900">Correo</label>
-                <input type="text" formControlName="correo"
+                <input type="text" [(ngModel)]="correo"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
             </div>
 
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-900">Teléfono</label>
-                <input type="text" formControlName="telefono"
+                <input type="text" [(ngModel)]="telefono"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
             </div>
 
-        </form>
+        </div>
         @if (isLoading()) {
         <div class="loader"></div>
         }@else {

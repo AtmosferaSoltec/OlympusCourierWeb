@@ -11,11 +11,7 @@
                 <select formControlName="tipo" (change)="resetDoc()">
                     <option value="1" selected>DNI</option>
                     <option value="6">RUC</option>
-                    <!--
-                    <option value="4">Carnet de Extranjeria</option>
-                    <option value="7">Pasaporte</option>
-                    <option value="-">Otros</option>
-                    -->
+                    <option value="4">CE</option>
                 </select>
             </div>
         </div>
@@ -23,11 +19,7 @@
         <!--Ingresar Número de Documento-->
         <div class="caja">
             <span class="label">
-                @if (formulario.get('tipo')?.value == 1) {
-                Número de DNI
-                }@else {
-                Número de RUC
-                }
+                Número de Documento
             </span>
             <div class="input">
                 <div class="input-btn">
@@ -48,11 +40,11 @@
         <!--Ingresar Nombre Completo o Razón Social-->
         <div class="caja">
             <span class="label">
-                @if (formulario.get('tipo')?.value == 1) {
-                Nombre Completo
-                }@else {
-                Razón Social
-                }
+                @if (formulario.get('tipo')?.value === '6') {
+                    Razón Social
+                    }@else {
+                    Nombre Completo
+                    }
             </span>
             <div class="input">
                 <input type="text" placeholder="Ingrese nombres y apellidos" formControlName="nombres"

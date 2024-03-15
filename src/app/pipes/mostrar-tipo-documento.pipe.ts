@@ -12,6 +12,8 @@ export class MostrarTipoDocumentoPipe implements PipeTransform {
         return 'DNI';
       case "6":
         return 'RUC';
+      case "4":
+        return 'CE';
       default:
         return 'Desconocido';
     }

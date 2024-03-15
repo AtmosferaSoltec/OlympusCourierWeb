@@ -4,11 +4,11 @@
             <tr>
                 <th scope="col" class="px-6 py-3">N° Reparto</th>
                 <th scope="col" class="px-6 py-3">Cliente</th>
-                <th scope="col" class="px-6 py-3">Anotación</th>
                 <th scope="col" class="px-6 py-3">Creado</th>
                 <th scope="col" class="px-6 py-3">Estado Envio</th>
                 <th scope="col" class="px-6 py-3">Estado</th>
                 <th scope="col" class="px-6 py-3">C. Adicional</th>
+                <th scope="col" class="px-6 py-3">C. Reparto</th>
                 <th scope="col" class="px-6 py-3">Total</th>
                 <th scope="col" class="px-6 py-3"></th>
             </tr>
@@ -30,7 +30,6 @@
                     {{item.nombre_usuario | uppercase}}
                 </td>
                 <td class="px-6 py-2">{{item.cliente?.nombres}}</td>
-                <td class="px-6 py-2">{{item.anotacion | uppercase}}</td>
                 <td class="px-6 py-2">{{item.fecha_creacion | date:'dd/MM/yyyy'}}</td>
                 <td class="px-6 py-2">
                     <p class="status" [ngClass]="item.estado">{{item.estado | mostrarEstado}}</p>
@@ -38,6 +37,9 @@
                 <td class="px-6 py-2">{{item.activo | mostrarActivo}}</td>
                 <td class="px-6 py-2">S/{{totalAdicional(item) | number:'1.2-2'}}<br>
                 <td class="px-6 py-2">S/{{item.total | number:'1.2-2'}}<br>
+                <td class="px-6 py-2">
+                    {{sum(totalAdicional(item), item.total ?? 0)}}
+                    <br>
                     @if(item.comprobante){
                     {{item.comprobante.serie}}-{{item.comprobante.num_serie | formatNum:4}}
                     }@else {

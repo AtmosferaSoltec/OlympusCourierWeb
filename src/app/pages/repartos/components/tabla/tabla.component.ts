@@ -31,6 +31,15 @@ export class TablaComponent {
   usuarioService = inject(UsuarioService);
   router = inject(Router);
 
+  sum(a: number, b: number) {
+    const total = a + b;
+    const formatter = new Intl.NumberFormat('es-PE', {
+      style: 'currency',
+      currency: 'PEN'
+    });
+    return formatter.format(total);
+  }
+
   getTotal(listRepartos?: Reparto[]): number {
     if (!listRepartos) {
       return 0;

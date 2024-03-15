@@ -29,7 +29,6 @@ import { DialogAddPedidoComponent } from '../../components/dialog-add-pedido/dia
 })
 export class AgregarRepartoComponent implements OnDestroy {
 
-  anotacion = ''
   vehiculo = 'T'
 
   service = inject(AgregarRepartoService);
@@ -123,7 +122,7 @@ export class AgregarRepartoComponent implements OnDestroy {
     }
 
     const body = {
-      anotacion: this.anotacion,
+      anotacion: '',
       id_vehiculo: this.vehiculo,
       id_cliente: this.service.cliente()?.id,
       items: this.service.listItemRepartos()

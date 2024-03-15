@@ -85,8 +85,10 @@ export class DialogAddClienteComponent implements OnInit {
       return 8;
     } else if (tipo == 6) {
       return 11;
-    } else {
+    } else if (tipo == 4) {
       return 12;
+    } else {
+      return 15;
     }
   }
 
