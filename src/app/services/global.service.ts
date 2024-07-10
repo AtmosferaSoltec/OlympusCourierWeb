@@ -49,7 +49,6 @@ export class GlobalService {
         ESTADO_ENCOMIENDA: reparto.estado === 'P' ? 'Pendiente' : reparto.estado === 'E' ? 'Entregado' : reparto.estado === 'A' ? 'Anulado' : '',
         USUARIO: reparto?.historial && reparto.historial.length > 0 ? reparto.historial[0].nombre : '',
         ENTREGADO: entregado?.nombre,
-        NRO_GUIAS: reparto.items?.map((item) => item.num_guia).join(','),
         CLIENTE: reparto.cliente?.nombres,
         GUIAS: reparto.items?.map((item) => item.num_guia).join(','),
         DETALLE: reparto.items?.map((item) => item.detalle).join(','),
