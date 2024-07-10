@@ -54,6 +54,8 @@ export class GlobalService {
         GUIAS: reparto.items?.map((item) => item.num_guia).join(','),
         DETALLE: reparto.items?.map((item) => item.detalle).join(','),
         CLAVES: reparto.items?.map((item) => item.clave).join(','),
+        DIRECCION: reparto.cliente?.direc,
+        DISTRITO: reparto.cliente?.distrito,
         COBRO_ADICIONAL: reparto?.items?.reduce((total, item) => total + (Number(item.adicional) || 0), 0),
         TOTAL: Number(reparto.total)
       }
