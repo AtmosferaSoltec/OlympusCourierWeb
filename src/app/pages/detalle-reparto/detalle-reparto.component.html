@@ -1,10 +1,10 @@
 <div class="cuerpo">
-    <div class="uno flex flex-col gap-3 px-4">
+    <div class="flex flex-col gap-3 px-4 uno">
         <div class="flex flex-row items-center text-p1">
             <button mat-icon-button (click)="back()" matTooltip="Volver">
                 <mat-icon>arrow_back</mat-icon>
             </button>
-            <span class="text-xl text-p1 font-bold">Detalle de Reparto</span>
+            <span class="text-xl font-bold text-p1">Detalle de Reparto</span>
         </div>
 
         <div class="flex flex-row items-center justify-between text-lg font-semibold text-textos">
@@ -27,7 +27,7 @@
                 [descrip]="service.reparto()?.cliente?.referencia | uppercase"></app-detalle-item>
         </div>
 
-        <hr class="border-t border-gray-200 my-2">
+        <hr class="my-2 border-t border-gray-200">
 
         <!--Detalle de Reparto-->
         @for (item of service.reparto()?.items; track item.id; let idx = $index) {
@@ -48,10 +48,16 @@
 
             <app-detalle-item title="Comprobante" descrip="Sin Comprobante"></app-detalle-item>
             }
+
+            <!--
+            @if (service.reparto()?.url_foto) {
+                <img [src]="service.reparto()?.url_foto" alt="">
+            }
+            -->
         </div>
 
         <table class="w-full text-sm text-textos">
-            <thead class="text-sm bg-white text-textos uppercase border-b">
+            <thead class="text-sm uppercase bg-white border-b text-textos">
                 <tr>
                     <th scope="col" class="px-6 py-3">Usuario</th>
                     <th scope="col" class="px-6 py-3">Operacion</th>
@@ -62,7 +68,7 @@
                 @if(false){
                 <tr class="bg-white border-b">
                     <td colspan="7" class="py-3">
-                        <div class="flex justify-center items-center">
+                        <div class="flex items-center justify-center">
                             <div class="loader"></div>
                         </div>
                     </td>
@@ -70,11 +76,11 @@
                 }@else {
 
                 @for (item of service.reparto()?.historial; track $index) {
-                <tr class="bg-white border-b text-center">
+                <tr class="text-center bg-white border-b">
                     <td class="px-6 py-2">{{item.nombre}}</td>
                     <td class="px-6 py-2">{{item.tipo_operacion}}</td>
                     <td class="px-6 py-2">
-                        <div class="flex flex-col justify-center items-center">
+                        <div class="flex flex-col items-center justify-center">
                             <div>
                                 {{item.fecha | date: 'dd/MM/yyyy'}}
                             </div>
@@ -87,7 +93,7 @@
                 } @empty {
                 <tr class="bg-white border-b">
                     <td colspan="7" class="py-2">
-                        <div class="flex flew-row items-center justify-center">
+                        <div class="flex items-center justify-center flew-row">
                             <mat-icon>hourglass_empty</mat-icon>
                             Sin Datos
                         </div>

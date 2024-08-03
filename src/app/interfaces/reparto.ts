@@ -12,6 +12,7 @@ export interface Reparto {
     fecha_entrega?: string;
     id_cliente?: number;
     id_usuario?: number;
+    url_foto?: string;
     nombre_usuario?: string;
     cliente?: Cliente;
     id_comprobante?: number;
