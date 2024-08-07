@@ -1,4 +1,4 @@
-<div class="cuerpo">
+<div class="flex flex-col md:flex-row cuerpo">
     <div class="flex flex-col gap-3 px-4 uno">
         <div class="flex flex-row items-center text-p1">
             <button mat-icon-button (click)="back()" matTooltip="Volver">
@@ -7,7 +7,7 @@
             <span class="text-xl font-bold text-p1">Detalle de Reparto</span>
         </div>
 
-        <div class="flex flex-row items-center justify-between text-lg font-semibold text-textos">
+        <div class="flex flex-col items-start justify-between text-lg font-semibold md:items-center md:flex-row text-textos">
             Datos del Cliente
             <span class="mr-1">N° Reparto #{{service.reparto()?.num_reparto | formatNum:6}}</span>
         </div>

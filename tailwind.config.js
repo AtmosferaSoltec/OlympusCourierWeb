@@ -10,6 +10,9 @@ module.exports = {
         'sm': '300px',
       },
       colors: {
+        colorP1: '#047CC4',
+        colorCard: '#eeeeee',
+        colorGrey: '#808080',
         p: {
           '50': '#f0f8ff',
           '100': '#e0f1fe',

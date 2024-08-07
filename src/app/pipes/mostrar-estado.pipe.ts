@@ -16,7 +16,7 @@ export class MostrarEstadoPipe implements PipeTransform {
       case 'A':
         return 'Anulado';
         case 'C':
-        return 'En Curso';
+        return 'En Ruta';
       default:
         return 'Sin Valor';
     }

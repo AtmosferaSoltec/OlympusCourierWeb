@@ -1,110 +1,105 @@
-<div class="rounded-xl overflow-x-auto shadow-sm">
-    <table class="w-full text-sm text-center rtl:text-right text-textos">
-        <thead class="text-sm bg-white text-textos uppercase border-b">
-            <tr>
-                <th scope="col" class="px-6 py-3">N° Reparto</th>
-                <th scope="col" class="px-6 py-3">Cliente</th>
-                <th scope="col" class="px-6 py-3">Creado</th>
-                <th scope="col" class="px-6 py-3">Estado Envio</th>
-                <th scope="col" class="px-6 py-3">Estado</th>
-                <th scope="col" class="px-6 py-3">C. Adicional</th>
-                <th scope="col" class="px-6 py-3">C. Reparto</th>
-                <th scope="col" class="px-6 py-3">Total</th>
-                <th scope="col" class="px-6 py-3"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if(repartosService.isLoading()){
-            <tr class="bg-white">
-                <td colspan="9" class="py-3">
-                    <div class="flex justify-center items-center">
-                        <div class="loader"></div>
-                    </div>
-                </td>
-            </tr>
-            }@else {
-            @for (item of repartosService.listRepartos(); track $index) {
-            <tr class="bg-white border-b">
-                <td class="px-6 py-2">
-                    #{{item.num_reparto | formatNum:6}}<br>
-                    {{item.nombre_usuario | uppercase}}
-                </td>
-                <td class="px-6 py-2">{{item.cliente?.nombres}}</td>
-                <td class="px-6 py-2">{{item.fecha_creacion | date:'dd/MM/yyyy'}}</td>
-                <td class="px-6 py-2">
-                    <p class="status" [ngClass]="item.estado">{{item.estado | mostrarEstado}}</p>
-                </td>
-                <td class="px-6 py-2">{{item.activo | mostrarActivo}}</td>
-                <td class="px-6 py-2">S/{{totalAdicional(item) | number:'1.2-2'}}<br>
-                <td class="px-6 py-2">S/{{item.total | number:'1.2-2'}}<br>
-                <td class="px-6 py-2">
-                    {{sum(totalAdicional(item), item.total ?? 0)}}
-                    <br>
-                    @if(item.comprobante){
-                    {{item.comprobante.serie}}-{{item.comprobante.num_serie | formatNum:4}}
-                    }@else {
-                    -
-                    }
-                </td>
-                <td class="px-6 py-2">
-                    <button mat-icon-button [matMenuTriggerFor]="menu">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <!--
+<div class="overflow-x-auto shadow-sm rounded-xl">
+  <table class="w-full text-sm text-center rtl:text-right text-textos">
+    <thead class="text-sm uppercase bg-white border-b text-textos">
+      <tr>
+        <th scope="col" class="px-6 py-3">N° Reparto</th>
+        <th scope="col" class="px-6 py-3">Cliente</th>
+        <th scope="col" class="px-6 py-3">Creado</th>
+        <th scope="col" class="px-6 py-3">Estado Envio</th>
+        <th scope="col" class="px-6 py-3">Estado</th>
+        <th scope="col" class="px-6 py-3">C. Adicional</th>
+        <th scope="col" class="px-6 py-3">C. Reparto</th>
+        <th scope="col" class="px-6 py-3">Total</th>
+        <th scope="col" class="px-6 py-3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @if(repartosService.isLoading()){
+      <tr class="bg-white">
+        <td colspan="9" class="py-3">
+          <div class="flex items-center justify-center">
+            <div class="loader"></div>
+          </div>
+        </td>
+      </tr>
+      }@else { @for (item of repartosService.listRepartos(); track $index) {
+      <tr class="bg-white border-b">
+        <td class="px-6 py-2">
+          #{{ item.num_reparto | formatNum : 6 }}<br />
+          {{ item.nombre_usuario | uppercase }}
+        </td>
+        <td class="px-6 py-2">{{ item.cliente?.nombres }}</td>
+        <td class="px-6 py-2">
+          {{ item.fecha_creacion | date : "dd/MM/yyyy" }}
+        </td>
+        <td class="px-6 py-2">
+          <p class="status" [ngClass]="item.estado">
+            {{ item.estado | mostrarEstado }}
+          </p>
+        </td>
+        <td class="px-6 py-2">{{ item.activo | mostrarActivo }}</td>
+        <td class="px-6 py-2">
+          S/{{ totalAdicional(item) | number : "1.2-2" }}<br />
+        </td>
+        <td class="px-6 py-2">S/{{ item.total | number : "1.2-2" }}<br /></td>
+        <td class="px-6 py-2">
+          {{ sum(totalAdicional(item), item.total ?? 0) }}
+          <br />
+          @if(item.comprobante){
+          {{ item.comprobante.serie }}-{{
+            item.comprobante.num_serie | formatNum : 4
+          }}
+          }@else { - }
+        </td>
+        <td class="px-6 py-2">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <!--
                         <button mat-menu-item>
                             <mat-icon>local_shipping</mat-icon>
                             Dar Conformidad
                         </button>
                         -->
-                        @switch (item.activo) {
-                        @case ("S") {
-                        <button mat-menu-item (click)="toDetalle(item.id)">
-                            Ver Detalle<mat-icon>visibility</mat-icon>
-                        </button>
-                        @if(usuarioService.usuario()?.cod_rol == 'A' && !item.id_comprobante){
-                        <button mat-menu-item (click)="deleteReparto(item)">
-                            <mat-icon>delete</mat-icon>
-                            Eliminar
-                        </button>
-                        }
-                        }
-                        @case ("N") {
-                        @if(usuarioService.usuario()?.cod_rol == 'A'){
-                        <button mat-menu-item (click)="recuperarReparto(item)">
-                            <mat-icon>restart_alt</mat-icon>
-                            Restaurar
-                        </button>
-                        }
-                        }
-                        }
-                    </mat-menu>
-                </td>
-            </tr>
-            }@empty {
-            <tr class="bg-white border-b">
-                <td colspan="9" class="py-2">
-                    <div class="flex flew-row items-center justify-center">
-                        <mat-icon>hourglass_empty</mat-icon>
-                        Sin Datos
-                    </div>
-                </td>
-            </tr>
-            }
-            }
-        </tbody>
-    </table>
-
-
-
-
+            @switch (item.activo) { @case ("S") {
+            <button mat-menu-item (click)="toDetalle(item.id)">
+              Ver Detalle<mat-icon>visibility</mat-icon>
+            </button>
+            @if(usuarioService.usuario()?.cod_rol == 'A' &&
+            !item.id_comprobante){
+            <button mat-menu-item (click)="deleteReparto(item)">
+              <mat-icon>delete</mat-icon>
+              Eliminar
+            </button>
+            } } @case ("N") { @if(usuarioService.usuario()?.cod_rol == 'A'){
+            <button mat-menu-item (click)="recuperarReparto(item)">
+              <mat-icon>restart_alt</mat-icon>
+              Restaurar
+            </button>
+            } } }
+          </mat-menu>
+        </td>
+      </tr>
+      }@empty {
+      <tr class="bg-white border-b">
+        <td colspan="9" class="py-2">
+          <div class="flex items-center justify-center flew-row">
+            <mat-icon>hourglass_empty</mat-icon>
+            Sin Datos
+          </div>
+        </td>
+      </tr>
+      } }
+    </tbody>
+  </table>
 </div>
 <!--Mostrar el Total-->
-<div class="flex flex-row justify-end my-3 gap-2">
-    <span class="text-xl text-textos font-semibold">
-        Total de Repartos: {{repartosService.listRepartos().length}} -
-    </span>
-    <span class="text-xl text-textos font-semibold">
-        Total: S/{{getTotal(repartosService.listRepartos()) | number:'1.2-2'}}
-    </span>
+<div class="flex flex-row justify-end gap-2 my-3">
+  <span class="text-xl font-semibold text-textos">
+    Total de Repartos: {{ repartosService.listRepartos().length }} -
+  </span>
+  <span class="text-xl font-semibold text-textos">
+    Total: S/{{ getTotal(repartosService.listRepartos()) | number : "1.2-2" }}
+  </span>
 </div>

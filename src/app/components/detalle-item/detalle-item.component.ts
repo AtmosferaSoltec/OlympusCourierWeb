@@ -5,8 +5,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-detalle-item',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './detalle-item.component.html',
-  styleUrl: './detalle-item.component.scss'
+  templateUrl: './detalle-item.component.html'
 })
 export class DetalleItemComponent {
 
