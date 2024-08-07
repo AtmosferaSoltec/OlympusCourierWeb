@@ -1,4 +1,4 @@
-<form [formGroup]="repartosService.formulario" (submit)="filtrar()" class="flex my-4 gap-2 items-end flex-wrap">
+<form [formGroup]="repartosService.formulario" (submit)="filtrar()" class="flex flex-wrap items-end gap-2 my-4">
     <div>
         <label class="block mb-1 text-sm font-medium text-t">Estado</label>
         <select formControlName="estado"
@@ -14,6 +14,7 @@
             class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
             <option value="T">Todos</option>
             <option value="P">Pendientes</option>
+            <option value="C">En Ruta</option>
             <option value="E">Entregados</option>
             <option value="A">Anulados</option>
         </select>
