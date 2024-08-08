@@ -10,8 +10,7 @@ import { UsuarioService } from '../../services/usuario.service';
   selector: 'app-login-main',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './login-main.component.html',
-  styleUrl: './login-main.component.scss'
+  templateUrl: './login-main.component.html'
 })
 export class LoginMainComponent {
   router = inject(Router)

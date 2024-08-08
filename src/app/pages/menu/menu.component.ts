@@ -10,7 +10,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
   standalone: true,
   imports: [CommonModule, RouterOutlet, SidenavComponent, NavbarComponent],
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.scss'
+  styleUrl: './menu.component.css'
 })
 export class MenuComponent {
 

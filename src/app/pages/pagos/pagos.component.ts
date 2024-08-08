@@ -17,7 +17,7 @@ import { GenerarComprobanteService } from '../generar-comprobante/generar-compro
     TablaRepartosSeleccionadosComponent, BotonComponent, TituloComponent
   ],
   templateUrl: './pagos.component.html',
-  styleUrl: './pagos.component.scss'
+  styleUrl: './pagos.component.css'
 })
 export class PagosComponent implements OnDestroy {
 

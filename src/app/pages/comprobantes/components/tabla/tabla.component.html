@@ -1,95 +1,97 @@
-<div class="rounded-xl overflow-hidden shadow-sm mt-3">
-    <table class="w-full text-sm text-center rtl:text-right text-textos">
-        <thead class="text-sm bg-white text-textos uppercase border-b">
-            <tr>
-                <th scope="col" class="px-6 py-3">Comprobante</th>
-                <!--
+<div class="mt-3 overflow-x-auto shadow-sm rounded-xl">
+  <table class="w-full text-sm text-center rtl:text-right text-textos">
+    <thead class="text-sm uppercase bg-white border-b text-textos">
+      <tr>
+        <th scope="col" class="px-6 py-3">Comprobante</th>
+        <!--
                 <th scope="col" class="px-6 py-3">Estado</th>
                 -->
-                <th scope="col" class="px-6 py-3">Tipo Documento</th>
-                <th scope="col" class="px-6 py-3">Documento</th>
-                <th scope="col" class="px-6 py-3" colspan="2">Razon Social</th>
-                <th scope="col" class="px-6 py-3">Fecha Emisión</th>
-                <th scope="col" class="px-6 py-3 text-start">Monto</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (comprobantesService.isLoading()) {
-            <tr class="bg-white">
-                <td colspan="10" class="py-3">
-                    <div class="flex justify-center items-center">
-                        <div class="loader"></div>
-                    </div>
-                </td>
-            </tr>
-            }@else {
-            @for (item of comprobantesService.listComprobantes(); track $index) {
-            <tr class="bg-white border-b">
-                <td class="px-6 py-3">
-                    {{item.serie}}-{{item.num_serie | formatNum:4}}<br>
-                    {{item.usuario | uppercase}}
-                </td>
-                <!--
+        <th scope="col" class="px-6 py-3">Tipo Documento</th>
+        <th scope="col" class="px-6 py-3">Documento</th>
+        <th scope="col" class="px-6 py-3" colspan="2">Razon Social</th>
+        <th scope="col" class="px-6 py-3">Fecha Emisión</th>
+        <th scope="col" class="px-6 py-3 text-start">Monto</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (comprobantesService.isLoading()) {
+      <tr class="bg-white">
+        <td colspan="10" class="py-3">
+          <div class="flex items-center justify-center">
+            <div class="loader"></div>
+          </div>
+        </td>
+      </tr>
+      }@else { @for (item of comprobantesService.listComprobantes(); track
+      $index) {
+      <tr class="bg-white border-b">
+        <td class="px-6 py-3">
+          {{ item.serie }}-{{ item.num_serie | formatNum : 4 }}<br />
+          {{ item.usuario | uppercase }}
+        </td>
+        <!--
                 <td class="px-6 py-3">{{item.estado_sunat | mostrarEstadoNubefact}}</td>
                 -->
-                <td class="px-6 py-3">{{item.tipo_doc | mostrarTipoDocumento}}</td>
-                <td class="px-6 py-3">{{item.documento}}</td>
-                <td class="px-6 py-3" colspan="2">{{item.nombre}}</td>
-                <td class="px-6 py-3">{{item.fecha_creacion | date: 'dd/MM/yyyy'}}</td>
-                <td class="px-6 py-3 font-semibold">
-                    <div class="flex items-center gap-6">
-                        <div>
-                            S/{{item.importe_total}}<br>
-                            {{item.metodo_pago | uppercase}}
-                        </div>
-                        <div>
+        <td class="px-6 py-3">{{ item.tipo_doc | mostrarTipoDocumento }}</td>
+        <td class="px-6 py-3">{{ item.documento }}</td>
+        <td class="px-6 py-3" colspan="2">{{ item.nombre }}</td>
+        <td class="px-6 py-3">
+          {{ item.fecha_creacion | date : "dd/MM/yyyy" }}
+        </td>
+        <td class="px-6 py-3 font-semibold">
+          <div class="flex items-center gap-6">
+            <div>
+              S/{{ item.importe_total }}<br />
+              {{ item.metodo_pago | uppercase }}
+            </div>
+            <div>
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="menuAction"
+                matTooltip="Ver más"
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
 
+              <mat-menu #menuAction="matMenu">
+                <button mat-menu-item (click)="openPdf(item.enlace_pdf)">
+                  <mat-icon>description</mat-icon>
+                  Ver Ticket
+                </button>
 
-                            <button mat-icon-button [matMenuTriggerFor]="menuAction" matTooltip="Ver más">
-                                <mat-icon>more_vert</mat-icon>
-                            </button>
-
-                            <mat-menu #menuAction="matMenu">
-                                <button mat-menu-item (click)="openPdf(item.enlace_pdf)">
-                                    <mat-icon>description</mat-icon>
-                                    Ver Ticket
-                                </button>
-
-
-                                @if(usuarioService.usuario()?.cod_rol == 'A'){
-                                @if(verificarTiempo(item.fecha_creacion)){
-                                <button mat-menu-item (click)="anular(item)">
-                                    <mat-icon>delete</mat-icon>
-                                    Anular
-                                </button>
-                                }
-                                }
-                            </mat-menu>
-                        </div>
-                    </div>
-                </td>
-
-            </tr>
-            }@empty {
-            <tr class="bg-white border-b">
-                <td colspan="10" class="py-2">
-                    <div class="flex flew-row items-center justify-center">
-                        <mat-icon>hourglass_empty</mat-icon>
-                        Sin Datos
-                    </div>
-                </td>
-            </tr>
-            }
-            }
-        </tbody>
-    </table>
+                @if(usuarioService.usuario()?.cod_rol == 'A'){
+                @if(verificarTiempo(item.fecha_creacion)){
+                <button mat-menu-item (click)="anular(item)">
+                  <mat-icon>delete</mat-icon>
+                  Anular
+                </button>
+                } }
+              </mat-menu>
+            </div>
+          </div>
+        </td>
+      </tr>
+      }@empty {
+      <tr class="bg-white border-b">
+        <td colspan="10" class="py-2">
+          <div class="flex items-center justify-center flew-row">
+            <mat-icon>hourglass_empty</mat-icon>
+            Sin Datos
+          </div>
+        </td>
+      </tr>
+      } }
+    </tbody>
+  </table>
 </div>
 <!--Mostrar el Total-->
-<div class="flex flex-row justify-end my-3 gap-2">
-    <span class="text-xl text-textos font-semibold">
-        Cantidad: {{comprobantesService.listComprobantes().length}} -
-    </span>
-    <span class="text-xl text-textos font-semibold">
-        Total: S/{{getTotal(comprobantesService.listComprobantes()) | number:'1.2-2'}}
-    </span>
+<div class="flex flex-row justify-end gap-2 my-3">
+  <span class="text-xl font-semibold text-textos">
+    Cantidad: {{ comprobantesService.listComprobantes().length }} -
+  </span>
+  <span class="text-xl font-semibold text-textos">
+    Total: S/{{
+      getTotal(comprobantesService.listComprobantes()) | number : "1.2-2"
+    }}
+  </span>
 </div>

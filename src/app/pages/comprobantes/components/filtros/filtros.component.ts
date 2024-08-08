@@ -3,16 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ComprobantesService } from '../../comprobantes.service';
 import { MetodoPagoService } from '../../../../services/metodo-pago.service';
 import { BotonComponent } from '../../../../components/boton/boton.component';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { fechaActual } from '../../../../util/funciones';
+import { ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService } from '../../../../services/usuario.service';
 
 @Component({
   selector: 'app-filtros',
   standalone: true,
   imports: [CommonModule, BotonComponent, ReactiveFormsModule],
-  templateUrl: './filtros.component.html',
-  styleUrl: './filtros.component.scss'
+  templateUrl: './filtros.component.html'
 })
 export class FiltrosComponent {
   metodoPagoService = inject(MetodoPagoService);

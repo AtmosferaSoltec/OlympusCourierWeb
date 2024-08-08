@@ -28,7 +28,7 @@ import { UsuarioService } from '../../../../services/usuario.service';
   ]
 })
 export class TablaComponent {
-
+  
   usuarioService = inject(UsuarioService)
   comprobanteService = inject(ComprobanteService)
   comprobantesService = inject(ComprobantesService)

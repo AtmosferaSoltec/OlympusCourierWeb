@@ -1,22 +1,50 @@
-<div class="cuerpo">
+<div
+  class="flex flex-col items-center justify-center w-screen h-screen gap-[32px] bg-colorP1"
+>
+  <img
+    class="w-[400px]"
+    src="../../../assets/full_logo.png"
+    alt="Logo"
+  />
+  <form
+    class="mx-4 w-auto md:mx-0 p-6 bg-white shadow-2xl md:w-[360px] rounded-xl flex flex-col items-center gap-2"
+    [formGroup]="formulario"
+    (submit)="onSubmit()"
+  >
+    <span class="text-3xl font-medium">Bienvenido</span>
+    <p class="text-lg text-center text-textos">
+      Gestiona tus envíos de forma rápida y sencilla. ¡Inicia sesión!
+    </p>
 
-    <img class="w-96" src="../../../assets/full_logo.png" alt="Logo">
-
-    <div class="card">
-        <form [formGroup]="formulario" (submit)="onSubmit()">
-            <div class="head">
-                <span>Bienvenido</span>
-                <p>Gestiona tus envíos de forma rápida y sencilla. ¡Inicia sesión!</p>
-            </div>
-            <div class="inputs">
-                <input type="text" placeholder="Usuario" formControlName="user" required>
-                <input type="password" placeholder="Contraseña" formControlName="clave" required>
-            </div>
-            @if (loading()) {
-            <div class="loader"></div>
-            }@else {
-            <button type="submit">Ingresar</button>
-            }
-        </form>
+    <div class="flex flex-col w-full gap-1">
+      <label class="text-xs text-textos">Usuario</label>
+      <input
+        type="text"
+        class="w-full border-0 rounded-sm outline-none bg-fondo ring-0 focus:outline-none focus:ring-0 focus:border-0"
+        placeholder="Ingrese su usuario"
+        formControlName="user"
+        required
+      />
     </div>
+    <div class="flex flex-col w-full gap-1 mb-6">
+      <label class="text-xs text-textos">Contraseña</label>
+      <input
+        type="password"
+        class="w-full border-0 rounded-sm outline-none bg-fondo ring-0 focus:outline-none focus:ring-0 focus:border-0"
+        placeholder="Ingrese su contraseña"
+        formControlName="clave"
+        required
+      />
+    </div>
+    @if (loading()) {
+    <div class="progress"></div>
+    }@else {
+    <button
+      type="submit"
+      class="w-full rounded-full h-[42px] font-medium text-lg transition-colors text-white bg-p-700 hover:bg-p-600 active:bg-p-800"
+    >
+      Ingresar
+    </button>
+    }
+  </form>
 </div>
