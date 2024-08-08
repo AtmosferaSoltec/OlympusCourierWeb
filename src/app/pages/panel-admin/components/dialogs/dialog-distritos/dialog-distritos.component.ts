@@ -8,11 +8,12 @@ import { DialogUsuarioComponent } from '../dialog-usuario/dialog-usuario.compone
 import { Distrito } from '../../../../../interfaces/distrito';
 import { DistritoService } from '../../../../../services/distrito.service';
 import Swal from 'sweetalert2';
+import { BotonComponent } from '../../../../../components/boton/boton.component';
 
 @Component({
   selector: 'app-dialog-distritos',
   standalone: true,
-  imports: [CommonModule, MatIconModule, ReactiveFormsModule, MatIconModule, MatRadioModule],
+  imports: [CommonModule, MatIconModule, ReactiveFormsModule, MatIconModule, MatRadioModule, BotonComponent],
   templateUrl: './dialog-distritos.component.html',
   styleUrl: './dialog-distritos.component.scss'
 })

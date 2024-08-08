@@ -1,11 +1,13 @@
 <div class="container">
-    <h1>
+
+    <h2 class="w-full font-semibold text-colorP1 text-start">
         @if(data === undefined){
             Agregar Distrito
         }@else {
             Editar Distrito
         }
-    </h1>
+    </h2>
+
     <form [formGroup]="formulario">
 
         <div class="caja">
@@ -14,8 +16,8 @@
         </div>
     </form>
 
-    <div class="actions">
-        <button (click)="closeDialog()">Cancelar</button>
-        <button (click)="guardar()">Guardar</button>
+    <div class="flex gap-4 mt-4">
+        <app-boton text="Cancelar" (click)="closeDialog()"></app-boton>
+        <app-boton text="Guardar" (click)="guardar()"></app-boton>
     </div>
 </div>
