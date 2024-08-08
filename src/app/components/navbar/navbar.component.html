@@ -1,0 +1,79 @@
+<nav
+  [ngClass]="{ 'md:w-[60px]': !isOpen() }"
+  class="w-full md:w-[300px] md:h-screen bg-colorP1 transition-all ease-in-out"
+>
+  <div
+    [ngClass]="{ 'md:justify-center': !isOpen() }"
+    class="flex items-center justify-between p-2"
+  >
+    <div [ngClass]="{ 'md:hidden': !isOpen() }" class="flex text-white">
+      <div class="flex flex-col">
+        <span class="text-lg font-medium">{{ getNombre() }}<br /></span>
+        <span class="text-sm">{{ getRol() }}</span>
+      </div>
+    </div>
+
+    <button mat-icon-button (click)="toggle()">
+      <mat-icon class="text-white" [matTooltip]="isOpen() ? 'Cerrar' : 'Menu'">
+        @if (isOpen()) { close } @else { menu }
+      </mat-icon>
+    </button>
+  </div>
+  <ul
+    [ngClass]="{ 'hidden md:flex': !isOpen() }"
+    class="flex flex-col gap-2 p-2"
+  >
+    <!-- Rutas de Menu -->
+    @for (item of listMenu; track $index) {
+    <li>
+      <a
+        [routerLink]="item.link"
+        routerLinkActive="bg-white tp1"
+        [matTooltip]="isOpen() ? '' : item.name"
+        [matTooltipDisabled]="!isOpen()"
+        class="flex items-center gap-2 p-2 text-white rounded-lg cursor-pointer select-none hover:bg-white hover:text-colorP1"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span [ngClass]="{ 'md:hidden': !isOpen() }">{{ item.name }}</span>
+      </a>
+    </li>
+    }
+    <!-- Panel Admin -->
+    @if( this.usuarioService.usuario()?.cod_rol === 'A' ||
+    this.usuarioService.usuario()?.cod_rol === 'S'){
+    <li>
+      <a
+        routerLink="/menu/panel-admin/usuarios"
+        matTooltip="Panel Admin"
+        [matTooltipDisabled]="!isOpen()"
+        class="flex items-center gap-2 p-2 text-white rounded-lg cursor-pointer select-none hover:bg-white hover:text-colorP1"
+      >
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span [ngClass]="{ 'md:hidden': !isOpen() }">Panel Admin</span>
+      </a>
+    </li>
+    }
+
+    <!-- Cambiar Contraseña -->
+    <li class="sidenav-nav-item">
+      <a
+        class="flex items-center gap-2 p-2 text-white rounded-lg cursor-pointer select-none hover:bg-white hover:text-colorP1"
+        (click)="cambiarPass()"
+      >
+        <mat-icon>sync_lock</mat-icon>
+        <span [ngClass]="{ 'md:hidden': !isOpen() }">Cambiar Contraseña</span>
+      </a>
+    </li>
+
+    <!-- Cerrar Sesión -->
+    <li>
+      <a
+        (click)="logout()"
+        class="flex items-center gap-2 p-2 text-white rounded-lg cursor-pointer select-none hover:bg-white hover:text-colorP1"
+      >
+        <mat-icon>logout</mat-icon>
+        <span [ngClass]="{ 'md:hidden': !isOpen() }">Cerrar Sesión</span>
+      </a>
+    </li>
+  </ul>
+</nav>
