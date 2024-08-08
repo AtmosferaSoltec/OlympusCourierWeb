@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-2">
+  @if(!service.cliente()){
   <div class="flex flex-col items-end gap-4 md:items-center md:flex-row">
-    @if(!service.cliente()){
     <!-- Buscador -->
     <div class="relative w-full md:w-[600px]">
       <form
@@ -42,11 +42,13 @@
     </div>
 
     <!-- Boton Agregar -->
-    <app-boton icon="person_add" text="Agregar" (clickEvent)="openDialogCliente()" />
-    }
+    <app-boton
+      icon="person_add"
+      text="Agregar"
+      (clickEvent)="openDialogCliente()"
+    />
   </div>
-
-  @if (service.cliente()) {
+  } @else {
   <div class="flex flex-row items-center justify-end gap-4">
     <app-boton
       icon="close"
