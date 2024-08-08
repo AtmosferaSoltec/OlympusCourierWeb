@@ -15,29 +15,34 @@ import { DialogVehiculoComponent } from '../dialogs/dialog-vehiculo/dialog-vehic
 @Component({
   selector: 'app-vehiculo',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, ReactiveFormsModule, MostrarActivoPipe],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+    MostrarActivoPipe,
+  ],
   templateUrl: './vehiculo.component.html',
-  styleUrl: './vehiculo.component.scss'
+  styleUrl: './vehiculo.component.scss',
 })
 export class VehiculoComponent {
-
   estado = new FormControl('S');
   vehiculoService = inject(VehiculoService);
-  dialog = inject(MatDialog)
+  dialog = inject(MatDialog);
 
   ngOnInit(): void {
-    this.estado.valueChanges
-      .subscribe({
-        next: (valor: any) => {
-          if (!valor) {
-            return;
-          }
-          //this.paqueteService.getAll(valor);
-          this.listarVehiculos(valor)
+    this.estado.valueChanges.subscribe({
+      next: (valor: any) => {
+        if (!valor) {
+          return;
         }
-      })
+        //this.paqueteService.getAll(valor);
+        this.listarVehiculos(valor);
+      },
+    });
 
-      this.listarVehiculos()
+    this.listarVehiculos();
   }
 
   listVehiculos = signal<Vehiculo[]>([]);
@@ -45,82 +50,84 @@ export class VehiculoComponent {
 
   listarVehiculos(activo: 'S' | 'N' = 'S') {
     this.isLoading.set(true);
-    this.vehiculoService.getAll(activo)
+    this.vehiculoService
+      .getAll(activo)
       .pipe(delay(800))
       .subscribe({
         next: (res) => {
           console.log(res);
-          
-          if(res?.isSuccess == true){
+
+          if (res?.isSuccess == true) {
             this.listVehiculos.set(res.data);
-          }else{
+          } else {
             alert(res?.mensaje);
           }
         },
         error: (err) => console.log(err),
-        complete: () => this.isLoading.set(false)
-      })
+        complete: () => this.isLoading.set(false),
+      });
   }
 
   openDialog(item: Vehiculo | null = null) {
     const dialogRef = this.dialog.open(DialogVehiculoComponent, {
       data: item,
-      width: "770px"
-    })
+      width: '770px',
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if(result === true){
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
         this.listarVehiculos();
       }
     });
-
   }
 
-
   setEstado(item: Vehiculo, estado: string) {
-    let texto = "";
-    if (estado == "N") {
-      texto = "Se eliminara este vehiculo!"
-    } else if (estado === "S") {
-      texto = "Se restaurara este vehiculo!"
+    let texto = '';
+    if (estado == 'N') {
+      texto = 'Se eliminara este vehiculo!';
+    } else if (estado === 'S') {
+      texto = 'Se restaurara este vehiculo!';
     }
 
     Swal.fire({
-      title: "¿Estas seguro?",
+      title: '¿Estas seguro?',
       text: texto,
-      icon: "warning",
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: "Confirmar",
-      confirmButtonColor: "#047CC4",
-      cancelButtonText: "Cancelar",
-      cancelButtonColor: "#d33",
+      confirmButtonText: 'Confirmar',
+      confirmButtonColor: '#047CC4',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#d33',
     }).then((result) => {
       if (result.isConfirmed) {
         this.vehiculoService.setActivo(item.id, estado).subscribe({
           next: (data: any) => {
             if (data?.isSuccess) {
-              let title = estado === "N" ? "Eliminado!" : "Restaurado!"
-              let text = estado === "N" ? "El vehiculo ha sido eliminado." : "El vehiculo ha sido restaurado."
+              let title = estado === 'N' ? 'Eliminado!' : 'Restaurado!';
+              let text =
+                estado === 'N'
+                  ? 'El vehiculo ha sido eliminado.'
+                  : 'El vehiculo ha sido restaurado.';
               Swal.fire({
                 title: title,
                 text: text,
-                icon: "success",
-                confirmButtonText: "Continuar",
-                confirmButtonColor: "#047CC4",
-              })
+                icon: 'success',
+                confirmButtonText: 'Continuar',
+                confirmButtonColor: '#047CC4',
+              });
               // Actualizar la lista de distritos
               this.vehiculoService.getAll();
             } else {
               Swal.fire({
-                icon: "error",
-                title: "Oops...",
+                icon: 'error',
+                title: 'Oops...',
                 text: data?.mensaje || 'Error al eliminar',
-                confirmButtonText: "Cerrar",
-                confirmButtonColor: "#047CC4",
+                confirmButtonText: 'Cerrar',
+                confirmButtonColor: '#047CC4',
               });
             }
           },
-          error: (err) => console.log(err)
+          error: (err) => console.log(err),
         });
       }
     });

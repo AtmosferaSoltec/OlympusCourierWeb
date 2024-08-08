@@ -1,17 +1,17 @@
-<div class="flex flex-row justify-between items-center my-3">
+<div class="flex flex-row items-center justify-between my-3">
     <select [formControl]="estado"
         class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
         <option value="S">Activos</option>
         <option value="N">Inactivos</option>
     </select>
-    <button (click)="openDialog()" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
+    <button (click)="openDialog()" class="px-4 py-2 font-semibold text-white rounded bg-p1 hover:bg-p2">
         Añadir
     </button>
 </div>
 
-<div class="rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto shadow-sm rounded-xl">
     <table class="w-full text-sm text-center text-textos">
-        <thead class="text-sm bg-white text-textos uppercase border-b">
+        <thead class="text-sm uppercase bg-white border-b text-textos">
             <tr>
                 <th scope="col" class="px-6 py-3">Detalle</th>
                 <th scope="col" class="px-6 py-3">Estado</th>
@@ -22,7 +22,7 @@
             @if(distritoService.loading()){
             <tr class="bg-white border-b">
                 <td colspan="7" class="py-3">
-                    <div class="flex justify-center items-center">
+                    <div class="flex items-center justify-center">
                         <div class="loader"></div>
                     </div>
                 </td>
@@ -57,7 +57,7 @@
             } @empty {
             <tr class="bg-white border-b">
                 <td colspan="7" class="py-2">
-                    <div class="flex flew-row items-center justify-center">
+                    <div class="flex items-center justify-center flew-row">
                         <mat-icon>hourglass_empty</mat-icon>
                         Sin Datos
                     </div>

@@ -1,4 +1,4 @@
-<form [formGroup]="formulario" class="flex flex-row items-center my-3 gap-2">
+<form [formGroup]="formulario" class="flex flex-row items-center gap-2 my-3">
     <select formControlName="estado"
         class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
         <option value="S">Activos</option>
@@ -6,18 +6,18 @@
     </select>
 
     <div class="spacer"></div>
-    <button (click)="filtrar()" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
+    <button (click)="filtrar()" class="px-4 py-2 font-semibold text-white rounded bg-p1 hover:bg-p2">
         Buscar
     </button>
 
-    <button (click)="openDialog()" class="bg-p1 hover:bg-p2 text-white font-semibold py-2 px-4 rounded">
+    <button (click)="openDialog()" class="px-4 py-2 font-semibold text-white rounded bg-p1 hover:bg-p2">
         Añadir
     </button>
 </form>
 
-<div class="rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto shadow-sm rounded-xl">
     <table class="w-full text-sm text-start text-textos">
-        <thead class="text-sm bg-white text-textos uppercase border-b">
+        <thead class="text-sm uppercase bg-white border-b text-textos">
             <tr>
                 <th scope="col" class="px-6 py-3">Documento</th>
                 <th scope="col" class="px-6 py-3">Nombres</th>
@@ -31,7 +31,7 @@
             @if(panelAdminService.isLoading()){
             <tr class="bg-white border-b">
                 <td colspan="7" class="py-3">
-                    <div class="flex justify-center items-center">
+                    <div class="flex items-center justify-center">
                         <div class="loader"></div>
                     </div>
                 </td>
@@ -45,7 +45,7 @@
                 <td class="px-6 py-2">
                     <span
                         [ngClass]="{'bg-orange-400': item.cod_rol == 'A', 'bg-green-400': item.cod_rol == 'U', 'bg-blue-400': item.cod_rol == 'D'}"
-                        class="text-white px-3 py-1 rounded-xl">{{item.cod_rol | mostrarRol}}</span>
+                        class="px-3 py-1 text-white rounded-xl">{{item.cod_rol | mostrarRol}}</span>
                 </td>
                 <td class="px-6 py-2">
                     <div class="flex flex-row items-center">
@@ -72,7 +72,7 @@
             } @empty {
             <tr class="bg-white border-b">
                 <td colspan="7" class="py-2">
-                    <div class="flex flew-row items-center justify-center">
+                    <div class="flex items-center justify-center flew-row">
                         <mat-icon>hourglass_empty</mat-icon>
                         Sin Datos
                     </div>
