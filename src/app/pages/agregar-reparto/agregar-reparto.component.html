@@ -7,11 +7,11 @@
         <app-titulo titulo="Nuevo Reparto"></app-titulo>
     </div>
 
-    <app-buscar-cliente></app-buscar-cliente>
+    <app-search-cliente />
 
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between mt-4">
 
-        <span class="text-xl text-textos font-medium">Lista de Items</span>
+        <span class="text-xl font-medium text-textos">Lista de Items</span>
         <app-boton text="Agregar Item" icon="add" witdh="w-36" (clickEvent)="openDialogAddItemReparto()"></app-boton>
 
     </div>
@@ -32,7 +32,7 @@
         
         <div class="flex-auto"></div>
 
-        <span class="total mr-3 font-semibold text-xl text-p-700">
+        <span class="mr-3 text-xl font-semibold total text-p-700">
             Total S/{{getTotal()}}
         </span>
     </div>
