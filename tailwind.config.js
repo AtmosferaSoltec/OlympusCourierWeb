@@ -6,6 +6,9 @@ module.exports = {
       screens: {
         sm: "300px",
       },
+      fontFamily: {
+        metropolis: ["Metropolis", "sans-serif"],
+      },
       colors: {
         colorP1: "#047CC4",
         colorCard: "#eeeeee",

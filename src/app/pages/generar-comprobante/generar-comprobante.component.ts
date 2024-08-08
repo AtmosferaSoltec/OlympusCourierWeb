@@ -21,7 +21,7 @@ import { MostrarContenidoPipe } from '../../pipes/mostrar-contenido.pipe';
   selector: 'app-generar-comprobante',
   standalone: true,
   templateUrl: './generar-comprobante.component.html',
-  styleUrl: './generar-comprobante.component.scss',
+  styleUrl: './generar-comprobante.component.css',
   imports: [
     CommonModule, MatIconModule, RouterOutlet,
     FormatNumPipe, MatButtonModule, MatTooltipModule,
