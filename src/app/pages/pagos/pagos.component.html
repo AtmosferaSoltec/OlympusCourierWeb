@@ -1,10 +1,10 @@
-<div class="flex flex-col">
+<div class="flex flex-col gap-4">
     <app-titulo titulo="Pagos"></app-titulo>
-    <p class="mt-2 text-xl text-textos font-medium">Buscar Reparto</p>
+    <p class="mt-2 text-xl font-medium text-textos">Buscar Reparto</p>
     <app-buscar-reparto></app-buscar-reparto>
-    <p class="mt-4 text-xl text-textos font-medium">Repartos Encontrados</p>
+    <p class="mt-4 text-xl font-medium text-textos">Repartos Encontrados</p>
     <app-tabla-repartos-encontrados></app-tabla-repartos-encontrados>
-    <p class="mt-4 text-xl text-textos font-medium">Repartos Seleccionados</p>
+    <p class="mt-4 text-xl font-medium text-textos">Repartos Seleccionados</p>
     <app-tabla-repartos-seleccionados></app-tabla-repartos-seleccionados>
-    <app-boton class="mt-4 flex justify-end" text="Pagar" (clickEvent)="toGenerarComprobante()"></app-boton>
+    <app-boton class="flex justify-end mt-4" text="Pagar" (clickEvent)="toGenerarComprobante()"></app-boton>
 </div>

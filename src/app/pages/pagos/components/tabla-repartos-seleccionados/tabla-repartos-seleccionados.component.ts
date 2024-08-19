@@ -12,7 +12,6 @@ import { FormatNumPipe } from "../../../../pipes/format-num.pipe";
     selector: 'app-tabla-repartos-seleccionados',
     standalone: true,
     templateUrl: './tabla-repartos-seleccionados.component.html',
-    styleUrl: './tabla-repartos-seleccionados.component.scss',
     imports: [
         CommonModule, MatIconModule, MatButtonModule,
         MatTooltipModule, MostrarContenidoPipe,

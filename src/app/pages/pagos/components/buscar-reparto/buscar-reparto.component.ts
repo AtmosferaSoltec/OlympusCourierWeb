@@ -12,8 +12,7 @@ import { fechaActual } from '../../../../util/funciones';
     CommonModule, ReactiveFormsModule,
     BotonComponent
   ],
-  templateUrl: './buscar-reparto.component.html',
-  styleUrl: './buscar-reparto.component.scss'
+  templateUrl: './buscar-reparto.component.html'
 })
 export class BuscarRepartoComponent {
 

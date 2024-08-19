@@ -1,25 +1,22 @@
-<form [formGroup]="formulario" (submit)="buscar()" class="flex flex-col items-end justify-end gap-3 md:flex-row">
+<form [formGroup]="formulario" (submit)="buscar()" class="flex flex-wrap items-end justify-start gap-3">
 
+    <div>
+        <label class="block mb-1 text-sm font-medium text-t">Desde</label>
+        <input formControlName="desde" type="date"
+            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+    </div>
+    <div>
+        <label class="block mb-1 text-sm font-medium text-t">Hasta</label>
+        <input formControlName="hasta" type="date"
+            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
+    </div>
     <div class="flex flex-row w-full gap-4 md:w-auto">
-        <div>
-            <label class="block mb-1 text-sm font-medium text-t">Desde</label>
-            <input formControlName="desde" type="date"
-                class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-        </div>
-        <div>
-            <label class="block mb-1 text-sm font-medium text-t">Hasta</label>
-            <input formControlName="hasta" type="date"
-                class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-        </div>
     </div>
-
-    <div class="flex items-end justify-between w-full gap-4 md:w-auto">
-        <div>
-            <label class="block mb-1 text-sm font-medium text-t">N° Reparto</label>
-            <input type="text" placeholder="Ingrese número de reparto" formControlName="buscar"
-                class="w-48 bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-        </div>
-        <app-boton type="submit" text="Buscar"></app-boton>
+    <div>
+        <label class="block mb-1 text-sm font-medium text-t">N° Reparto</label>
+        <input type="text" placeholder="Ingrese número de reparto" formControlName="buscar"
+            class="w-48 bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
     </div>
+    <app-boton type="submit" text="Buscar" icon="search"/>
 
 </form>
