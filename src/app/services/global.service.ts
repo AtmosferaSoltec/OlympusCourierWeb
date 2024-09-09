@@ -45,7 +45,8 @@ export class GlobalService {
     list.forEach((reparto) => {
       const entregado = reparto.historial?.find((item) => item.id_tipo_operacion === 4);
       const item = {
-        FECHA_CREACION: reparto.fecha_creacion ? format(parseISO(reparto.fecha_creacion), 'dd/MM/yyyy hh:mm a') : '',
+        FECHA_CREACION: reparto.fecha_creacion ? format(parseISO(reparto.fecha_creacion), 'dd/MM/yyyy') : '',
+        HORA: reparto.fecha_creacion ? format(parseISO(reparto.fecha_creacion), 'hh:mm a') : '',
         ESTADO_ENCOMIENDA: reparto.estado === 'P' ? 'Pendiente' : reparto.estado === 'E' ? 'Entregado' : reparto.estado === 'A' ? 'Anulado' : '',
         USUARIO: reparto?.historial && reparto.historial.length > 0 ? reparto.historial[0].nombre : '',
         ENTREGADO: entregado?.nombre,
