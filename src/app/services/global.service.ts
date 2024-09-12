@@ -51,6 +51,7 @@ export class GlobalService {
         USUARIO: reparto?.historial && reparto.historial.length > 0 ? reparto.historial[0].nombre : '',
         ENTREGADO: entregado?.nombre,
         CLIENTE: reparto.cliente?.nombres,
+        TELF: reparto.cliente?.telefono,
         GUIAS: reparto.items?.map((item) => item.num_guia).join(','),
         DETALLE: reparto.items?.map((item) => item.detalle).join(','),
         CLAVES: reparto.items?.map((item) => item.clave).join(','),
