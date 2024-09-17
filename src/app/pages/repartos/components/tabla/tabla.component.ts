@@ -51,6 +51,10 @@ export class TablaComponent {
     this.router.navigate(['/menu/detalle-reparto', id]);
   }
 
+  toEditar(id: number | undefined) {
+    this.router.navigate(['/menu/editar-reparto', id]);
+  }
+
   // Alerta para eliminar un reparto
   deleteReparto(reparto: Reparto) {
     if (reparto.id_comprobante) {

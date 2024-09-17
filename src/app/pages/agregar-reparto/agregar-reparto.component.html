@@ -4,7 +4,7 @@
         <button mat-icon-button (click)="back()" matTooltip="Volver">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <app-titulo titulo="Nuevo Reparto"></app-titulo>
+        <app-titulo [titulo]="this.reparto ? 'Editar Reparto' : 'Agregar Reparto'"></app-titulo>
     </div>
 
     <app-search-cliente />

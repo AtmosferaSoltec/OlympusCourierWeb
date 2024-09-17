@@ -27,8 +27,7 @@ import { DetalleClienteComponent } from '../detalle-cliente/detalle-cliente.comp
     FormatTelfPipe,
     DetalleClienteComponent
   ],
-  templateUrl: './search-cliente.component.html',
-  styleUrl: './search-cliente.component.css',
+  templateUrl: './search-cliente.component.html'
 })
 export class SearchClienteComponent {
   bool = signal(false);
@@ -66,6 +65,7 @@ export class SearchClienteComponent {
       }
     });
   }
+  
   selectCliente(item: Cliente) {
     this.service.cliente.set(item);
     this.formulario.get('buscador')?.setValue(item.nombres ?? '');

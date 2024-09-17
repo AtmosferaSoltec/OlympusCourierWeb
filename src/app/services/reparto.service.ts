@@ -26,4 +26,8 @@ export class RepartoService {
   insert(body: any) {
     return this.http.post<Result>(this.url, body)
   }
+
+  update(id: number, body: any) {
+    return this.http.patch<Result>(`${this.url}/${id}`, body)
+  }
 }

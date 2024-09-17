@@ -12,6 +12,7 @@ import { PagosComponent } from '../pagos/pagos.component';
 export default [
     { path: 'repartos', component: RepartosComponent },
     { path: 'detalle-reparto/:id', component: DetalleRepartoComponent },
+    { path: 'editar-reparto/:id', component: AgregarRepartoComponent },
     { path: 'generar-comprobante', component: GenerarComprobanteComponent },
     { path: 'clientes', component: ClientesComponent },
     { path: 'comprobantes', component: ComprobantesComponent },

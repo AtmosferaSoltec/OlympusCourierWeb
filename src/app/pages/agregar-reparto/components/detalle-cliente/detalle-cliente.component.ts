@@ -6,8 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-detalle-cliente',
   standalone: true,
   imports: [CommonModule, MatIconModule],
-  templateUrl: './detalle-cliente.component.html',
-  styleUrl: './detalle-cliente.component.css',
+  templateUrl: './detalle-cliente.component.html'
 })
 export class DetalleClienteComponent {
   @Input() icon?: string;

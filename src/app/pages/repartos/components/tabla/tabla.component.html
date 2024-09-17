@@ -52,32 +52,44 @@
           }@else { - }
         </td>
         <td class="px-6 py-2">
-          <button mat-icon-button [matMenuTriggerFor]="menu">
+          <button mat-icon-button [mat-menu-trigger-for]="acciones">
             <mat-icon>more_vert</mat-icon>
           </button>
-          <mat-menu #menu="matMenu">
-            <!--
-                        <button mat-menu-item>
-                            <mat-icon>local_shipping</mat-icon>
-                            Dar Conformidad
-                        </button>
-                        -->
-            @switch (item.activo) { @case ("S") {
+          <mat-menu #acciones="matMenu">
+            @if (item.activo == "S") {
+
+            <!-- Ver Detalle -->
             <button mat-menu-item (click)="toDetalle(item.id)">
-              Ver Detalle<mat-icon>visibility</mat-icon>
+              <span>Ver Detalle</span>
+              <mat-icon>visibility</mat-icon>
             </button>
-            @if(usuarioService.usuario()?.cod_rol == 'A' &&
-            !item.id_comprobante){
+
+            <!-- Solo si no ha sido entregado -->
+            @if (item.estado !== 'E') {
+            <!-- Editar -->
+            <button mat-menu-item (click)="toEditar(item.id)">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            }
+
+            <!-- Solo si es Admin -->
+            @if(usuarioService.usuario()?.cod_rol == 'A') { @if
+            (!item.id_comprobante){
+            <!-- Eliminar -->
             <button mat-menu-item (click)="deleteReparto(item)">
               <mat-icon>delete</mat-icon>
               Eliminar
             </button>
-            } } @case ("N") { @if(usuarioService.usuario()?.cod_rol == 'A'){
+            } } } @else {
+            <!-- Solo si es Admin -->
+            @if(usuarioService.usuario()?.cod_rol == 'A'){
+            <!-- Restaurar -->
             <button mat-menu-item (click)="recuperarReparto(item)">
               <mat-icon>restart_alt</mat-icon>
               Restaurar
             </button>
-            } } }
+            } }
           </mat-menu>
         </td>
       </tr>

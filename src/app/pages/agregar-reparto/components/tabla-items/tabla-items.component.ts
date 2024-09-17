@@ -13,8 +13,7 @@ import { AgregarRepartoService } from '../../agregar-reparto.service';
   selector: 'app-tabla-items',
   standalone: true,
   imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule],
-  templateUrl: './tabla-items.component.html',
-  styleUrl: './tabla-items.component.scss'
+  templateUrl: './tabla-items.component.html'
 })
 export class TablaItemsComponent {
 
