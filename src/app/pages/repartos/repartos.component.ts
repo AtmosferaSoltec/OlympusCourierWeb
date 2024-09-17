@@ -15,8 +15,7 @@ import { RepartosService } from './repartos.service';
     CommonModule, FiltrosComponent, TablaComponent,
     MatButtonModule, MatTooltipModule,
   ],
-  templateUrl: './repartos.component.html',
-  styleUrl: './repartos.component.scss'
+  templateUrl: './repartos.component.html'
 })
 export class RepartosComponent implements OnDestroy {
   ngOnDestroy(): void {

@@ -43,7 +43,6 @@ export class DialogAddItemRepartoComponent {
   }
 
   onAceptar() {
-    //Validar si el precio es un número y mayor a 1
     if (isNaN(Number(this.precio)) || Number(this.precio) < 1) {
       Swal.fire('Error', 'El precio debe ser un número mayor a 0', 'error');
       return;

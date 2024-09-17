@@ -43,7 +43,6 @@ export class RepartosService {
   ) {
     this.isLoading.set(true);
     this.repartoService.getAll(params)
-      .pipe(delay(500))
       .subscribe({
         next: (res) => {
           if (res?.isSuccess) {

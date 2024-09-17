@@ -22,8 +22,7 @@ import { UsuarioService } from '../../../../services/usuario.service';
     ReactiveFormsModule, BotonComponent, MatDatepickerModule,
     MatNativeDateModule, MatFormFieldModule, MatInputModule
   ],
-  templateUrl: './filtros.component.html',
-  styleUrl: './filtros.component.scss'
+  templateUrl: './filtros.component.html'
 })
 export class FiltrosComponent {
 
