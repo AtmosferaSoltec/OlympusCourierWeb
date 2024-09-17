@@ -35,7 +35,7 @@ export class TablaComponent {
     })
 
     dialogRef.afterClosed().subscribe((data: any) => {
-      this.clientesService.listarClientes({ activo: 'S'})
+      this.clientesService.listarClientes();
     });
 
   }

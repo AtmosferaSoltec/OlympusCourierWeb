@@ -6,43 +6,54 @@ import { Cliente } from '../interfaces/cliente';
 import { Result, State } from '../interfaces/state';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClienteService {
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/clientes`;
+  newUrl = `${environment.newUrl}/api/cliente`;
 
   #state = signal<State<Cliente[]>>({ data: [], loading: false });
   listClientes = computed(() => this.#state().data);
   loading = computed(() => this.#state().loading);
 
   searchCliente(data: string): Observable<Cliente[]> {
-    return this.http.get<any>(`${this.url}/search/${data}`)
+    return this.http.get<any>(`${this.url}/search/${data}`);
   }
 
   addCliente(cliente: any) {
-    return this.http.post(this.url, cliente)
+    return this.http.post(this.url, cliente);
   }
   updateCliente(cliente: any, id: any) {
-    return this.http.put(`${this.url}/${id}`, cliente)
+    return this.http.put(`${this.url}/${id}`, cliente);
   }
 
   exportClientes(listClientes: Cliente[]) {
-    const call = this.http.post(this.url + '/exportarCliente', { listClientes }, { responseType: 'arraybuffer' })
+    const call = this.http.post(
+      this.url + '/exportarCliente',
+      { listClientes },
+      { responseType: 'arraybuffer' }
+    );
     call.subscribe({
       next: (data: ArrayBuffer) => {
-        const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const blob = new Blob([data], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
         link.download = 'data_clientes.xlsx';
         link.click();
         window.URL.revokeObjectURL(link.href);
-      }
+      },
     });
   }
 
-  getAll(query: any) {
-    return this.http.get<Result>(this.url, { params: query });
+  getAll(filtros?: ClienteFiltro) {
+    const params: any = {
+      ...filtros,
+    };
+    const f = this.http.get(this.newUrl, { params });
+    return f;
   }
 
   setEstado(id: number, estado: string) {
@@ -52,5 +63,12 @@ export class ClienteService {
   getCliente(id: string | null) {
     return this.http.get<any>(`${this.url}/${id}`);
   }
+}
 
+export interface ClienteFiltro {
+  activo?: string | null | undefined;
+  tipo_doc?: string | null | undefined;
+  documento?: string | null | undefined;
+  page?: string;
+  limit?: string | null | undefined;
 }

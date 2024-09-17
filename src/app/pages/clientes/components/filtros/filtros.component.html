@@ -1,37 +1,73 @@
-<form [formGroup]="formulario" (submit)="filtrar()" class="flex mt-2 mb-4 gap-2 items-end flex-wrap">
-    @if (uuarioService.usuario()?.cod_rol === 'A') {
-    <div>
-        <label class="block mb-1 text-sm font-medium text-t">Estado</label>
-        <select formControlName="estado"
-            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-            <option value="S">Activos</option>
-            <option value="N">Inactivos</option>
-        </select>
-    </div>
-    }
-    <div>
-        <label class="block mb-1 text-sm font-medium text-t">Tipo Doc.</label>
-        <select formControlName="tipo_doc"
-            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-            <option value="T">Todos</option>
-            <option value="1">DNI</option>
-            <option value="6">RUC</option>
-            <option value="4">CE</option>
-        </select>
-    </div>
+<form
+  [formGroup]="form"
+  (submit)="filtrar()"
+  class="flex flex-wrap items-end gap-2 mt-2 mb-4"
+>
+  @if (uuarioService.usuario()?.cod_rol === 'A') {
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Estado</label>
+    <select
+      formControlName="estado"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    >
+      <option value="S">Activos</option>
+      <option value="N">Inactivos</option>
+    </select>
+  </div>
+  }
+  <!-- Tipo Documento -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Tipo Doc.</label>
+    <select
+      formControlName="tipo_doc"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    >
+      <option value="0">Todos</option>
+      <option value="1">DNI</option>
+      <option value="6">RUC</option>
+      <option value="4">CE</option>
+    </select>
+  </div>
 
-    <div>
-        <label class="block mb-1 text-sm font-medium text-t">Documento</label>
-        <input formControlName="doc" type="text" placeholder="Número de documento"
-            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-    </div>
-    <div>
-        <label class="block mb-1 text-sm font-medium text-t">Cliente</label>
-        <input formControlName="cliente" type="text" placeholder="Nombre del cliente"
-            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-    </div>
+  <!-- Documento -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Documento</label>
+    <input
+      formControlName="doc"
+      type="text"
+      placeholder="Número de documento"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    />
+  </div>
 
-    <div class="flex-auto"></div>
-    <app-boton icon="search" text="Buscar" type="submit"></app-boton>
-    <app-boton icon="add" text="Añadir" (clickEvent)="toAgregar()"></app-boton>
+  <!-- Cliente -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Cliente</label>
+    <input
+      formControlName="cliente"
+      type="text"
+      placeholder="Nombre del cliente"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    />
+  </div>
+
+  <!-- Limite -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Limite</label>
+    <select
+      formControlName="limit"
+      class="min-w-[120px] bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    >
+      <option>10</option>
+      <option>20</option>
+      <option>50</option>
+      <option>100</option>
+      <option>200</option>
+    </select>
+  </div>
+
+  <!-- Acciones -->
+  <div class="flex-auto"></div>
+  <app-boton icon="search" text="Buscar" type="submit"></app-boton>
+  <app-boton icon="add" text="Añadir" (clickEvent)="toAgregar()"></app-boton>
 </form>
