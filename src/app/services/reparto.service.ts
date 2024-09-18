@@ -20,7 +20,7 @@ export class RepartoService {
   }
 
   setActivo(id_reparto: number, activo: 'S' | 'N') {
-    return this.http.patch<Result>(`${this.url}/${id_reparto}`, { activo });
+    return this.http.patch<Result>(`${this.url}/activo/${id_reparto}`, { activo });
   }
 
   insert(body: any) {
