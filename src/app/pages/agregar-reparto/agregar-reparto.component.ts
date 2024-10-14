@@ -34,7 +34,7 @@ import { Reparto } from '../../interfaces/reparto';
     SearchClienteComponent,
   ],
   templateUrl: './agregar-reparto.component.html',
-  styleUrl: './agregar-reparto.component.scss',
+  styleUrl: './agregar-reparto.component.css',
 })
 export class AgregarRepartoComponent implements OnInit, OnDestroy {
   vehiculo = 'T';
@@ -124,9 +124,11 @@ export class AgregarRepartoComponent implements OnInit, OnDestroy {
   }
 
   getTotal() {
-    return this.service
+    const f = this.service
       .listItemRepartos()
-      .reduce((total, item) => total + (item?.precio || 0), 0);
+      .reduce((total, item) => total + (Number(item?.precio) || 0), 0);
+
+    return f;
   }
 
   guardarReparto() {
@@ -156,7 +158,15 @@ export class AgregarRepartoComponent implements OnInit, OnDestroy {
       anotacion: '',
       id_vehiculo: this.vehiculo,
       id_cliente: this.service.cliente()?.id,
-      items: this.service.listItemRepartos(),
+      items: this.service.listItemRepartos().map((item) => {
+        return {
+          adicional: Number(item.adicional),
+          clave: item.clave,
+          detalle: item.detalle,
+          num_guia: item.num_guia,
+          precio: Number(item.precio),
+        }
+      }),
     };
 
     if (this.reparto) {
