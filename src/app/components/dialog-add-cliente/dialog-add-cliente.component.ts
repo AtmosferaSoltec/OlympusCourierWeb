@@ -1,6 +1,12 @@
 import { Component, Inject, OnInit, inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ClienteService } from '../../services/cliente.service';
 import { CommonModule } from '@angular/common';
@@ -17,61 +23,101 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-dialog-add-cliente',
   standalone: true,
-  imports: [CommonModule, MenuSelectComponent, ReactiveFormsModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule],
+  imports: [
+    CommonModule,
+    MenuSelectComponent,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './dialog-add-cliente.component.html',
-  styleUrl: './dialog-add-cliente.component.scss'
+  styleUrl: './dialog-add-cliente.component.scss',
 })
 export class DialogAddClienteComponent implements OnInit {
-  formulario: FormGroup
   clienteService = inject(ClienteService);
   selectedDistrito: any;
 
-  documentoService = inject(DocumentoService)
-  consultasService = inject(ConsultasService)
-  distritoService = inject(DistritoService)
+  documentoService = inject(DocumentoService);
+  consultasService = inject(ConsultasService);
+  distritoService = inject(DistritoService);
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddClienteComponent>,
-    private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: Cliente | undefined,
-  ) {
+    @Inject(MAT_DIALOG_DATA) public data: Cliente | undefined
+  ) {}
 
-    this.formulario = this.fb.group({
-      tipo: [data?.cod_tipodoc ? data.cod_tipodoc : '1', [Validators.required]],
-      doc: [data?.documento, [Validators.required, Validators.minLength(8)]],
-      nombres: [data?.nombres, [Validators.required, Validators.maxLength(100)]],
-      cel: [data?.telefono, [Validators.required, Validators.minLength(9)]],
-      genero: [data?.genero ? data.genero : 'S'],
-      correo: [data?.correo, Validators.email],
-      distrito: [data?.id_distrito ?? 1, [Validators.required]],
-      direc: [data?.direc, [Validators.required, Validators.maxLength(100)]],
-      ref: [data?.referencia],
-      maps: [data?.url_maps],
-    })
-  }
+  formulario = new FormGroup({
+    tipo: new FormControl(this.data?.cod_tipodoc, [Validators.required]),
+    doc: new FormControl(this.data?.documento, [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
+    nombres: new FormControl(this.data?.nombres, [
+      Validators.required,
+      Validators.maxLength(100),
+    ]),
+    cel: new FormControl(this.data?.telefono, [
+      Validators.required,
+      Validators.minLength(9),
+    ]),
+    genero: new FormControl(this.data?.genero ?? 'S'),
+    correo: new FormControl(this.data?.correo, Validators.email),
+    distrito: new FormControl(this.data?.distrito, [Validators.required]),
+    direc: new FormControl(this.data?.direc, [
+      Validators.required,
+      Validators.maxLength(100),
+    ]),
+    ref: new FormControl(this.data?.referencia),
+    maps: new FormControl(this.data?.url_maps),
+  });
 
   ngOnInit(): void {
-    this.distritoService.getAll('S')
+    this.distritoService.getAll('S');
   }
 
   progressBuscarDoc = signal<boolean>(false);
 
   async buscarDoc() {
     this.progressBuscarDoc.set(true);
-    const doc = this.formulario.get('doc')
-    const tipo = this.formulario.get('tipo')
-    if (doc?.valid) {
-      if (tipo?.value == 1) {
-        const data: any = await this.consultasService.searchDoc(doc.value, 'dni')
-        this.formulario.get('nombres')?.setValue(`${data.nombres}`);
-        this.formulario.get('direc')?.setValue('');
-      }
-      if (tipo?.value == 6) {
-        const data: any = await this.consultasService.searchDoc(doc.value, 'ruc')
-        this.formulario.get('nombres')?.setValue(`${data.nombres}`);
-        this.formulario.get('direc')?.setValue(`${data.direc}`);
+    const { doc, tipo } = this.formulario.value;
+
+    if (!doc) {
+      this.progressBuscarDoc.set(false);
+      return;
+    }
+
+    if (!tipo) {
+      this.progressBuscarDoc.set(false);
+      return;
+    }
+
+    let tipoDoc: string | undefined;
+
+    if (tipo == '1') {
+      tipoDoc = 'dni';
+      if (doc.length != 8) {
+        this.progressBuscarDoc.set(false);
+        return;
       }
     }
+    if (tipo == '6') {
+      tipoDoc = 'ruc';
+      if (doc.length != 11) {
+        this.progressBuscarDoc.set(false);
+        return;
+      }
+    }
+    if (!tipoDoc) {
+      this.progressBuscarDoc.set(false);
+      return;
+    }
+
+    const data: any = await this.consultasService.searchDoc(doc, tipoDoc);
+
+    this.formulario.get('nombres')?.setValue(`${data.nombres}`);
+    this.formulario.get('direc')?.setValue(`${data.direc ?? ''}`);
+
     this.progressBuscarDoc.set(false);
   }
 
@@ -80,12 +126,12 @@ export class DialogAddClienteComponent implements OnInit {
   }
 
   getMaxLength(): number {
-    const tipo = this.formulario.get('tipo')?.value;
-    if (tipo == 1) {
+    const { tipo } = this.formulario.value;
+    if (tipo == '1') {
       return 8;
-    } else if (tipo == 6) {
+    } else if (tipo == '6') {
       return 11;
-    } else if (tipo == 4) {
+    } else if (tipo == '4') {
       return 12;
     } else {
       return 15;
@@ -93,91 +139,124 @@ export class DialogAddClienteComponent implements OnInit {
   }
 
   guardar() {
-    if (this.formulario.valid) {
-      const body = {
-        cod_tipodoc: this.formulario.get('tipo')?.value,
-        documento: this.formulario.get('doc')?.value,
-        nombres: this.formulario.get('nombres')?.value,
-        telefono: this.formulario.get('cel')?.value,
-        genero: this.formulario.get('genero')?.value,
-        correo: this.formulario.get('correo')?.value,
-        id_distrito: this.formulario.get('distrito')?.value,
-        direc: this.formulario.get('direc')?.value,
-        referencia: this.formulario.get('ref')?.value,
-        url_maps: this.formulario.get('maps')?.value,
-      };
-      if (this.data == undefined) {
-        this.clienteService.addCliente(body).subscribe({
-          next: (data: any) => {
-            if (data?.isSuccess) {
-              this.dialogRef.close(data.data);
-              Swal.fire({
-                icon: 'success',
-                title: 'Cliente registrado',
-                text: data?.mensaje
-              })
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Error al insertar',
-                text: data?.mensaje,
-              })
-            }
-          },
-          error: err => console.log(err)
-        });
-      } else {
-        this.clienteService.updateCliente(body, this.data?.id).subscribe({
-          next: (data: any) => {
-            if (data?.isSuccess) {
-              this.dialogRef.close(this.data?.id);
-              Swal.fire({
-                icon: 'success',
-                title: 'Cliente actualizado',
-                text: data?.mensaje
-              })
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Error al actualizar',
-                text: data?.mensaje,
-              })
-            }
-          },
-          error: err => console.log(err)
-        });
-      }
-    } else {
-      let error = '';
-      if (this.formulario.get('tipo')?.invalid) {
-        error += 'Tipo de documento, ';
-      }
-      if (this.formulario.get('doc')?.invalid) {
-        error += 'Documento, ';
-      }
-      if (this.formulario.get('nombres')?.invalid) {
-        error += 'Nombres, ';
-      }
-      if (this.formulario.get('cel')?.invalid) {
-        error += 'Celular, ';
-      }
-      if (this.formulario.get('distrito')?.invalid) {
-        error += 'Distrito, ';
-      }
-      if (this.formulario.get('direc')?.invalid) {
-        error += 'Dirección, ';
-      }
-      error = error.slice(0, -2);
+    const {
+      tipo,
+      doc,
+      nombres,
+      cel,
+      genero,
+      correo,
+      distrito,
+      direc,
+      ref,
+      maps,
+    } = this.formulario.value;
+
+    if (!tipo) {
       Swal.fire({
         icon: 'error',
         title: 'Error al guardar',
-        text: `Los siguientes campos son obligatorios: ${error}`,
-      })
+        text: 'Tipo de documento es obligatorio',
+      });
+      return;
+    }
+    if (!doc) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al guardar',
+        text: 'Documento es obligatorio',
+      });
+      return;
+    }
+    if (!nombres) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al guardar',
+        text: 'Nombres es obligatorio',
+      });
+      return;
+    }
+    if (!cel) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al guardar',
+        text: 'Celular es obligatorio',
+      });
+      return;
+    }
+    if (!distrito) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al guardar',
+        text: 'Distrito es obligatorio',
+      });
+      return;
+    }
+    if (!direc) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al guardar',
+        text: 'Dirección es obligatorio',
+      });
+      return;
+    }
+
+    const body = {
+      cod_tipodoc: Number(tipo),
+      documento: doc,
+      nombres: nombres,
+      telefono: cel,
+      genero: genero ?? 'S',
+      correo: correo ?? '',
+      id_distrito: Number(distrito),
+      direc: direc ?? '',
+      referencia: ref ?? '',
+      url_maps: maps ?? '',
+    };
+
+    if (!this.data?.id) {
+      this.clienteService.addCliente(body).subscribe({
+        next: (data: any) => {
+          this.dialogRef.close(data.data);
+          Swal.fire({
+            icon: 'success',
+            title: 'Cliente registrado',
+            text: data?.mensaje,
+          });
+        },
+        error: (err) => {
+          console.log(err);
+          
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al insertar',
+            text: err?.message,
+          });
+        }
+      });
+    } else {
+      this.clienteService.updateCliente(this.data?.id, body).subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.dialogRef.close(this.data?.id);
+          Swal.fire({
+            icon: 'success',
+            title: 'Cliente actualizado',
+            text: data?.mensaje,
+          });
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al actualizar',
+            text: err?.message,
+          });
+        },
+      });
     }
   }
 
   closeDialog(): void {
     this.dialogRef.close();
   }
-
 }

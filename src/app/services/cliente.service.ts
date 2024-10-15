@@ -22,10 +22,10 @@ export class ClienteService {
   }
 
   addCliente(cliente: any) {
-    return this.http.post(this.url, cliente);
+    return this.http.post(this.newUrl, cliente);
   }
-  updateCliente(cliente: any, id: any) {
-    return this.http.put(`${this.url}/${id}`, cliente);
+  updateCliente(id: number, cliente: any) {
+    return this.http.patch(`${this.newUrl}/${id}`, cliente);
   }
 
   exportClientes(listClientes: Cliente[]) {

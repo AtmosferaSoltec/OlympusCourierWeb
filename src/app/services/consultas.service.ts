@@ -12,7 +12,7 @@ export class ConsultasService {
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/consultas`;
 
-  async searchDoc(doc: string, tipoDoc: 'dni' | 'ruc') {
+  async searchDoc(doc: string, tipoDoc: string) {
     const call = this.http.get(`${this.url}/${tipoDoc}/${doc}`);
     const res: Result = await firstValueFrom(call);
     if (res?.isSuccess) {

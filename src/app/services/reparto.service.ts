@@ -30,4 +30,5 @@ export class RepartoService {
   update(id: number, body: any) {
     return this.http.patch<Result>(`${this.url}/${id}`, body)
   }
+  
 }
