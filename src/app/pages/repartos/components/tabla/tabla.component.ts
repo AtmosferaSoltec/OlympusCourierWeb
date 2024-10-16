@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
-import { HistorialReparto, Reparto } from '../../../../interfaces/reparto';
+import { HistorialReparto, Reparto, RepartoNew } from '../../../../interfaces/reparto';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../../../services/usuario.service';
 import Swal from 'sweetalert2';
@@ -17,7 +17,7 @@ import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
   selector: 'app-tabla',
   standalone: true,
   templateUrl: './tabla.component.html',
-  styleUrl: './tabla.component.scss',
+  styleUrl: './tabla.component.css',
   imports: [
     CommonModule, MatIconModule, MatButtonModule,
     MatTooltipModule, MatMenuModule, MostrarEstadoPipe,
@@ -31,22 +31,6 @@ export class TablaComponent {
   usuarioService = inject(UsuarioService);
   router = inject(Router);
 
-  sum(a: number, b: number) {
-    const total = a + b;
-    const formatter = new Intl.NumberFormat('es-PE', {
-      style: 'currency',
-      currency: 'PEN'
-    });
-    return formatter.format(total);
-  }
-
-  getTotal(listRepartos?: Reparto[]): number {
-    if (!listRepartos) {
-      return 0;
-    }
-    return listRepartos.map(r => r.total ?? 0).reduce((acc, value) => acc + value, 0);
-  }
-
   toDetalle(id: number | undefined) {
     this.router.navigate(['/menu/detalle-reparto', id]);
   }
@@ -56,8 +40,8 @@ export class TablaComponent {
   }
 
   // Alerta para eliminar un reparto
-  deleteReparto(reparto: Reparto) {
-    if (reparto.id_comprobante) {
+  deleteReparto(reparto: RepartoNew) {
+    if (reparto.comprobante) {
       //No se puede elimnar porque tiene un comprobante asociado
       Swal.fire({
         title: "No se puede eliminar",
@@ -89,7 +73,7 @@ export class TablaComponent {
   }
 
   // Alerta para recuperar un reparto
-  recuperarReparto(reparto: Reparto) {
+  recuperarReparto(reparto: RepartoNew) {
     Swal.fire({
       title: "¿Estas seguro?",
       text: "Se recuperara el reparto seleccionado",
@@ -107,8 +91,5 @@ export class TablaComponent {
     })
   }
 
-  totalAdicional(reparto: Reparto): number {
-    return reparto?.items?.reduce((total, item) => total + (Number(item.adicional) || 0), 0) ?? 0
-  }
 
 }

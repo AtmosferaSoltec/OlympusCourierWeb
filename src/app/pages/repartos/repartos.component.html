@@ -1,13 +1,21 @@
-<div class="flex flex-row justify-between items-center">
-    <span class="text-2xl text-p1 font-semibold">Repartos</span>
+<div class="flex flex-col w-full h-full">
+  <div class="flex flex-row items-center justify-between">
+    <span class="text-2xl font-semibold text-p1">Repartos</span>
     <div>
-        <button mat-icon-button matTooltip="Exportar" (click)="exportar()">
-            <img src="../../../assets/ic_export.svg" alt="">
-        </button>
+      <button mat-icon-button matTooltip="Exportar" (click)="exportar()">
+        <img src="../../../assets/ic_export.svg" alt="" />
+      </button>
     </div>
+  </div>
+
+  <app-filtros></app-filtros>
+
+  <div class="w-full h-full overflow-y-auto">
+    <app-tabla />
+  </div>
+
+  <!--Mostrar el Total-->
+  <div class="flex flex-row justify-end me-4">
+    <app-pager />
+  </div>
 </div>
-
-
-<app-filtros></app-filtros>
-
-<app-tabla></app-tabla>

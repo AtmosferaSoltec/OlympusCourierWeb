@@ -22,13 +22,13 @@
           </div>
         </td>
       </tr>
-      }@else { @for (item of repartosService.listRepartos(); track $index) {
+      }@else { @for (item of repartosService.listRepartosNew(); track $index) {
       <tr class="bg-white border-b">
         <td class="px-6 py-2">
           #{{ item.num_reparto | formatNum : 6 }}<br />
-          {{ item.nombre_usuario | uppercase }}
+          {{ item.usuario | uppercase }}
         </td>
-        <td class="px-6 py-2">{{ item.cliente?.nombres }}</td>
+        <td class="px-6 py-2">{{ item.cliente }}</td>
         <td class="px-6 py-2">
           {{ item.fecha_creacion | date : "dd/MM/yyyy" }}
         </td>
@@ -39,16 +39,20 @@
         </td>
         <td class="px-6 py-2">{{ item.activo | mostrarActivo }}</td>
         <td class="px-6 py-2">
-          S/{{ totalAdicional(item) | number : "1.2-2" }}<br />
+          S/{{ item.costo_adicional | number : "1.2-2" }}<br />
         </td>
-        <td class="px-6 py-2">S/{{ item.total | number : "1.2-2" }}<br /></td>
         <td class="px-6 py-2">
-          {{ sum(totalAdicional(item), item.total ?? 0) }}
+          S/{{ item.costo_reparto | number : "1.2-2" }}<br />
+        </td>
+        <td class="px-6 py-2">
+          S/
+          {{
+            (item.costo_adicional ?? 0) + (item.costo_reparto ?? 0)
+              | number : "1.2-2"
+          }}
           <br />
           @if(item.comprobante){
-          {{ item.comprobante.serie }}-{{
-            item.comprobante.num_serie | formatNum : 4
-          }}
+          {{ item.comprobante }}
           }@else { - }
         </td>
         <td class="px-6 py-2">
@@ -75,7 +79,7 @@
 
             <!-- Solo si es Admin -->
             @if(usuarioService.usuario()?.cod_rol == 'A') { @if
-            (!item.id_comprobante){
+            (!item.comprobante){
             <!-- Eliminar -->
             <button mat-menu-item (click)="deleteReparto(item)">
               <mat-icon>delete</mat-icon>
@@ -105,13 +109,4 @@
       } }
     </tbody>
   </table>
-</div>
-<!--Mostrar el Total-->
-<div class="flex flex-row justify-end gap-2 my-3">
-  <span class="text-xl font-semibold text-textos">
-    Total de Repartos: {{ repartosService.listRepartos().length }} -
-  </span>
-  <span class="text-xl font-semibold text-textos">
-    Total: S/{{ getTotal(repartosService.listRepartos()) | number : "1.2-2" }}
-  </span>
 </div>

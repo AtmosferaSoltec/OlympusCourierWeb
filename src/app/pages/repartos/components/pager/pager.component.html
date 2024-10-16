@@ -1,0 +1,28 @@
+<div class="flex items-center gap-2">
+  <span>Resultados por página {{ service.listRepartosNew().length }}</span>
+  <select [value]="service.limit()" (change)="setLimit($event)">
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+    <option value="200">200</option>
+  </select>
+
+  <div class="flex items-center">
+    <span> {{ service.page() }} de {{ service.totalPage() }} </span>
+    <button
+      mat-icon-button
+      (click)="prevPage()"
+      [disabled]="service.page() === 1"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      (click)="nextPage()"
+      [disabled]="service.page() === service.totalPage()"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</div>

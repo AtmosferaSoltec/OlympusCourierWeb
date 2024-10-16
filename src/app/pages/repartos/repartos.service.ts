@@ -1,5 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { Reparto } from '../../interfaces/reparto';
+import { Reparto, RepartoNew } from '../../interfaces/reparto';
 import { RepartoService } from '../../services/reparto.service';
 import { delay } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -7,14 +7,14 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { fechaActual } from '../../util/funciones';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RepartosService {
-
-  repartoService = inject(RepartoService)
-  public listRepartos = signal<Reparto[]>([]);
+  repartoService = inject(RepartoService);
+  //public listRepartos = signal<Reparto[]>([]);
   public isLoading = signal<boolean>(false);
 
+  listRepartosNew = signal<RepartoNew[]>([]);
 
   formulario = new FormGroup({
     estado: new FormControl<string>('S'),
@@ -24,11 +24,37 @@ export class RepartosService {
     desde: new FormControl<string>(fechaActual()),
     hasta: new FormControl<string>(fechaActual()),
     usuario: new FormControl<string>('T'),
-  })
+  });
 
   reset() {
-    this.listRepartos.set([]);
+    this.listRepartosNew.set([]);
     this.isLoading.set(false);
+  }
+
+  limit = signal<number>(100);
+  page = signal<number>(1);
+
+  totalPage = signal<number>(0);
+
+  getAll() {
+    this.isLoading.set(true);
+    const params = {
+      limit: this.limit(),
+      page: this.page()
+    };
+    this.repartoService.getAllNew(params).subscribe({
+      next: (res: any) => {
+        this.listRepartosNew.set(res.data);
+        this.totalPage.set(res.totalPages);
+        this.page.set(res.page);
+      },
+      error: (err: any) => {
+        alert(err.message);
+      },
+      complete: () => {
+        this.isLoading.set(false);
+      },
+    });
   }
 
   listarRepartos(
@@ -42,69 +68,67 @@ export class RepartosService {
     }
   ) {
     this.isLoading.set(true);
-    this.repartoService.getAll(params)
+    this.repartoService
+      .getAllNew({
+        limit: 100,
+      })
       .subscribe({
-        next: (res) => {
-          if (res?.isSuccess) {
-            this.listRepartos.set(res.data);
-          } else {
-            alert(res?.mensaje || 'Error al obtener los repartos');
-          }
-          this.isLoading.set(false);
+        next: (res: any) => {
+          this.listRepartosNew.set(res.data);
+          console.log(res);
         },
         error: (err: any) => {
-          this.isLoading.set(false);
           alert(err.message);
-        }
-      })
+        },
+        complete: () => {
+          this.isLoading.set(false);
+        },
+      });
   }
 
   retaurarReparto(id_reparto: number) {
-    this.repartoService.setActivo(id_reparto, 'S')
-      .subscribe({
-        next: (res) => {
-          if (res?.isSuccess) {
-            Swal.fire({
-              title: "Recuperado",
-              text: "Se recupero el reparto correctamente",
-              icon: "success"
-            });
-            const params = {
-              estado: 'S'
-            }
-            this.listarRepartos(params);
-          } else {
-            alert(res?.mensaje || 'Error al recuperar el reparto');
-          }
-        },
-        error: (err: any) => {
-          alert(err.message);
+    this.repartoService.setActivo(id_reparto, 'S').subscribe({
+      next: (res) => {
+        if (res?.isSuccess) {
+          Swal.fire({
+            title: 'Recuperado',
+            text: 'Se recupero el reparto correctamente',
+            icon: 'success',
+          });
+          const params = {
+            estado: 'S',
+          };
+          this.listarRepartos(params);
+        } else {
+          alert(res?.mensaje || 'Error al recuperar el reparto');
         }
-      })
+      },
+      error: (err: any) => {
+        alert(err.message);
+      },
+    });
   }
 
   eliminarReparto(id_reparto: number) {
-    this.repartoService.setActivo(id_reparto, 'N')
-      .subscribe({
-        next: (res) => {
-          if (res?.isSuccess) {
-            Swal.fire({
-              title: "Eliminado",
-              text: "Se elimino el reparto correctamente",
-              icon: "success"
-            });
-            const params = {
-              estado: 'S'
-            }
-            this.listarRepartos(params);
-          } else {
-            alert(res?.mensaje || 'Error al eliminar el reparto');
-          }
-        },
-        error: (err: any) => {
-          alert(err.message);
+    this.repartoService.setActivo(id_reparto, 'N').subscribe({
+      next: (res) => {
+        if (res?.isSuccess) {
+          Swal.fire({
+            title: 'Eliminado',
+            text: 'Se elimino el reparto correctamente',
+            icon: 'success',
+          });
+          const params = {
+            estado: 'S',
+          };
+          this.listarRepartos(params);
+        } else {
+          alert(res?.mensaje || 'Error al eliminar el reparto');
         }
-      })
-
+      },
+      error: (err: any) => {
+        alert(err.message);
+      },
+    });
   }
 }

@@ -78,8 +78,8 @@ export class FiltrosComponent {
       id_usuario: controls.usuario.value
     }
 
-    this.repartosService.listarRepartos(params)
-
+    //this.repartosService.listarRepartos(params)
+    this.repartosService.getAll()
   }
   toAgregar() {
     this.router.navigateByUrl('/menu/agregar-reparto')

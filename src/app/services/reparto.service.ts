@@ -10,6 +10,8 @@ export class RepartoService {
 
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/repartos`;
+  newUrl = `${environment.newUrl}/api/reparto`;
+  
 
   get(id: number) {
     return this.http.get<Result>(`${this.url}/${id}`);
@@ -17,6 +19,12 @@ export class RepartoService {
 
   getAll(params: any) {
     return this.http.get<Result>(this.url, { params: params })
+  }
+
+  getAllNew(
+    params: any
+  ) {
+    return this.http.get(this.newUrl, { params: params });
   }
 
   setActivo(id_reparto: number, activo: 'S' | 'N') {

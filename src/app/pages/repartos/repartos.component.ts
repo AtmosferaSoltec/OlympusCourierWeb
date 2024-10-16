@@ -7,6 +7,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import Swal from 'sweetalert2';
 import { GlobalService } from '../../services/global.service';
 import { RepartosService } from './repartos.service';
+import { PagerComponent } from "./components/pager/pager.component";
 
 @Component({
   selector: 'app-repartos',
@@ -14,7 +15,8 @@ import { RepartosService } from './repartos.service';
   imports: [
     CommonModule, FiltrosComponent, TablaComponent,
     MatButtonModule, MatTooltipModule,
-  ],
+    PagerComponent
+],
   templateUrl: './repartos.component.html'
 })
 export class RepartosComponent implements OnDestroy {
@@ -36,7 +38,7 @@ export class RepartosComponent implements OnDestroy {
       cancelButtonColor: '#d33'
     }).then((result) => {
       if (result.isConfirmed) {
-        const listRepartos = this.repartosService.listRepartos();
+        const listRepartos = this.repartosService.listRepartosNew();
         if (!listRepartos) {
           Swal.fire(
             '¡Error!',
