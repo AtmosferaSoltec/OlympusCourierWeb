@@ -1,10 +1,12 @@
-<div class="flex items-center justify-between">
-    <app-titulo titulo="Clientes"></app-titulo>
+<div class="flex flex-col">
+  <div class="flex items-center justify-between">
+    <app-titulo titulo="Clientes" />
     <button mat-icon-button matTooltip="Exportar" (click)="exportar()">
-        <img src="../../../assets/ic_export.svg" alt="">
+      <img src="../../../assets/ic_export.svg" alt="" />
     </button>
+  </div>
+
+  <app-filtros />
+
+  <app-tabla />
 </div>
-
-<app-filtros></app-filtros>
-
-<app-tabla></app-tabla>

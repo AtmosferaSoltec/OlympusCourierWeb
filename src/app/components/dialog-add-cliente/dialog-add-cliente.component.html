@@ -1,146 +1,177 @@
 <div class="container">
+  <h1>Agregar Cliente</h1>
 
-    <h1>Agregar Cliente</h1>
-
-    <form [formGroup]="formulario">
-
-        <!--Seleccionar Tipo Documento-->
-        <div class="caja">
-            <span class="label">Tipo de Doc.</span>
-            <div class="input">
-                <select formControlName="tipo" (change)="resetDoc()">
-                    <option value="1" selected>DNI</option>
-                    <option value="6">RUC</option>
-                    <option value="4">CE</option>
-                </select>
-            </div>
-        </div>
-
-        <!--Ingresar Número de Documento-->
-        <div class="caja">
-            <span class="label">
-                Número de Documento
-            </span>
-            <div class="input">
-                <div class="input-btn">
-                    <input type="search" placeholder="Ingrese número de documento" [maxLength]="getMaxLength()"
-                        formControlName="doc" autocomplete="off">
-                    @if (progressBuscarDoc()) {
-                    <div class="loader"></div>
-                    }@else {
-                    <button (click)="buscarDoc()">Buscar</button>
-                    }
-                </div>
-                @if (formulario.get('doc')?.hasError('required') && formulario.get('doc')?.touched) {
-                <span>Campo Obligatorio</span>
-                }
-            </div>
-        </div>
-
-        <!--Ingresar Nombre Completo o Razón Social-->
-        <div class="caja">
-            <span class="label">
-                @if (formulario.get('tipo')?.value === '6') {
-                    Razón Social
-                    }@else {
-                    Nombre Completo
-                    }
-            </span>
-            <div class="input">
-                <input type="text" placeholder="Ingrese nombres y apellidos" formControlName="nombres"
-                    autocomplete="off">
-                @if (formulario.get('nombres')?.hasError('required') && formulario.get('nombres')?.touched) {
-                <span>Campo Obligatorio</span>
-                }
-            </div>
-        </div>
-
-        <!--Ingresar Teléfono-->
-        <div class="caja">
-            <span class="label">Teléfono</span>
-            <div class="input">
-                <input type="tel" maxlength="9" placeholder="Ingrese número de teléfono" formControlName="cel"
-                    autocomplete="off">
-                @if (formulario.get('cel')?.hasError('required') && formulario.get('cel')?.touched) {
-                <span>Campo Obligatorio</span>
-                }
-            </div>
-        </div>
-
-        <!--Ingresar Correo-->
-        <div class="caja">
-            <span class="label">Correo</span>
-            <div class="input">
-                <input type="email" placeholder="Ingrese correo electrónico" formControlName="correo"
-                    autocomplete="off">
-                @if (formulario.get('correo')?.hasError('required') && formulario.get('correo')?.touched) {
-                <span>Campo Obligatorio</span>
-                }
-            </div>
-        </div>
-
-        <!--Seleccionar Genero-->
-        <div class="caja">
-            <span class="label">Genero</span>
-            <div class="input">
-                <select formControlName="genero">
-                    <option value="S">Sin Definir</option>
-                    <option value="M">Masculino</option>
-                    <option value="F">Femenino</option>
-                </select>
-            </div>
-        </div>
-
-        <!--Seleccionar Distrito-->
-        <div class="caja">
-            <span class="label">Distrito</span>
-            <div class="input">
-                <select formControlName="distrito">
-                    @for (item of distritoService.listDistritos(); track $index) {
-                    <option [value]="item.id">{{item.nombre}}</option>
-                    }
-                </select>
-            </div>
-        </div>
-
-        <!--Ingresar Dirección-->
-        <div class="caja">
-            <span class="label">Dirección</span>
-            <div class="input">
-                <input type="text" placeholder="Ingrese direción" formControlName="direc" autocomplete="off">
-                @if (formulario.get('direc')?.hasError('required') && formulario.get('direc')?.touched) {
-                <span>Campo Obligatorio</span>
-                }
-            </div>
-        </div>
-
-        <!--Ingresar Referencia-->
-        <div class="caja">
-            <span class="label">Referencia</span>
-            <div class="input">
-                <input type="text" placeholder="Ingrese una referencia" formControlName="ref" autocomplete="off">
-                @if (formulario.get('ref')?.hasError('required') && formulario.get('ref')?.touched) {
-                <span>Campo Obligatorio</span>
-                }
-            </div>
-        </div>
-
-        <!--Ingresar URL Maps-->
-        <div class="caja">
-            <span class="label">URL Maps</span>
-            <div class="input">
-                <input type="url" placeholder="Ingrese url de enlace (Google Maps)" formControlName="maps"
-                    autocomplete="off">
-                @if (formulario.get('maps')?.hasError('required') && formulario.get('maps')?.touched) {
-                <span>Campo Obligatorio</span>
-                }
-            </div>
-        </div>
-
-    </form>
-
-    <div class="actions">
-        <button (click)="closeDialog()">Cancelar</button>
-        <button (click)="guardar()">Guardar</button>
+  <form [formGroup]="formulario">
+    <!--Seleccionar Tipo Documento-->
+    <div class="caja">
+      <span class="label">Tipo de Doc.</span>
+      <div class="input">
+        <select formControlName="tipo" (change)="resetDoc()">
+          <option value="1" selected>DNI</option>
+          <option value="6">RUC</option>
+          <option value="4">CE</option>
+        </select>
+      </div>
     </div>
+
+    <!--Ingresar Número de Documento-->
+    <div class="caja">
+      <span class="label"> Número de Documento </span>
+      <div class="input">
+        <div class="input-btn">
+          <input
+            type="search"
+            placeholder="Ingrese número de documento"
+            [maxLength]="getMaxLength()"
+            formControlName="doc"
+            autocomplete="off"
+          />
+          @if (progressBuscarDoc()) {
+          <div class="loader"></div>
+          }@else {
+          <button (click)="buscarDoc()">Buscar</button>
+          }
+        </div>
+        @if (formulario.get('doc')?.hasError('required') &&
+        formulario.get('doc')?.touched) {
+        <span>Campo Obligatorio</span>
+        }
+      </div>
+    </div>
+
+    <!--Ingresar Nombre Completo o Razón Social-->
+    <div class="caja">
+      <span class="label">
+        @if (formulario.get('tipo')?.value === '6') { Razón Social }@else {
+        Nombre Completo }
+      </span>
+      <div class="input">
+        <input
+          type="text"
+          placeholder="Ingrese nombres y apellidos"
+          formControlName="nombres"
+          autocomplete="off"
+        />
+        @if (formulario.get('nombres')?.hasError('required') &&
+        formulario.get('nombres')?.touched) {
+        <span>Campo Obligatorio</span>
+        }
+      </div>
+    </div>
+
+    <!--Ingresar Teléfono-->
+    <div class="caja">
+      <span class="label">Teléfono</span>
+      <div class="input">
+        <input
+          type="tel"
+          maxlength="9"
+          placeholder="Ingrese número de teléfono"
+          formControlName="cel"
+          autocomplete="off"
+        />
+        @if (formulario.get('cel')?.hasError('required') &&
+        formulario.get('cel')?.touched) {
+        <span>Campo Obligatorio</span>
+        }
+      </div>
+    </div>
+
+    <!--Ingresar Correo-->
+    <div class="caja">
+      <span class="label">Correo</span>
+      <div class="input">
+        <input
+          type="email"
+          placeholder="Ingrese correo electrónico"
+          formControlName="correo"
+          autocomplete="off"
+        />
+        @if (formulario.get('correo')?.hasError('required') &&
+        formulario.get('correo')?.touched) {
+        <span>Campo Obligatorio</span>
+        }
+      </div>
+    </div>
+
+    <!--Seleccionar Genero-->
+    <div class="caja">
+      <span class="label">Genero</span>
+      <div class="input">
+        <select formControlName="genero">
+          <option value="S">Sin Definir</option>
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+        </select>
+      </div>
+    </div>
+
+    <!--Seleccionar Distrito-->
+    <div class="caja">
+      <span class="label">Distrito</span>
+      <div class="input">
+        <select formControlName="distrito">
+          @for (item of distritoService.listDistritos(); track $index) {
+          <option [value]="item.id">{{ item.nombre }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <!--Ingresar Dirección-->
+    <div class="caja">
+      <span class="label">Dirección</span>
+      <div class="input">
+        <input
+          type="text"
+          placeholder="Ingrese direción"
+          formControlName="direc"
+          autocomplete="off"
+        />
+        @if (formulario.get('direc')?.hasError('required') &&
+        formulario.get('direc')?.touched) {
+        <span>Campo Obligatorio</span>
+        }
+      </div>
+    </div>
+
+    <!--Ingresar Referencia-->
+    <div class="caja">
+      <span class="label">Referencia</span>
+      <div class="input">
+        <input
+          type="text"
+          placeholder="Ingrese una referencia"
+          formControlName="ref"
+          autocomplete="off"
+        />
+        @if (formulario.get('ref')?.hasError('required') &&
+        formulario.get('ref')?.touched) {
+        <span>Campo Obligatorio</span>
+        }
+      </div>
+    </div>
+
+    <!--Ingresar URL Maps-->
+    <div class="caja">
+      <span class="label">URL Maps</span>
+      <div class="input">
+        <input
+          type="url"
+          placeholder="Ingrese url de enlace (Google Maps)"
+          formControlName="maps"
+          autocomplete="off"
+        />
+        @if (formulario.get('maps')?.hasError('required') &&
+        formulario.get('maps')?.touched) {
+        <span>Campo Obligatorio</span>
+        }
+      </div>
+    </div>
+  </form>
+
+  <div class="actions">
+    <button (click)="closeDialog()">Cancelar</button>
+    <button (click)="guardar()">Guardar</button>
+  </div>
 </div>

@@ -24,8 +24,7 @@ import { ClientesService } from './clientes.service';
     MatTooltipModule,
     TituloComponent,
   ],
-  templateUrl: './clientes.component.html',
-  styleUrl: './clientes.component.scss',
+  templateUrl: './clientes.component.html'
 })
 export class ClientesComponent {
   clienteService = inject(ClientesService);

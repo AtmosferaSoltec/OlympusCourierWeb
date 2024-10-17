@@ -90,6 +90,21 @@
     </select>
   </div>
 
+  <!-- Subido Por -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Subido por</label>
+    <select
+      [value]="repartosService.idSubido()"
+      (change)="setIdSubido($event)"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    >
+      <option value="0">Todos</option>
+      @for (item of listUsuarios(); track $index) {
+      <option [value]="item.id">{{ item.nombres | uppercase }}</option>
+      }
+    </select>
+  </div>
+
   <!-- Tipo Vehiculo -->
   <div>
     <label class="block mb-1 text-sm font-medium text-t">Vehiculo</label>

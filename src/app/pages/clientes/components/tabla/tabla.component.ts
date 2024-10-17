@@ -18,7 +18,7 @@ import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
     selector: 'app-tabla',
     standalone: true,
     templateUrl: './tabla.component.html',
-    styleUrl: './tabla.component.scss',
+    styleUrl: './tabla.component.css',
     imports: [CommonModule, MatButtonModule, MatIconModule,
         MatTooltipModule, MostrarTipoDocumentoPipe, FormatTelfPipe, MatMenuModule, MostrarActivoPipe]
 })

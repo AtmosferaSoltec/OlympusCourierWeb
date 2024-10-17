@@ -19,6 +19,7 @@ export class RepartosService {
   numReparto = signal<string>('');
   nomCliente = signal<string>('');
   idUsuario = signal<number>(0);
+  idSubido = signal<number>(0);
   idVehiculo = signal<number>(0);
 
   desde = signal<string>(fechaActual());
@@ -59,6 +60,10 @@ export class RepartosService {
 
     if (this.idUsuario() != 0) {
       params.id_usuario = this.idUsuario();
+    }
+
+    if (this.idSubido() != 0) {
+      params.id_subido = this.idSubido();
     }
 
     if (this.idVehiculo() != 0) {

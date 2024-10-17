@@ -98,6 +98,10 @@ export class FiltrosComponent implements OnInit {
     this.repartosService.idUsuario.set(event.target.value);
   }
 
+  setIdSubido(event: any) {
+    this.repartosService.idSubido.set(event.target.value);
+  }
+
   setDesde(event: any) {
     this.repartosService.desde.set(event.target.value);
   }

@@ -45,7 +45,10 @@ export class DialogAddClienteComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogAddClienteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Cliente | undefined
-  ) {}
+  ) {
+    console.log('Paso por aca');
+    
+  }
 
   formulario = new FormGroup({
     tipo: new FormControl(this.data?.cod_tipodoc, [Validators.required]),
@@ -63,7 +66,7 @@ export class DialogAddClienteComponent implements OnInit {
     ]),
     genero: new FormControl(this.data?.genero ?? 'S'),
     correo: new FormControl(this.data?.correo, Validators.email),
-    distrito: new FormControl(this.data?.distrito, [Validators.required]),
+    distrito: new FormControl(this.data?.id_distrito, [Validators.required]),
     direc: new FormControl(this.data?.direc, [
       Validators.required,
       Validators.maxLength(100),

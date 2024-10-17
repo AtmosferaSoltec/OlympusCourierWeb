@@ -19,7 +19,6 @@ import { ClienteFiltro } from '../../../../services/cliente.service';
   standalone: true,
   imports: [CommonModule, MatIconModule, BotonComponent, ReactiveFormsModule],
   templateUrl: './filtros.component.html',
-  styleUrl: './filtros.component.scss',
 })
 export class FiltrosComponent {
   uuarioService = inject(UsuarioService);
@@ -42,12 +41,12 @@ export class FiltrosComponent {
       doc: form.doc,
       cliente: form.cliente,
     };
-    const filtros : ClienteFiltro = {
+    const filtros: ClienteFiltro = {
       activo: form.estado,
       tipo_doc: form.tipo_doc,
       documento: form.doc,
-      limit: form.limit
-    }
+      limit: form.limit,
+    };
     this.clientesService.listarClientes(filtros);
   }
 
