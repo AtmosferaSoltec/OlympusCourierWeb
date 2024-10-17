@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { GlobalService } from '../../services/global.service';
 import { RepartosService } from './repartos.service';
 import { PagerComponent } from "./components/pager/pager.component";
+import { TotalesComponent } from "./components/totales/totales.component";
 
 @Component({
   selector: 'app-repartos',
@@ -15,7 +16,8 @@ import { PagerComponent } from "./components/pager/pager.component";
   imports: [
     CommonModule, FiltrosComponent, TablaComponent,
     MatButtonModule, MatTooltipModule,
-    PagerComponent
+    PagerComponent,
+    TotalesComponent
 ],
   templateUrl: './repartos.component.html'
 })

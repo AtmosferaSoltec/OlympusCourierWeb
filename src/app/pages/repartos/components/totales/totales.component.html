@@ -1,0 +1,21 @@
+<div class="flex flex-wrap items-center text-lg">
+  <span class="font-bold text-colorP1">Total Repartos</span>
+  <span class="ml-1 text-colorGrey">{{
+    service.listRepartosNew().length
+  }}</span>
+
+  <span class="ml-4 font-bold text-colorP1">C. Adicional</span>
+  <span class="ml-1 text-colorGrey"
+    >S/ {{ getTotalAdicional() | number : "1.2-2" }}</span
+  >
+
+  <span class="ml-4 font-bold text-colorP1">C. Reparto</span>
+  <span class="ml-1 text-colorGrey"
+    >S/ {{ getTotalRepartos() | number : "1.2-2" }}</span
+  >
+
+  <span class="ml-4 font-bold text-colorP1">Total</span>
+  <span class="ml-1 text-colorGrey"
+    >S/ {{ getTotal() | number : "1.2-2" }}</span
+  >
+</div>
