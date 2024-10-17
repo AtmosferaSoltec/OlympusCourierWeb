@@ -1,59 +1,112 @@
-<form [formGroup]="repartosService.formulario" (submit)="filtrar()" class="flex flex-wrap items-end gap-2 my-4">
-    <div>
-        <label class="block mb-1 text-sm font-medium text-t">Estado</label>
-        <select formControlName="estado"
-            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-            <option value="T">Todos</option>
-            <option value="S">Activos</option>
-            <option value="N">Inactivos</option>
-        </select>
-    </div>
-    <div>
-        <label class="block mb-1 text-sm font-medium text-t">Estado Envio</label>
-        <select formControlName="estado_envio"
-            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-            <option value="T">Todos</option>
-            <option value="P">Pendientes</option>
-            <option value="C">En Ruta</option>
-            <option value="E">Entregados</option>
-            <option value="A">Anulados</option>
-        </select>
-    </div>
+<form class="flex flex-wrap items-end gap-2 my-4">
+  <!-- Estado Activo o Inactivo-->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Estado</label>
+    <select
+      [value]="repartosService.activo()"
+      (change)="setActivo($event)"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    >
+      <option value="T">Todos</option>
+      <option value="S">Activos</option>
+      <option value="N">Inactivos</option>
+    </select>
+  </div>
 
-    <div>
-        <label class="block mb-1 text-sm font-medium text-t">N° Reparto</label>
-        <input formControlName="num_reparto" type="text" placeholder="Número de reparto"
-            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-    </div>
-    <div>
-        <label class="block mb-1 text-sm font-medium text-t">Nombre Cliente</label>
-        <input formControlName="cliente" type="text" placeholder="Cliente"
-            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-    </div>
+  <!-- Estado Envio -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Estado Envio</label>
+    <select
+      [value]="repartosService.estadoEnvio()"
+      (change)="setEstadoEnvio($event)"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    >
+      <option value="T">Todos</option>
+      <option value="P">Pendientes</option>
+      <option value="C">En Ruta</option>
+      <option value="E">Entregados</option>
+      <option value="A">Anulados</option>
+    </select>
+  </div>
 
-    <div>
-        <label class="block mb-1 text-sm font-medium text-t">Desde</label>
-        <input formControlName="desde" type="date"
-            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-    </div>
-    <div>
-        <label class="block mb-1 text-sm font-medium text-t">Hasta</label>
-        <input formControlName="hasta" type="date"
-            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-    </div>
+  <!-- Número de Reparto -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">N° Reparto</label>
+    <input
+      [value]="repartosService.numReparto()"
+      (change)="setNumReparto($event)"
+      type="text"
+      placeholder="Número de reparto"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    />
+  </div>
 
-    <div>
-        <label class="block mb-1 text-sm font-medium text-t">Usuario</label>
-        <select formControlName="usuario"
-            class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-            <option value="T">Todos</option>
-            @for (item of listUsuarios(); track $index) {
-            <option [value]="item.id">{{item.nombres | uppercase}}</option>
-            }
-        </select>
-    </div>
+  <!-- Nombre Cliente -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Nombre Cliente</label>
+    <input
+      [value]="repartosService.nomCliente()"
+      (change)="setNomCliente($event)"
+      type="text"
+      placeholder="Cliente"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    />
+  </div>
 
-    <div class="flex-auto"></div>
-    <app-boton icon="search" text="Buscar" type="submit"></app-boton>
-    <app-boton icon="add" text="Añadir" (clickEvent)="toAgregar()"></app-boton>
+  <!-- Desde -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Desde</label>
+    <input
+      [value]="repartosService.desde()"
+      (change)="setDesde($event)"
+      type="date"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    />
+  </div>
+
+  <!-- Hasta -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Hasta</label>
+    <input
+      [value]="repartosService.hasta()"
+      (change)="setHasta($event)"
+      type="date"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    />
+  </div>
+
+  <!-- Usuario -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Usuario</label>
+    <select
+      [value]="repartosService.idUsuario()"
+      (change)="setIdUsuario($event)"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    >
+      <option value="0">Todos</option>
+      @for (item of listUsuarios(); track $index) {
+      <option [value]="item.id">{{ item.nombres | uppercase }}</option>
+      }
+    </select>
+  </div>
+
+  <!-- Tipo Vehiculo -->
+  <div>
+    <label class="block mb-1 text-sm font-medium text-t">Vehiculo</label>
+    <select
+      [value]="repartosService.idVehiculo()"
+      (change)="setIdVehiculo($event)"
+      class="bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+    >
+      <option value="0">Todos</option>
+      @for (item of listVehiculos(); track $index) {
+      <option [value]="item.id">{{ item.nombre | uppercase }}</option>
+      }
+    </select>
+  </div>
+
+  <!-- Botones -->
+  <div class="flex-auto"></div>
+  <app-boton icon="search" text="Buscar" (clickEvent)="filtrar()"></app-boton>
+  <app-boton icon="add" text="Añadir" (clickEvent)="toAgregar()"></app-boton>
 </form>

@@ -1,9 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { Reparto, RepartoNew } from '../../interfaces/reparto';
+import { RepartoNew } from '../../interfaces/reparto';
 import { RepartoService } from '../../services/reparto.service';
-import { delay } from 'rxjs';
 import Swal from 'sweetalert2';
-import { FormControl, FormGroup } from '@angular/forms';
 import { fechaActual } from '../../util/funciones';
 
 @Injectable({
@@ -16,15 +14,15 @@ export class RepartosService {
 
   listRepartosNew = signal<RepartoNew[]>([]);
 
-  formulario = new FormGroup({
-    estado: new FormControl<string>('S'),
-    estado_envio: new FormControl<string>('T'),
-    num_reparto: new FormControl<string>(''),
-    cliente: new FormControl<string>(''),
-    desde: new FormControl<string>(fechaActual()),
-    hasta: new FormControl<string>(fechaActual()),
-    usuario: new FormControl<string>('T'),
-  });
+  activo = signal<string>('T');
+  estadoEnvio = signal<string>('T');
+  numReparto = signal<string>('');
+  nomCliente = signal<string>('');
+  idUsuario = signal<number>(0);
+  idVehiculo = signal<number>(0);
+
+  desde = signal<string>(fechaActual());
+  hasta = signal<string>(fechaActual());
 
   reset() {
     this.listRepartosNew.set([]);
@@ -38,10 +36,45 @@ export class RepartosService {
 
   getAll() {
     this.isLoading.set(true);
-    const params = {
+    const params: any = {
       limit: this.limit(),
-      page: this.page()
+      page: this.page(),
     };
+
+    if (this.activo() !== 'T') {
+      params.activo = this.activo();
+    }
+
+    if (this.estadoEnvio() !== 'T') {
+      params.estado = this.estadoEnvio();
+    }
+
+    if (this.numReparto()) {
+      params.num_reparto = this.numReparto();
+    }
+
+    if (this.nomCliente()) {
+      params.nom_cliente = this.nomCliente();
+    }
+
+    if (this.idUsuario() != 0) {
+      params.id_usuario = this.idUsuario();
+    }
+
+    if (this.idVehiculo() != 0) {
+      params.id_vehiculo = this.idVehiculo();
+    }
+
+    if (this.desde()) {
+      params.desde = this.desde();
+    }
+
+    if (this.hasta()) {
+      params.hasta = this.hasta();
+    }
+
+    console.log(params);
+
     this.repartoService.getAllNew(params).subscribe({
       next: (res: any) => {
         this.listRepartosNew.set(res.data);
@@ -49,6 +82,8 @@ export class RepartosService {
         this.page.set(res.page);
       },
       error: (err: any) => {
+        console.log(err);
+        
         alert(err.message);
       },
       complete: () => {
@@ -57,34 +92,6 @@ export class RepartosService {
     });
   }
 
-  listarRepartos(
-    params: any = {
-      estado: this.formulario.controls.estado.value,
-      estado_envio: this.formulario.controls.estado_envio.value,
-      num_reparto: this.formulario.controls.num_reparto.value,
-      cliente: this.formulario.controls.cliente.value,
-      desde: this.formulario.controls.desde.value,
-      hasta: this.formulario.controls.hasta.value,
-    }
-  ) {
-    this.isLoading.set(true);
-    this.repartoService
-      .getAllNew({
-        limit: 100,
-      })
-      .subscribe({
-        next: (res: any) => {
-          this.listRepartosNew.set(res.data);
-          console.log(res);
-        },
-        error: (err: any) => {
-          alert(err.message);
-        },
-        complete: () => {
-          this.isLoading.set(false);
-        },
-      });
-  }
 
   retaurarReparto(id_reparto: number) {
     this.repartoService.setActivo(id_reparto, 'S').subscribe({
@@ -95,10 +102,8 @@ export class RepartosService {
             text: 'Se recupero el reparto correctamente',
             icon: 'success',
           });
-          const params = {
-            estado: 'S',
-          };
-          this.listarRepartos(params);
+          
+          this.getAll();
         } else {
           alert(res?.mensaje || 'Error al recuperar el reparto');
         }
@@ -118,10 +123,8 @@ export class RepartosService {
             text: 'Se elimino el reparto correctamente',
             icon: 'success',
           });
-          const params = {
-            estado: 'S',
-          };
-          this.listarRepartos(params);
+
+          this.getAll();
         } else {
           alert(res?.mensaje || 'Error al eliminar el reparto');
         }

@@ -13,9 +13,6 @@ import { MatButtonModule } from '@angular/material/button';
 export class PagerComponent {
   service = inject(RepartosService);
 
-  search() {
-    this.service.listarRepartos()
-  }
 
   setLimit(event: any) {
     this.service.limit.set(event.target.value);

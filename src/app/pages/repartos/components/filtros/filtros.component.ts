@@ -1,87 +1,112 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BotonComponent } from '../../../../components/boton/boton.component';
 import { Router } from '@angular/router';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { fechaActual } from '../../../../util/funciones'
 import { RepartosService } from '../../repartos.service';
 import { Usuario } from '../../../../interfaces/usuario';
 import { UsuarioService } from '../../../../services/usuario.service';
+import { VehiculoService } from '../../../../services/vehiculo.service';
+import { Vehiculo } from '../../../../interfaces/vehiculo';
 
 @Component({
   selector: 'app-filtros',
   standalone: true,
   imports: [
-    CommonModule, MatIconModule, MatButtonModule,
-    ReactiveFormsModule, BotonComponent, MatDatepickerModule,
-    MatNativeDateModule, MatFormFieldModule, MatInputModule
+    CommonModule,
+    MatIconModule,
+    MatButtonModule,
+    BotonComponent,
   ],
-  templateUrl: './filtros.component.html'
+  templateUrl: './filtros.component.html',
 })
-export class FiltrosComponent {
-
-  repartosService = inject(RepartosService)
-  router = inject(Router)
+export class FiltrosComponent implements OnInit {
+  repartosService = inject(RepartosService);
+  router = inject(Router);
 
   listUsuarios = signal<Usuario[]>([]);
+  listVehiculos = signal<Vehiculo[]>([]);
 
-  constructor(
-    private usuarioService: UsuarioService
-  ) {
-    const query = {
-      estado: 'S'
-    }
-    usuarioService.getAll(query)
-      .subscribe({
-        next: (res) => {
-          if (res?.isSuccess) {
-            this.listUsuarios.set(res.data);
-          } else {
-            alert(res?.mensaje || 'Error al obtener los usuarios');
-          }
-        },
-        error: (err: any) => {
-          alert(err.message);
+  usuarioService = inject(UsuarioService);
+  vehiculoService = inject(VehiculoService);
+
+  
+  ngOnInit(): void {
+    this.getAllUsuarios();
+    this.getAllVehiculos();
+  }
+
+  getAllUsuarios() {
+    this.usuarioService.getAll({ estado: 'S'}).subscribe({
+      next: (res) => {
+        if (res?.isSuccess) {
+          this.listUsuarios.set(res.data);
+        } else {
+          alert(res?.mensaje || 'Error al obtener los usuarios');
         }
-      })
+      },
+      error: (err: any) => {
+        alert(err.message);
+      },
+    });
+  }
+
+  getAllVehiculos() {
+    this.vehiculoService.getAll('S').subscribe({
+      next: (res) => {
+        if (res?.isSuccess) {
+          this.listVehiculos.set(res.data);
+        } else {
+          alert(res?.mensaje || 'Error al obtener los vehiculos');
+        }
+      },
+      error: (err: any) => {
+        alert(err.message);
+      }
+    });
   }
 
   filtrar() {
-    const controls = this.repartosService.formulario.controls;
-
-    //Validar si la fecha esta bien ingresada
-    if (!controls.desde.value) {
-      return alert('Ingrese fecha desde valida')
-    }
-    if (!controls.hasta.value) {
-      return alert('Ingrese fecha hasta valida')
-    }
-
-    // Validar fechas
-    if (controls.desde.value > controls.hasta.value) {
-      return alert('La fecha desde no puede ser mayor a la fecha hasta')
-    }
-
-    const params = {
-      estado: controls.estado.value,
-      estado_envio: controls.estado_envio.value,
-      num_reparto: controls.num_reparto.value,
-      cliente: controls.cliente.value,
-      desde: controls.desde.value,
-      hasta: controls.hasta.value,
-      id_usuario: controls.usuario.value
-    }
-
-    //this.repartosService.listarRepartos(params)
-    this.repartosService.getAll()
+    this.repartosService.getAll();
   }
   toAgregar() {
-    this.router.navigateByUrl('/menu/agregar-reparto')
+    this.router.navigateByUrl('/menu/agregar-reparto');
+  }
+
+  setActivo(event: any) {
+    this.repartosService.activo.set(event.target.value);
+  }
+
+  setEstadoEnvio(event: any) {
+    this.repartosService.estadoEnvio.set(event.target.value);
+  }
+
+  setNumReparto(event: any) {
+    this.repartosService.numReparto.set(event.target.value);
+  }
+
+  setNomCliente(event: any) {
+    this.repartosService.nomCliente.set(event.target.value);
+  }
+
+  setIdUsuario(event: any) {
+    this.repartosService.idUsuario.set(event.target.value);
+  }
+
+  setDesde(event: any) {
+    this.repartosService.desde.set(event.target.value);
+  }
+
+  setHasta(event: any) {
+    this.repartosService.hasta.set(event.target.value);
+  }
+
+  setIdVehiculo(event: any) {
+    this.repartosService.idVehiculo.set(event.target.value);
   }
 }
