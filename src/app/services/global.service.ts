@@ -89,7 +89,7 @@ export class GlobalService {
         DIRECCION: reparto.direccion,
         DISTRITO: reparto.distrito,
         COBRO_ADICIONAL: Number(reparto.costo_adicional),
-        COBRO_REPARTO: Number(reparto.costo_adicional),
+        COBRO_REPARTO: Number(reparto.costo_reparto),
         TOTAL: Number(
           (reparto.costo_adicional ?? 0) + (reparto.costo_reparto ?? 0)
         ),

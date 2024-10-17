@@ -25,9 +25,9 @@ import { DetalleClienteComponent } from '../detalle-cliente/detalle-cliente.comp
     MatTooltipModule,
     ReactiveFormsModule,
     FormatTelfPipe,
-    DetalleClienteComponent
+    DetalleClienteComponent,
   ],
-  templateUrl: './search-cliente.component.html'
+  templateUrl: './search-cliente.component.html',
 })
 export class SearchClienteComponent {
   bool = signal(false);
@@ -56,16 +56,18 @@ export class SearchClienteComponent {
     dialogRef.afterClosed().subscribe((data: any) => {
       console.log(data);
       if (data) {
+
+        return
         this.clienteService.getCliente(data).subscribe({
-          next: (res: any) => {
-            this.service.cliente.set(res.data);
+          next: (res) => {
+            this.service.cliente.set(res?.data);
           },
           error: (err: any) => console.log(err),
         });
       }
     });
   }
-  
+
   selectCliente(item: Cliente) {
     this.service.cliente.set(item);
     this.formulario.get('buscador')?.setValue(item.nombres ?? '');
