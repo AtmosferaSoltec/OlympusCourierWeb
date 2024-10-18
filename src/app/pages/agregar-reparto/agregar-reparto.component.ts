@@ -18,6 +18,7 @@ import { DialogAddPedidoComponent } from '../../components/dialog-add-pedido/dia
 import { SearchClienteComponent } from './components/search-cliente/search-cliente.component';
 import { RepartoService } from '../../services/reparto.service';
 import { Reparto } from '../../interfaces/reparto';
+import { DistritoService } from '../../services/distrito.service';
 @Component({
   selector: 'app-agregar-reparto',
   standalone: true,
@@ -46,9 +47,12 @@ export class AgregarRepartoComponent implements OnInit, OnDestroy {
   repartoService = inject(RepartoService);
   actRoute = inject(ActivatedRoute);
 
+  distritoService = inject(DistritoService)
   reparto?: Reparto;
 
   ngOnInit(): void {
+    this.distritoService.activo.set('S');
+    this.distritoService.getAll();
     this.actRoute.params.subscribe((params) => {
       const id = params['id'];
       if (!id) {

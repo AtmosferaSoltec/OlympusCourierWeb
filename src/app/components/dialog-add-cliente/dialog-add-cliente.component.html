@@ -111,7 +111,7 @@
       <span class="label">Distrito</span>
       <div class="input">
         <select formControlName="distrito">
-          @for (item of distritoService.listDistritos(); track $index) {
+          @for (item of distritoService.list(); track $index) {
           <option [value]="item.id">{{ item.nombre }}</option>
           }
         </select>

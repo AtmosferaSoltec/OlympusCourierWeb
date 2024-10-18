@@ -34,7 +34,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   templateUrl: './dialog-add-cliente.component.html',
   styleUrl: './dialog-add-cliente.component.scss',
 })
-export class DialogAddClienteComponent implements OnInit {
+export class DialogAddClienteComponent {
   clienteService = inject(ClienteService);
   selectedDistrito: any;
 
@@ -74,10 +74,6 @@ export class DialogAddClienteComponent implements OnInit {
     ref: new FormControl(this.data?.referencia),
     maps: new FormControl(this.data?.url_maps),
   });
-
-  ngOnInit(): void {
-    this.distritoService.getAll('S');
-  }
 
   progressBuscarDoc = signal<boolean>(false);
 

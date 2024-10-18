@@ -6,54 +6,56 @@ import { environment } from '../../environments/environment.development';
 import { State } from '../interfaces/state';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DistritoService {
-
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/distrito`;
+  newUrl = `${environment.newUrl}/api/distrito`;
 
-  #state = signal<State<Distrito[]>>({ loading: false, data: [] })
-  listDistritos = computed(() => this.#state().data)
-  loading = computed(() => this.#state().loading)
+  isLoading = signal(false);
+  list = signal<Distrito[]>([]);
 
-  constructor() {
-    this.getAll()
-  }
+  // Parametros
+  activo = signal<'S' | 'N'>('S'); // T -> Todos, S -> Solo activos, N -> Solo inactivos
 
-  getAll(estado: 'T' | 'S' | 'N' = 'S') {
-    this.#state.set({ loading: true, data: [] })
-    this.http.get<any>(this.url, { params: { estado: estado }})
-      .pipe(delay(500))
-      .subscribe({
-        next: (res: any) => {
-          if (res?.isSuccess) {
-            this.#state.set({ loading: false, data: res.data })
-          } else {
-            this.#state.set({ loading: false, data: [], error: res?.mensaje })
-          }
-        },
-        error: (err: any) => console.log(err)
-      })
+  getAll() {
+    this.isLoading.set(true);
+    const params: any = {
+      estado: this.activo(),
+    };
+    console.log(params);
+    
+    this.http.get(this.url, { params }).subscribe({
+      next: (res: any) => {
+        if (res?.isSuccess) {
+          this.list.set(res?.data ?? []);
+        } else {
+          console.log(res);
+        }
+      },
+      error: (err: any) => console.log(err),
+      complete: () => this.isLoading.set(false),
+    });
   }
 
   get(id: number) {
-    return this.http.get(`${this.url}/${id}`)
+    return this.http.get(`${this.url}/${id}`);
   }
 
   add(nombre: string) {
-    return this.http.post(this.url, { nombre })
+    return this.http.post(this.url, { nombre });
   }
 
   update(id: number, nombre: string) {
-    return this.http.put(this.url, { id, nombre })
+    return this.http.put(this.url, { id, nombre });
   }
 
   eliminar(id: number | undefined, estado: string) {
     const url = `${this.url}/${id}`;
     const body = {
-      activo: estado
-    }
+      activo: estado,
+    };
     return this.http.patch(url, body);
   }
 }

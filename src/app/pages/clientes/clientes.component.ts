@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClienteService } from '../../services/cliente.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,6 +11,7 @@ import { GlobalService } from '../../services/global.service';
 import { TituloComponent } from '../../components/titulo/titulo.component';
 import { Cliente } from '../../interfaces/cliente';
 import { ClientesService } from './clientes.service';
+import { DistritoService } from '../../services/distrito.service';
 
 @Component({
   selector: 'app-clientes',
@@ -26,9 +27,16 @@ import { ClientesService } from './clientes.service';
   ],
   templateUrl: './clientes.component.html'
 })
-export class ClientesComponent {
+export class ClientesComponent implements OnInit {
+  distritoService = inject(DistritoService);
   clienteService = inject(ClientesService);
   globalService = inject(GlobalService);
+
+
+  ngOnInit(): void {
+    this.distritoService.activo.set('S');
+    this.distritoService.getAll();
+  }
 
   exportar() {
     Swal.fire({
