@@ -45,10 +45,7 @@ export class DialogAddClienteComponent {
   constructor(
     public dialogRef: MatDialogRef<DialogAddClienteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Cliente | undefined
-  ) {
-    console.log('Paso por aca');
-    
-  }
+  ) {}
 
   formulario = new FormGroup({
     tipo: new FormControl(this.data?.cod_tipodoc, [Validators.required]),
@@ -216,32 +213,29 @@ export class DialogAddClienteComponent {
     if (!this.data?.id) {
       this.clienteService.addCliente(body).subscribe({
         next: (data: any) => {
-          this.dialogRef.close(data.data);
+          this.dialogRef.close(data?.id);
           Swal.fire({
             icon: 'success',
             title: 'Cliente registrado',
-            text: data?.mensaje,
+            text: 'Cliente registrado correctamente',
           });
         },
         error: (err) => {
-          console.log(err);
-          
           Swal.fire({
             icon: 'error',
             title: 'Error al insertar',
             text: err?.message,
           });
-        }
+        },
       });
     } else {
       this.clienteService.updateCliente(this.data?.id, body).subscribe({
         next: (data: any) => {
-          console.log(data);
-          this.dialogRef.close(this.data?.id);
+          this.dialogRef.close(data?.id);
           Swal.fire({
             icon: 'success',
             title: 'Cliente actualizado',
-            text: data?.mensaje,
+            text: 'Cliente actualizado correctamente',
           });
         },
         error: (err) => {

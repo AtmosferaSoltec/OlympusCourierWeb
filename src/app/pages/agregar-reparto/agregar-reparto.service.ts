@@ -4,17 +4,20 @@ import { Cliente } from '../../interfaces/cliente';
 import { RepartoService } from '../../services/reparto.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { delay } from 'rxjs';
 import { VehiculoService } from '../../services/vehiculo.service';
 import { Vehiculo } from '../../interfaces/vehiculo';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogAddClienteComponent } from '../../components/dialog-add-cliente/dialog-add-cliente.component';
+import { ClienteService } from '../../services/cliente.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AgregarRepartoService {
   listItemRepartos = signal<ItemReparto[]>([]);
-  cliente = signal<Cliente | null>(null);
   isLoadingAgregarReparto = signal<boolean>(false);
+
+  client = signal<Cliente | null>(null);
 
   repartoService = inject(RepartoService);
 
@@ -28,7 +31,7 @@ export class AgregarRepartoService {
 
   reset() {
     this.listItemRepartos.set([]);
-    this.cliente.set(null);
+    this.client.set(null);
   }
 
   agregarReparto(body: any) {
@@ -58,7 +61,7 @@ export class AgregarRepartoService {
         },
         complete: () => {
           this.isLoadingAgregarReparto.set(false);
-        }
+        },
       });
     } else {
       this.isLoadingAgregarReparto.set(true);
@@ -108,5 +111,27 @@ export class AgregarRepartoService {
       },
       error: (err) => console.log(err),
     });
+  }
+
+  clienteService = inject(ClienteService);
+  dialog = inject(MatDialog);
+
+  openDialog() {
+    this.dialog
+      .open(DialogAddClienteComponent, {
+        width: '950px',
+        data: this.client(),
+      })
+      .afterClosed()
+      .subscribe((data: any) => {
+        if (data) {
+          this.clienteService.get(data).subscribe({
+            next: (res) => {
+              this.client.set(res);
+            },
+            error: (err: any) => console.log(err),
+          });
+        }
+      });
   }
 }

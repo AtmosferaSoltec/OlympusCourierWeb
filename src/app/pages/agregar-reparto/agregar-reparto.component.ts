@@ -15,10 +15,11 @@ import { DialogAddItemRepartoComponent } from '../../components/dialog-add-item-
 import { ItemReparto } from '../../interfaces/item-reparto';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPedidoComponent } from '../../components/dialog-add-pedido/dialog-add-pedido.component';
-import { SearchClienteComponent } from './components/search-cliente/search-cliente.component';
 import { RepartoService } from '../../services/reparto.service';
 import { Reparto } from '../../interfaces/reparto';
 import { DistritoService } from '../../services/distrito.service';
+import { BuscarClienteComponent } from './components/buscar-cliente/buscar-cliente.component';
+import { DetalleClienteComponent } from "./components/detalle-cliente/detalle-cliente.component";
 @Component({
   selector: 'app-agregar-reparto',
   standalone: true,
@@ -32,8 +33,9 @@ import { DistritoService } from '../../services/distrito.service';
     TituloComponent,
     MatTooltipModule,
     BotonComponent,
-    SearchClienteComponent,
-  ],
+    BuscarClienteComponent,
+    DetalleClienteComponent
+],
   templateUrl: './agregar-reparto.component.html',
   styleUrl: './agregar-reparto.component.css',
 })
@@ -64,7 +66,7 @@ export class AgregarRepartoComponent implements OnInit, OnDestroy {
           this.reparto = reparto;
           const cliente = reparto.cliente;
           cliente.id = reparto.id_cliente;
-          this.service.cliente.set(cliente);
+          this.service.client.set(cliente);
           this.service.listItemRepartos.set(reparto.items);
           this.vehiculo = reparto.id_vehiculo;
         } else {
@@ -107,7 +109,7 @@ export class AgregarRepartoComponent implements OnInit, OnDestroy {
   }
 
   cancel() {
-    if (this.service.cliente() && this.service.listItemRepartos()) {
+    if (this.service.client() && this.service.listItemRepartos()) {
       Swal.fire({
         title: '¡Alerta de Seguridad!',
         text: '¿Estás seguro de que deseas regresar a la pantalla anterior? Todos los datos ingresados se perderán.',
@@ -136,7 +138,7 @@ export class AgregarRepartoComponent implements OnInit, OnDestroy {
   }
 
   guardarReparto() {
-    if (!this.service.cliente()?.id) {
+    if (!this.service.client()?.id) {
       Swal.fire({
         icon: 'question',
         title: 'Sin Cliente',
@@ -161,7 +163,7 @@ export class AgregarRepartoComponent implements OnInit, OnDestroy {
     const body: any = {
       anotacion: '',
       id_vehiculo: this.vehiculo,
-      id_cliente: this.service.cliente()?.id,
+      id_cliente: this.service.client()?.id,
       items: this.service.listItemRepartos().map((item) => {
         return {
           adicional: Number(item.adicional),

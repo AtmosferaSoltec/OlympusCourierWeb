@@ -1,0 +1,21 @@
+<div class="relative w-full md:w-[600px]">
+  <input
+    type="text"
+    class="w-full border-0 outline-none rounded-xl bg-colorFondo ring-0 focus:outline-none focus:ring-0 focus:border-0"
+    placeholder="Buscar por documento o nombre"
+    required
+    (input)="onSearch($event)"
+  />
+
+  <div class="absolute z-10 w-full rounded-lg bg-colorGrey">
+    <ul>
+      @for (item of list(); track $index) {
+      <li 
+      (click)="onSelect(item.id)"
+      class="px-2 py-1 text-lg text-white hover:bg-colorP1">
+        {{ item.nombres | uppercase }}
+      </li>
+      }
+    </ul>
+  </div>
+</div>

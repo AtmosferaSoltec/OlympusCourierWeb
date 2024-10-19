@@ -1,6 +1,37 @@
-
-<div class="flex flex-row items-center gap-2 text-lg">
-    <mat-icon class="text-textos">{{icon}}</mat-icon>
-    <span class="text-textos">{{label}}</span>
-    <span>{{text | uppercase}}</span>
+<div>
+  <div class="flex flex-row items-center justify-end gap-4">
+    <app-boton icon="close" text="Limpiar" (clickEvent)="borrar()" />
+    <app-boton icon="edit" text="Editar" (clickEvent)="service.openDialog()" />
   </div>
+
+  <app-item-detalle
+    icon="description"
+    label="Documento"
+    [text]="service.client()?.documento"
+  />
+  <app-item-detalle
+    icon="person"
+    label="Cliente"
+    [text]="service.client()?.nombres"
+  />
+  <app-item-detalle
+    icon="call"
+    label="Celular"
+    [text]="service.client()?.telefono"
+  />
+  <app-item-detalle
+    icon="location_on"
+    label="Distrito"
+    [text]="service.client()?.distrito"
+  />
+  <app-item-detalle
+    icon="apartment"
+    label="Dirección"
+    [text]="service.client()?.direc"
+  />
+  <app-item-detalle
+    icon="assistant_direction"
+    label="Referencia"
+    [text]="service.client()?.referencia"
+  />
+</div>

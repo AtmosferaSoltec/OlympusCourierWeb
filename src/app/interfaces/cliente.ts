@@ -6,11 +6,11 @@ export interface Cliente {
     telefono?: string;
     correo?: string;
     genero?: string;
-    id_distrito?: string;
+    id_distrito?: number;
     distrito?: string;
     direc?: string;
     referencia?: string;
     url_maps?: string;
-    fecha_creacion?: string;
+    fecha_creacion?: Date;
     activo?: string;
 }

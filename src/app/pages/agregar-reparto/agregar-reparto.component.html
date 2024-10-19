@@ -1,48 +1,73 @@
 <div>
+  <div class="flex items-center gap-2 text-p-700">
+    <button mat-icon-button (click)="back()" matTooltip="Volver">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <app-titulo
+      [titulo]="this.reparto ? 'Editar Reparto' : 'Agregar Reparto'"
+    ></app-titulo>
+  </div>
 
-    <div class="flex items-center gap-2 text-p-700">
-        <button mat-icon-button (click)="back()" matTooltip="Volver">
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-        <app-titulo [titulo]="this.reparto ? 'Editar Reparto' : 'Agregar Reparto'"></app-titulo>
-    </div>
+  @if (service.client()) {
+  <app-detalle-cliente />
+  } @else {
+  <div class="flex items-center gap-4 mt-2">
+    <app-buscar-cliente />
+    <app-boton
+      icon="person_add"
+      text="Agregar"
+      (clickEvent)="service.openDialog()"
+    />
+  </div>
+  }
 
-    <app-search-cliente />
+  <div class="flex items-center justify-between mt-4">
+    <span class="text-xl font-medium text-textos">Lista de Items</span>
+    <app-boton
+      text="Agregar Item"
+      icon="add"
+      witdh="w-36"
+      (clickEvent)="openDialogAddItemReparto()"
+    ></app-boton>
+  </div>
+  <app-tabla-items />
 
-    <div class="flex items-center justify-between mt-4">
-
-        <span class="text-xl font-medium text-textos">Lista de Items</span>
-        <app-boton text="Agregar Item" icon="add" witdh="w-36" (clickEvent)="openDialogAddItemReparto()"></app-boton>
-
-    </div>
-    <app-tabla-items />
-
-    <div class="flex items-center gap-3">
-
-        <div>
-            <label class="block mb-1 text-sm font-medium text-t">Vehiculo</label>
-            <select [(ngModel)]="vehiculo"
-                class="w-48 bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5">
-                <option value="T">Todos</option>
-                @for (item of service.listVehiculos(); track $index) {
-                    <option [value]="item.id">{{item.nombre}}</option>
-                }
-            </select>
-        </div>
-        
-        <div class="flex-auto"></div>
-
-        <span class="mr-3 text-xl font-semibold total text-p-700">
-            Total S/{{getTotal()}}
-        </span>
-    </div>
-
-    <div class="flex justify-end gap-3 mt-3">
-        @if (service.isLoadingAgregarReparto()) {
-        <div class="loader"></div>
-        }@else {
-        <app-boton text="Cancelar" (clickEvent)="cancel()" color="Secundario" witdh="w-24"></app-boton>
-        <app-boton text="Guardar" (clickEvent)="guardarReparto()" witdh="w-24"></app-boton>
+  <div class="flex items-center gap-3">
+    <div>
+      <label class="block mb-1 text-sm font-medium text-t">Vehiculo</label>
+      <select
+        [(ngModel)]="vehiculo"
+        class="w-48 bg-gray-50 border border-gray-300 text-textos text-sm rounded-lg focus:ring-p1 focus:border-p1 p-2.5"
+      >
+        <option value="T">Todos</option>
+        @for (item of service.listVehiculos(); track $index) {
+        <option [value]="item.id">{{ item.nombre }}</option>
         }
+      </select>
     </div>
+
+    <div class="flex-auto"></div>
+
+    <span class="mr-3 text-xl font-semibold total text-p-700">
+      Total S/{{ getTotal() }}
+    </span>
+  </div>
+
+  <div class="flex justify-end gap-3 mt-3">
+    @if (service.isLoadingAgregarReparto()) {
+    <div class="loader"></div>
+    }@else {
+    <app-boton
+      text="Cancelar"
+      (clickEvent)="cancel()"
+      color="Secundario"
+      witdh="w-24"
+    ></app-boton>
+    <app-boton
+      text="Guardar"
+      (clickEvent)="guardarReparto()"
+      witdh="w-24"
+    ></app-boton>
+    }
+  </div>
 </div>

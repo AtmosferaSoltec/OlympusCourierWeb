@@ -17,6 +17,10 @@ export class ClienteService {
   listClientes = computed(() => this.#state().data);
   loading = computed(() => this.#state().loading);
 
+  search(term: string) {
+    return this.http.get(`${this.newUrl}/search`, { params: { term } });
+  }
+
   searchCliente(data: string): Observable<Cliente[]> {
     return this.http.get<any>(`${this.url}/search/${data}`);
   }
@@ -54,6 +58,10 @@ export class ClienteService {
     };
     const f = this.http.get(this.newUrl, { params });
     return f;
+  }
+
+  get(id: number) {
+    return this.http.get(`${this.newUrl}/${id}`);
   }
 
   setEstado(id: number, estado: string) {
