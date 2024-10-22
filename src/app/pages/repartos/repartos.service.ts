@@ -3,6 +3,7 @@ import { RepartoNew } from '../../interfaces/reparto';
 import { RepartoService } from '../../services/reparto.service';
 import Swal from 'sweetalert2';
 import { fechaActual } from '../../util/funciones';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -37,49 +38,7 @@ export class RepartosService {
 
   getAll() {
     this.isLoading.set(true);
-    const params: any = {
-      limit: this.limit(),
-      page: this.page(),
-    };
-
-    if (this.activo() !== 'T') {
-      params.activo = this.activo();
-    }
-
-    if (this.estadoEnvio() !== 'T') {
-      params.estado = this.estadoEnvio();
-    }
-
-    if (this.numReparto()) {
-      params.num_reparto = this.numReparto();
-    }
-
-    if (this.nomCliente()) {
-      params.nom_cliente = this.nomCliente();
-    }
-
-    if (this.idUsuario() != 0) {
-      params.id_usuario = this.idUsuario();
-    }
-
-    if (this.idSubido() != 0) {
-      params.id_subido = this.idSubido();
-    }
-
-    if (this.idVehiculo() != 0) {
-      params.id_vehiculo = this.idVehiculo();
-    }
-
-    if (this.desde()) {
-      params.desde = this.desde();
-    }
-
-    if (this.hasta()) {
-      params.hasta = this.hasta();
-    }
-
-    console.log(params);
-
+    const params = this.getAllParams();
     this.repartoService.getAllNew(params).subscribe({
       next: (res: any) => {
         this.listRepartosNew.set(res.data);
@@ -88,7 +47,7 @@ export class RepartosService {
       },
       error: (err: any) => {
         console.log(err);
-        
+
         alert(err.message);
       },
       complete: () => {
@@ -97,6 +56,26 @@ export class RepartosService {
     });
   }
 
+  async getAllExcel(): Promise<any> {
+    const params = this.getAllParams(10000, 1);
+
+    const call = await lastValueFrom(this.repartoService.getAllNew(params));
+    return call;
+  }
+
+  private getAllParams(limit = this.limit(), page = this.page()): any {
+    const params: any = { limit, page };
+    if (this.activo() !== 'T') params.activo = this.activo();
+    if (this.estadoEnvio() !== 'T') params.estado = this.estadoEnvio();
+    if (this.numReparto()) params.num_reparto = this.numReparto();
+    if (this.nomCliente()) params.nom_cliente = this.nomCliente();
+    if (this.idUsuario() != 0) params.id_usuario = this.idUsuario();
+    if (this.idSubido() != 0) params.id_subido = this.idSubido();
+    if (this.idVehiculo() != 0) params.id_vehiculo = this.idVehiculo();
+    if (this.desde()) params.desde = this.desde();
+    if (this.hasta()) params.hasta = this.hasta();
+    return params;
+  }
 
   retaurarReparto(id_reparto: number) {
     this.repartoService.setActivo(id_reparto, 'S').subscribe({
@@ -107,7 +86,7 @@ export class RepartosService {
             text: 'Se recupero el reparto correctamente',
             icon: 'success',
           });
-          
+
           this.getAll();
         } else {
           alert(res?.mensaje || 'Error al recuperar el reparto');

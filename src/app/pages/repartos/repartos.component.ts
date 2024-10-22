@@ -7,60 +7,52 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import Swal from 'sweetalert2';
 import { GlobalService } from '../../services/global.service';
 import { RepartosService } from './repartos.service';
-import { PagerComponent } from "./components/pager/pager.component";
-import { TotalesComponent } from "./components/totales/totales.component";
+import { PagerComponent } from './components/pager/pager.component';
+import { TotalesComponent } from './components/totales/totales.component';
 
 @Component({
   selector: 'app-repartos',
   standalone: true,
   imports: [
-    CommonModule, FiltrosComponent, TablaComponent,
-    MatButtonModule, MatTooltipModule,
+    CommonModule,
+    FiltrosComponent,
+    TablaComponent,
+    MatButtonModule,
+    MatTooltipModule,
     PagerComponent,
-    TotalesComponent
-],
-  templateUrl: './repartos.component.html'
+    TotalesComponent,
+  ],
+  templateUrl: './repartos.component.html',
 })
 export class RepartosComponent implements OnDestroy {
   ngOnDestroy(): void {
-    this.repartosService.reset()
+    this.repartosService.reset();
   }
 
-  repartosService = inject(RepartosService)
-  globalService = inject(GlobalService)
+  repartosService = inject(RepartosService);
+  globalService = inject(GlobalService);
 
-
-  exportar() {
-    Swal.fire({
+  async exportar() {
+    const result = await Swal.fire({
       title: '¿Estás seguro?',
-      text: "Se exportará la información de los repartos a un archivo Excel",
+      text: 'Se exportará la información de los repartos a un archivo Excel',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const listRepartos = this.repartosService.listRepartosNew();
-        if (!listRepartos) {
-          Swal.fire(
-            '¡Error!',
-            'No se encontró ningún reparto.',
-            'error'
-          )
-          return;
-        }
-
-
-        this.globalService.exportarListRepartos(listRepartos)
-
-        Swal.fire(
-          '¡Exportado!',
-          'La información ha sido exportada.',
-          'success'
-        )
-      }
+      cancelButtonColor: '#d33',
     });
-  }
 
-  
+    if (result.isConfirmed) {
+      const { data } = await this.repartosService.getAllExcel();
+
+      if (!data) {
+        Swal.fire('¡Error!', 'No se encontró ningún reparto.', 'error');
+        return;
+      }
+
+      this.globalService.exportarListRepartos(data);
+
+      Swal.fire('¡Exportado!', 'La información ha sido exportada.', 'success');
+    }
+  }
 }
