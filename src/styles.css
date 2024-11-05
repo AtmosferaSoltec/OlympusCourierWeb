@@ -26,7 +26,7 @@ body {
 }
 
 :root {
-  --colorP1: #047CC4;
+  --colorP1: #047cc4;
   --colorP2: #54adff;
   --colorR1: #cf475b;
   --colorT: #1c2134;
@@ -62,4 +62,21 @@ h6 {
   font-size: 14px;
   color: var(--colorT1);
   font-weight: 400;
+}
+
+
+.progress {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, #047cc4 94%, #0000) top/8px 8px
+      no-repeat,
+    conic-gradient(#0000 30%, #047cc4);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: l13 1s infinite linear;
+}
+@keyframes l13 {
+  100% {
+    transform: rotate(1turn);
+  }
 }
