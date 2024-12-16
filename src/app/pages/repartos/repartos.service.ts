@@ -39,6 +39,8 @@ export class RepartosService {
   getAll() {
     this.isLoading.set(true);
     const params = this.getAllParams();
+    console.log(params);
+    
     this.repartoService.getAllNew(params).subscribe({
       next: (res: any) => {
         this.listRepartosNew.set(res.data);
