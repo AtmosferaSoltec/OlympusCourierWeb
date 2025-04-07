@@ -47,13 +47,13 @@ export class ClientesComponent implements OnInit {
       cancelButtonColor: '#d33',
     }).then(async (result) => {
       if (result.isConfirmed) {
+        
         const { data }: any = await this.clienteService.getAll();
         const listConverted = this.convertirListCompr(data);
         if (!listConverted) {
           Swal.fire('¡Error!', 'No se encontró ningún cliente.', 'error');
           return;
         }
-
         this.globalService.exportarList(listConverted, 'CLIENTES');
         Swal.fire(
           '¡Exportado!',
