@@ -93,6 +93,7 @@ export class GlobalService {
         TOTAL: Number(
           (reparto.costo_adicional ?? 0) + (reparto.costo_reparto ?? 0)
         ),
+        URL_MAPS: reparto?.maps,
       };
       //const entregado = reparto.historial?.find((item: any) => item.id_tipo_operacion === 4);
       /*

@@ -60,7 +60,6 @@ export class RepartosService {
 
   async getAllExcel(): Promise<any> {
     const params = this.getAllParams(10000, 1);
-
     const call = await lastValueFrom(this.repartoService.getAllNew(params));
     return call;
   }

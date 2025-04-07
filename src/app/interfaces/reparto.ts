@@ -42,6 +42,7 @@ export interface RepartoNew {
   num_reparto?: number;
   usuario?: string;
   cliente?: string;
+  maps?: string;
   fecha_creacion?: Date;
   estado?: string;
   activo?: string;
