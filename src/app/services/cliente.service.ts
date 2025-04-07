@@ -77,6 +77,7 @@ export interface ClienteFiltro {
   activo?: string | null | undefined;
   tipo_doc?: string | null | undefined;
   documento?: string | null | undefined;
+  nombres?: string | null | undefined;
   page?: string;
   limit?: string | null | undefined;
 }

@@ -21,33 +21,12 @@ import { ClienteFiltro } from '../../../../services/cliente.service';
   templateUrl: './filtros.component.html',
 })
 export class FiltrosComponent {
-  uuarioService = inject(UsuarioService);
+  usuarioService = inject(UsuarioService);
   clientesService = inject(ClientesService);
   router = inject(Router);
 
-  form = new FormGroup({
-    estado: new FormControl('S'),
-    tipo_doc: new FormControl('0'),
-    doc: new FormControl(''),
-    cliente: new FormControl(''),
-    limit: new FormControl('20'),
-  });
-
   filtrar() {
-    const form = this.form.value;
-    const query = {
-      estado: form.estado,
-      tipo_doc: form.tipo_doc,
-      doc: form.doc,
-      cliente: form.cliente,
-    };
-    const filtros: ClienteFiltro = {
-      activo: form.estado,
-      tipo_doc: form.tipo_doc,
-      documento: form.doc,
-      limit: form.limit,
-    };
-    this.clientesService.listarClientes(filtros);
+    this.clientesService.listarClientes();
   }
 
   toAgregar() {

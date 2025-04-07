@@ -4,7 +4,8 @@ import { DialogAddClienteComponent } from '../../components/dialog-add-cliente/d
 import { ClienteFiltro, ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../interfaces/cliente';
 import Swal from 'sweetalert2';
-import { delay } from 'rxjs';
+import { delay, lastValueFrom } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,14 @@ import { delay } from 'rxjs';
 export class ClientesService {
   clienteService = inject(ClienteService);
   dialog = inject(MatDialog);
+
+  form = new FormGroup({
+    estado: new FormControl('S'),
+    tipo_doc: new FormControl('0'),
+    doc: new FormControl(''),
+    cliente: new FormControl(''),
+    limit: new FormControl('20'),
+  });
 
   listClientes = signal<Cliente[]>([]);
   isLoading = signal<boolean>(false);
@@ -48,21 +57,23 @@ export class ClientesService {
     });
   }
 
-  listarClientes(filtros?: ClienteFiltro) {
+  listarClientes() {
+    const form = this.form.value;
+    const filtros: ClienteFiltro = {
+      activo: form.estado,
+      tipo_doc: form.tipo_doc,
+      documento: form.doc,
+      nombres: form.cliente,
+      limit: form.limit,
+    };
+
     this.isLoading.set(true);
     this.clienteService
       .getAll(filtros)
-      //.pipe(delay(800))
+      .pipe(delay(800))
       .subscribe({
         next: (res: any) => {
           this.listClientes.set(res.data);
-          /*
-          if (res?.isSuccess) {
-            this.listClientes.set(res.data)
-          } else {
-            alert(res?.mensaje);
-          }
-          */
         },
         error: (err: any) => {
           alert(err.message);
@@ -72,6 +83,18 @@ export class ClientesService {
           this.isLoading.set(false);
         },
       });
+  }
+
+  async getAll() {
+    const form = this.form.value;
+    const filtros: ClienteFiltro = {
+      activo: form.estado,
+      tipo_doc: form.tipo_doc,
+      documento: form.doc,
+      nombres: form.cliente,
+      limit: '10000',
+    };
+    return lastValueFrom(this.clienteService.getAll(filtros));
   }
 
   openDialogCliente(): void {

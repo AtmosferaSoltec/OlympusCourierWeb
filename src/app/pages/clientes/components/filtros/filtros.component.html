@@ -1,9 +1,9 @@
 <form
-  [formGroup]="form"
+  [formGroup]="clientesService.form"
   (submit)="filtrar()"
   class="flex flex-wrap items-end gap-2 mt-2 mb-4"
 >
-  @if (uuarioService.usuario()?.cod_rol === 'A') {
+  @if (usuarioService.usuario()?.cod_rol === 'A') {
   <div>
     <label class="block mb-1 text-sm font-medium text-t">Estado</label>
     <select
