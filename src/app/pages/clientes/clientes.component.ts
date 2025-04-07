@@ -87,6 +87,7 @@ export class ClientesComponent implements OnInit {
         NOMBRE: cliente?.nombres ?? '',
         DIRECCION: cliente?.direc ?? '',
         DISTRITO: cliente?.distrito ?? '',
+        MAPS: cliente?.url_maps ?? '',
         CORREO: cliente?.correo ?? '',
         TELF: cliente?.telefono ?? '',
       };
