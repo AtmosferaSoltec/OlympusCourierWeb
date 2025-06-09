@@ -93,9 +93,7 @@ export class ClientesService {
       documento: form.doc,
       nombres: form.cliente,
       limit: '10000',
-    };
-    console.log(filtros);
-    
+    };    
     return lastValueFrom(this.clienteService.getAll(filtros));
   }
 
