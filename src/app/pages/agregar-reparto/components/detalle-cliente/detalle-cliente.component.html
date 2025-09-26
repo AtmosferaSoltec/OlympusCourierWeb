@@ -1,37 +1,115 @@
-<div>
-  <div class="flex flex-row items-center justify-end gap-4">
-    <app-boton icon="close" text="Limpiar" (clickEvent)="borrar()" />
-    <app-boton icon="edit" text="Editar" (clickEvent)="service.openDialog()" />
+<div class="flex flex-col gap-3">
+  <!-- Acciones (compacto) -->
+  <div class="flex flex-wrap items-center justify-between gap-2">
+    <h2 class="text-sm font-extrabold text-textos">Cliente</h2>
+    <div class="flex items-center gap-2">
+      <app-boton icon="close" text="Limpiar" (clickEvent)="borrar()" />
+      <app-boton
+        icon="edit"
+        text="Editar"
+        (clickEvent)="service.openDialog()"
+      />
+    </div>
   </div>
 
-  <app-item-detalle
-    icon="description"
-    label="Documento"
-    [text]="service.client()?.documento"
-  />
-  <app-item-detalle
-    icon="person"
-    label="Cliente"
-    [text]="service.client()?.nombres"
-  />
-  <app-item-detalle
-    icon="call"
-    label="Celular"
-    [text]="service.client()?.telefono"
-  />
-  <app-item-detalle
-    icon="location_on"
-    label="Distrito"
-    [text]="service.client()?.distrito"
-  />
-  <app-item-detalle
-    icon="apartment"
-    label="Dirección"
-    [text]="service.client()?.direc"
-  />
-  <app-item-detalle
-    icon="assistant_direction"
-    label="Referencia"
-    [text]="service.client()?.referencia"
-  />
+  <!-- Contenedor compacto -->
+  <div
+    class="rounded-xl border border-white/10 bg-white/40 p-3 dark:bg-neutral-900/60"
+  >
+    <!-- Grid muy compacto y responsive -->
+    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">
+      <!-- Item -->
+      <div class="flex items-start gap-2">
+        <mat-icon class="!text-[18px] text-textos/80">description</mat-icon>
+        <div class="min-w-0">
+          <div class="text-[10px] uppercase tracking-wide text-textos/70">
+            Documento
+          </div>
+          <div
+            class="text-sm font-semibold text-textos truncate"
+            [title]="service.client()?.documento | uppercase"
+          >
+            {{ service.client()?.documento | uppercase }}
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-2">
+        <mat-icon class="!text-[18px] text-textos/80">person</mat-icon>
+        <div class="min-w-0">
+          <div class="text-[10px] uppercase tracking-wide text-textos/70">
+            Cliente
+          </div>
+          <div
+            class="text-sm font-semibold text-textos truncate"
+            [title]="service.client()?.nombres | uppercase"
+          >
+            {{ service.client()?.nombres | uppercase }}
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-2">
+        <mat-icon class="!text-[18px] text-textos/80">call</mat-icon>
+        <div class="min-w-0">
+          <div class="text-[10px] uppercase tracking-wide text-textos/70">
+            Celular
+          </div>
+          <div
+            class="text-sm font-semibold text-textos truncate"
+            [title]="service.client()?.telefono | uppercase"
+          >
+            {{ service.client()?.telefono | uppercase }}
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-2">
+        <mat-icon class="!text-[18px] text-textos/80">location_on</mat-icon>
+        <div class="min-w-0">
+          <div class="text-[10px] uppercase tracking-wide text-textos/70">
+            Distrito
+          </div>
+          <div
+            class="text-sm font-semibold text-textos truncate"
+            [title]="service.client()?.distrito | uppercase"
+          >
+            {{ service.client()?.distrito | uppercase }}
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-2">
+        <mat-icon class="!text-[18px] text-textos/80">apartment</mat-icon>
+        <div class="min-w-0">
+          <div class="text-[10px] uppercase tracking-wide text-textos/70">
+            Dirección
+          </div>
+          <div
+            class="text-sm font-semibold text-textos truncate"
+            [title]="service.client()?.direc | uppercase"
+          >
+            {{ service.client()?.direc | uppercase }}
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-2">
+        <mat-icon class="!text-[18px] text-textos/80"
+          >assistant_direction</mat-icon
+        >
+        <div class="min-w-0">
+          <div class="text-[10px] uppercase tracking-wide text-textos/70">
+            Referencia
+          </div>
+          <div
+            class="text-sm font-semibold text-textos truncate"
+            [title]="service.client()?.referencia | uppercase"
+          >
+            {{ service.client()?.referencia | uppercase }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

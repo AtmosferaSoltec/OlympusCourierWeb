@@ -3,10 +3,16 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-item-detalle',
   standalone: true,
+  selector: 'app-item-detalle',
   imports: [CommonModule, MatIconModule],
-  templateUrl: './item-detalle.component.html',
+  template: `
+    <div class="flex flex-row items-center gap-2 text-lg">
+      <mat-icon class="text-textos">{{ icon }}</mat-icon>
+      <span class="text-textos">{{ label }}</span>
+      <span>{{ text | uppercase }}</span>
+    </div>
+  `,
 })
 export class ItemDetalleComponent {
   @Input() icon?: string;
