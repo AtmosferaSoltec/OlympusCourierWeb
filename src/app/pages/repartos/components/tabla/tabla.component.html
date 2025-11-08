@@ -1,112 +1,221 @@
-<div class="overflow-x-auto shadow-sm rounded-xl">
-  <table class="w-full text-sm text-center rtl:text-right text-textos">
-    <thead class="text-sm uppercase bg-white border-b text-textos">
-      <tr>
-        <th scope="col" class="px-6 py-3">N° Reparto</th>
-        <th scope="col" class="px-6 py-3">Cliente</th>
-        <th scope="col" class="px-6 py-3">Creado</th>
-        <th scope="col" class="px-6 py-3">Estado Envio</th>
-        <th scope="col" class="px-6 py-3">Estado</th>
-        <th scope="col" class="px-6 py-3">C. Adicional</th>
-        <th scope="col" class="px-6 py-3">C. Reparto</th>
-        <th scope="col" class="px-6 py-3">Total</th>
-        <th scope="col" class="px-6 py-3"></th>
-      </tr>
-    </thead>
-    <tbody>
-      @if(repartosService.isLoading()){
-      <tr class="bg-white">
-        <td colspan="9" class="py-3">
-          <div class="flex items-center justify-center">
-            <div class="loader"></div>
-          </div>
-        </td>
-      </tr>
-      }@else { @for (item of repartosService.listRepartosNew(); track $index) {
-      <tr class="bg-white border-b">
-        <td class="px-6 py-2">
-          #{{ item.num_reparto | formatNum : 6 }}<br />
-          {{ item.usuario | uppercase }}
-        </td>
-        <td class="px-6 py-2">{{ item.cliente }}</td>
-        <td class="px-6 py-2">
-          {{ item.fecha_creacion | date : "dd/MM/yyyy" }}
-        </td>
-        <td class="px-6 py-2">
-          <p class="status" [ngClass]="item.estado">
-            {{ item.estado | mostrarEstado }}
-          </p>
-        </td>
-        <td class="px-6 py-2">{{ item.activo | mostrarActivo }}</td>
-        <td class="px-6 py-2">
-          S/{{ item.costo_adicional | number : "1.2-2" }}<br />
-        </td>
-        <td class="px-6 py-2">
-          S/{{ item.costo_reparto | number : "1.2-2" }}<br />
-        </td>
-        <td class="px-6 py-2">
-          S/
-          {{
-            (item.costo_adicional ?? 0) + (item.costo_reparto ?? 0)
-              | number : "1.2-2"
-          }}
-          <br />
-          @if(item.comprobante){
-          {{ item.comprobante }}
-          }@else { - }
-        </td>
-        <td class="px-6 py-2">
-          <button mat-icon-button [mat-menu-trigger-for]="acciones">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #acciones="matMenu">
-            @if (item.activo == "S") {
+<div
+  class="rounded-2xl border border-white/10 bg-white/50 dark:bg-neutral-900/60 shadow-sm"
+>
+  <!-- Tabla responsive horizontal -->
+  <div class="overflow-x-auto rounded-2xl">
+    <table class="w-full text-sm text-left text-textos">
+      <!-- THEAD sticky -->
+      <thead
+        class="sticky top-0 z-10 bg-white/80 dark:bg-neutral-900/80 backdrop-blur border-b border-white/10"
+      >
+        <tr class="text-[11px] uppercase tracking-wide text-textos/70">
+          <th scope="col" class="px-4 py-3">N° Reparto</th>
+          <th scope="col" class="px-4 py-3">Cliente</th>
+          <th scope="col" class="px-4 py-3">Creado</th>
+          <th scope="col" class="px-4 py-3">Estado Envío</th>
+          <th scope="col" class="px-4 py-3">Estado</th>
+          <th scope="col" class="px-4 py-3 hidden md:table-cell">
+            C. Adicional
+          </th>
+          <th scope="col" class="px-4 py-3 hidden md:table-cell">C. Reparto</th>
+          <th scope="col" class="px-4 py-3">Total</th>
+          <th scope="col" class="px-2 py-3 text-right w-10"></th>
+        </tr>
+      </thead>
 
-            <!-- Ver Detalle -->
-            <button mat-menu-item (click)="toDetalle(item.id)">
-              <span>Ver Detalle</span>
-              <mat-icon>visibility</mat-icon>
+      <tbody class="divide-y divide-white/10">
+        <!-- LOADING: skeleton rows -->
+        @if(repartosService.isLoading()){ @for (_ of [0,1,2,3,4,5]; track
+        $index) {
+        <tr class="bg-white dark:bg-neutral-900">
+          <td colspan="9" class="px-4 py-3">
+            <div class="grid grid-cols-8 gap-3 animate-pulse">
+              <div
+                class="h-4 bg-black/5 dark:bg-white/10 rounded col-span-2"
+              ></div>
+              <div
+                class="h-4 bg-black/5 dark:bg-white/10 rounded col-span-2"
+              ></div>
+              <div
+                class="h-4 bg-black/5 dark:bg-white/10 rounded col-span-1"
+              ></div>
+              <div
+                class="h-4 bg-black/5 dark:bg-white/10 rounded col-span-1"
+              ></div>
+              <div
+                class="h-4 bg-black/5 dark:bg-white/10 rounded col-span-1"
+              ></div>
+              <div
+                class="h-4 bg-black/5 dark:bg-white/10 rounded col-span-1"
+              ></div>
+            </div>
+          </td>
+        </tr>
+        } } @else {
+
+        <!-- ROWS -->
+        @for (item of repartosService.listRepartosNew(); track $index) {
+        <tr
+          class="bg-white dark:bg-neutral-900 hover:bg-black/[0.02] dark:hover:bg-white/[0.02]"
+        >
+          <!-- N° Reparto / Usuario -->
+          <td class="px-4 py-2 align-top">
+            <div class="font-mono text-[13px] font-semibold">
+              #{{ item.num_reparto | formatNum : 6 }}
+            </div>
+            <div class="text-[11px] text-textos/70">
+              {{ item.usuario | uppercase }}
+            </div>
+          </td>
+
+          <!-- Cliente -->
+          <td class="px-4 py-2 align-top">
+            <div
+              class="font-semibold truncate max-w-[18ch] md:max-w-[28ch]"
+              [title]="item.cliente"
+            >
+              {{ item.cliente }}
+            </div>
+          </td>
+
+          <!-- Creado -->
+          <td class="px-4 py-2 align-top">
+            <span class="inline-flex items-center gap-1 text-xs">
+              <mat-icon class="!text-[16px] text-textos/60">event</mat-icon>
+              {{ item.fecha_creacion | date : "dd/MM/yyyy" }}
+            </span>
+          </td>
+
+          <!-- Estado Envío (badge por estado) -->
+          <td class="px-4 py-2 align-top">
+            <span
+              class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold ring-1"
+              [ngClass]="{
+                'bg-emerald-50 text-emerald-700 ring-emerald-200':
+                  item.estado === 'E',
+                'bg-amber-50 text-amber-700 ring-amber-200':
+                  item.estado === 'P',
+                'bg-sky-50 text-sky-700 ring-sky-200': item.estado === 'R',
+                'bg-rose-50 text-rose-700 ring-rose-200': item.estado === 'C',
+                'bg-slate-50 text-slate-700 ring-slate-200':
+                  item.estado !== 'E' &&
+                  item.estado !== 'P' &&
+                  item.estado !== 'R' &&
+                  item.estado !== 'C'
+              }"
+            >
+              <span
+                class="h-1.5 w-1.5 rounded-full"
+                [ngClass]="{
+                  'bg-emerald-500': item.estado === 'E',
+                  'bg-amber-500': item.estado === 'P',
+                  'bg-sky-500': item.estado === 'R',
+                  'bg-rose-500': item.estado === 'C',
+                  'bg-slate-400':
+                    item.estado !== 'E' &&
+                    item.estado !== 'P' &&
+                    item.estado !== 'R' &&
+                    item.estado !== 'C'
+                }"
+              ></span>
+              {{ item.estado | mostrarEstado }}
+            </span>
+          </td>
+
+          <!-- Estado (activo) -->
+          <td class="px-4 py-2 align-top">
+            <span
+              class="inline-flex items-center rounded-md bg-black/5 dark:bg-white/10 px-2 py-0.5 text-[11px] font-medium"
+            >
+              {{ item.activo | mostrarActivo }}
+            </span>
+          </td>
+
+          <!-- C. Adicional -->
+          <td class="px-4 py-2 align-top hidden md:table-cell">
+            <div class="font-mono text-[13px]">
+              S/{{ item.costo_adicional | number : "1.2-2" }}
+            </div>
+          </td>
+
+          <!-- C. Reparto -->
+          <td class="px-4 py-2 align-top hidden md:table-cell">
+            <div class="font-mono text-[13px]">
+              S/{{ item.costo_reparto | number : "1.2-2" }}
+            </div>
+          </td>
+
+          <!-- Total + Comprobante -->
+          <td class="px-4 py-2 align-top">
+            <div class="font-mono text-[13px] font-bold">
+              S/{{
+                (item.costo_adicional ?? 0) + (item.costo_reparto ?? 0)
+                  | number : "1.2-2"
+              }}
+            </div>
+            <div class="text-[11px] text-textos/60">
+              @if(item.comprobante){ {{ item.comprobante }} } @else { — }
+            </div>
+          </td>
+
+          <!-- Acciones -->
+          <td class="px-2 py-2 align-top text-right">
+            <!-- Usa el input correcto: [matMenuTriggerFor] -->
+            <button mat-icon-button [matMenuTriggerFor]="acciones">
+              <mat-icon>more_vert</mat-icon>
             </button>
 
-            <!-- Solo si no ha sido entregado -->
-            @if (item.estado !== 'E') {
-            <!-- Editar -->
-            <button mat-menu-item (click)="toEditar(item.id)">
-              <mat-icon>edit</mat-icon>
-              <span>Editar</span>
-            </button>
-            }
+            <!-- Define el menú en la misma fila y usa un nombre fijo -->
+            <mat-menu #acciones="matMenu">
+              @if (item.activo == "S") {
 
-            <!-- Solo si es Admin -->
-            @if(usuarioService.usuario()?.cod_rol == 'A') { @if
-            (!item.comprobante){
-            <!-- Eliminar -->
-            <button mat-menu-item (click)="deleteReparto(item)">
-              <mat-icon>delete</mat-icon>
-              Eliminar
-            </button>
-            } } } @else {
-            <!-- Solo si es Admin -->
-            @if(usuarioService.usuario()?.cod_rol == 'A'){
-            <!-- Restaurar -->
-            <button mat-menu-item (click)="recuperarReparto(item)">
-              <mat-icon>restart_alt</mat-icon>
-              Restaurar
-            </button>
-            } }
-          </mat-menu>
-        </td>
-      </tr>
-      }@empty {
-      <tr class="bg-white border-b">
-        <td colspan="9" class="py-2">
-          <div class="flex items-center justify-center flew-row">
-            <mat-icon>hourglass_empty</mat-icon>
-            Sin Datos
-          </div>
-        </td>
-      </tr>
-      } }
-    </tbody>
-  </table>
+              <button mat-menu-item (click)="toDetalle(item.id)">
+                <span>Ver Detalle</span>
+                <mat-icon>visibility</mat-icon>
+              </button>
+
+              @if (item.estado !== 'E') {
+              <button mat-menu-item (click)="toEditar(item.id)">
+                <mat-icon>edit</mat-icon>
+                <span>Editar</span>
+              </button>
+              } @if (usuarioService.usuario()?.cod_rol == 'A') { @if
+              (!item.comprobante) {
+              <button mat-menu-item (click)="deleteReparto(item)">
+                <mat-icon>delete</mat-icon>
+                Eliminar
+              </button>
+              } } } @else { @if (usuarioService.usuario()?.cod_rol == 'A') {
+              <button mat-menu-item (click)="recuperarReparto(item)">
+                <mat-icon>restart_alt</mat-icon>
+                Restaurar
+              </button>
+              } }
+            </mat-menu>
+          </td>
+        </tr>
+        } @empty {
+        <!-- EMPTY STATE -->
+        <tr>
+          <td colspan="9" class="px-6 py-10">
+            <div
+              class="flex flex-col items-center justify-center gap-2 text-center"
+            >
+              <div
+                class="flex h-12 w-12 items-center justify-center rounded-full bg-black/5 dark:bg-white/10"
+              >
+                <mat-icon>hourglass_empty</mat-icon>
+              </div>
+              <div class="text-sm font-semibold">Sin datos</div>
+              <div class="text-xs text-textos/60 max-w-sm">
+                No encontramos repartos para mostrar. Ajusta los filtros o
+                vuelve a intentarlo.
+              </div>
+            </div>
+          </td>
+        </tr>
+        } }
+      </tbody>
+    </table>
+  </div>
 </div>
