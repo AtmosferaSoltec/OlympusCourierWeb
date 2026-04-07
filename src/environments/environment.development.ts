@@ -1,7 +1,9 @@
 export const environment = {
-    //baseUrl: 'https://atmosfera-soltec.online:7878',
-    //newUrl: 'https://atmosfera-soltec.online:7979',
-    baseUrl: 'https://atmosfera-soltec.com/olympus-courier-express',
-    newUrl: 'https://atmosfera-soltec.com/olympus-courier-nestjs',
-    token: ''
+  //baseUrl: 'https://atmosfera-soltec.online:7878',
+  //newUrl: 'https://atmosfera-soltec.online:7979',
+  baseUrl: 'http://localhost:7878',
+  newUrl: 'http://localhost:7979',
+  //baseUrl: 'https://atmosfera-soltec.com/olympus-courier-express',
+  //newUrl: 'https://atmosfera-soltec.com/olympus-courier-nestjs',
+  token: '',
 };

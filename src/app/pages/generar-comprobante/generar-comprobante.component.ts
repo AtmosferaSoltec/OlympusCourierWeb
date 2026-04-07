@@ -1,7 +1,14 @@
-import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Reparto } from '../../interfaces/reparto';
@@ -11,7 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { EmpresaService } from '../../services/empresa.service';
 import Swal from 'sweetalert2';
 import { ComprobanteService } from '../../services/comprobante.service';
-import { FormatNumPipe } from "../../pipes/format-num.pipe";
+import { FormatNumPipe } from '../../pipes/format-num.pipe';
 import { GenerarComprobanteService } from './generar-comprobante.service';
 import { ConsultasService } from '../../services/consultas.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -23,17 +30,20 @@ import { MostrarContenidoPipe } from '../../pipes/mostrar-contenido.pipe';
   templateUrl: './generar-comprobante.component.html',
   styleUrl: './generar-comprobante.component.css',
   imports: [
-    CommonModule, MatIconModule, RouterOutlet,
-    FormatNumPipe, MatButtonModule, MatTooltipModule,
-    FormsModule, FormatNumPipe,
-    MatProgressSpinnerModule, MostrarContenidoPipe
-  ]
+    CommonModule,
+    MatIconModule,
+    FormatNumPipe,
+    MatButtonModule,
+    MatTooltipModule,
+    FormsModule,
+    FormatNumPipe,
+    MatProgressSpinnerModule,
+    MostrarContenidoPipe,
+  ],
 })
 export class GenerarComprobanteComponent implements OnInit, OnDestroy {
-
-
-  generarComprobanteService = inject(GenerarComprobanteService)
-  consultaService = inject(ConsultasService)
+  generarComprobanteService = inject(GenerarComprobanteService);
+  consultaService = inject(ConsultasService);
 
   serie_f = signal<string>('F001');
   num_f = signal<number>(0);
@@ -41,22 +51,25 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
   num_b = signal<number>(0);
 
   loading = signal<boolean>(false);
-  tipoComprobante = signal<number>(2)
-  listMetodoPago = computed(() => this.generarComprobanteService.listMetodoPago())
-  empresaService = inject(EmpresaService)
-  router = inject(Router)
-  repartoService = inject(RepartoService)
+  tipoComprobante = signal<number>(2);
+  listMetodoPago = computed(() =>
+    this.generarComprobanteService.listMetodoPago(),
+  );
+  empresaService = inject(EmpresaService);
+  router = inject(Router);
+  repartoService = inject(RepartoService);
   reparto: Reparto | null = null;
-  paqueteService = inject(PaqueteService)
-  comprobanteService = inject(ComprobanteService)
+  paqueteService = inject(PaqueteService);
+  comprobanteService = inject(ComprobanteService);
 
   metodoPago = '';
   num_operacion = '';
   doc = '';
   nombre = '';
   direc = '';
-  telefono = '';
   correo = '';
+  telefono = '';
+  detalleComprobante = '';
 
   ngOnDestroy(): void {
     this.generarComprobanteService.reset();
@@ -67,15 +80,14 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
     let total = 0;
     list.forEach((item: any) => {
       total += item.total;
-    })
+    });
     return total;
   }
 
   ngOnInit(): void {
-
     //Verificar si hay repartos seleccionados
     if (this.generarComprobanteService.listRepartos().length === 0) {
-      this.router.navigate(['menu', 'pagos'])
+      this.router.navigate(['menu', 'pagos']);
     }
 
     this.generarComprobanteService.listarMetodosPago();
@@ -89,17 +101,16 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
           this.serie_b.set(res.data.serie_b);
           this.num_b.set(res.data.num_b + 1);
         }
-      }
-    })
+      },
+    });
   }
 
-
   back() {
-    this.router.navigate(['menu', 'pagos'])
+    this.router.navigate(['menu', 'pagos']);
   }
 
   setTipoComprobante(valor: 1 | 2) {
-    this.tipoComprobante.set(valor)
+    this.tipoComprobante.set(valor);
   }
 
   isLoadingSearchDoc = signal<boolean>(false);
@@ -108,22 +119,21 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
     this.isLoadingSearchDoc.set(true);
     if (this.doc) {
       if (this.tipoComprobante() === 1) {
-        const data = await this.consultaService.searchDoc(this.doc, 'ruc')
+        const data = await this.consultaService.searchDoc(this.doc, 'ruc');
 
-        this.nombre = data?.nombres
-        this.direc = data?.direc
-        this.correo = data?.correo
-        this.telefono = data?.telefono
+        this.nombre = data?.nombres;
+        this.direc = data?.direc;
+        this.correo = data?.correo;
+        this.telefono = data?.telefono;
       }
 
       if (this.tipoComprobante() === 2) {
-        const data = await this.consultaService.searchDoc(this.doc, 'dni')
+        const data = await this.consultaService.searchDoc(this.doc, 'dni');
         if (data) {
-          this.nombre = data?.nombres
-          this.direc = data?.direc
-          this.correo = data?.correo
-          this.telefono = data?.telefono
-
+          this.nombre = data?.nombres;
+          this.direc = data?.direc;
+          this.correo = data?.correo;
+          this.telefono = data?.telefono;
         }
       }
     }
@@ -137,14 +147,14 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
 
     //Hacer validciones en el formulario
 
-    //Verificar si el tipo de comprobante coincide con el tipo de documento
+    // Verificar si el tipo de comprobante coincide con el tipo de documento
     if (this.tipoComprobante() == 1) {
       if (this.doc?.length !== 11) {
         Swal.fire({
           title: 'Error',
           text: 'El documento debe tener 11 dígitos',
           icon: 'error',
-          confirmButtonText: 'Ok'
+          confirmButtonText: 'Ok',
         });
         this.isLoading.set(false);
         return;
@@ -155,14 +165,14 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
           title: 'Error',
           text: 'El documento debe tener 8 o 9 dígitos',
           icon: 'error',
-          confirmButtonText: 'Ok'
+          confirmButtonText: 'Ok',
         });
         this.isLoading.set(false);
         return;
       }
     }
 
-    let tipoDoc = 1
+    let tipoDoc = 1;
 
     if (this.tipoComprobante() == 1) {
       tipoDoc = 6;
@@ -172,6 +182,17 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
       } else if (this.doc.length == 9) {
         tipoDoc = 4;
       }
+    }
+
+    if (this.detalleComprobante.trim().length === 0) {
+      Swal.fire({
+        title: 'Error',
+        text: 'El detalle del comprobante es obligatorio',
+        icon: 'error',
+        confirmButtonText: 'Ok',
+      });
+      this.isLoading.set(false);
+      return;
     }
 
     const body = {
@@ -185,10 +206,11 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
       direc: this.direc,
       correo: this.correo,
       telefono: this.telefono,
+      detalleComprobante: this.detalleComprobante,
       repartos: this.generarComprobanteService.listRepartos().map((item) => {
-        return item.id
-      })
-    }
+        return item.id;
+      }),
+    };
 
     this.comprobanteService.insert(body).subscribe({
       next: (res) => {
@@ -197,16 +219,16 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
             title: 'Éxito',
             text: 'Comprobante generado correctamente',
             icon: 'success',
-            confirmButtonText: 'Ok'
-          })
-          this.router.navigate(['menu', 'comprobantes'])
+            confirmButtonText: 'Ok',
+          });
+          this.router.navigate(['menu', 'comprobantes']);
         } else {
           Swal.fire({
             title: 'Error',
             text: res?.mensaje ?? 'Error al generar comprobante',
             icon: 'error',
-            confirmButtonText: 'Ok'
-          })
+            confirmButtonText: 'Ok',
+          });
         }
         this.loading.set(false);
       },
@@ -216,7 +238,7 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
       },
       complete: () => {
         this.isLoading.set(false);
-      }
-    })
+      },
+    });
   }
 }
