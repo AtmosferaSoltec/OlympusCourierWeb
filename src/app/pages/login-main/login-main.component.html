@@ -1,50 +1,159 @@
-<div
-  class="flex flex-col items-center justify-center w-full min-h-screen gap-8 bg-colorP1 py-8 px-4"
->
-  <img
-    class="w-full max-w-[240px] md:max-w-[380px]"
-    src="../../../assets/full_logo.png"
-    alt="Logo"
-  />
-  <form
-    class="w-full max-w-[360px] p-6 bg-white shadow-2xl rounded-xl flex flex-col items-center gap-2"
-    [formGroup]="formulario"
-    (submit)="onSubmit()"
+<div class="min-h-screen flex flex-col lg:flex-row font-metropolis">
+  <!-- Panel izquierdo - branding (solo desktop) -->
+  <div
+    class="hidden lg:flex lg:w-[42%] flex-col items-center justify-between p-10 bg-gradient-to-br from-p-600 via-p-800 to-p-950 relative overflow-hidden"
   >
-    <span class="text-3xl font-medium">Bienvenido</span>
-    <p class="text-lg text-center text-textos">
-      Gestiona tus envíos de forma rápida y sencilla. ¡Inicia sesión!
-    </p>
+    <!-- Círculos decorativos -->
+    <div
+      class="absolute top-[-100px] right-[-100px] w-[350px] h-[350px] rounded-full bg-white opacity-[0.04]"
+    ></div>
+    <div
+      class="absolute bottom-[-80px] left-[-80px] w-[300px] h-[300px] rounded-full bg-white opacity-[0.04]"
+    ></div>
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-p-500 opacity-[0.06]"
+    ></div>
 
-    <div class="flex flex-col w-full gap-1">
-      <label class="text-xs text-textos">Usuario</label>
-      <input
-        type="text"
-        class="w-full border-0 rounded-sm outline-none bg-fondo ring-0 focus:outline-none focus:ring-0 focus:border-0"
-        placeholder="Ingrese su usuario"
-        formControlName="user"
-        required
+    <!-- Espacio superior -->
+    <div></div>
+
+    <!-- Contenido central -->
+    <div class="flex flex-col items-center z-10 text-center">
+      <img
+        src="../../../assets/full_logo_white.png"
+        class="w-60 mb-10 drop-shadow-xl"
+        alt="Olympus Courier"
+      />
+      <h2 class="text-white text-2xl font-semibold leading-snug">
+        Sistema de Gestión de Repartos
+      </h2>
+      <p class="text-p-200 mt-3 text-sm leading-relaxed max-w-[260px]">
+        Administra envíos, rutas y comprobantes desde un solo lugar.
+      </p>
+    </div>
+
+    <!-- Footer del panel izquierdo -->
+    <div class="flex flex-col items-center gap-1.5 z-10">
+      <span class="text-p-300 text-xs">Desarrollado por</span>
+      <img
+        src="../../../assets/atmosfera_logo3.png"
+        class="h-5"
+        alt="Atmosfera"
       />
     </div>
-    <div class="flex flex-col w-full gap-1 mb-6">
-      <label class="text-xs text-textos">Contraseña</label>
-      <input
-        type="password"
-        class="w-full border-0 rounded-sm outline-none bg-fondo ring-0 focus:outline-none focus:ring-0 focus:border-0"
-        placeholder="Ingrese su contraseña"
-        formControlName="clave"
-        required
+  </div>
+
+  <!-- Panel derecho - formulario -->
+  <div
+    class="flex-1 flex flex-col items-center justify-between bg-white px-6 py-10 lg:px-12"
+  >
+    <!-- Logo mobile -->
+    <div class="lg:hidden flex flex-col items-center my-8">
+      <img
+        src="../../../assets/full_logo.png"
+        class="h-18"
+        alt="Olympus Courier"
       />
+      <span class="text-xs text-textos mt-2 tracking-wide uppercase">
+        Sistema de Gestión de Repartos
+      </span>
     </div>
-    @if (loading()) {
-      <div class="progress"></div>
-    } @else {
-      <button
-        type="submit"
-        class="w-full rounded-full h-[42px] font-medium text-lg transition-colors text-white bg-p-700 hover:bg-p-600 active:bg-p-800"
+
+    <!-- Área del formulario -->
+    <div class="w-full max-w-[400px] flex flex-col justify-center flex-1">
+      <div class="mb-8">
+        <h1 class="text-2xl lg:text-3xl font-bold text-t">Bienvenido</h1>
+        <p class="text-textos mt-1.5 text-sm">
+          Ingresa tus credenciales para continuar
+        </p>
+      </div>
+
+      <form
+        [formGroup]="formulario"
+        (submit)="onSubmit()"
+        class="flex flex-col gap-4"
       >
-        Ingresar
-      </button>
-    }
-  </form>
+        <!-- Usuario -->
+        <div class="flex flex-col gap-1.5">
+          <label class="text-sm font-medium text-t">Usuario</label>
+          <div
+            class="flex items-center gap-2 bg-fondo rounded-xl px-3 py-3 border border-transparent focus-within:border-colorP1 focus-within:bg-white transition-all duration-200"
+          >
+            <span class="material-icons text-textos" style="font-size: 20px"
+              >person_outline</span
+            >
+            <input
+              type="text"
+              class="flex-1 bg-transparent border-0 outline-none ring-0 focus:outline-none focus:ring-0 text-sm text-t placeholder:text-textos"
+              placeholder="Ingrese su usuario"
+              formControlName="user"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="flex flex-col gap-1.5">
+          <label class="text-sm font-medium text-t">Contraseña</label>
+          <div
+            class="flex items-center gap-2 bg-fondo rounded-xl px-3 py-3 border border-transparent focus-within:border-colorP1 focus-within:bg-white transition-all duration-200"
+          >
+            <span class="material-icons text-textos" style="font-size: 20px"
+              >lock_outline</span
+            >
+            <input
+              type="password"
+              class="flex-1 bg-transparent border-0 outline-none ring-0 focus:outline-none focus:ring-0 text-sm text-t placeholder:text-textos"
+              placeholder="Ingrese su contraseña"
+              formControlName="clave"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- ¿Olvidaste tu contraseña? -->
+        <!--
+        <div class="text-right -mt-1">
+          <a
+            routerLink="/forgot-password"
+            class="text-sm text-colorP1 hover:text-p-800 hover:underline transition-colors"
+          >
+            ¿Olvidaste tu contraseña?
+          </a>
+        </div>
+        -->
+
+        <!-- Botón de submit -->
+        @if (loading()) {
+          <div class="progress mt-2"></div>
+        } @else {
+          <button
+            type="submit"
+            class="w-full rounded-full h-[48px] font-semibold text-base transition-all duration-200 text-white bg-p-700 hover:bg-p-600 active:bg-p-800 shadow-md hover:shadow-lg mt-1"
+          >
+            Iniciar sesión
+          </button>
+        }
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-[400px] mt-10">
+      <div
+        class="border-t border-gray-100 pt-5 flex flex-col items-center gap-2"
+      >
+        <p class="text-xs text-textos text-center">
+          © {{ currentYear }} Olympus Courier. Todos los derechos reservados.
+        </p>
+        <div class="flex items-center gap-1.5">
+          <span class="text-xs text-textos">Desarrollado por</span>
+          <img
+            src="../../../assets/atmosfera_logo.png"
+            class="h-3.5 opacity-70"
+            alt="Atmosfera"
+          />
+        </div>
+      </div>
+    </footer>
+  </div>
 </div>

@@ -6,20 +6,21 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-login-main',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login-main.component.html',
 })
 export class LoginMainComponent {
   router = inject(Router);
   usuarioService = inject(UsuarioService);
   loading = signal(false);
+  currentYear = new Date().getFullYear();
 
   formulario = new FormGroup({
     user: new FormControl('', [Validators.required, Validators.minLength(8)]),
