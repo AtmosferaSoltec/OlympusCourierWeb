@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { environment } from '../../environments/environment.development';
 import { TipoPaquete } from '../interfaces/tipo-paquete';
 import { State } from '../interfaces/state';
 import { delay } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

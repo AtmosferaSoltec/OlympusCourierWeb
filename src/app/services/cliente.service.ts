@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Cliente } from '../interfaces/cliente';
-import { Result, State } from '../interfaces/state';
+import { State } from '../interfaces/state';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +36,7 @@ export class ClienteService {
     const call = this.http.post(
       this.url + '/exportarCliente',
       { listClientes },
-      { responseType: 'arraybuffer' }
+      { responseType: 'arraybuffer' },
     );
     call.subscribe({
       next: (data: ArrayBuffer) => {

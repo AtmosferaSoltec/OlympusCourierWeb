@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { Result } from '../interfaces/state';
 
 @Injectable({
@@ -21,8 +21,7 @@ export class RepartoService {
 
   getAllNew(params: any) {
     const query = this.http.get(this.newUrl, { params: params });
-    return query
-    
+    return query;
   }
 
   setActivo(id_reparto: number, activo: 'S' | 'N') {

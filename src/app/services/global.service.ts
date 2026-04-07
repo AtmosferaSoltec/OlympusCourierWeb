@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { Reparto, RepartoNew } from '../interfaces/reparto';
-import { format, parseISO } from 'date-fns';
+import { RepartoNew } from '../interfaces/reparto';
+import { format } from 'date-fns';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class GlobalService {
   exportarList2(
     data: any[],
     nombreHoja: string,
-    workbook: XLSX.WorkBook = XLSX.utils.book_new()
+    workbook: XLSX.WorkBook = XLSX.utils.book_new(),
   ): XLSX.WorkBook {
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     XLSX.utils.book_append_sheet(workbook, worksheet, nombreHoja);
@@ -22,14 +22,14 @@ export class GlobalService {
 
   exportarVariasListas(
     parametros: { nombreHoja: string; data: any[] }[],
-    nombreExcel: string
+    nombreExcel: string,
   ) {
     let workbook: XLSX.WorkBook = XLSX.utils.book_new();
     for (const parametro of parametros) {
       workbook = this.exportarList2(
         parametro.data,
         parametro.nombreHoja,
-        workbook
+        workbook,
       );
     }
     const excelBuffer: any = XLSX.write(workbook, {
@@ -73,12 +73,12 @@ export class GlobalService {
           reparto.estado === 'P'
             ? 'Pendiente'
             : reparto.estado === 'E'
-            ? 'Entregado'
-            : reparto.estado === 'C'
-            ? 'En Curso'
-            : reparto.estado === 'A'
-            ? 'Anulado'
-            : '',
+              ? 'Entregado'
+              : reparto.estado === 'C'
+                ? 'En Curso'
+                : reparto.estado === 'A'
+                  ? 'Anulado'
+                  : '',
         USUARIO: reparto.usuario,
         ENTREGADO: reparto.entregado,
         CLIENTE: reparto.cliente,
@@ -91,7 +91,7 @@ export class GlobalService {
         COBRO_ADICIONAL: Number(reparto.costo_adicional),
         COBRO_REPARTO: Number(reparto.costo_reparto),
         TOTAL: Number(
-          (reparto.costo_adicional ?? 0) + (reparto.costo_reparto ?? 0)
+          (reparto.costo_adicional ?? 0) + (reparto.costo_reparto ?? 0),
         ),
         URL_MAPS: reparto?.maps,
       };
