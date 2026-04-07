@@ -1,9 +1,13 @@
 <div
-  class="flex flex-col items-center justify-center w-screen h-screen gap-[32px] bg-colorP1"
+  class="flex flex-col items-center justify-center w-full min-h-screen gap-8 bg-colorP1 py-8 px-4"
 >
-  <img class="w-[400px]" src="../../../assets/full_logo.png" alt="Logo" />
+  <img
+    class="w-full max-w-[240px] md:max-w-[380px]"
+    src="../../../assets/full_logo.png"
+    alt="Logo"
+  />
   <form
-    class="mx-4 w-auto md:mx-0 p-6 bg-white shadow-2xl md:w-[360px] rounded-xl flex flex-col items-center gap-2"
+    class="w-full max-w-[360px] p-6 bg-white shadow-2xl rounded-xl flex flex-col items-center gap-2"
     [formGroup]="formulario"
     (submit)="onSubmit()"
   >
@@ -33,14 +37,14 @@
       />
     </div>
     @if (loading()) {
-    <div class="progress"></div>
-    }@else {
-    <button
-      type="submit"
-      class="w-full rounded-full h-[42px] font-medium text-lg transition-colors text-white bg-p-700 hover:bg-p-600 active:bg-p-800"
-    >
-      Ingresar
-    </button>
+      <div class="progress"></div>
+    } @else {
+      <button
+        type="submit"
+        class="w-full rounded-full h-[42px] font-medium text-lg transition-colors text-white bg-p-700 hover:bg-p-600 active:bg-p-800"
+      >
+        Ingresar
+      </button>
     }
   </form>
 </div>

@@ -39,9 +39,14 @@ export class UsuarioService {
   }
 
   async isLogged(): Promise<boolean> {
-    const call = this.http.get(`${this.baseUrl}/verificarToken`);
-    const res: any = await firstValueFrom(call);
-    return res?.isSuccess;
+    try {
+      const res: any = await firstValueFrom(
+        this.http.get(`${this.baseUrl}/verificarToken`)
+      );
+      return res?.isSuccess ?? false;
+    } catch {
+      return false;
+    }
   }
 
   getAll(params: any) {
