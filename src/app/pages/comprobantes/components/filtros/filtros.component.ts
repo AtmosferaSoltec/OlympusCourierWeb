@@ -7,10 +7,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService } from '../../../../services/usuario.service';
 
 @Component({
-  selector: 'app-filtros',
-  standalone: true,
-  imports: [CommonModule, BotonComponent, ReactiveFormsModule],
-  templateUrl: './filtros.component.html'
+    selector: 'app-filtros',
+    imports: [CommonModule, BotonComponent, ReactiveFormsModule],
+    templateUrl: './filtros.component.html'
 })
 export class FiltrosComponent {
   metodoPagoService = inject(MetodoPagoService);

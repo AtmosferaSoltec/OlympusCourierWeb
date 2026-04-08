@@ -14,17 +14,16 @@ import { FormatTelfPipe } from "../../pipes/format-telf.pipe";
 import { FormatNumPipe } from "../../pipes/format-num.pipe";
 
 @Component({
-  selector: 'app-detalle-reparto',
-  standalone: true,
-  templateUrl: './detalle-reparto.component.html',
-  styleUrl: './detalle-reparto.component.scss',
-  imports: [
-    CommonModule, MatIconModule, MatButtonModule,
-    RouterOutlet, CardItemComponent,
-    MatTooltipModule, DetalleItemComponent, MatMenuModule,
-    MostrarEstadoPipe, FormatTelfPipe,
-    FormatNumPipe
-  ]
+    selector: 'app-detalle-reparto',
+    templateUrl: './detalle-reparto.component.html',
+    styleUrl: './detalle-reparto.component.scss',
+    imports: [
+        CommonModule, MatIconModule, MatButtonModule,
+        RouterOutlet, CardItemComponent,
+        MatTooltipModule, DetalleItemComponent, MatMenuModule,
+        MostrarEstadoPipe, FormatTelfPipe,
+        FormatNumPipe
+    ]
 })
 export class DetalleRepartoComponent implements OnInit {
 

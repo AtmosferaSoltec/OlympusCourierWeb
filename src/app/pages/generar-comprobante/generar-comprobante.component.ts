@@ -25,21 +25,20 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MostrarContenidoPipe } from '../../pipes/mostrar-contenido.pipe';
 
 @Component({
-  selector: 'app-generar-comprobante',
-  standalone: true,
-  templateUrl: './generar-comprobante.component.html',
-  styleUrl: './generar-comprobante.component.css',
-  imports: [
-    CommonModule,
-    MatIconModule,
-    FormatNumPipe,
-    MatButtonModule,
-    MatTooltipModule,
-    FormsModule,
-    FormatNumPipe,
-    MatProgressSpinnerModule,
-    MostrarContenidoPipe,
-  ],
+    selector: 'app-generar-comprobante',
+    templateUrl: './generar-comprobante.component.html',
+    styleUrl: './generar-comprobante.component.css',
+    imports: [
+        CommonModule,
+        MatIconModule,
+        FormatNumPipe,
+        MatButtonModule,
+        MatTooltipModule,
+        FormsModule,
+        FormatNumPipe,
+        MatProgressSpinnerModule,
+        MostrarContenidoPipe,
+    ]
 })
 export class GenerarComprobanteComponent implements OnInit, OnDestroy {
   generarComprobanteService = inject(GenerarComprobanteService);

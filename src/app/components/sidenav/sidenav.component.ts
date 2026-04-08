@@ -10,11 +10,10 @@ import { DialogCambiarPassComponent } from '../dialog-cambiar-pass/dialog-cambia
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-sidenav',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, MatIconModule, MatTooltipModule],
-  templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss'
+    selector: 'app-sidenav',
+    imports: [CommonModule, RouterOutlet, MatIconModule, MatTooltipModule],
+    templateUrl: './sidenav.component.html',
+    styleUrl: './sidenav.component.scss'
 })
 export class SidenavComponent implements OnInit {
 

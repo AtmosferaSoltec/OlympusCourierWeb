@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm outdated:*)",
+      "Bash(npx ng:*)",
+      "Bash(npm install:*)",
+      "Bash(npm audit:*)",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\); const a=JSON.parse\\(d\\); const vulns=a.vulnerabilities||{}; const critical=Object.entries\\(vulns\\).filter\\(\\([k,v]\\)=>v.severity==='critical'||v.severity==='high'\\).map\\(\\([k,v]\\)=>k+': '+v.severity\\); console.log\\(critical.join\\('\\\\n'\\)\\)\")"
+    ]
+  }
+}

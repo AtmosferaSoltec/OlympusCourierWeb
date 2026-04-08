@@ -10,10 +10,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { AgregarRepartoService } from '../../agregar-reparto.service';
 
 @Component({
-  selector: 'app-tabla-items',
-  standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule],
-  templateUrl: './tabla-items.component.html'
+    selector: 'app-tabla-items',
+    imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule],
+    templateUrl: './tabla-items.component.html'
 })
 export class TablaItemsComponent {
 

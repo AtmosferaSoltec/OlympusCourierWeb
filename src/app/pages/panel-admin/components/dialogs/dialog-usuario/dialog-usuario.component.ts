@@ -1,5 +1,5 @@
 import { Component, Inject, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -10,14 +10,15 @@ import Swal from 'sweetalert2';
 import { PanelAdminService } from '../../../panel-admin.service';
 
 @Component({
-  selector: 'app-dialog-usuario',
-  standalone: true,
-  imports: [
-    CommonModule, MatIconModule, ReactiveFormsModule,
-    MatIconModule, MatRadioModule
-  ],
-  templateUrl: './dialog-usuario.component.html',
-  styleUrl: './dialog-usuario.component.scss'
+    selector: 'app-dialog-usuario',
+    imports: [
+    MatIconModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatRadioModule
+],
+    templateUrl: './dialog-usuario.component.html',
+    styleUrl: './dialog-usuario.component.scss'
 })
 export class DialogUsuarioComponent {
 

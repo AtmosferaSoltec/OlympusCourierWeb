@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
@@ -7,11 +7,10 @@ import { firstValueFrom } from 'rxjs';
 import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
-  selector: 'app-dialog-cambiar-pass',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './dialog-cambiar-pass.component.html',
-  styleUrl: './dialog-cambiar-pass.component.scss'
+    selector: 'app-dialog-cambiar-pass',
+    imports: [ReactiveFormsModule],
+    templateUrl: './dialog-cambiar-pass.component.html',
+    styleUrl: './dialog-cambiar-pass.component.scss'
 })
 export class DialogCambiarPassComponent {
 

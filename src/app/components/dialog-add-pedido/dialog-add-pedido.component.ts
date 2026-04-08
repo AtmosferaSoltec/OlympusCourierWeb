@@ -1,5 +1,5 @@
 import { Component, Inject, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
@@ -11,11 +11,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
-  selector: 'app-dialog-add-pedido',
-  standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, MatButtonModule, MatTooltipModule],
-  templateUrl: './dialog-add-pedido.component.html',
-  styleUrl: './dialog-add-pedido.component.scss'
+    selector: 'app-dialog-add-pedido',
+    imports: [FormsModule, MatIconModule, MatButtonModule, MatTooltipModule],
+    templateUrl: './dialog-add-pedido.component.html',
+    styleUrl: './dialog-add-pedido.component.scss'
 })
 export class DialogAddPedidoComponent {
 

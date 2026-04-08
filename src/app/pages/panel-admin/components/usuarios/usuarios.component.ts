@@ -15,11 +15,10 @@ import { FormatTelfPipe } from "../../../../pipes/format-telf.pipe";
 import { PanelAdminService } from '../../panel-admin.service';
 
 @Component({
-  selector: 'app-usuarios',
-  standalone: true,
-  templateUrl: './usuarios.component.html',
-  styleUrl: './usuarios.component.scss',
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarRolPipe, ReactiveFormsModule, MostrarActivoPipe, FormatTelfPipe]
+    selector: 'app-usuarios',
+    templateUrl: './usuarios.component.html',
+    styleUrl: './usuarios.component.scss',
+    imports: [CommonModule, MatIconModule, MatButtonModule, MatTooltipModule, MostrarRolPipe, ReactiveFormsModule, MostrarActivoPipe, FormatTelfPipe]
 })
 export class UsuariosComponent {
 

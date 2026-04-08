@@ -10,17 +10,16 @@ import { PanelAdminService } from './panel-admin.service';
 
 
 @Component({
-  selector: 'app-panel-admin',
-  standalone: true,
-  imports: [
-    CommonModule, MatIconModule,
-    RouterOutlet, MatTabsModule,
-    UsuariosComponent,
-    DestinosComponent, ComprobantesAdminComponent,
-    RouterOutlet
-  ],
-  templateUrl: './panel-admin.component.html',
-  styleUrl: './panel-admin.component.scss'
+    selector: 'app-panel-admin',
+    imports: [
+        CommonModule, MatIconModule,
+        RouterOutlet, MatTabsModule,
+        UsuariosComponent,
+        DestinosComponent, ComprobantesAdminComponent,
+        RouterOutlet
+    ],
+    templateUrl: './panel-admin.component.html',
+    styleUrl: './panel-admin.component.scss'
 })
 export class PanelAdminComponent implements OnDestroy {
 

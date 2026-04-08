@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ClienteService } from '../../services/cliente.service';
-import { CommonModule } from '@angular/common';
+
 import { Distrito } from '../../interfaces/distrito';
 import { DistritoService } from '../../services/distrito.service';
 import { Cliente } from '../../interfaces/cliente';
@@ -21,18 +21,16 @@ import { ConsultasService } from '../../services/consultas.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-dialog-add-cliente',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-dialog-add-cliente',
+    imports: [
     MenuSelectComponent,
     ReactiveFormsModule,
     MatIconModule,
     MatButtonModule,
-    MatProgressSpinnerModule,
-  ],
-  templateUrl: './dialog-add-cliente.component.html',
-  styleUrl: './dialog-add-cliente.component.scss',
+    MatProgressSpinnerModule
+],
+    templateUrl: './dialog-add-cliente.component.html',
+    styleUrl: './dialog-add-cliente.component.scss'
 })
 export class DialogAddClienteComponent {
   clienteService = inject(ClienteService);

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2';
 import { GlobalService } from '../../services/global.service';
@@ -11,14 +11,15 @@ import { Comprobante } from '../../interfaces/comprobante';
 import { format, parseISO } from 'date-fns';
 
 @Component({
-  selector: 'app-comprobantes',
-  standalone: true,
-  templateUrl: './comprobantes.component.html',
-  styleUrl: './comprobantes.component.scss',
-  imports: [
-    CommonModule, MatButtonModule, TituloComponent,
-    FiltrosComponent, TablaComponent
-  ]
+    selector: 'app-comprobantes',
+    templateUrl: './comprobantes.component.html',
+    styleUrl: './comprobantes.component.scss',
+    imports: [
+    MatButtonModule,
+    TituloComponent,
+    FiltrosComponent,
+    TablaComponent
+]
 })
 export class ComprobantesComponent implements OnDestroy{
   ngOnDestroy(): void {

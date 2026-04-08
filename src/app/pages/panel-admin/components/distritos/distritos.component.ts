@@ -12,18 +12,17 @@ import { DistritoService } from '../../../../services/distrito.service';
 import { MostrarActivoPipe } from '../../../../pipes/mostrar-activo.pipe';
 
 @Component({
-  selector: 'app-destinos',
-  standalone: true,
-  templateUrl: './distritos.component.html',
-  styleUrl: './distritos.component.css',
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-    MostrarActivoPipe,
-  ],
+    selector: 'app-destinos',
+    templateUrl: './distritos.component.html',
+    styleUrl: './distritos.component.css',
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatButtonModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        MostrarActivoPipe,
+    ]
 })
 export class DestinosComponent implements OnInit {
   distritoService = inject(DistritoService);

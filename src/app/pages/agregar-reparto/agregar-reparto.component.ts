@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -21,10 +21,8 @@ import { DistritoService } from '../../services/distrito.service';
 import { BuscarClienteComponent } from './components/buscar-cliente/buscar-cliente.component';
 import { DetalleClienteComponent } from "./components/detalle-cliente/detalle-cliente.component";
 @Component({
-  selector: 'app-agregar-reparto',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-agregar-reparto',
+    imports: [
     TablaItemsComponent,
     MatIconModule,
     MatButtonModule,
@@ -36,8 +34,8 @@ import { DetalleClienteComponent } from "./components/detalle-cliente/detalle-cl
     BuscarClienteComponent,
     DetalleClienteComponent
 ],
-  templateUrl: './agregar-reparto.component.html',
-  styleUrl: './agregar-reparto.component.css',
+    templateUrl: './agregar-reparto.component.html',
+    styleUrl: './agregar-reparto.component.css'
 })
 export class AgregarRepartoComponent implements OnInit, OnDestroy {
   vehiculo = 'T';

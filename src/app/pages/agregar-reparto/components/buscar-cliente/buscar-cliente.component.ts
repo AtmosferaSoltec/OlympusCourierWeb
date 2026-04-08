@@ -11,10 +11,9 @@ import { ClienteService } from '../../../../services/cliente.service';
 import { AgregarRepartoService } from '../../agregar-reparto.service';
 
 @Component({
-  selector: 'app-buscar-cliente',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './buscar-cliente.component.html',
+    selector: 'app-buscar-cliente',
+    imports: [CommonModule],
+    templateUrl: './buscar-cliente.component.html'
 })
 export class BuscarClienteComponent {
 

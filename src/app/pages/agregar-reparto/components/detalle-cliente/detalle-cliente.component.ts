@@ -6,10 +6,9 @@ import { ClienteService } from '../../../../services/cliente.service';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-detalle-cliente',
-  standalone: true,
-  imports: [CommonModule, MatIconModule, BotonComponent],
-  templateUrl: './detalle-cliente.component.html',
+    selector: 'app-detalle-cliente',
+    imports: [CommonModule, MatIconModule, BotonComponent],
+    templateUrl: './detalle-cliente.component.html'
 })
 export class DetalleClienteComponent {
   service = inject(AgregarRepartoService);

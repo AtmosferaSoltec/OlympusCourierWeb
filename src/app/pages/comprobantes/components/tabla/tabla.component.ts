@@ -15,17 +15,16 @@ import { ComprobanteService } from '../../../../services/comprobante.service';
 import { UsuarioService } from '../../../../services/usuario.service';
 
 @Component({
-  selector: 'app-tabla',
-  standalone: true,
-  templateUrl: './tabla.component.html',
-  styleUrl: './tabla.component.scss',
-  imports: [
-    CommonModule, MatIconModule, MatButtonModule,
-    MatTooltipModule, MatMenuModule,
-    MostrarEstadoNubefactPipe,
-    MostrarTipoDocumentoPipe,
-    FormatNumPipe
-  ]
+    selector: 'app-tabla',
+    templateUrl: './tabla.component.html',
+    styleUrl: './tabla.component.scss',
+    imports: [
+        CommonModule, MatIconModule, MatButtonModule,
+        MatTooltipModule, MatMenuModule,
+        MostrarEstadoNubefactPipe,
+        MostrarTipoDocumentoPipe,
+        FormatNumPipe
+    ]
 })
 export class TablaComponent {
   

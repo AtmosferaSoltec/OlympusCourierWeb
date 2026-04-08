@@ -10,14 +10,14 @@ import { MostrarContenidoPipe } from "../../../../pipes/mostrar-contenido.pipe";
 import { FormatNumPipe } from '../../../../pipes/format-num.pipe';
 
 @Component({
-  selector: 'app-tabla-repartos-encontrados',
-  standalone: true,
-  templateUrl: './tabla-repartos-encontrados.component.html',
-  styleUrl: './tabla-repartos-encontrados.component.scss',
-  imports: [
-    CommonModule, MatIconModule, MatButtonModule,
-    MatTooltipModule, MostrarActivoPipe, FormatNumPipe,
-    MostrarContenidoPipe]
+    selector: 'app-tabla-repartos-encontrados',
+    templateUrl: './tabla-repartos-encontrados.component.html',
+    styleUrl: './tabla-repartos-encontrados.component.scss',
+    imports: [
+        CommonModule, MatIconModule, MatButtonModule,
+        MatTooltipModule, MostrarActivoPipe, FormatNumPipe,
+        MostrarContenidoPipe
+    ]
 })
 export class TablaRepartosEncontradosComponent {
 

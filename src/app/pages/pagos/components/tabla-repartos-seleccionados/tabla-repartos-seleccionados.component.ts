@@ -10,7 +10,6 @@ import { FormatNumPipe } from "../../../../pipes/format-num.pipe";
 
 @Component({
     selector: 'app-tabla-repartos-seleccionados',
-    standalone: true,
     templateUrl: './tabla-repartos-seleccionados.component.html',
     imports: [
         CommonModule, MatIconModule, MatButtonModule,

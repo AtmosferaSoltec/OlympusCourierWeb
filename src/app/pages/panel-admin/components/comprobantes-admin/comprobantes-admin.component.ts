@@ -1,15 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { EmpresaService } from '../../../../services/empresa.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-comprobantes-admin',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './comprobantes-admin.component.html',
-  styleUrl: './comprobantes-admin.component.scss'
+    selector: 'app-comprobantes-admin',
+    imports: [ReactiveFormsModule],
+    templateUrl: './comprobantes-admin.component.html',
+    styleUrl: './comprobantes-admin.component.scss'
 })
 export class ComprobantesAdminComponent implements OnInit {
 

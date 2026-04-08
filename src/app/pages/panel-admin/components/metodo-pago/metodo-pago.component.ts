@@ -12,11 +12,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
-  selector: 'app-metodo-pago',
-  standalone: true,
-  templateUrl: './metodo-pago.component.html',
-  styleUrl: './metodo-pago.component.scss',
-  imports: [CommonModule, ReactiveFormsModule, MostrarActivoPipe, MatIconModule, MatButtonModule, MatTooltipModule]
+    selector: 'app-metodo-pago',
+    templateUrl: './metodo-pago.component.html',
+    styleUrl: './metodo-pago.component.scss',
+    imports: [CommonModule, ReactiveFormsModule, MostrarActivoPipe, MatIconModule, MatButtonModule, MatTooltipModule]
 })
 export class MetodoPagoComponent {
 

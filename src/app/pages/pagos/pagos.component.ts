@@ -1,5 +1,5 @@
 import { Component, OnDestroy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { BuscarRepartoComponent } from './components/buscar-reparto/buscar-reparto.component';
 import { TablaRepartosEncontradosComponent } from './components/tabla-repartos-encontrados/tabla-repartos-encontrados.component';
 import { TablaRepartosSeleccionadosComponent } from './components/tabla-repartos-seleccionados/tabla-repartos-seleccionados.component';
@@ -10,13 +10,15 @@ import { Router } from '@angular/router';
 import { GenerarComprobanteService } from '../generar-comprobante/generar-comprobante.service';
 
 @Component({
-  selector: 'app-pagos',
-  standalone: true,
-  imports: [
-    CommonModule, BuscarRepartoComponent, TablaRepartosEncontradosComponent,
-    TablaRepartosSeleccionadosComponent, BotonComponent, TituloComponent
-  ],
-  templateUrl: './pagos.component.html'
+    selector: 'app-pagos',
+    imports: [
+    BuscarRepartoComponent,
+    TablaRepartosEncontradosComponent,
+    TablaRepartosSeleccionadosComponent,
+    BotonComponent,
+    TituloComponent
+],
+    templateUrl: './pagos.component.html'
 })
 export class PagosComponent implements OnDestroy {
 

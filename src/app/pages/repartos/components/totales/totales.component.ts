@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RepartosService } from '../../repartos.service';
 
 @Component({
-  selector: 'app-totales',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './totales.component.html',
+    selector: 'app-totales',
+    imports: [CommonModule],
+    templateUrl: './totales.component.html'
 })
 export class TotalesComponent {
   service = inject(RepartosService);

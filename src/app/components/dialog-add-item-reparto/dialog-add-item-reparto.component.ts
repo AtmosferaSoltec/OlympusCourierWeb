@@ -1,5 +1,5 @@
 import { Component, Inject, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,11 +9,10 @@ import { PaqueteService } from '../../services/paquete.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-dialog-add-item-reparto',
-  standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, MatButtonModule],
-  templateUrl: './dialog-add-item-reparto.component.html',
-  styleUrl: './dialog-add-item-reparto.component.scss',
+    selector: 'app-dialog-add-item-reparto',
+    imports: [FormsModule, MatIconModule, MatButtonModule],
+    templateUrl: './dialog-add-item-reparto.component.html',
+    styleUrl: './dialog-add-item-reparto.component.scss'
 })
 export class DialogAddItemRepartoComponent {
   paqueteService = inject(PaqueteService);

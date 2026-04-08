@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ClienteFiltro, ClienteService } from '../../services/cliente.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,18 +14,16 @@ import { ClientesService } from './clientes.service';
 import { DistritoService } from '../../services/distrito.service';
 
 @Component({
-  selector: 'app-clientes',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-clientes',
+    imports: [
     MatIconModule,
     MatButtonModule,
     FiltrosComponent,
     TablaComponent,
     MatTooltipModule,
-    TituloComponent,
-  ],
-  templateUrl: './clientes.component.html',
+    TituloComponent
+],
+    templateUrl: './clientes.component.html'
 })
 export class ClientesComponent implements OnInit {
   distritoService = inject(DistritoService);

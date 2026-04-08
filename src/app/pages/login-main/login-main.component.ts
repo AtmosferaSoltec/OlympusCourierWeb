@@ -1,20 +1,19 @@
 import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   FormGroup,
   FormControl,
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
-  selector: 'app-login-main',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
-  templateUrl: './login-main.component.html',
+    selector: 'app-login-main',
+    imports: [ReactiveFormsModule],
+    templateUrl: './login-main.component.html'
 })
 export class LoginMainComponent {
   router = inject(Router);

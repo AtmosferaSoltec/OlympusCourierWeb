@@ -1,5 +1,5 @@
 import { Component, Inject, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
@@ -7,11 +7,10 @@ import { VehiculoService } from '../../../../../services/vehiculo.service';
 import { Vehiculo } from '../../../../../interfaces/vehiculo';
 
 @Component({
-  selector: 'app-dialog-vehiculo',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './dialog-vehiculo.component.html',
-  styleUrl: './dialog-vehiculo.component.scss'
+    selector: 'app-dialog-vehiculo',
+    imports: [ReactiveFormsModule],
+    templateUrl: './dialog-vehiculo.component.html',
+    styleUrl: './dialog-vehiculo.component.scss'
 })
 export class DialogVehiculoComponent {
   formulario: FormGroup;

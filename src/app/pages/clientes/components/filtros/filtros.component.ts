@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatIconModule } from '@angular/material/icon';
 import {
   FormBuilder,
@@ -15,10 +15,9 @@ import { UsuarioService } from '../../../../services/usuario.service';
 import { ClienteFiltro } from '../../../../services/cliente.service';
 
 @Component({
-  selector: 'app-filtros',
-  standalone: true,
-  imports: [CommonModule, MatIconModule, BotonComponent, ReactiveFormsModule],
-  templateUrl: './filtros.component.html',
+    selector: 'app-filtros',
+    imports: [MatIconModule, BotonComponent, ReactiveFormsModule],
+    templateUrl: './filtros.component.html'
 })
 export class FiltrosComponent {
   usuarioService = inject(UsuarioService);

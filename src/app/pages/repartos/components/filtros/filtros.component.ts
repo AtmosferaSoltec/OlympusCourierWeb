@@ -15,15 +15,14 @@ import { VehiculoService } from '../../../../services/vehiculo.service';
 import { Vehiculo } from '../../../../interfaces/vehiculo';
 
 @Component({
-  selector: 'app-filtros',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatButtonModule,
-    BotonComponent,
-  ],
-  templateUrl: './filtros.component.html',
+    selector: 'app-filtros',
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatButtonModule,
+        BotonComponent,
+    ],
+    templateUrl: './filtros.component.html'
 })
 export class FiltrosComponent implements OnInit {
   repartosService = inject(RepartosService);

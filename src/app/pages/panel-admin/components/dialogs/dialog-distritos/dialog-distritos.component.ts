@@ -1,5 +1,5 @@
 import { Component, Inject, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,11 +11,10 @@ import Swal from 'sweetalert2';
 import { BotonComponent } from '../../../../../components/boton/boton.component';
 
 @Component({
-  selector: 'app-dialog-distritos',
-  standalone: true,
-  imports: [CommonModule, MatIconModule, ReactiveFormsModule, MatIconModule, MatRadioModule, BotonComponent],
-  templateUrl: './dialog-distritos.component.html',
-  styleUrl: './dialog-distritos.component.scss'
+    selector: 'app-dialog-distritos',
+    imports: [MatIconModule, ReactiveFormsModule, MatIconModule, MatRadioModule, BotonComponent],
+    templateUrl: './dialog-distritos.component.html',
+    styleUrl: './dialog-distritos.component.scss'
 })
 export class DialogDistritosComponent {
 

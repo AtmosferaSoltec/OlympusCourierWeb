@@ -1,14 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RepartosService } from '../../repartos.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-pager',
-  standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule],
-  templateUrl: './pager.component.html',
+    selector: 'app-pager',
+    imports: [MatIconModule, MatButtonModule],
+    templateUrl: './pager.component.html'
 })
 export class PagerComponent {
   service = inject(RepartosService);

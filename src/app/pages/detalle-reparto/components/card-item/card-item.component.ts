@@ -1,15 +1,14 @@
 import { Component, Input, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ItemReparto } from '../../../../interfaces/item-reparto';
 import { MatIconModule } from '@angular/material/icon';
 import { PaqueteService } from '../../../../services/paquete.service';
 
 @Component({
-  selector: 'app-card-item',
-  standalone: true,
-  templateUrl: './card-item.component.html',
-  styleUrl: './card-item.component.scss',
-  imports: [CommonModule, MatIconModule]
+    selector: 'app-card-item',
+    templateUrl: './card-item.component.html',
+    styleUrl: './card-item.component.scss',
+    imports: [MatIconModule]
 })
 export class CardItemComponent {
 

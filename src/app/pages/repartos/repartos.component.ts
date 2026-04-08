@@ -1,5 +1,5 @@
 import { Component, OnDestroy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FiltrosComponent } from './components/filtros/filtros.component';
 import { TablaComponent } from './components/tabla/tabla.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,18 +11,16 @@ import { PagerComponent } from './components/pager/pager.component';
 import { TotalesComponent } from './components/totales/totales.component';
 
 @Component({
-  selector: 'app-repartos',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-repartos',
+    imports: [
     FiltrosComponent,
     TablaComponent,
     MatButtonModule,
     MatTooltipModule,
     PagerComponent,
-    TotalesComponent,
-  ],
-  templateUrl: './repartos.component.html',
+    TotalesComponent
+],
+    templateUrl: './repartos.component.html'
 })
 export class RepartosComponent implements OnDestroy {
   ngOnDestroy(): void {

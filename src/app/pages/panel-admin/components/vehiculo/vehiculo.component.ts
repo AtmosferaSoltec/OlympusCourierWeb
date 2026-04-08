@@ -13,18 +13,17 @@ import { Vehiculo } from '../../../../interfaces/vehiculo';
 import { DialogVehiculoComponent } from '../dialogs/dialog-vehiculo/dialog-vehiculo.component';
 
 @Component({
-  selector: 'app-vehiculo',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-    MostrarActivoPipe,
-  ],
-  templateUrl: './vehiculo.component.html',
-  styleUrl: './vehiculo.component.scss',
+    selector: 'app-vehiculo',
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatButtonModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        MostrarActivoPipe,
+    ],
+    templateUrl: './vehiculo.component.html',
+    styleUrl: './vehiculo.component.scss'
 })
 export class VehiculoComponent {
   estado = new FormControl('S');

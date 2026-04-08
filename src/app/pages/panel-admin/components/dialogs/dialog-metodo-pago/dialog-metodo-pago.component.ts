@@ -1,5 +1,5 @@
 import { Component, Inject, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MetodoPagoService } from '../../../../../services/metodo-pago.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -7,11 +7,10 @@ import { MetodoPago } from '../../../../../interfaces/metodo-pago';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-dialog-metodo-pago',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './dialog-metodo-pago.component.html',
-  styleUrl: './dialog-metodo-pago.component.scss'
+    selector: 'app-dialog-metodo-pago',
+    imports: [ReactiveFormsModule],
+    templateUrl: './dialog-metodo-pago.component.html',
+    styleUrl: './dialog-metodo-pago.component.scss'
 })
 export class DialogMetodoPagoComponent {
   formulario: FormGroup;

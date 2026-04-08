@@ -1,13 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Distrito } from '../../interfaces/distrito';
 
 @Component({
-  selector: 'app-menu-select',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './menu-select.component.html',
-  styleUrl: './menu-select.component.scss'
+    selector: 'app-menu-select',
+    imports: [],
+    templateUrl: './menu-select.component.html',
+    styleUrl: './menu-select.component.scss'
 })
 export class MenuSelectComponent {
   // Asegúrate de que el tipo de datos sea adecuado para tu caso
