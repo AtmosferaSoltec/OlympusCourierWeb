@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComprobantesService } from '../../comprobantes.service';
 import { MetodoPagoService } from '../../../../services/metodo-pago.service';
-import { BotonComponent } from '../../../../components/boton/boton.component';
+import { BotonComponent } from '../../../../components/boton.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService } from '../../../../services/usuario.service';
 

@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
 
 import { RouterOutlet } from '@angular/router';
-import { SidenavComponent } from '../../components/sidenav/sidenav.component';
 import { AppService } from '../../app.service';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
     selector: 'app-menu',
-    imports: [RouterOutlet, SidenavComponent, NavbarComponent],
+    imports: [RouterOutlet, NavbarComponent],
     templateUrl: './menu.component.html',
     styleUrl: './menu.component.css'
 })

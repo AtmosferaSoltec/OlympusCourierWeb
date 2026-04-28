@@ -4,34 +4,33 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
-import { MostrarEstadoNubefactPipe } from "../../../../pipes/mostrar-estado-nubefact.pipe";
-import { MostrarTipoDocumentoPipe } from "../../../../pipes/mostrar-tipo-documento.pipe";
+import { MostrarTipoDocumentoPipe } from '../../../../pipes/mostrar-tipo-documento.pipe';
 import { ComprobantesService } from '../../comprobantes.service';
 import { Router } from '@angular/router';
-import { Reparto } from '../../../../interfaces/reparto';
-import { FormatNumPipe } from "../../../../pipes/format-num.pipe";
+import { FormatNumPipe } from '../../../../pipes/format-num.pipe';
 import { Comprobante } from '../../../../interfaces/comprobante';
 import { ComprobanteService } from '../../../../services/comprobante.service';
 import { UsuarioService } from '../../../../services/usuario.service';
 
 @Component({
-    selector: 'app-tabla',
-    templateUrl: './tabla.component.html',
-    styleUrl: './tabla.component.scss',
-    imports: [
-        CommonModule, MatIconModule, MatButtonModule,
-        MatTooltipModule, MatMenuModule,
-        MostrarEstadoNubefactPipe,
-        MostrarTipoDocumentoPipe,
-        FormatNumPipe
-    ]
+  selector: 'app-tabla',
+  templateUrl: './tabla.component.html',
+  styleUrl: './tabla.component.scss',
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MostrarTipoDocumentoPipe,
+    FormatNumPipe,
+  ],
 })
 export class TablaComponent {
-  
-  usuarioService = inject(UsuarioService)
-  comprobanteService = inject(ComprobanteService)
-  comprobantesService = inject(ComprobantesService)
-  router = inject(Router)
+  usuarioService = inject(UsuarioService);
+  comprobanteService = inject(ComprobanteService);
+  comprobantesService = inject(ComprobantesService);
+  router = inject(Router);
 
   openPdf(url?: string) {
     if (!url) {
@@ -56,8 +55,8 @@ export class TablaComponent {
   anular(comprobante: Comprobante) {
     const body = {
       id_comprobante: comprobante.id,
-      motivo: 'Se elimino, por error de carga'
-    }
+      motivo: 'Se elimino, por error de carga',
+    };
     this.comprobanteService.anular(body).subscribe({
       next: (res) => {
         if (res?.isSuccess) {
@@ -67,18 +66,19 @@ export class TablaComponent {
           alert(res?.mensaje);
         }
       },
-      error: err => {
+      error: (err) => {
         console.log(err);
         alert('Ocurrió un error al anular el comprobante');
-      }
-    })
+      },
+    });
   }
 
   getTotal(listComprobante?: Comprobante[]): number {
     if (!listComprobante) {
       return 50;
     }
-    return listComprobante.map(r => Number(r.importe_total) ?? 0).reduce((acc, value) => acc + value, 0);
+    return listComprobante
+      .map((r) => Number(r.importe_total) ?? 0)
+      .reduce((acc, value) => acc + value, 0);
   }
-
 }

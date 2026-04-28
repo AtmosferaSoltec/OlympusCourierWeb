@@ -2,11 +2,11 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DetalleRepartoService } from './detalle-reparto.service';
 import { CardItemComponent } from './components/card-item/card-item.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DetalleItemComponent } from '../../components/detalle-item/detalle-item.component';
+import { DetalleItemComponent } from '../../components/detalle-item.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { Comprobante } from '../../interfaces/comprobante';
 import { MostrarEstadoPipe } from "../../pipes/mostrar-estado.pipe";
@@ -19,7 +19,7 @@ import { FormatNumPipe } from "../../pipes/format-num.pipe";
     styleUrl: './detalle-reparto.component.scss',
     imports: [
         CommonModule, MatIconModule, MatButtonModule,
-        RouterOutlet, CardItemComponent,
+        CardItemComponent,
         MatTooltipModule, DetalleItemComponent, MatMenuModule,
         MostrarEstadoPipe, FormatTelfPipe,
         FormatNumPipe

@@ -8,7 +8,7 @@ import { TablaComponent } from './components/tabla/tabla.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import Swal from 'sweetalert2';
 import { GlobalService } from '../../services/global.service';
-import { TituloComponent } from '../../components/titulo/titulo.component';
+import { TituloComponent } from '../../components/titulo.component';
 import { Cliente } from '../../interfaces/cliente';
 import { ClientesService } from './clientes.service';
 import { DistritoService } from '../../services/distrito.service';
@@ -45,7 +45,7 @@ export class ClientesComponent implements OnInit {
       cancelButtonColor: '#d33',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        
+
         const { data }: any = await this.clienteService.getAll();
         const listConverted = this.convertirListCompr(data);
         if (!listConverted) {

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { BotonComponent } from '../../../../components/boton/boton.component';
+import { BotonComponent } from '../../../../components/boton.component';
 import { PagosService } from '../../pagos.service';
 import { fechaActual } from '../../../../util/funciones';
 

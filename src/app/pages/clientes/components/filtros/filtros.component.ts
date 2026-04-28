@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RepartosService } from '../../../repartos/repartos.service';
-import { BotonComponent } from '../../../../components/boton/boton.component';
+import { BotonComponent } from '../../../../components/boton.component';
 import { ClientesService } from '../../clientes.service';
 import { UsuarioService } from '../../../../services/usuario.service';
 import { ClienteFiltro } from '../../../../services/cliente.service';

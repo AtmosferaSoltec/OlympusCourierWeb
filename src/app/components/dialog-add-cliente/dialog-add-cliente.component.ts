@@ -1,7 +1,6 @@
-import { Component, Inject, OnInit, inject, signal } from '@angular/core';
+import { Component, Inject, inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -10,10 +9,8 @@ import {
 import Swal from 'sweetalert2';
 import { ClienteService } from '../../services/cliente.service';
 
-import { Distrito } from '../../interfaces/distrito';
 import { DistritoService } from '../../services/distrito.service';
 import { Cliente } from '../../interfaces/cliente';
-import { MenuSelectComponent } from '../menu-select/menu-select.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { DocumentoService } from '../../services/documento.service';
@@ -21,16 +18,15 @@ import { ConsultasService } from '../../services/consultas.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-    selector: 'app-dialog-add-cliente',
-    imports: [
-    MenuSelectComponent,
+  selector: 'app-dialog-add-cliente',
+  imports: [
     ReactiveFormsModule,
     MatIconModule,
     MatButtonModule,
-    MatProgressSpinnerModule
-],
-    templateUrl: './dialog-add-cliente.component.html',
-    styleUrl: './dialog-add-cliente.component.scss'
+    MatProgressSpinnerModule,
+  ],
+  templateUrl: './dialog-add-cliente.component.html',
+  styleUrl: './dialog-add-cliente.component.scss',
 })
 export class DialogAddClienteComponent {
   clienteService = inject(ClienteService);
@@ -42,7 +38,7 @@ export class DialogAddClienteComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddClienteComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Cliente | undefined
+    @Inject(MAT_DIALOG_DATA) public data: Cliente | undefined,
   ) {}
 
   formulario = new FormGroup({

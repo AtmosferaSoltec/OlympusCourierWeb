@@ -3,7 +3,7 @@ import { Component, OnDestroy, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2';
 import { GlobalService } from '../../services/global.service';
-import { TituloComponent } from '../../components/titulo/titulo.component';
+import { TituloComponent } from '../../components/titulo.component';
 import { ComprobantesService } from './comprobantes.service';
 import { FiltrosComponent } from './components/filtros/filtros.component';
 import { TablaComponent } from './components/tabla/tabla.component';

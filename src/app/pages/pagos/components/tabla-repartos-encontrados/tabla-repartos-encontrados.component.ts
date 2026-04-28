@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PagosService } from '../../pagos.service';
-import { MostrarActivoPipe } from "../../../../pipes/mostrar-activo.pipe";
 import { Reparto } from '../../../../interfaces/reparto';
 import { MostrarContenidoPipe } from "../../../../pipes/mostrar-contenido.pipe";
 import { FormatNumPipe } from '../../../../pipes/format-num.pipe';
@@ -15,7 +14,7 @@ import { FormatNumPipe } from '../../../../pipes/format-num.pipe';
     styleUrl: './tabla-repartos-encontrados.component.scss',
     imports: [
         CommonModule, MatIconModule, MatButtonModule,
-        MatTooltipModule, MostrarActivoPipe, FormatNumPipe,
+        MatTooltipModule, FormatNumPipe,
         MostrarContenidoPipe
     ]
 })

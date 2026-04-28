@@ -8,7 +8,7 @@ import { DialogUsuarioComponent } from '../dialog-usuario/dialog-usuario.compone
 import { Distrito } from '../../../../../interfaces/distrito';
 import { DistritoService } from '../../../../../services/distrito.service';
 import Swal from 'sweetalert2';
-import { BotonComponent } from '../../../../../components/boton/boton.component';
+import { BotonComponent } from '../../../../../components/boton.component';
 
 @Component({
     selector: 'app-dialog-distritos',
@@ -57,7 +57,7 @@ export class DialogDistritosComponent {
                 }
                 this.distritoService.getAll()
               });
-  
+
             }else{
               Swal.fire({
                 icon: "error",
@@ -69,7 +69,7 @@ export class DialogDistritosComponent {
             }
           },
           error: (err:any) => console.log(err?.message)
-  
+
         })
       }else{
         this.distritoService.add(this.formulario.get('nombre')?.value).subscribe({
@@ -87,7 +87,7 @@ export class DialogDistritosComponent {
                 }
                 this.distritoService.getAll()
               });
-  
+
             }else{
               Swal.fire({
                 icon: "error",
@@ -99,7 +99,7 @@ export class DialogDistritosComponent {
             }
           },
           error: (err) => console.log(err)
-  
+
         })
       }
     }

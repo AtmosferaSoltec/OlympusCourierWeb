@@ -2,12 +2,8 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { BotonComponent } from '../../../../components/boton/boton.component';
+import { BotonComponent } from '../../../../components/boton.component';
 import { Router } from '@angular/router';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { RepartosService } from '../../repartos.service';
 import { Usuario } from '../../../../interfaces/usuario';
 import { UsuarioService } from '../../../../services/usuario.service';
@@ -34,7 +30,7 @@ export class FiltrosComponent implements OnInit {
   usuarioService = inject(UsuarioService);
   vehiculoService = inject(VehiculoService);
 
-  
+
   ngOnInit(): void {
     this.getAllUsuarios();
     this.getAllVehiculos();
