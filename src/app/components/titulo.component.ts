@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-titulo',
   imports: [],
   template: `
-    <p class="text-3xl text-p1 font-semibold p-0 m-0">{{ titulo }}</p>
+    <p class="text-xl sm:text-2xl lg:text-3xl text-p1 font-semibold p-0 m-0">{{ titulo }}</p>
   `,
   styles: `
     p {

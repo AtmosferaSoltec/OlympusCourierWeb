@@ -21,14 +21,24 @@
   </div>
   }
 
-  <div class="flex items-center justify-between mt-4">
-    <span class="text-xl font-medium text-textos">Lista de Items</span>
-    <app-boton
-      text="Agregar Item"
-      icon="add"
-      witdh="w-36"
-      (clickEvent)="openDialogAddItemReparto()"
-    ></app-boton>
+  <div class="flex items-center justify-between mt-5">
+    <div class="flex items-center gap-2">
+      <span class="text-base font-bold text-t">Lista de Items</span>
+      @if (service.listItemRepartos().length > 0) {
+      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-p-100 text-p-700">
+        {{ service.listItemRepartos().length }}
+      </span>
+      }
+    </div>
+    <button
+      (click)="openDialogAddItemReparto()"
+      class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold text-white bg-p-600 hover:bg-p-700 shadow-sm transition-all duration-150"
+    >
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+      </svg>
+      Agregar Item
+    </button>
   </div>
   <app-tabla-items />
 
