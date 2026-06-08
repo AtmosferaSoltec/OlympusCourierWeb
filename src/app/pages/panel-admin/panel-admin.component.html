@@ -1,11 +1,11 @@
 <h1>Panel Administrativo</h1>
-<div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200">
-    <ul class="flex flex-wrap -mb-px">
+<div class="overflow-x-auto text-sm font-medium text-center text-gray-500 border-b border-gray-200">
+    <ul class="flex flex-nowrap -mb-px">
         @for (item of data; track $index) {
-        <li class="me-2">
+        <li class="me-2 shrink-0">
             <button (click)="navegar(item.url)"
                 [ngClass]="{'active text-p1 border-b-2 border-p1 rounded-t-lg': item.url === url}"
-                class="inline-block text-lg p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 ">{{item.label}}
+                class="inline-block text-lg p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 whitespace-nowrap">{{item.label}}
             </button>
         </li>
         }
