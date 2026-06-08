@@ -15,7 +15,6 @@ import { Reparto } from '../../interfaces/reparto';
 import { RepartoService } from '../../services/reparto.service';
 import { PaqueteService } from '../../services/paquete.service';
 import { FormsModule } from '@angular/forms';
-import { EmpresaService } from '../../services/empresa.service';
 import Swal from 'sweetalert2';
 import { ComprobanteService } from '../../services/comprobante.service';
 import { FormatNumPipe } from '../../pipes/format-num.pipe';
@@ -44,17 +43,11 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
   generarComprobanteService = inject(GenerarComprobanteService);
   consultaService = inject(ConsultasService);
 
-  serie_f = signal<string>('F001');
-  num_f = signal<number>(0);
-  serie_b = signal<string>('B001');
-  num_b = signal<number>(0);
-
   loading = signal<boolean>(false);
   tipoComprobante = signal<number>(2);
   listMetodoPago = computed(() =>
     this.generarComprobanteService.listMetodoPago(),
   );
-  empresaService = inject(EmpresaService);
   router = inject(Router);
   repartoService = inject(RepartoService);
   reparto: Reparto | null = null;
@@ -90,18 +83,6 @@ export class GenerarComprobanteComponent implements OnInit, OnDestroy {
     }
 
     this.generarComprobanteService.listarMetodosPago();
-
-    //Obtener serie y numero de comprobante
-    this.empresaService.get().subscribe({
-      next: (res: any) => {
-        if (res?.isSuccess) {
-          this.serie_f.set(res.data.serie_f);
-          this.num_f.set(res.data.num_f + 1);
-          this.serie_b.set(res.data.serie_b);
-          this.num_b.set(res.data.num_b + 1);
-        }
-      },
-    });
   }
 
   back() {
