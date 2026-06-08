@@ -36,10 +36,6 @@ export class PanelAdminComponent implements OnDestroy {
       label: 'Vehiculos',
       url: 'vehiculos',
     },
-    {
-      label: 'Comprobantes',
-      url: 'comprobantes-admin',
-    },
   ];
 
   private router = inject(Router);
