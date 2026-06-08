@@ -11,7 +11,7 @@ import { State } from '../interfaces/state';
 export class ClienteService {
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/clientes`;
-  newUrl = `${environment.newUrl}/api/cliente`;
+  newUrl = `${environment.baseUrl}/api/cliente`;
 
   #state = signal<State<Cliente[]>>({ data: [], loading: false });
   listClientes = computed(() => this.#state().data);

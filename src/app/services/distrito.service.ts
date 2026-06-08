@@ -9,7 +9,6 @@ import { environment } from '../../environments/environment';
 export class DistritoService {
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/distrito`;
-  newUrl = `${environment.newUrl}/api/distrito`;
 
   isLoading = signal(false);
   list = signal<Distrito[]>([]);

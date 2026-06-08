@@ -9,7 +9,7 @@ import { Result } from '../interfaces/state';
 export class RepartoService {
   http = inject(HttpClient);
   url = `${environment.baseUrl}/api/repartos`;
-  newUrl = `${environment.newUrl}/api/reparto`;
+  newUrl = `${environment.baseUrl}/api/reparto`;
 
   get(id: number) {
     return this.http.get<Result>(`${this.url}/${id}`);
