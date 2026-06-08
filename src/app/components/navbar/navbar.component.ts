@@ -51,6 +51,28 @@ export class NavbarComponent implements OnInit {
     this.isOpen.set(!this.isOpen());
   }
 
+  close() {
+    this.isOpen.set(false);
+  }
+
+  closeOnMobile() {
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      this.isOpen.set(false);
+    }
+  }
+
+  esAdmin(): boolean {
+    const codRol = this.usuarioService.usuario()?.cod_rol;
+    return codRol === 'A' || codRol === 'S';
+  }
+
+  getIniciales(): string {
+    const nombres = this.usuarioService.usuario()?.nombres || '';
+    const apellidos = this.usuarioService.usuario()?.apellidos || '';
+    const iniciales = `${nombres.charAt(0)}${apellidos.charAt(0)}`.toUpperCase();
+    return iniciales || '?';
+  }
+
   cambiarPass() {
     const dialogRef = this.dialog.open(DialogCambiarPassComponent, {
       width: '770px',

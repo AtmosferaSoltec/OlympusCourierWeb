@@ -1,79 +1,120 @@
-<nav
-  [ngClass]="{ 'md:w-[60px]': !isOpen() }"  
-  class="w-full md:w-[300px] md:h-screen bg-colorP1 transition-all ease-in-out"
->
-  <div
-    [ngClass]="{ 'md:justify-center': !isOpen() }"
-    class="flex items-center justify-between p-2"
-  >
-    <div [ngClass]="{ 'md:hidden': !isOpen() }" class="flex text-white">
-      <div class="flex flex-col">
-        <span class="text-lg font-medium">{{ getNombre() }}<br /></span>
-        <span class="text-sm">{{ getRol() }}</span>
-      </div>
-    </div>
+<!-- Mobile top app bar -->
+<header class="sticky top-0 z-30 flex items-center justify-between gap-3 bg-colorP1 px-4 py-3 text-white shadow-sm md:hidden">
+  <div class="flex flex-col leading-tight">
+    <span class="text-sm font-medium">{{ getNombre() }}</span>
+    <span class="text-xs text-white/70">{{ getRol() }}</span>
+  </div>
+  <button mat-icon-button (click)="toggle()" aria-label="Abrir menú">
+    <mat-icon class="text-white">menu</mat-icon>
+  </button>
+</header>
 
-    <button mat-icon-button (click)="toggle()">
-      <mat-icon class="text-white" [matTooltip]="isOpen() ? 'Cerrar' : 'Menu'">
-        @if (isOpen()) { close } @else { menu }
-      </mat-icon>
+<!-- Backdrop (mobile drawer) -->
+@if (isOpen()) {
+<div class="fixed inset-0 z-30 bg-black/40 md:hidden" (click)="close()"></div>
+}
+
+<!-- Sidebar / Drawer -->
+<aside
+  [ngClass]="{
+    '-translate-x-full': !isOpen(),
+    'translate-x-0': isOpen(),
+    'md:w-72': isOpen(),
+    'md:w-[76px]': !isOpen()
+  }"
+  class="fixed inset-y-0 left-0 z-40 flex w-72 flex-col bg-colorP1 text-white transition-all duration-300 ease-in-out md:static md:h-screen md:translate-x-0"
+>
+  <div class="flex items-center gap-3 border-b border-white/10 px-4 py-4">
+    <button
+      type="button"
+      class="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-sm font-semibold text-p1 transition-transform hover:scale-105 md:flex"
+      (click)="toggle()"
+      [matTooltip]="isOpen() ? 'Contraer menú' : 'Expandir menú'"
+      matTooltipPosition="below"
+    >
+      {{ getIniciales() }}
+    </button>
+    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-sm font-semibold text-p1 md:hidden">
+      {{ getIniciales() }}
+    </div>
+    <div [ngClass]="{ 'md:hidden': !isOpen() }" class="flex flex-col overflow-hidden leading-tight">
+      <span class="truncate text-sm font-medium">{{ getNombre() }}</span>
+      <span class="truncate text-xs text-white/70">{{ getRol() }}</span>
+    </div>
+    <button mat-icon-button class="ml-auto md:hidden" (click)="close()" aria-label="Cerrar menú">
+      <mat-icon class="text-white">close</mat-icon>
     </button>
   </div>
-  <ul
-    [ngClass]="{ 'hidden md:flex': !isOpen() }"
-    class="flex flex-col gap-2 p-2"
-  >
-    <!-- Rutas de Menu -->
-    @for (item of listMenu; track $index) {
-    <li>
-      <a
-        [routerLink]="item.link"
-        routerLinkActive="bg-white tp1"
-        [matTooltip]="isOpen() ? '' : item.name"
-        [matTooltipDisabled]="!isOpen()"
-        class="flex items-center gap-2 p-2 text-white rounded-lg cursor-pointer select-none hover:bg-white hover:text-colorP1"
-      >
-        <mat-icon>{{ item.icon }}</mat-icon>
-        <span [ngClass]="{ 'md:hidden': !isOpen() }">{{ item.name }}</span>
-      </a>
-    </li>
-    }
-    <!-- Panel Admin -->
-    @if( this.usuarioService.usuario()?.cod_rol === 'A' ||
-    this.usuarioService.usuario()?.cod_rol === 'S'){
-    <li>
-      <a
-        routerLink="/menu/panel-admin/usuarios"
-        matTooltip="Panel Admin"
-        [matTooltipDisabled]="!isOpen()"
-        class="flex items-center gap-2 p-2 text-white rounded-lg cursor-pointer select-none hover:bg-white hover:text-colorP1"
-      >
-        <mat-icon>admin_panel_settings</mat-icon>
-        <span [ngClass]="{ 'md:hidden': !isOpen() }">Panel Admin</span>
-      </a>
-    </li>
-    }
 
-    <!-- Cambiar Contraseña -->
-    <li class="sidenav-nav-item">
-      <a
-        class="flex items-center gap-2 p-2 text-white rounded-lg cursor-pointer select-none hover:bg-white hover:text-colorP1"
-        (click)="cambiarPass()"
-      >
-        <mat-icon>sync_lock</mat-icon>
-        <span [ngClass]="{ 'md:hidden': !isOpen() }">Cambiar Contraseña</span>
-      </a>
-    </li>
+  <nav class="flex-1 overflow-y-auto px-2 py-3">
+    <p [ngClass]="{ 'md:hidden': !isOpen() }" class="px-3 pb-2 text-xs font-medium uppercase tracking-wide text-white/50">
+      Navegación
+    </p>
+    <ul class="flex flex-col gap-1">
+      @for (item of listMenu; track $index) {
+      <li>
+        <a
+          [routerLink]="item.link"
+          routerLinkActive="bg-white/15 text-white"
+          (click)="closeOnMobile()"
+          [matTooltip]="isOpen() ? '' : item.name"
+          [matTooltipDisabled]="isOpen()"
+          matTooltipPosition="right"
+          class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+        >
+          <mat-icon class="shrink-0 text-[20px]">{{ item.icon }}</mat-icon>
+          <span [ngClass]="{ 'md:hidden': !isOpen() }" class="truncate">{{ item.name }}</span>
+        </a>
+      </li>
+      }
+      @if (esAdmin()) {
+      <li>
+        <a
+          routerLink="/menu/panel-admin/usuarios"
+          routerLinkActive="bg-white/15 text-white"
+          (click)="closeOnMobile()"
+          [matTooltip]="isOpen() ? '' : 'Panel Admin'"
+          [matTooltipDisabled]="isOpen()"
+          matTooltipPosition="right"
+          class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+        >
+          <mat-icon class="shrink-0 text-[20px]">admin_panel_settings</mat-icon>
+          <span [ngClass]="{ 'md:hidden': !isOpen() }" class="truncate">Panel Admin</span>
+        </a>
+      </li>
+      }
+    </ul>
+  </nav>
 
-    <!-- Cerrar Sesión -->
-    <li>
-      <a
-        (click)="logout()"
-        class="flex items-center gap-2 p-2 text-white rounded-lg cursor-pointer select-none hover:bg-white hover:text-colorP1"
-      >
-        <mat-icon>logout</mat-icon>
-        <span [ngClass]="{ 'md:hidden': !isOpen() }">Cerrar Sesión</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+  <div class="border-t border-white/10 px-2 py-3">
+    <p [ngClass]="{ 'md:hidden': !isOpen() }" class="px-3 pb-2 text-xs font-medium uppercase tracking-wide text-white/50">
+      Cuenta
+    </p>
+    <ul class="flex flex-col gap-1">
+      <li>
+        <a
+          (click)="cambiarPass()"
+          [matTooltip]="isOpen() ? '' : 'Cambiar Contraseña'"
+          [matTooltipDisabled]="isOpen()"
+          matTooltipPosition="right"
+          class="flex cursor-pointer select-none items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+        >
+          <mat-icon class="shrink-0 text-[20px]">sync_lock</mat-icon>
+          <span [ngClass]="{ 'md:hidden': !isOpen() }" class="truncate">Cambiar Contraseña</span>
+        </a>
+      </li>
+      <li>
+        <a
+          (click)="logout()"
+          [matTooltip]="isOpen() ? '' : 'Cerrar Sesión'"
+          [matTooltipDisabled]="isOpen()"
+          matTooltipPosition="right"
+          class="flex cursor-pointer select-none items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+        >
+          <mat-icon class="shrink-0 text-[20px]">logout</mat-icon>
+          <span [ngClass]="{ 'md:hidden': !isOpen() }" class="truncate">Cerrar Sesión</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
