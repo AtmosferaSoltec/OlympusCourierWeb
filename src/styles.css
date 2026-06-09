@@ -80,3 +80,27 @@ h6 {
     transform: rotate(1turn);
   }
 }
+
+/* Flatpickr */
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover {
+  background: #047cc4;
+  border-color: #047cc4;
+}
+.flatpickr-day.inRange {
+  background: #e0f1fe;
+  border-color: #e0f1fe;
+  box-shadow: -5px 0 0 #e0f1fe, 5px 0 0 #e0f1fe;
+}
+.flatpickr-day.today {
+  border-color: #047cc4;
+}
+.flatpickr-day.today:hover {
+  background: #047cc4;
+  border-color: #047cc4;
+  color: #fff;
+}

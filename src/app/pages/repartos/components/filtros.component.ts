@@ -1,4 +1,12 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +17,8 @@ import { Usuario } from '../../../interfaces/usuario';
 import { UsuarioService } from '../../../services/usuario.service';
 import { VehiculoService } from '../../../services/vehiculo.service';
 import { Vehiculo } from '../../../interfaces/vehiculo';
+import flatpickr from 'flatpickr';
+import { Spanish } from 'flatpickr/dist/l10n/es.js';
 
 @Component({
   selector: 'app-filtros',
@@ -104,29 +114,17 @@ import { Vehiculo } from '../../../interfaces/vehiculo';
           />
         </div>
 
-        <!-- Desde -->
-        <div class="flex flex-col gap-1">
+        <!-- Período -->
+        <div class="flex flex-col gap-1 col-span-2 xl:col-span-1">
           <label class="text-xs font-medium text-textos uppercase tracking-wide"
-            >Desde</label
+            >Período</label
           >
           <input
-            [value]="repartosService.desde()"
-            (change)="setDesde($event)"
-            type="date"
-            class="bg-gray-50 border border-gray-200 text-t text-sm rounded-lg focus:ring-2 focus:ring-p-300 focus:border-p-400 px-3 py-2.5 outline-none transition-all cursor-pointer"
-          />
-        </div>
-
-        <!-- Hasta -->
-        <div class="flex flex-col gap-1">
-          <label class="text-xs font-medium text-textos uppercase tracking-wide"
-            >Hasta</label
-          >
-          <input
-            [value]="repartosService.hasta()"
-            (change)="setHasta($event)"
-            type="date"
-            class="bg-gray-50 border border-gray-200 text-t text-sm rounded-lg focus:ring-2 focus:ring-p-300 focus:border-p-400 px-3 py-2.5 outline-none transition-all cursor-pointer"
+            #dateRange
+            type="text"
+            placeholder="Fecha inicio → Fecha fin"
+            readonly
+            class="bg-gray-50 border border-gray-200 text-t text-sm rounded-lg focus:ring-2 focus:ring-p-300 focus:border-p-400 px-3 py-2.5 outline-none transition-all cursor-pointer w-full"
           />
         </div>
 
@@ -184,7 +182,9 @@ import { Vehiculo } from '../../../interfaces/vehiculo';
     </div>
   `,
 })
-export class FiltrosComponent implements OnInit {
+export class FiltrosComponent implements OnInit, AfterViewInit {
+  @ViewChild('dateRange') dateRangeRef!: ElementRef;
+
   repartosService = inject(RepartosService);
   router = inject(Router);
 
@@ -197,6 +197,37 @@ export class FiltrosComponent implements OnInit {
   ngOnInit(): void {
     this.getAllUsuarios();
     this.getAllVehiculos();
+  }
+
+  ngAfterViewInit(): void {
+    const toISO = (d: Date) => {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    };
+
+    const initialDates: string[] = [];
+    if (this.repartosService.desde()) initialDates.push(this.repartosService.desde());
+    if (this.repartosService.hasta()) initialDates.push(this.repartosService.hasta());
+
+    flatpickr(this.dateRangeRef.nativeElement, {
+      mode: 'range',
+      dateFormat: 'Y-m-d',
+      altInput: true,
+      altFormat: 'd/m/Y',
+      locale: { ...Spanish, rangeSeparator: ' → ' },
+      defaultDate: initialDates.length === 2 ? initialDates : undefined,
+      onChange: (selectedDates: Date[]) => {
+        if (selectedDates.length === 2) {
+          this.repartosService.desde.set(toISO(selectedDates[0]));
+          this.repartosService.hasta.set(toISO(selectedDates[1]));
+        } else if (selectedDates.length === 0) {
+          this.repartosService.desde.set('');
+          this.repartosService.hasta.set('');
+        }
+      },
+    });
   }
 
   getAllUsuarios() {
@@ -232,6 +263,7 @@ export class FiltrosComponent implements OnInit {
   filtrar() {
     this.repartosService.getAll();
   }
+
   toAgregar() {
     this.router.navigateByUrl('/menu/agregar-reparto');
   }
@@ -258,14 +290,6 @@ export class FiltrosComponent implements OnInit {
 
   setIdSubido(event: any) {
     this.repartosService.idSubido.set(event.target.value);
-  }
-
-  setDesde(event: any) {
-    this.repartosService.desde.set(event.target.value);
-  }
-
-  setHasta(event: any) {
-    this.repartosService.hasta.set(event.target.value);
   }
 
   setIdVehiculo(event: any) {
