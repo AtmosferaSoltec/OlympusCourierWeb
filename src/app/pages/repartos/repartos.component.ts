@@ -1,14 +1,14 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 
-import { FiltrosComponent } from './components/filtros/filtros.component';
-import { TablaComponent } from './components/tabla/tabla.component';
+import { FiltrosComponent } from './components/filtros.component';
+import { TablaComponent } from './components/tabla.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import Swal from 'sweetalert2';
 import { GlobalService } from '../../services/global.service';
 import { RepartosService } from './repartos.service';
-import { PagerComponent } from './components/pager/pager.component';
-import { TotalesComponent } from './components/totales/totales.component';
+import { PagerComponent } from './components/pager.component';
+import { TotalesComponent } from './components/totales.component';
 
 @Component({
     selector: 'app-repartos',
