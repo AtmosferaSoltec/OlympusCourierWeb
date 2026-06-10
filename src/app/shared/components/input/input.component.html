@@ -1,0 +1,46 @@
+<div class="flex flex-col gap-1">
+  @if (label) {
+    <label [for]="id" class="text-[10px] font-semibold uppercase tracking-widest text-textos/60">
+      {{ label }}
+      @if (hint) {
+        <span class="normal-case font-normal text-textos/40">{{ hint }}</span>
+      }
+    </label>
+  }
+
+  @if (multiline) {
+    <textarea
+      [id]="id"
+      [rows]="rows"
+      [placeholder]="placeholder"
+      [maxlength]="maxlength"
+      [disabled]="disabled"
+      [value]="value"
+      (input)="onInput($any($event.target).value)"
+      (blur)="onTouched()"
+      class="w-full px-3 py-2 text-sm text-t bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 transition-all resize-none {{ inputClass }}"
+      [ngClass]="errorMessage
+        ? 'border-red-400 focus:ring-red-500/20 focus:border-red-500'
+        : 'border-gray-200 focus:ring-p-500/20 focus:border-p-500'"
+    ></textarea>
+  } @else {
+    <input
+      [id]="id"
+      [type]="type"
+      [placeholder]="placeholder"
+      [maxlength]="maxlength"
+      [disabled]="disabled"
+      [value]="value"
+      (input)="onInput($any($event.target).value)"
+      (blur)="onTouched()"
+      class="w-full px-3 py-2 text-sm text-t bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 transition-all {{ inputClass }}"
+      [ngClass]="errorMessage
+        ? 'border-red-400 focus:ring-red-500/20 focus:border-red-500'
+        : 'border-gray-200 focus:ring-p-500/20 focus:border-p-500'"
+    />
+  }
+
+  @if (errorMessage) {
+    <span class="text-[11px] text-red-500">{{ errorMessage }}</span>
+  }
+</div>

@@ -6,20 +6,20 @@ import Swal from 'sweetalert2';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { TablaItemsComponent } from './components/tabla-items/tabla-items.component';
+import { TablaItemsComponent } from './components/tabla-items.component';
 import { AgregarRepartoService } from './agregar-reparto.service';
 import { BotonComponent } from '../../components/boton.component';
 import { TituloComponent } from '../../components/titulo.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DialogAddItemRepartoComponent } from '../../components/dialog-add-item-reparto/dialog-add-item-reparto.component';
+import { DialogAddItemRepartoComponent } from './components/dialog-add-item-reparto.component';
 import { ItemReparto } from '../../interfaces/item-reparto';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPedidoComponent } from '../../components/dialog-add-pedido/dialog-add-pedido.component';
 import { RepartoService } from '../../services/reparto.service';
 import { Reparto } from '../../interfaces/reparto';
 import { DistritoService } from '../../services/distrito.service';
-import { BuscarClienteComponent } from './components/buscar-cliente/buscar-cliente.component';
-import { DetalleClienteComponent } from "./components/detalle-cliente/detalle-cliente.component";
+import { BuscarClienteComponent } from './components/buscar-cliente.component';
+import { DetalleClienteComponent } from "./components/detalle-cliente.component";
 @Component({
     selector: 'app-agregar-reparto',
     imports: [

@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { ItemReparto } from '../../interfaces/item-reparto';
 import { PaqueteService } from '../../services/paquete.service';
-import { DialogAddItemRepartoComponent } from '../dialog-add-item-reparto/dialog-add-item-reparto.component';
+import { DialogAddItemRepartoComponent } from '../../pages/agregar-reparto/components/dialog-add-item-reparto.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -72,7 +72,7 @@ export class DialogAddPedidoComponent {
       clave: this.clave,
       items: this.listItemPedido
     }
-    
+
 
 
     console.log(pedido);
