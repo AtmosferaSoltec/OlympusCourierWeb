@@ -8,11 +8,12 @@ import {
   signal,
   computed,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { NgSelectComponent } from '@ng-select/ng-select';
 import { BotonComponent } from '../../../components/boton.component';
+import { SelectComponent } from '../../../shared/components/select/select.component';
 import { Router } from '@angular/router';
 import { RepartosService } from '../repartos.service';
 import { Usuario } from '../../../interfaces/usuario';
@@ -26,10 +27,11 @@ import { Spanish } from 'flatpickr/dist/l10n/es.js';
   selector: 'app-filtros',
   imports: [
     CommonModule,
+    FormsModule,
     MatIconModule,
     MatButtonModule,
-    NgSelectComponent,
     BotonComponent,
+    SelectComponent,
   ],
   template: `
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-5">
@@ -49,32 +51,24 @@ import { Spanish } from 'flatpickr/dist/l10n/es.js';
       <form class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
 
         <!-- Estado -->
-        <div class="flex flex-col gap-1">
-          <label class="text-xs font-medium text-textos uppercase tracking-wide">Estado</label>
-          <ng-select
-            #estadoSelect
-            [items]="estadoOpciones"
-            bindLabel="label"
-            bindValue="value"
-            [clearable]="false"
-            [searchable]="false"
-            (change)="repartosService.activo.set($event?.value ?? 'T')"
-          ></ng-select>
-        </div>
+        <app-select
+          label="Estado"
+          [items]="estadoOpciones"
+          bindLabel="label"
+          bindValue="value"
+          [ngModel]="repartosService.activo()"
+          (ngModelChange)="repartosService.activo.set($event ?? 'T')"
+        ></app-select>
 
         <!-- Estado Envío -->
-        <div class="flex flex-col gap-1">
-          <label class="text-xs font-medium text-textos uppercase tracking-wide">Estado Envío</label>
-          <ng-select
-            #estadoEnvioSelect
-            [items]="estadoEnvioOpciones"
-            bindLabel="label"
-            bindValue="value"
-            [clearable]="false"
-            [searchable]="false"
-            (change)="repartosService.estadoEnvio.set($event?.value ?? 'T')"
-          ></ng-select>
-        </div>
+        <app-select
+          label="Estado Envío"
+          [items]="estadoEnvioOpciones"
+          bindLabel="label"
+          bindValue="value"
+          [ngModel]="repartosService.estadoEnvio()"
+          (ngModelChange)="repartosService.estadoEnvio.set($event ?? 'T')"
+        ></app-select>
 
         <!-- N° Reparto -->
         <div class="flex flex-col gap-1">
@@ -113,61 +107,44 @@ import { Spanish } from 'flatpickr/dist/l10n/es.js';
         </div>
 
         <!-- Usuario -->
-        <div class="flex flex-col gap-1">
-          <label class="text-xs font-medium text-textos uppercase tracking-wide">Usuario</label>
-          <ng-select
-            #usuarioSelect
-            [items]="usuariosSelect()"
-            bindLabel="nombres"
-            bindValue="id"
-            [clearable]="false"
-            [searchable]="true"
-            notFoundText="Sin resultados"
-            (change)="repartosService.idUsuario.set($event?.id ?? 0)"
-          ></ng-select>
-        </div>
+        <app-select
+          label="Usuario"
+          [items]="usuariosSelect()"
+          bindLabel="nombres"
+          bindValue="id"
+          [searchable]="true"
+          [ngModel]="repartosService.idUsuario()"
+          (ngModelChange)="repartosService.idUsuario.set($event ?? 0)"
+        ></app-select>
 
         <!-- Subido por -->
-        <div class="flex flex-col gap-1">
-          <label class="text-xs font-medium text-textos uppercase tracking-wide">Subido por</label>
-          <ng-select
-            #subidoSelect
-            [items]="usuariosSelect()"
-            bindLabel="nombres"
-            bindValue="id"
-            [clearable]="false"
-            [searchable]="true"
-            notFoundText="Sin resultados"
-            (change)="repartosService.idSubido.set($event?.id ?? 0)"
-          ></ng-select>
-        </div>
+        <app-select
+          label="Subido por"
+          [items]="usuariosSelect()"
+          bindLabel="nombres"
+          bindValue="id"
+          [searchable]="true"
+          [ngModel]="repartosService.idSubido()"
+          (ngModelChange)="repartosService.idSubido.set($event ?? 0)"
+        ></app-select>
 
         <!-- Vehículo -->
-        <div class="flex flex-col gap-1">
-          <label class="text-xs font-medium text-textos uppercase tracking-wide">Vehículo</label>
-          <ng-select
-            #vehiculoSelect
-            [items]="vehiculosSelect()"
-            bindLabel="nombre"
-            bindValue="id"
-            [clearable]="false"
-            [searchable]="true"
-            notFoundText="Sin resultados"
-            (change)="repartosService.idVehiculo.set($event?.id ?? 0)"
-          ></ng-select>
-        </div>
+        <app-select
+          label="Vehículo"
+          [items]="vehiculosSelect()"
+          bindLabel="nombre"
+          bindValue="id"
+          [searchable]="true"
+          [ngModel]="repartosService.idVehiculo()"
+          (ngModelChange)="repartosService.idVehiculo.set($event ?? 0)"
+        ></app-select>
 
       </form>
     </div>
   `,
 })
 export class FiltrosComponent implements OnInit, AfterViewInit {
-  @ViewChild('dateRange')      dateRangeRef!: ElementRef;
-  @ViewChild('estadoSelect')   estadoSelect!: NgSelectComponent;
-  @ViewChild('estadoEnvioSelect') estadoEnvioSelect!: NgSelectComponent;
-  @ViewChild('usuarioSelect')  usuarioSelect!: NgSelectComponent;
-  @ViewChild('subidoSelect')   subidoSelect!: NgSelectComponent;
-  @ViewChild('vehiculoSelect') vehiculoSelect!: NgSelectComponent;
+  @ViewChild('dateRange') dateRangeRef!: ElementRef;
 
   repartosService = inject(RepartosService);
   router          = inject(Router);
@@ -213,15 +190,6 @@ export class FiltrosComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // Inicializar selects con su valor actual del servicio (post-render para que los items ya estén listos)
-    setTimeout(() => {
-      this.estadoSelect.writeValue(this.repartosService.activo());
-      this.estadoEnvioSelect.writeValue(this.repartosService.estadoEnvio());
-      this.usuarioSelect.writeValue(this.repartosService.idUsuario());
-      this.subidoSelect.writeValue(this.repartosService.idSubido());
-      this.vehiculoSelect.writeValue(this.repartosService.idVehiculo());
-    }, 0);
-
     // Flatpickr
     const toISO = (d: Date) => {
       const y = d.getFullYear();

@@ -1,38 +1,38 @@
 import { Component, Input, Optional, Self } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 let nextId = 0;
 
 @Component({
   standalone: true,
-  selector: 'app-input',
-  imports: [CommonModule],
-  templateUrl: './input.component.html',
-  // Sin esto, el atributo type="number" queda en el host y el preflight de
-  // @tailwindcss/forms (selector [type="number"]) le agrega un borde gris al <app-input>.
-  host: { '[attr.type]': 'null' },
+  selector: 'app-select',
+  imports: [CommonModule, FormsModule, NgSelectModule],
+  templateUrl: './select.component.html',
 })
-export class InputComponent implements ControlValueAccessor {
+export class SelectComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() hint = '';
-  @Input() type: 'text' | 'number' | 'email' | 'password' | 'date' | 'tel' = 'text';
+  @Input() items: any[] = [];
+  @Input() bindLabel = 'label';
+  @Input() bindValue = 'value';
   @Input() placeholder = '';
-  @Input() maxlength: number | null = null;
-  @Input() multiline = false;
-  @Input() rows = 3;
-  @Input() inputClass = '';
+  @Input() clearable = false;
+  @Input() searchable = false;
+  @Input() notFoundText = 'Sin resultados';
 
   /** Mensaje de error manual (para validación que no usa Reactive Forms) */
   @Input() error: string | null = null;
-  /** Mapa de claves de validador (required, minlength, etc) a mensajes legibles */
+  /** Mapa de claves de validador (required, etc) a mensajes legibles */
   @Input() errorMessages: Record<string, string> = {};
 
-  id = `app-input-${nextId++}`;
-  value = '';
+  id = `app-select-${nextId++}`;
+  value: any = null;
   disabled = false;
 
-  private onChange: (value: string) => void = () => {};
+  private onChange: (value: any) => void = () => {};
   onTouched: () => void = () => {};
 
   constructor(@Optional() @Self() public ngControl: NgControl | null) {
@@ -42,10 +42,10 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   writeValue(value: any): void {
-    this.value = value ?? '';
+    this.value = value;
   }
 
-  registerOnChange(fn: (value: string) => void): void {
+  registerOnChange(fn: (value: any) => void): void {
     this.onChange = fn;
   }
 
@@ -57,9 +57,10 @@ export class InputComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  onInput(value: string): void {
+  onSelectChange(value: any): void {
     this.value = value;
     this.onChange(value);
+    this.onTouched();
   }
 
   get errorMessage(): string | null {

@@ -109,6 +109,13 @@ h6 {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
+.app-select-error .ng-select-container {
+  border-color: #f87171;
+}
+.app-select-error.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+  border-color: #f87171;
+  box-shadow: 0 0 0 2px #fecaca40;
+}
 .ng-dropdown-panel {
   border: 1px solid #e5e7eb;
   border-top: none;

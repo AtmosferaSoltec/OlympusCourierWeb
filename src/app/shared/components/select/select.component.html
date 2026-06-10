@@ -1,0 +1,30 @@
+<div class="flex flex-col gap-1">
+  @if (label) {
+    <label [for]="id" class="text-xs font-medium text-textos uppercase tracking-wide">
+      {{ label }}
+      @if (hint) {
+        <span class="normal-case font-normal text-textos/40">{{ hint }}</span>
+      }
+    </label>
+  }
+
+  <ng-select
+    [labelForId]="id"
+    [items]="items"
+    [bindLabel]="bindLabel"
+    [bindValue]="bindValue"
+    [placeholder]="placeholder"
+    [clearable]="clearable"
+    [searchable]="searchable"
+    [notFoundText]="notFoundText"
+    [disabled]="disabled"
+    [ngModel]="value"
+    (ngModelChange)="onSelectChange($event)"
+    (blur)="onTouched()"
+    [class.app-select-error]="errorMessage"
+  ></ng-select>
+
+  @if (errorMessage) {
+    <span class="text-[11px] text-red-500">{{ errorMessage }}</span>
+  }
+</div>
