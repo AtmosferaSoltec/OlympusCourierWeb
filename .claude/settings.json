@@ -1,7 +1,38 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm -v)"
+      "Bash(pnpm -v)",
+      "Bash(./gradlew :app:compileDebugKotlin --offline -q)",
+      "Bash(./gradlew :app:compileDebugKotlin -q)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(dig +short api.olympuscourier.com)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} -> %{remote_ip}\\\\n\" https://api.olympuscourier.com/health)",
+      "Bash(curl -sI https://api.olympuscourier.com/health)",
+      "Bash(curl -sI -X POST https://api.olympuscourier.com/api/usuarios/login)",
+      "Read(//private/etc/**)",
+      "Bash(dig +short @8.8.8.8 api.olympuscourier.com)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --resolve api.olympuscourier.com:443:64.29.17.65 https://api.olympuscourier.com/health)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(dig api.olympuscourier.com +noall +answer)",
+      "Bash(dig @1.1.1.1 api.olympuscourier.com +noall +answer)",
+      "Bash(dig @8.8.8.8 api.olympuscourier.com +noall +answer)",
+      "Bash(dig api.olympuscourier.com CNAME +noall +answer)",
+      "Bash(curl -s -X POST https://api.olympuscourier.com/api/usuarios/login -H \"Content-Type: application/json\" -H \"Authorization: null\" -d '{\"documento\":\"74455518\",\"clave\":\"010460\"}')",
+      "Bash(curl -s -X POST https://api.olympuscourier.com/api/usuarios/login -H \"Content-Type: application/json\" -d '{\"documento\":\"74455518\",\"clave\":\"010460\"}')",
+      "Bash(dig api.olympuscourier.com AAAA +noall +answer)",
+      "Bash(dig @8.8.8.8 api.olympuscourier.com AAAA +noall +answer)",
+      "Bash(dig olympuscourier.com +noall +answer)",
+      "Bash(dig www.olympuscourier.com +noall +answer)",
+      "Bash(dig olympuscourier.com NS +noall +answer)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" -H \"Host: api.olympuscourier.com\" https://161.132.47.45/health -k)",
+      "Bash(dig @ns1.elastika.pe api.olympuscourier.com +noall +answer)",
+      "Bash(dig @ns1.elastika.pe olympuscourier.com +noall +answer)",
+      "Bash(dig @ns1.elastika.pe www.olympuscourier.com +noall +answer)",
+      "Bash(dig @a.gtld-servers.net olympuscourier.com NS +noall +authority)"
+    ],
+    "additionalDirectories": [
+      "/Users/joel/Documents/Atmosfera/Olympus/OlympusCourierApp/gradle",
+      "/Users/joel/Documents/Atmosfera/Olympus/OlympusCourierApp/app"
     ]
   }
 }
