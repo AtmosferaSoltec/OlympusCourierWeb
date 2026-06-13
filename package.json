@@ -11,6 +11,7 @@
   "engines": {
     "node": "22.x"
   },
+  "packageManager": "pnpm@10.33.4",
   "private": true,
   "dependencies": {
     "@angular/animations": "^21.2.7",
